@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import src.Entity;
 
-public class Automaton
+public abstract class Automaton
 {
   private ArrayList< Transition > m_transitions;
 
@@ -18,16 +18,17 @@ public class Automaton
     m_transitions.add( new Transition( src, dst, cond, act ) );
   }
 
-  public boolean next( Entity entity )
+  public boolean nextState( Entity entity )
   {
     for ( Transition transition : m_transitions )
     {
       if( transition.getSource().isEqual( entity.getState() ) && transition.getCondition().evaluate( entity ) )
       {
-        transition.getAction().run( entity );
-        return true;
+        return transition.getAction().run( entity );
       }
     }
     return false;
   }
+  
+  public abstract State getInitialState();
 }
