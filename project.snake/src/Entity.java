@@ -1,5 +1,7 @@
 package src;
 
+import src.Grid.Cell;
+
 public interface Entity
 {
   public boolean cell( DIRECTION dir, Entity e );
@@ -9,5 +11,7 @@ public interface Entity
   public void turn( DIRECTION dir );
 
   public void tick( int elapsed );
+
+  public void setCell( Cell c );
 
 }
