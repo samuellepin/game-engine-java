@@ -1,5 +1,7 @@
 package src;
 
+import src.AI.State;
+
 public interface Entity
 {
   public boolean cell( DIRECTION dir, Entity e );
@@ -10,4 +12,5 @@ public interface Entity
 
   public void tick( int elapsed );
 
+  public State getState();
 }
