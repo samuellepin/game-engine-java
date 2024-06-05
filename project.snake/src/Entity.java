@@ -4,11 +4,9 @@ import src.AI.State;
 
 public interface Entity
 {
-  public boolean cell( DIRECTION dir, Entity e );
+  public boolean cell( DIRECTION direction, CATEGORY category );
 
-  public void move( DIRECTION dir );
-
-  public void turn( DIRECTION dir );
+  public boolean move( DIRECTION direction );
 
   public void tick( int elapsed );
 

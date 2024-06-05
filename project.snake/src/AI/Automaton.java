@@ -8,12 +8,17 @@ public class Automaton
 {
   private ArrayList< Transition > m_transitions;
 
-  public Automaton( ArrayList< Transition > transitions )
+  public Automaton()
   {
-    m_transitions = transitions;
+    m_transitions = new ArrayList< Transition >();
+  }
+  
+  protected void addTransition( State src, State dst, Condition cond, Action act )
+  {
+    m_transitions.add( new Transition( src, dst, cond, act ) );
   }
 
-  public boolean Next( Entity entity )
+  public boolean next( Entity entity )
   {
     for ( Transition transition : m_transitions )
     {
