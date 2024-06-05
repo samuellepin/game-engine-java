@@ -2,10 +2,25 @@ package src.AI;
 
 public class State
 {
-  int m_id;
+  private int m_id;
 
   public State( int id )
   {
-    this.m_id = id;
+    m_id = id;
+  }
+
+  public void setID( int id )
+  {
+    m_id = id;
+  }
+
+  public int getID()
+  {
+    return m_id;
+  }
+
+  public boolean isEqual( State state )
+  {
+    return this.getID() == state.getID();
   }
 }

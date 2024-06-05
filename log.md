@@ -16,3 +16,13 @@
     - prophunt 
 - choix definitif de l'organisation du groupe 
 - discussion avec Mr Gruber sur la meilleur approche d'orgnisation et des prochaines tâches à suivre dans la semaine
+
+#### Snack-Protype 
+
+- réflexion sur l'organisation du Model 
+- réalisation du début du graph d'object 
+- creation de la class Model , Grid, Cell , Directory , Entity et de certains de leur méthode
+
+Pour demain :
+- comment faire le View ?
+- discussion de ce qui a été fait

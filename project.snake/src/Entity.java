@@ -1,6 +1,7 @@
 package src;
 
 import src.Grid.Cell;
+import src.AI.State;
 
 public interface Entity
 {
@@ -14,4 +15,5 @@ public interface Entity
 
   public void setCell( Cell c );
 
+  public State getState();
 }
