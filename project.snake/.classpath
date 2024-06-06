@@ -6,6 +6,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path=""/>
-	<classpathentry exported="true" kind="lib" path="/home/greg/Documents/Cours/Semestre-6/PLE/g6/info3.game.jar" sourcepath="/info3.game.given.2021"/>
+	<classpathentry kind="lib" path="/home/greg/Documents/Cours/Semestre-6/PLE/g6/info3.game.jar" sourcepath="/info3.game.given.2021"/>
 	<classpathentry kind="output" path=""/>
 </classpath>
