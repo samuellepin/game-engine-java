@@ -26,3 +26,13 @@
 Pour demain :
 - comment faire le View ?
 - discussion de ce qui a été fait
+
+
+### Jour 3 (06 juin) (aprèm)
+
+- Appel avec Olivier Gruber pour clarifier la vue et le modèle 
+- Retard sur le code (trop de conception pas assez d'implémentation) 
+- TODO :
+    - Implémenter la vue (avec les avatars et une factory)
+    - Queue du Snake
+    - Assembler tous les différents morceaux du modèle pour voir si ça fonctionne
