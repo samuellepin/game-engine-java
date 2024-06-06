@@ -5,17 +5,14 @@ import src.Entity;
 
 public class Move implements Action
 {
-  private DIRECTION m_direction;
-
-  public Move( DIRECTION direction )
+  public Move()
   {
-    m_direction = direction;
   }
 
   @Override
   public boolean run( Entity entity )
   {
-    return entity.move( m_direction );
+    return entity.move();
   }
 
 }

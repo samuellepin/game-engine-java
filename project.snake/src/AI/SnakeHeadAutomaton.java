@@ -14,11 +14,7 @@ public class SnakeHeadAutomaton extends Automaton
   private SnakeHeadAutomaton()
   {
     super();
-    addTransition( STATE_IDLE, STATE_IDLE, new Cell( DIRECTION.UP, CATEGORY.EMPTY ), new Move( DIRECTION.UP ) );
-    addTransition( STATE_IDLE, STATE_IDLE, new Cell( DIRECTION.DOWN, CATEGORY.EMPTY ), new Move( DIRECTION.DOWN ) );
-    addTransition( STATE_IDLE, STATE_IDLE, new Cell( DIRECTION.RIGHT, CATEGORY.EMPTY ), new Move( DIRECTION.RIGHT ) );
-    addTransition( STATE_IDLE, STATE_IDLE, new Cell( DIRECTION.LEFT, CATEGORY.EMPTY ), new Move( DIRECTION.LEFT ) );
-    addTransition( STATE_IDLE, STATE_DEAD, new DefaultCondition(), new DefaultAction() );
+    addTransition( STATE_IDLE, STATE_IDLE, new DefaultCondition(), new Turn( DIRECTION.RIGHT ) );
   }
   
   public State getInitialState()

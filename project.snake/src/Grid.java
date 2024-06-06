@@ -113,15 +113,15 @@ public class Grid
     {
       return false;
     }
-    
+
     Cell c = this.getCell( x, y );
-    
+
     if( c.getCategory() != CATEGORY.EMPTY ) return false;
-    
+
     setEntity( null, e.getCell() );
     e.setCell( c );
     setEntity( e, c );
-    
+
     return true;
   }
 
@@ -176,6 +176,26 @@ public class Grid
     return m_map[ y ][ x ].getCategory() == category;
   }
 
+  public void snakeHeadASCII( StringBuilder strb, int x, int y )
+  {
+    DIRECTION dir = Grid.getInstance().getCell( x, y ).getEntity().getDirection();
+    switch ( dir )
+    {
+    case UP:
+      strb.append( "^" );
+      break;
+    case DOWN:
+      strb.append( "V" );
+      break;
+    case RIGHT:
+      strb.append( ">" );
+      break;
+    case LEFT:
+      strb.append( "<" );
+      break;
+    }
+  }
+
   @Override
   public String toString()
   {
@@ -194,7 +214,7 @@ public class Grid
           strb.append( "@" );
           break;
         case SNAKE:
-          strb.append( "S" );
+          snakeHeadASCII( strb, x, y );
           break;
         default:
           strb.append( "?" );

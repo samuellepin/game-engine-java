@@ -20,14 +20,37 @@ public class SnakeHead extends Entity
   }
 
   @Override
-  public boolean move( DIRECTION direction )
+  public boolean move()
   {
-    m_direction = direction;
     return Grid.getInstance().move( this );
   }
 
   public boolean isDead()
   {
     return this.getState() == SnakeHeadAutomaton.STATE_DEAD;
+  }
+  
+  @Override
+  public boolean turn( DIRECTION direction )
+  {
+    if( direction != DIRECTION.RIGHT ) return false;
+    switch( m_direction )
+    {
+    case RIGHT:
+      m_direction = DIRECTION.DOWN;
+      break;
+    case DOWN:
+      m_direction = DIRECTION.LEFT;
+      break;
+    case LEFT:
+      m_direction = DIRECTION.UP;
+      break;
+    case UP:
+      m_direction = DIRECTION.RIGHT;
+      break;
+    default:
+      break;
+    }
+    return true;
   }
 }

@@ -24,7 +24,7 @@ public abstract class Entity
     return false;
   }
 
-  public boolean move( DIRECTION direction )
+  public boolean move()
   {
     return false;
   }
@@ -52,5 +52,10 @@ public abstract class Entity
   public DIRECTION getDirection()
   {
     return m_direction;
+  }
+  
+  public boolean turn( DIRECTION direction )
+  {
+    return false;
   }
 }
