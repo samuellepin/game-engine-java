@@ -1,5 +1,4 @@
 # Journal de Bord du groupe 6 - Projet fin d'année
-======
 ## Semaine 1
 
 ### Jour 1 (04 juin):
@@ -48,3 +47,12 @@ Reflexion sur la View :
     - Implémenter la vue (avec les avatars et une factory)
     - Queue du Snake
     - Assembler tous les différents morceaux du modèle pour voir si ça fonctionne
+
+### Jour 4 (07 juin):
+- Discussion avec Pr. Olivier Gruber sur le lien entre automate et entity et de entity/brain/automate 
+    - Discussion du rôle de chaque partie 
+
+- Finition de toute la View par David 
+- Rémi s'occupe de faire la Tail du snake .
+- Romain s'occupe de faire les mouvenet aléatoire du snake 
+- Grégory et Samuel s'occupe de la rédaction et de la réflexion du contrat, des fonctionnalité du moteur, des 2 jeux avec ce moteur,...
