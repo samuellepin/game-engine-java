@@ -6,6 +6,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path=""/>
-	<classpathentry kind="lib" path="info3.game.jar" sourcepath="/info3.game.given.2021"/>
+	<classpathentry kind="lib" path="/home/david/JVG/g6/project.snake/info3.game.jar" sourcepath="/info3.game.given.2021"/>
 	<classpathentry kind="output" path=""/>
 </classpath>
