@@ -10,7 +10,7 @@ public class Apple extends Entity
   {
     super( automaton, cell );
   }
-  
+
   boolean isEaten()
   {
     return this.getState() == AppleAutomaton.STATE_EATEN;

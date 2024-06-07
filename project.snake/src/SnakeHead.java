@@ -16,7 +16,7 @@ public class SnakeHead extends Entity
   @Override
   public boolean cell( DIRECTION direction, CATEGORY category )
   {
-    return Grid.getInstance().checkCell( m_cell, direction, category );
+    return Grid.getInstance().checkCell( m_cell, m_direction, category );
   }
 
   @Override
@@ -29,12 +29,12 @@ public class SnakeHead extends Entity
   {
     return this.getState() == SnakeHeadAutomaton.STATE_DEAD;
   }
-  
+
   @Override
   public boolean turn( DIRECTION direction )
   {
     if( direction != DIRECTION.RIGHT ) return false;
-    switch( m_direction )
+    switch ( m_direction )
     {
     case RIGHT:
       m_direction = DIRECTION.DOWN;

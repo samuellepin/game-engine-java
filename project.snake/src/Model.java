@@ -1,6 +1,9 @@
 package src;
 
 import src.Grid.Cell;
+
+import java.util.ArrayList;
+
 import src.AI.AppleAutomaton;
 import src.AI.SnakeHeadAutomaton;
 
@@ -34,7 +37,7 @@ public class Model
     m_grid.setEntity( m_apple, cell );
   }
 
-  public void tick( int elapsed )
+  public void tick( long elapsed )
   {
     m_snake.tick( elapsed );
     m_apple.tick( elapsed );
@@ -58,5 +61,13 @@ public class Model
   public void print()
   {
     System.out.println( Grid.getInstance().toString() );
+  }
+
+  public ArrayList< Entity > GetEntityList()
+  {
+    ArrayList< Entity > entities = new ArrayList<>();
+    entities.add( m_snake );
+    entities.add( m_apple );
+    return entities;
   }
 }

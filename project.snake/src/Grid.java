@@ -226,4 +226,20 @@ public class Grid
 
     return strb.toString();
   }
+
+  public Apple getApple()
+  {
+    for ( int y = 0; y < Grid.ROWS_NUM; y++ )
+    {
+      for ( int x = 0; x < Grid.COLS_NUM; x++ )
+      {
+        Entity e = m_map[ y ][ x ].getEntity();
+        if( e instanceof Apple )
+        {
+          return (Apple)e;
+        }
+      }
+    }
+    return null;
+  }
 }

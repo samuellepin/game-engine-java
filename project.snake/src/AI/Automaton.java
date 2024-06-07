@@ -12,7 +12,7 @@ public abstract class Automaton
   {
     m_transitions = new ArrayList< Transition >();
   }
-  
+
   protected void addTransition( State src, State dst, Condition cond, Action act )
   {
     m_transitions.add( new Transition( src, dst, cond, act ) );
@@ -29,6 +29,6 @@ public abstract class Automaton
     }
     return false;
   }
-  
+
   public abstract State getInitialState();
 }
