@@ -17,7 +17,7 @@ public class SnakeHeadAutomaton extends Automaton
   {
     super();
   /// < The direction is useless here - we use the direction of the snake
-    addTransition( STATE_IDLE, STATE_IDLE, new Cell( DIRECTION.HERE, CATEGORY.EMPTY ), new Move() );
+    addTransition( STATE_IDLE, STATE_IDLE, new Conjunction(new Cell( DIRECTION.HERE, CATEGORY.EMPTY ),new Cell( DIRECTION.HERE, CATEGORY.EMPTY )), new Move() );
     addTransition( STATE_IDLE, STATE_IDLE, new DefaultCondition(), new Turn( DIRECTION.RIGHT ) );
   }
 
