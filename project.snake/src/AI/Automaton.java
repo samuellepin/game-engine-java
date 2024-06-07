@@ -4,25 +4,31 @@ import java.util.ArrayList;
 
 import src.Entity;
 
-public class Automaton
+public abstract class Automaton
 {
   private ArrayList< Transition > m_transitions;
 
-  public Automaton( ArrayList< Transition > transitions )
+  public Automaton()
   {
-    m_transitions = transitions;
+    m_transitions = new ArrayList< Transition >();
   }
 
-  public boolean Next( Entity entity )
+  protected void addTransition( State src, State dst, Condition cond, Action act )
+  {
+    m_transitions.add( new Transition( src, dst, cond, act ) );
+  }
+
+  public boolean nextState( Entity entity )
   {
     for ( Transition transition : m_transitions )
     {
       if( transition.getSource().isEqual( entity.getState() ) && transition.getCondition().evaluate( entity ) )
       {
-        transition.getAction().run( entity );
-        return true;
+        return transition.getAction().run( entity );
       }
     }
     return false;
   }
+
+  public abstract State getInitialState();
 }
