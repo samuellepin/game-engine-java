@@ -30,6 +30,21 @@ Pour demain :
 
 ### Jour 3 (06 juin) (aprèm)
 
+### Jour 3 (06 juin):
+
+Réunion de début :
+- discussion sur le code fait (src-AI et Model)
+- réflexion sur la View
+- décision du travail à faire pour la journée et répartition des tâches
+
+Reflexion sur la View :
+- graph d'objet de la View
+- gestion du polymorphisme des avatars (solution non trouvé) besoin d'un professeur pour nous aider dans cette conception 
+    - possible solution : 
+        - factory 
+        - getAvatar dans entity mais pas propre car on perd la séparation entre View et Model 
+- timer sur la view 
+
 - Appel avec Olivier Gruber pour clarifier la vue et le modèle 
 - Retard sur le code (trop de conception pas assez d'implémentation) 
 - TODO :
