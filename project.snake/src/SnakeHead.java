@@ -20,7 +20,7 @@ public class SnakeHead extends Entity
   @Override
   public boolean cell( DIRECTION direction, CATEGORY category )
   {
-    return Grid.getInstance().checkCell( m_cell, m_direction, category );
+    return Grid.getInstance().checkCell( m_cell, getCardinal( direction ), category );
   }
 
   @Override
@@ -37,21 +37,29 @@ public class SnakeHead extends Entity
   @Override
   public boolean turn( DIRECTION direction )
   {
+    m_direction = getCardinal( direction );
+    move();
+    return true;
+  }
+
+  private DIRECTION getCardinal( DIRECTION direction )
+  {
+    DIRECTION cardinal = m_direction;
     if( direction == DIRECTION.RIGHT )
     {
       switch ( m_direction )
       {
       case RIGHT:
-        m_direction = DIRECTION.DOWN;
+        cardinal = DIRECTION.DOWN;
         break;
       case DOWN:
-        m_direction = DIRECTION.LEFT;
+        cardinal = DIRECTION.LEFT;
         break;
       case LEFT:
-        m_direction = DIRECTION.UP;
+        cardinal = DIRECTION.UP;
         break;
       case UP:
-        m_direction = DIRECTION.RIGHT;
+        cardinal = DIRECTION.RIGHT;
         break;
       default:
         break;
@@ -62,23 +70,22 @@ public class SnakeHead extends Entity
       switch ( m_direction )
       {
       case RIGHT:
-        m_direction = DIRECTION.UP;
+        cardinal = DIRECTION.UP;
         break;
       case DOWN:
-        m_direction = DIRECTION.RIGHT;
+        cardinal = DIRECTION.RIGHT;
         break;
       case LEFT:
-        m_direction = DIRECTION.DOWN;
+        cardinal = DIRECTION.DOWN;
         break;
       case UP:
-        m_direction = DIRECTION.LEFT;
+        cardinal = DIRECTION.LEFT;
         break;
       default:
         break;
       }
     }
-    move();
-    return true;
+    return cardinal;
   }
 
 //  public void eat()
