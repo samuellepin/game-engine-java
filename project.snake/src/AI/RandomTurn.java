@@ -18,7 +18,7 @@ public class RandomTurn implements Action
     }
     else if( right && front )
     {
-      m_direction = m_direction_tab[ new Random().nextInt( 1, 3 ) ];
+      m_direction = m_direction_tab[ new Random().nextInt( 2 ) + 1 ];
     }
     else if( left && front )
     {
