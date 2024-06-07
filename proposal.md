@@ -50,7 +50,7 @@ Un joueur, le survivant, est chassé par un monstre (le deuxième joueur).
 Le monstre craint la lumière.
 Plusieurs torches sont disposées aléatoirement sur la carte, et des lucioles et autre créatures bioluminescentes se déplacent sur la carte.
 Le joueur peut capturer ces lucioles afin d'allumer les lampes.
-Le monstre gagne s'il attrappe le joueur, le joueur gagne si il survit jusqu'à l'aube.
+Le monstre gagne s'il attrape le joueur, le joueur gagne si il survit jusqu'à l'aube.
 
 Fonctionnalités :
 - Système d'éclairage et de champ de vision
