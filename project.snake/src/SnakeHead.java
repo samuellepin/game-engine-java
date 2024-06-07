@@ -58,16 +58,8 @@ public class SnakeHead extends Entity
     return true;
   }
   
-//  public void eat()
-//  {
-//    if( m_snakeTail == null )
-//    {
-//      m_snakeTail = new SnakeTail(  )
-//    }
-//    while( m_snakeTail.getNext() != null )
-//    {
-//      
-//    }
-//    m_length++;
-//  }
+  public SnakeTail getTail()
+  {
+    return m_snakeTail;
+  }
 }

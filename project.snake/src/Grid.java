@@ -88,6 +88,7 @@ public class Grid
 
   public boolean move( Entity e )
   {
+    Cell oldCell = e.getCell();
     int x = e.getCell().getX();
     int y = e.getCell().getY();
 
@@ -114,15 +115,33 @@ public class Grid
       return false;
     }
 
-    Cell c = this.getCell( x, y );
+    Cell newCell = this.getCell( x, y );
 
-    if( c.getCategory() != CATEGORY.EMPTY ) return false;
+    if( newCell.getCategory() != CATEGORY.EMPTY ) return false;
 
-    setEntity( null, e.getCell() );
-    e.setCell( c );
-    setEntity( e, c );
-
+    setEntity( null, oldCell );
+    e.setCell( newCell );
+    setEntity( e, newCell );
+    
+    if( !(e instanceof SnakeHead) ) return true;
+   
+    SnakeHead head = (SnakeHead)e;
+    SnakeTail tail = head.getTail();
+    
+    
     return true;
+  }
+  
+  public void moveSnakeTail( SnakeTail tail, Cell newCell )
+  {
+    if( tail == null ) return;
+    
+    Cell oldCell = tail.getCell();
+    setEntity( null, oldCell );
+    tail.setCell( newCell );
+    setEntity( tail, newCell );
+    
+    moveSnakeTail( tail.getNext(), newCell );
   }
 
   public Cell getCell( int x, int y )
