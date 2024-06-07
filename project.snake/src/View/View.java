@@ -11,10 +11,10 @@ import src.Model;
 
 public class View
 {
-  private Model              m_model;
-  ArrayList< Avatar >        m_avatars;
-  private static final Color BACKGROUND_COLOR  = new Color( 0x1E, 0x1E, 0x2E );
-  private static final Color CELL_BORDER_COLOR = new Color( 0x60, 0x60, 0x80 );
+  private Model               m_model;
+  private ArrayList< Avatar > m_avatars;
+  private static final Color  BACKGROUND_COLOR  = new Color( 0x1E, 0x1E, 0x2E );
+  private static final Color  CELL_BORDER_COLOR = new Color( 0x60, 0x60, 0x80 );
 
   public View( Model model )
   {

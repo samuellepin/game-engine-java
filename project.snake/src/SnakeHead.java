@@ -8,9 +8,13 @@ import src.AI.State;
 
 public class SnakeHead extends Entity
 {
+  private SnakeTail m_snakeTail;
+  private int m_length;
+  
   public SnakeHead( Automaton automaton, Cell cell )
   {
     super( automaton, cell );
+    m_length = 1;
   }
 
   @Override
@@ -53,4 +57,17 @@ public class SnakeHead extends Entity
     }
     return true;
   }
+  
+//  public void eat()
+//  {
+//    if( m_snakeTail == null )
+//    {
+//      m_snakeTail = new SnakeTail(  )
+//    }
+//    while( m_snakeTail.getNext() != null )
+//    {
+//      
+//    }
+//    m_length++;
+//  }
 }
