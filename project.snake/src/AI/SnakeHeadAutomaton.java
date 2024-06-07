@@ -8,11 +8,10 @@ import src.Grid;
 
 public class SnakeHeadAutomaton extends Automaton
 {
-  public static final State               STATE_IDLE  = new State( 0 );
-  public static final State               STATE_DEAD  = new State( 1 );
- 
+  public static final State               STATE_IDLE = new State( 0 );
+  public static final State               STATE_DEAD = new State( 1 );
 
-  private static final SnakeHeadAutomaton INSTANCE    = new SnakeHeadAutomaton();
+  private static final SnakeHeadAutomaton INSTANCE   = new SnakeHeadAutomaton();
 
   private SnakeHeadAutomaton()
   {
@@ -21,16 +20,16 @@ public class SnakeHeadAutomaton extends Automaton
     addTransition( STATE_IDLE, STATE_IDLE,
         new Conjunction( new Cell( DIRECTION.HERE, CATEGORY.EMPTY ), new Conjunction(
             new Cell( DIRECTION.LEFT, CATEGORY.EMPTY ), new Cell( DIRECTION.RIGHT, CATEGORY.EMPTY ) ) ),
-        Turn.RandomTurn(true,true,true) );
+        new RandomTurn( true, true, true ) );
     addTransition( STATE_IDLE, STATE_IDLE,
         new Conjunction( new Cell( DIRECTION.HERE, CATEGORY.EMPTY ), new Cell( DIRECTION.RIGHT, CATEGORY.EMPTY ) ),
-        Turn.RandomTurn(false,true,true) );
+        new RandomTurn( false, true, true ) );
     addTransition( STATE_IDLE, STATE_IDLE,
         new Conjunction( new Cell( DIRECTION.HERE, CATEGORY.EMPTY ), new Cell( DIRECTION.LEFT, CATEGORY.EMPTY ) ),
-        Turn.RandomTurn(true,true,false) );
+        new RandomTurn( true, true, false ) );
     addTransition( STATE_IDLE, STATE_IDLE,
         new Conjunction( new Cell( DIRECTION.LEFT, CATEGORY.EMPTY ), new Cell( DIRECTION.RIGHT, CATEGORY.EMPTY ) ),
-        Turn.RandomTurn(true,false,true) );
+        new RandomTurn( true, false, true ) );
     addTransition( STATE_IDLE, STATE_IDLE, new Cell( DIRECTION.LEFT, CATEGORY.EMPTY ), new Turn( DIRECTION.LEFT ) );
     addTransition( STATE_IDLE, STATE_IDLE, new Cell( DIRECTION.RIGHT, CATEGORY.EMPTY ), new Turn( DIRECTION.RIGHT ) );
     addTransition( STATE_IDLE, STATE_IDLE, new DefaultCondition(), new Turn( DIRECTION.HERE ) );
