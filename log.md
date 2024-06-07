@@ -27,9 +27,6 @@ Pour demain :
 - comment faire le View ?
 - discussion de ce qui a été fait
 
-
-### Jour 3 (06 juin) (aprèm)
-
 ### Jour 3 (06 juin):
 
 Réunion de début :
