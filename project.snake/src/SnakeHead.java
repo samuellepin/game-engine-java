@@ -9,8 +9,8 @@ import src.AI.State;
 public class SnakeHead extends Entity
 {
   private SnakeTail m_snakeTail;
-  private int m_length;
-  
+  private int       m_length;
+
   public SnakeHead( Automaton automaton, Cell cell )
   {
     super( automaton, cell );
@@ -37,27 +37,50 @@ public class SnakeHead extends Entity
   @Override
   public boolean turn( DIRECTION direction )
   {
-    if( direction != DIRECTION.RIGHT ) return false;
-    switch ( m_direction )
+    if( direction == DIRECTION.RIGHT )
     {
-    case RIGHT:
-      m_direction = DIRECTION.DOWN;
-      break;
-    case DOWN:
-      m_direction = DIRECTION.LEFT;
-      break;
-    case LEFT:
-      m_direction = DIRECTION.UP;
-      break;
-    case UP:
-      m_direction = DIRECTION.RIGHT;
-      break;
-    default:
-      break;
+      switch ( m_direction )
+      {
+      case RIGHT:
+        m_direction = DIRECTION.DOWN;
+        break;
+      case DOWN:
+        m_direction = DIRECTION.LEFT;
+        break;
+      case LEFT:
+        m_direction = DIRECTION.UP;
+        break;
+      case UP:
+        m_direction = DIRECTION.RIGHT;
+        break;
+      default:
+        break;
+      }
     }
+    else if( direction == DIRECTION.LEFT )
+    {
+      switch ( m_direction )
+      {
+      case RIGHT:
+        m_direction = DIRECTION.UP;
+        break;
+      case DOWN:
+        m_direction = DIRECTION.RIGHT;
+        break;
+      case LEFT:
+        m_direction = DIRECTION.DOWN;
+        break;
+      case UP:
+        m_direction = DIRECTION.LEFT;
+        break;
+      default:
+        break;
+      }
+    }
+    move();
     return true;
   }
-  
+
 //  public void eat()
 //  {
 //    if( m_snakeTail == null )

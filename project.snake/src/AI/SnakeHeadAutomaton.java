@@ -5,20 +5,36 @@ import src.DIRECTION;
 import src.Entity;
 import src.Game;
 import src.Grid;
+import java.util.Random;
 
 public class SnakeHeadAutomaton extends Automaton
 {
-  public static final State               STATE_IDLE = new State( 0 );
-  public static final State               STATE_DEAD = new State( 1 );
+  public static final State               STATE_IDLE  = new State( 0 );
+  public static final State               STATE_DEAD  = new State( 1 );
+  private DIRECTION[]                     m_direction = { DIRECTION.LEFT, DIRECTION.RIGHT, DIRECTION.HERE };
 
-  private static final SnakeHeadAutomaton INSTANCE   = new SnakeHeadAutomaton();
+  private static final SnakeHeadAutomaton INSTANCE    = new SnakeHeadAutomaton();
 
   private SnakeHeadAutomaton()
   {
     super();
-  /// < The direction is useless here - we use the direction of the snake
-    addTransition( STATE_IDLE, STATE_IDLE, new Conjunction(new Cell( DIRECTION.HERE, CATEGORY.EMPTY ),new Cell( DIRECTION.HERE, CATEGORY.EMPTY )), new Move() );
-    addTransition( STATE_IDLE, STATE_IDLE, new DefaultCondition(), new Turn( DIRECTION.RIGHT ) );
+    /// < The direction is useless here - we use the direction of the snake
+    addTransition( STATE_IDLE, STATE_IDLE,
+        new Conjunction( new Cell( DIRECTION.HERE, CATEGORY.EMPTY ), new Conjunction(
+            new Cell( DIRECTION.LEFT, CATEGORY.EMPTY ), new Cell( DIRECTION.RIGHT, CATEGORY.EMPTY ) ) ),
+        new Turn( m_direction[ new Random().nextInt( 3 ) ] ) );
+    addTransition( STATE_IDLE, STATE_IDLE,
+        new Conjunction( new Cell( DIRECTION.HERE, CATEGORY.EMPTY ), new Cell( DIRECTION.RIGHT, CATEGORY.EMPTY ) ),
+        new Turn( m_direction[ new Random().nextInt( 1, 3 ) ] ) );
+    addTransition( STATE_IDLE, STATE_IDLE,
+        new Conjunction( new Cell( DIRECTION.HERE, CATEGORY.EMPTY ), new Cell( DIRECTION.LEFT, CATEGORY.EMPTY ) ),
+        new Turn( m_direction[ new Random().nextInt( 1 ) * 2 ] ) );
+    addTransition( STATE_IDLE, STATE_IDLE,
+        new Conjunction( new Cell( DIRECTION.LEFT, CATEGORY.EMPTY ), new Cell( DIRECTION.RIGHT, CATEGORY.EMPTY ) ),
+        new Turn( m_direction[ new Random().nextInt( 2 ) ] ) );
+    addTransition( STATE_IDLE, STATE_IDLE, new Cell( DIRECTION.LEFT, CATEGORY.EMPTY ), new Turn( DIRECTION.LEFT ) );
+    addTransition( STATE_IDLE, STATE_IDLE, new Cell( DIRECTION.RIGHT, CATEGORY.EMPTY ), new Turn( DIRECTION.RIGHT ) );
+    addTransition( STATE_IDLE, STATE_IDLE, new DefaultCondition(), new Turn( DIRECTION.HERE ) );
   }
 
   public State getInitialState()
