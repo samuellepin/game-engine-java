@@ -56,3 +56,20 @@ Reflexion sur la View :
 - Rémi s'occupe de faire la Tail du snake .
 - Romain s'occupe de faire les mouvenet aléatoire du snake 
 - Grégory et Samuel s'occupe de la rédaction et de la réflexion du contrat, des fonctionnalité du moteur, des 2 jeux avec ce moteur,...
+
+### Jour 5 (10 juin):
+- Rédaction du contract 
+- Choix de ce qui va être fait le lendemnain 
+
+- Model :
+    - Coordonnées
+    - Déplacement 
+    - Collisions
+    - Champ de vision 
+    - Ticks
+- View :
+    - Viewport
+    - Ecran scindé 
+    - Système métrique 
+- Automate 
+    - Double lien entre automate et entité 
