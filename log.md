@@ -61,13 +61,15 @@ Reflexion sur la View :
 - Rédaction du contract 
 - Choix de ce qui va être fait le lendemnain 
 
-- Model :
+Rémi merge-request et support Model
+- Entité (Romain)
+- Model : (David)
     - Coordonnées
     - Déplacement 
     - Collisions
     - Champ de vision 
     - Ticks
-- View :
+- View : (Sam et Greg)
     - Viewport
     - Ecran scindé 
     - Système métrique 
