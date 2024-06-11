@@ -1,5 +1,9 @@
 package src.Model;
 
+/**
+ * A camera represents a part of the Model,
+ * with its own width, height and position.
+ */
 public class Camera
 {
   public Vector getPos()
