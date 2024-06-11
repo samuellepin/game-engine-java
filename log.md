@@ -96,3 +96,14 @@ Réflexion sur la View :
         - Metal Gear : placer un mur
         - Prop Night : "dégradé" vers le fond par défaut.
     - "dégradé" signifie une texture déjà faite qui permet de faire la liaison entre les deux biomes.
+
+- Un JViewport qui vient de la librairie Swing va permettre de scinder l'écran en deux parties.
+- Chaque JViewport va afficher une partie de l'écran.
+- Un JViewport pour chaque joueur.
+- Nous utilisons cette solution car nous ne pouvons pas modifier Canvas.
+- Un JViewport va prendre en paramètre le Canvas.
+- Le Canvas représente le façon dont on dessine les éléments de la carte.
+- Chaque JViewport va afficher ce que le joueur voit donc il a besoin de savoir auprès de Canvas ce qu'il doit afficher.
+
+TO DO pour demain :
+- 2 JViewport qui vont prendre en paramètre le Canvas et chaque JViewport va afficher une partie de l'écran scindé. (1 JVieport pour chaque joueur)
