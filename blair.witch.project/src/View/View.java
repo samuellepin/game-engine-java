@@ -16,6 +16,7 @@ public class View
   private Model               m_model;
   private ArrayList< Avatar > m_avatars;
   private LightAvatar         m_lightAvatar;
+  private MapAvatar           m_mapAvatar;
 
   public View( Model model, GameCanvas canvas )
   {
@@ -37,6 +38,7 @@ public class View
     }
     
     m_lightAvatar = new LightAvatar( m_model.getLight(), entities );
+    m_mapAvatar = new MapAvatar( m_model.getMap() );
   }
 
   public void paint( Graphics g )
@@ -44,17 +46,20 @@ public class View
     g.setColor( Color.black );
     g.fillRect( 0, 0, m_canvas.getWidth(), m_canvas.getHeight() );
     
-    double size = 1000;
-    Vector origin = new Vector( 0, 0 );
-    Vector right = new Vector( size, 0 );
-    Vector left = new Vector( -size, 0 );
-    Vector up = new Vector( 0, -size );
-    Vector down = new Vector( 0, size );
-    g.setColor( Color.white );
-    g.drawLine( (int)origin.getRX(), (int)origin.getRY(), (int)right.getRX(), (int)right.getRY() );
-    g.drawLine( (int)origin.getRX(), (int)origin.getRY(), (int)left.getRX(), (int)left.getRY() );
-    g.drawLine( (int)origin.getRX(), (int)origin.getRY(), (int)up.getRX(), (int)up.getRY() );
-    g.drawLine( (int)origin.getRX(), (int)origin.getRY(), (int)down.getRX(), (int)down.getRY() );
+///< Dessiner le repère cartésien
+//    double size = 1000;
+//    Vector origin = new Vector( 0, 0 );
+//    Vector right = new Vector( size, 0 );
+//    Vector left = new Vector( -size, 0 );
+//    Vector up = new Vector( 0, -size );
+//    Vector down = new Vector( 0, size );
+//    g.setColor( Color.white );
+//    g.drawLine( (int)origin.getRX(), (int)origin.getRY(), (int)right.getRX(), (int)right.getRY() );
+//    g.drawLine( (int)origin.getRX(), (int)origin.getRY(), (int)left.getRX(), (int)left.getRY() );
+//    g.drawLine( (int)origin.getRX(), (int)origin.getRY(), (int)up.getRX(), (int)up.getRY() );
+//    g.drawLine( (int)origin.getRX(), (int)origin.getRY(), (int)down.getRX(), (int)down.getRY() );
+    
+    m_mapAvatar.paint( g );
     
     m_lightAvatar.paint( g );
 
