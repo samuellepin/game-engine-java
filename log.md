@@ -61,7 +61,7 @@ Reflexion sur la View :
 - Rédaction du contract 
 - Choix de ce qui va être fait le lendemnain 
 
-Rémi merge-request et support Model
+Sam merge-request et support Model
 - Entité (Romain)
 - Model : (David)
     - Coordonnées
@@ -69,9 +69,14 @@ Rémi merge-request et support Model
     - Collisions
     - Champ de vision 
     - Ticks
-- View : (Sam et Greg)
+- View : (Rémi et Greg)
     - Viewport
     - Ecran scindé 
     - Système métrique 
 - Automate 
     - Double lien entre automate et entité 
+    
+### Jour 6 (11 juin):
+
+Chacun fait sa tâche attribué hier. 
+Sam met à jour le proposal avec les consignes du Pr. Périn sur les nouvelles consignes.
