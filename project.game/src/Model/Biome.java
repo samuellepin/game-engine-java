@@ -1,11 +1,15 @@
 package src.Model;
 
+import java.awt.Color;
+
 public abstract class Biome
 {
-  private int m_width;
-  private int m_height;
-  private int m_x;
-  private int m_y;
+  protected int    m_width;
+  protected int    m_height;
+  protected int    m_x;
+  protected int    m_y;
+  protected Vector m_entry;
+  protected Color m_color;
 
   public int getX()
   {
@@ -25,5 +29,10 @@ public abstract class Biome
   public int getWidth()
   {
     return m_width;
+  }
+
+  public Vector getEntry()
+  {
+    return m_entry;
   }
 }
