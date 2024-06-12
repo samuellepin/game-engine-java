@@ -115,3 +115,6 @@ TO DO pour demain :
 - Discussion sur la génération aléatoire et de la vue scindée.
 
 - Modèle : les coordonnées d'une entité correspondent à son barycentre, et pas son coin en haut à gauche
+
+- On a essayé de mettre en place le parser mais on n'a pas réussi à le faire fonctionner. Cela est du a ce qu'il ne compile pas. 
+- Mettre le source folder du parser au même niveau que le src du projet.
