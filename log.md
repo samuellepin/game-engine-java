@@ -107,3 +107,8 @@ Réflexion sur la View :
 
 TO DO pour demain :
 - 2 JViewport qui vont prendre en paramètre le Canvas et chaque JViewport va afficher une partie de l'écran scindé. (1 JVieport pour chaque joueur)
+
+
+### Jour 7 (12 juin):
+
+- Modèle : les coordonnées d'une entité correspondent à son barycentre, et pas son coin en haut à gauche
