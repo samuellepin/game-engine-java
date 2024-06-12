@@ -101,6 +101,7 @@ public class LightAvatar implements Avatar
     posY = pos.getRY() - 10;
     g.fillOval( (int)posX, (int)posY, (int)width, (int)width );
     
+    if( m_entities.size() > 0 )
     this.paintShadow( g, (Rectangle)m_entities.get( 0 ) );
   }
 
