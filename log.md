@@ -111,4 +111,7 @@ TO DO pour demain :
 
 ### Jour 7 (12 juin):
 
+- Réunion de début de journée pour discuter de l'avancement du projet et des tâches à réaliser pour la journée.
+- Discussion sur la génération aléatoire et de la vue scindée.
+
 - Modèle : les coordonnées d'une entité correspondent à son barycentre, et pas son coin en haut à gauche
