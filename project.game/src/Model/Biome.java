@@ -9,7 +9,8 @@ public abstract class Biome
   protected int    m_x;
   protected int    m_y;
   protected Vector m_entry;
-  protected Color m_color;
+  protected Color  m_color;
+  protected String m_name;
 
   public int getX()
   {
@@ -34,5 +35,10 @@ public abstract class Biome
   public Vector getEntry()
   {
     return m_entry;
+  }
+
+  public String getName()
+  {
+    return m_name;
   }
 }

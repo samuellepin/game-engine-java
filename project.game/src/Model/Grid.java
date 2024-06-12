@@ -8,15 +8,22 @@ public class Grid
 
   public class Cell
   {
-    private int     m_x;
-    private int     m_y;
-    private Biome m_biome;
+    private int    m_x;
+    private int    m_y;
+    private Biome  m_biome;
+    private String m_name;
 
-    public Cell( int x, int y, Biome biome)
+    public Cell( int x, int y, Biome biome )
     {
       m_x = x;
       m_y = y;
       m_biome = biome;
+      if(biome==null) {
+        m_name="";
+      }
+      else {
+        m_name = biome.getName(); 
+      }
     }
 
     public int getX()
@@ -29,14 +36,20 @@ public class Grid
       return m_y;
     }
 
-    public void setBiome(Biome biome)
+    public void setBiome( Biome biome )
     {
       m_biome = biome;
+      m_name=biome.getName();
     }
 
     public Biome getBiome()
     {
       return m_biome;
+    }
+
+    public String getBiomeName()
+    {
+      return m_name;
     }
 
   }
@@ -54,7 +67,9 @@ public class Grid
       }
     }
   }
-  public Cell getCell(int x, int y) {
-    return m_map[y][x];
+
+  public Cell getCell( int x, int y )
+  {
+    return m_map[ y ][ x ];
   }
 }

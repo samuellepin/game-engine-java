@@ -12,6 +12,7 @@ public class BiomeA extends Biome
     m_width = 15;
     m_entry = new Vector( 0, 5 );// en coordonnées locales
     m_color=Color.green;
+    m_name="BiomeA";
   }
   
 }
