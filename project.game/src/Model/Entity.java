@@ -11,7 +11,7 @@ public abstract class Entity
   protected long      m_elapsedTime;
   protected Vector    m_pos;
 
-  protected Entity( Automaton automaton )
+  public Entity( Automaton automaton )
   {
     m_automaton = automaton;
     if( m_automaton != null ) m_state = automaton.getInitialState();
@@ -32,5 +32,10 @@ public abstract class Entity
   public Vector getPos()
   {
     return m_pos;
+  }
+  
+  public void setPos( Vector pos )
+  {
+    m_pos = pos;
   }
 }

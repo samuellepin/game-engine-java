@@ -1,0 +1,72 @@
+{
+    "cooperation": false,
+    "germe" : 123,
+    "map-size" : ["hauteur-en-m", "largeur-en-m"], 
+    "background" : "background.png",
+    "biome" :[
+        {
+            "name" : "Lack",
+            "class" : "lack.class",
+            "sprite" : "sprite1.png",
+            "nb_entity" : 10
+        },
+        {
+            "name" : "Forest",
+            "class" : "forest.class",
+            "sprite" : "sprite2.png",
+            "nb_entity" : 10
+        },
+        {
+            "name" : "Desert",
+            "class" : "desert.class",
+            "sprite" : "sprite3.png",
+            "nb_entity" : 10
+        }
+    ],
+    "entity" :[
+        {
+            "name" : "Player1",
+            "class" : "gign.class",
+            "automaton" : "automaton1.gal",
+            "sprite" : "sprite1.png",
+            "angle-view" : 3.15
+        },
+        {
+            "name" : "Player2",
+            "class" : "alien.class",
+            "automaton" : "automaton2.gal",
+            "sprite" : "sprite2.png",
+            "angle-view" : 3.15
+        },
+        {
+            "name" : "Lapin",
+            "class" : "animal.class",
+            "automaton" : "automaton3.gal",
+            "sprite" : "sprite3.png"
+        },
+        {
+            "name" : "Loup",
+            "class" : "animal.class",
+            "automaton" : "automaton4.gal",
+            "sprite" : "sprite4.png"
+        },
+        {
+            "name" : "Cerf",
+            "class" : "animal.class",
+            "automaton" : "automaton5.gal",
+            "sprite" : "sprite5.png"
+        },
+        {
+            "name" : "Machine",
+            "class" : "machine.class",
+            "automaton" : "automaton6.gal",
+            "sprite" : "sprite6.png"
+        },
+        {
+            "name" : "Arbre",
+            "class" : "tree.class",
+            "automaton" : "automaton7.gal",
+            "sprite" : "sprite7.png"
+        }
+    ]
+}
