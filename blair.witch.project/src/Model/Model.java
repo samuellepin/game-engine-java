@@ -37,7 +37,7 @@ public class Model
 
     m_offset = new Vector( 0, 0 );
     
-    m_map.setPos( m_light, 1, 1 );
+    m_playerPos = m_map.getPos( 11, 11 );
     
     updateOffset();
   }

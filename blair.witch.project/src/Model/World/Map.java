@@ -142,10 +142,9 @@ public class Map
     }
   }
 
-  public void setPos( Entity entity, int x, int y )
+  public Vector getPos( int x, int y )
   {
-    Vector pos = new Vector( (double)(x * Map.TILE_WIDTH ) + (double)Map.TILE_WIDTH/2 , (double)(y * Map.TILE_HEIGHT) + (double)Map.TILE_HEIGHT/2 );
-    entity.setPos( pos );
+    return new Vector( (double)(x * Map.TILE_WIDTH ) + (double)Map.TILE_WIDTH/2 , (double)(y * Map.TILE_HEIGHT) + (double)Map.TILE_HEIGHT/2 );
   }
 
 }
