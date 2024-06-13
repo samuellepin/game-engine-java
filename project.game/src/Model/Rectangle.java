@@ -13,19 +13,19 @@ public class Rectangle extends Entity
   public int[] getRX()
   {
     return new int[] { 
-        (int)m_points[ 0 ].getRX(), 
-        (int)m_points[ 1 ].getRX(), 
-        (int)m_points[ 2 ].getRX(), 
-        (int)m_points[ 3 ].getRX() };
+        (int)m_points[ 0 ].getVX(), 
+        (int)m_points[ 1 ].getVX(), 
+        (int)m_points[ 2 ].getVX(), 
+        (int)m_points[ 3 ].getVX() };
   }
 
   public int[] getRY()
   {
     return new int[] { 
-        (int)m_points[ 0 ].getRY(), 
-        (int)m_points[ 1 ].getRY(), 
-        (int)m_points[ 2 ].getRY(), 
-        (int)m_points[ 3 ].getRY() };
+        (int)m_points[ 0 ].getVY(), 
+        (int)m_points[ 1 ].getVY(), 
+        (int)m_points[ 2 ].getVY(), 
+        (int)m_points[ 3 ].getVY() };
   }
   
   public int getNum()

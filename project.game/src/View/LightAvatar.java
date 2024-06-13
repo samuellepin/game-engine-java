@@ -73,14 +73,14 @@ public class LightAvatar implements Avatar
     
     g.setColor( Color.black );
     g.fillPolygon( new int[] { 
-            (int)shadow[ 0 ].getRX(), 
-            (int)shadow[ 1 ].getRX(), 
-            (int)shadow[ 2 ].getRX(), 
-            (int)shadow[ 3 ].getRX() }, new int[] { 
-                (int)shadow[ 0 ].getRY(), 
-                (int)shadow[ 1 ].getRY(), 
-                (int)shadow[ 2 ].getRY(), 
-                (int)shadow[ 3 ].getRY() }, shadow.length );
+            (int)shadow[ 0 ].getVX(), 
+            (int)shadow[ 1 ].getVX(), 
+            (int)shadow[ 2 ].getVX(), 
+            (int)shadow[ 3 ].getVX() }, new int[] { 
+                (int)shadow[ 0 ].getVY(), 
+                (int)shadow[ 1 ].getVY(), 
+                (int)shadow[ 2 ].getVY(), 
+                (int)shadow[ 3 ].getVY() }, shadow.length );
   }
 
   @Override
@@ -88,8 +88,8 @@ public class LightAvatar implements Avatar
   {
     double width  = 2 * m_light.getRadius();
     Vector pos    = Model.getPlayerPos();
-    double posX   = pos.getRX() - m_light.getRadius();
-    double posY   = pos.getRY() - m_light.getRadius();
+    double posX   = pos.getVX() - m_light.getRadius();
+    double posY   = pos.getVY() - m_light.getRadius();
 
     g.setColor( m_color );
     g.fillOval( (int)posX, (int)posY, (int)width, (int)width );
@@ -97,8 +97,8 @@ public class LightAvatar implements Avatar
     g.setColor( Color.red );
     
     width = 20;
-    posX = pos.getRX() - 10;
-    posY = pos.getRY() - 10;
+    posX = pos.getVX() - 10;
+    posY = pos.getVY() - 10;
     g.fillOval( (int)posX, (int)posY, (int)width, (int)width );
     
     if( m_entities.size() > 0 )

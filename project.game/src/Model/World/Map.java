@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.Random;
 
 import src.Model.Archive;
+import src.Model.Config;
 import src.Model.Entity;
 import src.Model.Vector;
 
@@ -13,15 +14,18 @@ public class Map
 {
   private Tile[][]        m_tiles;
   private Archive         m_archive;
+  private Random          m_rand;
 
   public static final int TILE_WIDTH  = 100;
   public static final int TILE_HEIGHT = 100;
-  public static final int COLS_NUM    = 21;
-  public static final int ROWS_NUM    = 21;
+  public static final int COLS_NUM    = 15;
+  public static final int ROWS_NUM    = 15;
 
   /// < Backtracker algorithm
   public Map()
   {
+    m_rand = new Random();
+    m_rand.setSeed( Config.SEED );
     m_archive = new Archive( null );
     m_tiles = new Tile[ ROWS_NUM ][ COLS_NUM ];
     for ( int i = 0; i < ROWS_NUM; i++ )
@@ -42,6 +46,8 @@ public class Map
     createPath( 1, 1 );
 
     createRoom( ( new Random() ).nextInt() % 60 + 40 );
+
+    System.out.println( this.toString() );
   }
 
   public Tile getTile( int x, int y )
@@ -120,13 +126,12 @@ public class Map
 
   public void createRoom( int num )
   {
-    Random rand = new Random();
     for ( int i = 0; i < num; i++ )
     {
-      int width  = rand.nextInt() % 2 + 1;
-      int height = rand.nextInt() % 2 + 1;
-      int startI = rand.nextInt() % ( COLS_NUM - 2 ) + 1;
-      int startY = rand.nextInt() % ( ROWS_NUM - 2 ) + 1;
+      int width  = m_rand.nextInt() % 2 + 1;
+      int height = m_rand.nextInt() % 2 + 1;
+      int startI = m_rand.nextInt() % ( COLS_NUM - 2 ) + 1;
+      int startY = m_rand.nextInt() % ( ROWS_NUM - 2 ) + 1;
       for ( int j = -1; j < width; j++ )
       {
         for ( int z = -1; z < height; z++ )
@@ -144,7 +149,8 @@ public class Map
 
   public Vector getPos( int x, int y )
   {
-    return new Vector( (double)(x * Map.TILE_WIDTH ) + (double)Map.TILE_WIDTH/2 , (double)(y * Map.TILE_HEIGHT) + (double)Map.TILE_HEIGHT/2 );
+    return new Vector( (double) ( x * Map.TILE_WIDTH ) + (double)Map.TILE_WIDTH / 2,
+        (double) ( y * Map.TILE_HEIGHT ) + (double)Map.TILE_HEIGHT / 2 );
   }
 
 }
