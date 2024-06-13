@@ -21,7 +21,7 @@ public class Map
     {
       for ( int j = 0; j < COLS_NUM; j++ )
       {
-        m_tiles[ i ][ j ] = new Tile( TILE_TYPE.EMPTY );
+        m_tiles[ i ][ j ] = new Tile( TILE_TYPE.EMPTY, j, i );
       }
     }
     m_random.setSeed( 123485789 );
