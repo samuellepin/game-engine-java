@@ -17,8 +17,8 @@ import src.View.View;
 public class Game
 {
   private static Game     INSTANCE;
-  public static final int SCREEN_WIDTH = 550;
-  public static final int SCREEN_HEIGHT = 550;
+  public static final int SCREEN_WIDTH = 720;
+  public static final int SCREEN_HEIGHT = 480;
 
   public static void main( String args[] ) throws Exception
   {
