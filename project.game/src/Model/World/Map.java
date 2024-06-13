@@ -18,8 +18,8 @@ public class Map
 
   public static final int TILE_WIDTH  = 100;
   public static final int TILE_HEIGHT = 100;
-  public static final int COLS_NUM    = 15;
-  public static final int ROWS_NUM    = 15;
+  public static final int COLS_NUM    = 21;
+  public static final int ROWS_NUM    = 21;
 
   /// < Backtracker algorithm
   public Map()
@@ -42,8 +42,12 @@ public class Map
         }
       }
     }
+    
+    System.out.println( this.toString() );
 
     createPath( 1, 1 );
+    
+    System.out.println( this.toString() );
 
     createRoom( ( new Random() ).nextInt() % 60 + 40 );
 
