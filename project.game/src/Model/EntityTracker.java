@@ -12,10 +12,12 @@ public class EntityTracker
   Model  m_model;
   double m_x, m_y, m_width, m_height;
 
-  public EntityTracker( Entity e, Model model )
+  public EntityTracker( Entity e, Model model, int ratio_w, int ratio_h )
   {
     m_e = e;
     m_model = model;
+    m_width = ratio_w;
+    m_width = ratio_h;
   }
 
   public Vector getPos()
