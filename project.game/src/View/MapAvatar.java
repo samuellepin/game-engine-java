@@ -74,6 +74,7 @@ public class MapAvatar implements Avatar
         {
           g.fillRect( (int)pos.getVX(), (int)pos.getVY(), Map.TILE_WIDTH, Map.TILE_HEIGHT );
         }
+        AABBAvatar.paint( g, m_map.getTile( x, y ).getHitbox() );
       }
     }
   }

@@ -6,6 +6,6 @@ public class MapTest
 {
   public static void main(String[] args)
   {
-    new Map();
+    Map.getInstance();
   }
 }
