@@ -1,0 +1,79 @@
+{
+    "cooperation": true,
+    "germe" : 123,
+    "map-size" : ["hauteur-en-m", "largeur-en-m"], 
+    "background" : "background.png",
+    "biome" :[
+        {
+            "name" : "Room 1",
+            "type" : "room.class",
+            "sprite" : "sprite1.png",
+            "nb_entity" : 4
+        },
+        {
+            "name" : "Room 2",
+            "type" : "room.class",
+            "sprite" : "sprite2.png",
+            "nb_entity" : 4
+        }
+    ],
+    "entity" :[
+        {
+            "name" : "Player1",
+            "class" : "player.class",
+            "automaton" : "automaton1.gal",
+            "sprite" : "sprite1.png",
+            "angle-view" : 3.15
+        },
+        {
+            "name" : "Player2",
+            "class" : "player.class",
+            "automaton" : "automaton2.gal",
+            "sprite" : "sprite2.png",
+            "angle-view" : 3.15
+        },
+        {
+            "name" : "Soldier",
+            "class" : "soldier.class",
+            "automaton" : "automaton3.gal",
+            "sprite" : "sprite3.png",
+            "angle-view" : 0.7,
+            "density" : 10
+        },
+        {
+            "name" : "Camera",
+            "class" : "camera.class",
+            "automaton" : "automaton4.gal",
+            "sprite" : "sprite4.png",
+            "angle-view" : 0,
+            "density" : 10
+        },
+        {
+            "name" : "Wall",
+            "class" : "wall.class",
+            "automaton" : "automaton5.gal",
+            "sprite" : "sprite5.png",
+            "angle-view" : 0
+        },
+        {
+            "name" : "Box",
+            "class" : "box.class",
+            "automaton" : "automaton6.gal",
+            "sprite" : "sprite6.png",
+            "angle-view" : 0
+        },
+        {
+            "name" : "Robot",
+            "class" : "robot.class",
+            "automaton" : "automaton7.gal",
+            "sprite" : "sprite7.png",
+            "angle-view" : 0
+        },
+        {
+            "name" : "Doc-succinte",
+            "class" : "objectif.class",
+            "automaton" : "automaton8.gal",
+            "sprite" : "sprite8.png"
+        }
+    ]
+}

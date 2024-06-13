@@ -69,3 +69,158 @@ Un vaisseau extraterrestre vient de s'écraser sur Terre. L'un des joueurs joue 
     - Nombre de gardes + caméras / animaux + générateurs.
     - Distance entre position initiale du joueur et des objectifs
     - Nombre de points de vie
+
+## Automate GAL
+
+### Jeu 1 :
+
+Wizz() = prévenir les autres gardes autour 
+
+```
+guard (patrol) {
+  // État de patrouille aléatoire
+  * (patrol):
+  | Closest(#, F) ? Move(F) : (engage)
+  | Closest(#, B) ? Turn(B) : (patrol)
+  | Closest(#, L) ? Turn(L) : (patrol)
+  | Closest(#, R) ? Turn(R) : (patrol)
+  | True ? 40% Move(F) / 20% Turn(L) / 20% Turn(R) / 20% Turn(B) : (patrol)
+  
+  // État d'engagement avec l'ennemi
+  * (engage):
+  | Cell(F, #) ? Hit(F) : (patrol)
+  | Cell(L, #) ? Turn(L) : (engage)
+  | Cell(R, #) ? Turn(R) : (engage)
+  | Cell(B, #) ? Turn(B) : (engage)
+  | Cell(F, V) ? Move(F) : (engage)
+  | not(Closest(#, _)) ? : (patrol)
+}
+```
+```
+rotatingSurveillanceCamera (rotate) {
+  * (rotate):
+  | Closest(#, F) ? Wizz : (rotate)
+  | True ? Turn(R) : (rotate)
+}
+```
+```
+wall (idle) {
+  * (idle):
+  | True ? : (idle)
+}
+```
+C'est le même automate pour toutes entités immobile et l'automate du robot car il sera contrôler dans le player car c'est lui le cerveau
+
+```
+robot (idle){
+    * (idle):
+    | True ? : (idle)
+}
+```
+```
+player1 (normal) {
+  * (normal):
+  | Key(FU) ? Move(N) : (normal)
+  | Key(FD) ? Move(S) : (normal)
+  | Key(FR) ? Move(E) : (normal)
+  | Key(FL) ? Move(W) : (normal)
+  | Key(m) ? Egg() : (robot)
+  | Key(l) ? : (metamorph)
+  | True ? Wait() : (normal)
+
+  * (robot):
+  | Key(FU) ? Move(N) : (robot)
+  | Key(FD) ? Move(S) : (robot)
+  | Key(FR) ? Move(E) : (robot)
+  | Key(FL) ? Move(W) : (robot)
+  | Key(m) ?: (normal)
+  | True ? Wait() : (robot)
+
+  * (metamorph):
+  | Key(FU) ? Move(N) : (metamorph)
+  | Key(FD) ? Move(S) : (metamorph)
+  | Key(FR) ? Move(E) : (metamorph)
+  | Key(FL) ? Move(W) : (metamorph)
+  | Key(l) ? : (normal)
+  | True ? Wait() : (metamorph)
+
+}
+```
+```
+player2 (normal) {
+    * (normal):
+    | Key(z) ? Move(N) : (normal)
+    | Key(s) ? Move(S) : (normal)
+    | Key(d) ? Move(E) : (normal)
+    | Key(q) ? Move(W) : (normal)
+    | Key(w) ? Egg() : (robot)
+    | Key(x) ? : (metamorph)
+    | True ? Wait() : (normal)
+
+    * (robot):
+    | Key(z) ? Move(N) : (robot)
+    | Key(s) ? Move(S) : (robot)
+    | Key(d) ? Move(E) : (robot)
+    | Key(q) ? Move(W) : (robot)
+    | Key(w) ? : (normal)
+    | True ? Wait() : (robot)   
+
+    * (metamorph):
+    | Key(z) ? Move(N) : (metamorph)
+    | Key(s) ? Move(S) : (metamorph)
+    | Key(d) ? Move(E) : (metamorph)
+    | Key(q) ? Move(W) : (metamorph)
+    | Key(x) ? : (normal)
+    | True ? Wait() : (metamorph)
+}
+```
+
+### Jeu 2 :
+
+```
+gign (normal) {
+    * (normal):
+    | Key(FU) ? Move(N) : (normal)
+    | Key(FD) ? Move(S) : (normal)
+    | Key(FR) ? Move(E) : (normal)
+    | Key(FL) ? Move(W) : (normal)
+    | Key(m) ? Hit(F) : (normal)
+    | Key(l) ? Egg() : (normal)
+    | True ?  Wait() : (normal)
+}
+```
+```
+alien (normal) {
+    * (normal):
+    | Key(z) ? Move(N) : (normal)
+    | Key(s) ? Move(S) : (normal)
+    | Key(d) ? Move(E) : (normal)
+    | Key(q) ? Move(W) : (normal)
+    | True ?  Wait() : (normal)
+}
+```
+```
+animal (noraml) {
+    * (normal):
+    | True ? 40% Move(F) / 20% Turn(L) / 20% Turn(R) / 20% Turn(B) : (n)
+}
+```
+```
+generator (disable) {
+  * (disable):
+  | Cell(L, T) & Key(T) ? : (activate)
+  | Cell(R, T) & Key(T) ? : (activate)
+  | Cell(F, T) & Key(T) ? : (activate)
+  | Cell(B, T) & Key(T) ? : (activate)
+  | True ? Wait() : (disable)
+
+  * (activate):
+  | True ? Wait() : (activate)
+}
+```
+```
+tree (idle) {
+  * (idle):
+  | True ? : (idle)
+}
+```

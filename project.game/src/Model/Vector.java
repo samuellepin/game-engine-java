@@ -6,6 +6,17 @@ public class Vector
 
   public static final Vector e_x = new Vector( 1, 0 );
   public static final Vector e_y = new Vector( 0, 1 );
+  
+  /* Triède direct utilisé pour le jeu
+   * O------------> e_x
+   * |
+   * |
+   * |
+   * |
+   * |
+   * v
+   * e_y
+   */
 
   public Vector( double x, double y )
   {
@@ -13,14 +24,14 @@ public class Vector
     m_y = y;
   }
 
-  public double getX()
+  public double getX() ///< Position dans le model 
   {
     return m_x;
   }
   
-  public double getRX()
+  public double getVX() ///< Position dans la vue 
   {
-    return m_x + Model.getOffset().getX();
+    return m_x + Model.getViewPos().getX();
   }
 
   public double getY()
@@ -28,9 +39,9 @@ public class Vector
     return m_y;
   }
 
-  public double getRY()
+  public double getVY()
   {
-    return m_y + Model.getOffset().getY();
+    return m_y + Model.getViewPos().getY();
   }
 
   public void setPos( double x, double y )
