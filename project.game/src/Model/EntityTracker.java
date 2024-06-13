@@ -1,37 +1,29 @@
 package src.Model;
 
+import java.util.ArrayList;
+
 /**
  * A camera represents a part of the Model,
  * with its own width, height and position.
  */
-public class Camera
+public class EntityTracker
 {
   public Vector getPos()
   {
     throw new RuntimeException( "NYI" );
   }
 
-  public double getWidth()
+  public Vector getDim()
   {
     throw new RuntimeException( "NYI" );
   }
 
-  public double getHeight()
+  public void setTrack( Entity e )
   {
     throw new RuntimeException( "NYI" );
   }
 
-  public void setPos( Vector v )
-  {
-    throw new RuntimeException( "NYI" );
-  }
-
-  public void setWidth()
-  {
-    throw new RuntimeException( "NYI" );
-  }
-
-  public void setHeight()
+  ArrayList<Entity> getEntities()
   {
     throw new RuntimeException( "NYI" );
   }
