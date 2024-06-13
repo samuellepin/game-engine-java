@@ -1,9 +1,10 @@
-package gal.demo.test;
+package src.AI;
 
 import gal.ast.AST;
+import gal.ast.IVisitor;
 import gal.parser.Parser;
 
-public class TestMain 
+public class TestMain
 {
   public static Object loadAutomata(String filename) {
     Object fsm_list;
@@ -19,6 +20,6 @@ public class TestMain
 
     public static void main(String[] args) {
       loadAutomata("/home/samuel/Documents/cours-TP-TD/projet/g6/JavaProject/src/gal/demo/test/"
-          + "a02.gal");
+          + "a03.gal");
     }
 }
