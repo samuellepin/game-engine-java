@@ -127,9 +127,10 @@ TO DO pour demain :
 **Commande parser**
 
 Votre fichier automate : nom_AI.gal
-make nom_AI.txt
-make nom_AI.ast.dot OU make nom_AI.aut.dot
-make nom_AI.ast.jpg OU make nom_AI.aut.jpg
+
+- make nom_AI.txt
+- make nom_AI.ast.dot OU make nom_AI.aut.dot
+- make nom_AI.ast.jpg OU make nom_AI.aut.jpg
 
 **Planning des deux jours :**
 
