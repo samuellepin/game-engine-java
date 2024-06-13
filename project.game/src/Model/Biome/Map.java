@@ -1,25 +1,29 @@
 package src.Model.Biome;
 
 import java.util.Random;
-
-import src.Model.Biome.BiomeA;
-
+import src.Model.World.Tile;
+import src.Model.World.TILE_TYPE;
 import java.util.ArrayList;
 
 public class Map
 {
-  private int                m_width;
-  private int                m_height;
-  private Grid               m_grid;
+  private Tile[][]           m_tiles;
   private Random             m_random = new Random();
   private Biome[]            m_biome_tab;
   private ArrayList< Biome > m_biomes;
+  public static final int    COLS_NUM = 15;
+  public static final int    ROWS_NUM = 15;
 
-  public Map( int width, int height )
+  public Map()
   {
-    m_width = width;
-    m_height = height;
-    m_grid = new Grid( width, height );
+    m_tiles = new Tile[ ROWS_NUM ][ COLS_NUM ];
+    for ( int i = 0; i < ROWS_NUM; i++ )
+    {
+      for ( int j = 0; j < COLS_NUM; j++ )
+      {
+        m_tiles[ i ][ j ] = new Tile( TILE_TYPE.EMPTY );
+      }
+    }
     m_random.setSeed( 123485789 );
     fillMap();
     System.out.println( this.toString() );
@@ -27,12 +31,12 @@ public class Map
 
   public int getHeight()
   {
-    return m_height;
+    return ROWS_NUM;
   }
 
   public int getWidth()
   {
-    return m_width;
+    return COLS_NUM;
   }
 
   public ArrayList< Biome > getBiomes()
@@ -42,13 +46,13 @@ public class Map
 
   private boolean placeBiome( int x, int y, Biome biome )
   {
-    if( x + biome.getWidth() + 2 < m_width && y + biome.getHeight() + 2 < m_height )
+    if( x + biome.getWidth() < COLS_NUM && y + biome.getHeight() < ROWS_NUM )
     {
-      for ( int i = x - 2; i < x + biome.getWidth() + 2; i++ )
+      for ( int i = x - 1; i < x + biome.getWidth() + 1; i++ )
       {
-        for ( int j = y - 2; j < y + biome.getHeight() + 2; j++ )
+        for ( int j = y - 1; j < y + biome.getHeight() + 1; j++ )
         {
-          if( m_grid.getCell( i, j ).getBiome() != null )
+          if( m_tiles[ j ][ i ].getType() != TILE_TYPE.EMPTY )
           {
             return false;
           }
@@ -58,10 +62,19 @@ public class Map
       {
         for ( int j = y; j < y + biome.getHeight(); j++ )
         {
-          m_grid.getCell( i, j ).setBiome( biome );
+          m_tiles[ j ][ i ].setType( TILE_TYPE.WALL );
         }
       }
-      m_grid.getCell( x + (int)biome.getEntry().getX(), y + (int)biome.getEntry().getY() ).setName( "Entry" );
+      int entryX = x + (int)biome.getEntry().getX();
+      int entryY = y + (int)biome.getEntry().getY();
+      while( entryY == 1 && entryX == 1 || entryY == ROWS_NUM - 2 && entryX == COLS_NUM - 2
+          || entryX == 1 && entryY == ROWS_NUM - 2 || entryX == COLS_NUM - 2 && entryY == 1 )
+      {
+        biome.entryNext();
+        entryX = x + (int)biome.getEntry().getX();
+        entryY = y + (int)biome.getEntry().getY();
+      }
+      m_tiles[ entryY ][ entryX ].setType( TILE_TYPE.EMPTY );
       return true;
     }
     return false;
@@ -73,10 +86,18 @@ public class Map
     int   biomeY;
     Biome biome;
     int   i = 0;
-    while( i < 50 )
+    while( i < 5000 )
     {
-      biomeX = m_random.nextInt( m_width - 2 ) + 2;
-      biomeY = m_random.nextInt( m_height - 2 ) + 2;
+      biomeX = m_random.nextInt( COLS_NUM - 2 ) + 1;// random entre 1 et COLS_NUM-1
+      biomeY = m_random.nextInt( ROWS_NUM - 2 ) + 1;// random entre 1 et ROWS_NUM-1
+      if( biomeX % 2 == 0 )
+      {
+        biomeX++ ;
+      }
+      if( biomeY % 2 == 0 )
+      {
+        biomeY++ ;
+      }
       biome = new BiomeA( biomeX, biomeY );// random entre les différents biomes
       placeBiome( biomeX, biomeY, biome );
       i++ ;
@@ -90,16 +111,16 @@ public class Map
   public String toString()
   {
     StringBuilder strb = new StringBuilder();
-    for ( int i = 0; i < m_grid.m_rows_num; i++ )
+    for ( int i = 0; i < ROWS_NUM; i++ )
     {
-      for ( int j = 0; j < m_grid.m_cols_num; j++ )
+      for ( int j = 0; j < COLS_NUM; j++ )
       {
-        switch ( m_grid.getCell( j, i ).getBiomeName() )
+        switch ( m_tiles[ i ][ j ].getType() )
         {
-        case "BiomeA":
+        case WALL:
           strb.append( "🟦" );
           break;
-        case "Entry":
+        case EMPTY:
           strb.append( "🟫" );
           break;
         default:
