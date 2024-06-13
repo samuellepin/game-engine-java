@@ -124,6 +124,12 @@ TO DO pour demain :
 - Définition du planning global du projet pour les semaines à venir pour avoir un objectif clair et précis.
 - Définition d'un planning plus precis de la journée d'aujourd'hui et de demain.
 
+**Commande parser**
+
+Votre fichier automate : nom_AI.gal
+make nom_AI.txt
+make nom_AI.ast.dot OU make nom_AI.aut.dot
+make nom_AI.ast.jpg OU make nom_AI.aut.jpg
 
 **Planning des deux jours :**
 
