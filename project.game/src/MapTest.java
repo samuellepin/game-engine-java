@@ -6,7 +6,6 @@ public class MapTest
 {
   public static void main(String[] args)
   {
-    Map map = new Map();
-    System.out.println( map.toString() );
+    new Map();
   }
 }
