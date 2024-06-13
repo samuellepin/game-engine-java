@@ -13,7 +13,7 @@ import src.Model.Rectangle;
 
 public class AvatarFactory
 {
-  public static Avatar make( Entity e ) throws Exception
+  public static Avatar make( Entity e )
   {
     if( e instanceof Light )
     {
@@ -23,7 +23,10 @@ public class AvatarFactory
     {
       return new RectangleAvatar( (Rectangle)e );
     }
-    throw new Exception( "Unknow entity" );
+    
+    // TODO return default avatar if the entity is unknown
+    // throw new Exception( "Unknow entity" );
+    return null;
   }
 
   public static BufferedImage loadImage( String filename ) throws IOException

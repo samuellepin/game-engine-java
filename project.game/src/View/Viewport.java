@@ -1,6 +1,6 @@
 package src.View;
 
-import java.awt.Container;
+import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.util.ArrayList;
@@ -12,7 +12,7 @@ import src.Model.EntityTracker;
 import src.Model.Model;
 import src.Model.Vector;
 
-public class Viewport extends Container
+public class Viewport extends Component
 {
   EntityTracker m_tracker;
   Image         m_background;
@@ -20,10 +20,14 @@ public class Viewport extends Container
 
   public Viewport( Image background, Entity e, Model model )
   {
-    m_tracker = new EntityTracker( e, model );
+    m_tracker = new EntityTracker( e, model, getWidth(), getHeight() );
     m_background = background;
     m_model = model;
-    
+  }
+
+  public void setTrack( Entity e )
+  {
+    m_tracker = new EntityTracker( e, m_model, getWidth(), getHeight() );
   }
 
   public int metersToPixels( double d )
@@ -47,19 +51,19 @@ public class Viewport extends Container
   {
     ArrayList< Entity > entities = m_tracker.getEntities();
 
-    for ( Entity entity : entities )
+    for ( Entity e : entities )
     {
-      Avatar avatar;
-      try
-      {
-        avatar = AvatarFactory.make( entity );
+      Avatar avatar        = AvatarFactory.make( e );
+
+      if (avatar != null) {
+        Vector pos           = worldPosToViewportPos( new Vector( e.getX(), e.getY() ) );
+        int    avatar_x      = (int)pos.getX();
+        int    avatar_y      = (int)pos.getY();
+        int    avatar_width  = metersToPixels( e.getWidth() );
+        int    avatar_height = metersToPixels( e.getHeight() );
+  
+        avatar.paint( g.create( avatar_x, avatar_y, avatar_width, avatar_height ) );
       }
-      catch ( Exception e )
-      {
-        avatar = null;
-      }
-      if (avatar != null)
-        avatar.paint( g );
     }
   }
 }
