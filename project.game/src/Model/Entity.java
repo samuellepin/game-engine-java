@@ -2,6 +2,8 @@ package src.Model;
 
 import src.AI.Automaton;
 import src.AI.State;
+import src.Model.Collision.AABB;
+import src.Model.Collision.Hitbox;
 import src.Game;
 
 public abstract class Entity
@@ -10,9 +12,10 @@ public abstract class Entity
   protected State     m_state;
   protected long      m_elapsedTime;
   protected Vector    m_pos;
-  protected double    m_width, m_height;
+  protected Vector    m_dim;
   protected double    m_orientation;
-  protected Vector    m_velocity;
+  protected double    m_velocity;
+  protected AABB      m_hitbox;
 
   public Entity( Automaton automaton )
   {
@@ -20,11 +23,21 @@ public abstract class Entity
     if( m_automaton != null ) m_state = automaton.getInitialState();
     m_elapsedTime = 0;
     m_pos = new Vector( 0, 0 );
+    m_dim = new Vector( 0, 0 );
+    m_hitbox = new AABB( null, null );
+    updateHitbox();
+  }
+  
+  public void updateHitbox()
+  {
+    Vector pos = m_pos;
+    pos = pos.sub( this.getWidth()/2, this.getHeight()/2 );
+    m_hitbox.resize( pos, pos.add( this.getWidth(), this.getHeight() ) );
   }
 
   public void tick( long elapsed )
   {
-    m_elapsedTime += elapsed;
+    m_elapsedTime = elapsed;
   }
 
   public State getState()
@@ -49,37 +62,38 @@ public abstract class Entity
 
   public double getVX()
   {
-    return m_pos.getVX() - m_width / 2;
+    return m_pos.getVX() - this.getWidth() / 2;
   }
 
   public double getVY()
   {
-    return m_pos.getVY() - m_height / 2;
+    return m_pos.getVY() - this.getHeight() / 2;
   }
 
   public void setPos( Vector pos )
   {
     m_pos = pos;
+    this.updateHitbox();
   }
 
   public void setWidth( double width )
   {
-    m_width = width;
+    m_dim.setX( width );
   }
 
   public double getWidth()
   {
-    return m_width;
+    return m_dim.getX();
   }
 
   public void setHeight( double height )
   {
-    m_height = height;
+    m_dim.setY( height );
   }
 
   public double getHeight()
   {
-    return m_height;
+    return m_dim.getY();
   }
 
   public double getOrientation()
@@ -92,13 +106,28 @@ public abstract class Entity
     m_orientation = orientation;
   }
 
-  public void setVelocity( Vector velocity )
+  public void setVelocity( double velocity )
   {
     m_velocity = velocity;
   }
 
-  public Vector getVelocity()
+  public double getVelocity()
   {
     return m_velocity;
+  }
+  
+  public Vector getDim()
+  {
+    return m_dim;
+  }
+  
+  public void setDim( double width, double height )
+  {
+    m_dim.setPos( width, height );
+  }
+  
+  public AABB getHitbox()
+  {
+    return m_hitbox;
   }
 }

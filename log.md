@@ -107,3 +107,94 @@ Réflexion sur la View :
 
 TO DO pour demain :
 - 2 JViewport qui vont prendre en paramètre le Canvas et chaque JViewport va afficher une partie de l'écran scindé. (1 JVieport pour chaque joueur)
+
+
+### Jour 7 (12 juin):
+
+- Réunion de début de journée pour discuter de l'avancement du projet et des tâches à réaliser pour la journée.
+- Discussion sur la génération aléatoire et de la vue scindée.
+
+- Modèle : les coordonnées d'une entité correspondent à son barycentre, et pas son coin en haut à gauche
+
+- On a essayé de mettre en place le parser mais on n'a pas réussi à le faire fonctionner. Cela est du a ce qu'il ne compile pas. 
+- Mettre le source folder du parser au même niveau que le src du projet.
+
+### Jour 8 (13 juin):
+
+- Définition du planning global du projet pour les semaines à venir pour avoir un objectif clair et précis.
+- Définition d'un planning plus precis de la journée d'aujourd'hui et de demain.
+
+
+**Planning des deux jours :**
+
+- [ ] View => Greg et Rémi
+    - [ ] Afficher Viewport du modéle avec monde qui bouge 
+    - => Besoin du model 
+- [ ] AI (Automaton) => Sam 
+    - [ ] Faire un Visitor et comprendre commnent le parser appel les différent méthode 
+    - [ ] Créer les classes qui implémente action (move ,...)
+    - [ ] Lier le parser et notre projet 
+    - [ ] Gestion FSM (traduction ast en FSM)
+- [ ] Model => David 
+    - [x] Fonctions qui détectes les collisons
+    - [x] Géneration des biomes => Romain 
+    - [ ] Supprimer ancien Viewport
+    - [ ] Integration des méthodes de collision 
+        - [ ] Hitbox aux entités
+    - [ ] Implémentation vision
+    - [ ] Gestion des ticks
+- [ ] Controler 
+    - [ ] Interpréter les touches pour L'AI
+
+
+**Planning global :**
+
+Jeudi 13 juin :
+
+- [ ] Finir premier jet du moteur (1/2)
+    - [ ] Finir chaque morceau
+
+Vendredi 14 juin :
+
+- [ ] Finir premier jet du moteur (2/2)
+    - [ ] Assembler les morceaux
+
+Lundi 17 juin :
+
+- [ ] Implémenter fonctionnalité MG (1/2)
+    - [ ] Implémenter les entités
+    - [ ] Implémenter les automates
+
+Mardi 18 juin :
+
+- [ ] Implémenter fonctionnalité MG (2/2)
+    - [ ] Implémenter les entités
+    - [ ] Implémenter les automates
+- Soir : Première version du jeu MG
+
+Mercredi 19 juin :
+
+- [ ] Implémenter fonctionnalité PN (1/1)
+    - [ ] Implémenter les entités
+    - [ ] Implémenter les automates
+- Soir : Première version du jeu PN
+
+Jeudi 20 juin :
+
+- [ ] Debug (1/2)
+- [ ] Ajout visuel et son (1/2)
+
+Vendredi 21 juin :
+
+- [ ] Debug (2/2)
+- [ ] Ajout visuel et son (2/2)
+
+Lundi 24 juin :
+
+- [ ] Finalisation
+    - [ ] Vidéo 
+
+Mardi 25 juin :
+
+- [ ] Rendu final
+    

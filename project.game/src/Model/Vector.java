@@ -23,6 +23,16 @@ public class Vector
     m_x = x;
     m_y = y;
   }
+  
+  public void setX(double x)
+  {
+    m_x = x;
+  }
+  
+  public void setY(double y)
+  {
+    m_y = y;
+  }
 
   public double getX() ///< Position dans le model 
   {
@@ -85,6 +95,36 @@ public class Vector
   {
     assert v1 != null;
     return Vector.scale( v1, 1.0f / Vector.norm( v1 ) );
+  }
+  
+  public double norm()
+  {
+    return Math.sqrt( m_x * m_x + m_y * m_y );
+  }
+  
+  public Vector add( Vector v )
+  {
+    return new Vector( this.getX() + v.getX(), this.getY() + v.getY() );
+  }
+  
+  public Vector add( double x, double y )
+  {
+    return new Vector( this.getX() + x, this.getY() + y );
+  }
+  
+  public Vector sub( double x, double y )
+  {
+    return new Vector( this.getX() - x, this.getY() - y );
+  }
+  
+  @Override
+  public String toString()
+  {
+    return "(mx=" + this.getX() 
+         + ", my=" + this.getY() 
+         + ", vx=" + this.getVX()
+         + ", vy=" + this.getVY()
+         + ")";
   }
 
   /// < Pas de cross product, on est en 2D

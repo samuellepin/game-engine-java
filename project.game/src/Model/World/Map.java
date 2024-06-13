@@ -9,6 +9,7 @@ import src.Model.Archive;
 import src.Model.Config;
 import src.Model.Entity;
 import src.Model.Vector;
+import src.Model.Collision.Collision;
 
 public class Map
 {
@@ -18,11 +19,18 @@ public class Map
 
   public static final int TILE_WIDTH  = 100;
   public static final int TILE_HEIGHT = 100;
-  public static final int COLS_NUM    = 15;
-  public static final int ROWS_NUM    = 15;
+  public static final int COLS_NUM    = 11;
+  public static final int ROWS_NUM    = 11;
+  
+  private static Map INSTANCE = new Map();
+  
+  public static Map getInstance()
+  {
+    return INSTANCE;
+  }
 
   /// < Backtracker algorithm
-  public Map()
+  private Map()
   {
     m_rand = new Random();
     m_rand.setSeed( Config.SEED );
@@ -34,16 +42,22 @@ public class Map
       {
         if( ( i % 2 != 0 ) && ( j % 2 != 0 ) )
         {
-          m_tiles[ i ][ j ] = new Tile( TILE_TYPE.EMPTY );
+          m_tiles[ i ][ j ] = new Tile( TILE_TYPE.EMPTY, (double) ( j * Map.TILE_WIDTH ),
+              (double) ( i * Map.TILE_HEIGHT ) );
         }
         else
         {
-          m_tiles[ i ][ j ] = new Tile( TILE_TYPE.WALL );
+          m_tiles[ i ][ j ] = new Tile( TILE_TYPE.WALL, (double) ( j * Map.TILE_WIDTH ),
+              (double) ( i * Map.TILE_HEIGHT ) );
         }
       }
     }
 
+    System.out.println( this.toString() );
+
     createPath( 1, 1 );
+
+    System.out.println( this.toString() );
 
     createRoom( ( new Random() ).nextInt() % 60 + 40 );
 
@@ -153,4 +167,29 @@ public class Map
         (double) ( y * Map.TILE_HEIGHT ) + (double)Map.TILE_HEIGHT / 2 );
   }
 
+  public boolean detectCollision( Entity entity )
+  {
+    for ( int i = 0; i < ROWS_NUM; i++ )
+    {
+      for ( int j = 0; j < COLS_NUM; j++ )
+      {
+        if( Collision.detect( entity.getHitbox(), m_tiles[i][j].getHitbox() ) )
+        {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+  
+  public double getWidth()
+  {
+    return (double)( Map.COLS_NUM * Map.TILE_WIDTH );
+  }
+  
+  public double getHeight()
+  {
+    return (double)( Map.ROWS_NUM * Map.TILE_HEIGHT );
+  }
+  
 }
