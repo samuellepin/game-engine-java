@@ -23,7 +23,7 @@ public class Model
 
   public Model()
   {
-    m_map = new Map();
+    m_map = Map.getInstance();
     m_screenCenter = new Vector( Game.SCREEN_WIDTH / 2, Game.SCREEN_HEIGHT / 2 );
     m_isGameOver = false;
     m_entities = new ArrayList< Entity >();

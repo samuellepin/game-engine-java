@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import src.Model.Player;
+import src.Model.Collision.Hitbox;
 
 public class PlayerAvatar extends Avatar
 {
@@ -34,6 +35,10 @@ public class PlayerAvatar extends Avatar
 //    g.drawRect( (int)m_player.getVX(), (int)m_player.getVY(), (int)m_player.getWidth(), (int)m_player.getHeight() );
     g.drawImage( m_idleImg[ 0 ], (int)m_player.getVX(), (int)m_player.getVY(), (int)m_player.getWidth(),
         (int)m_player.getHeight(), null );
+//    System.out.println( m_player.getPos() );
+//    System.out.println( m_player.getHitbox().getMin() );
+//    System.out.println( m_player.getHitbox().getMax() );
+    AABBAvatar.paint( g, m_player.getHitbox() );
   }
 
 }
