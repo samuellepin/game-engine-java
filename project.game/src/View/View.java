@@ -16,6 +16,8 @@ public class View
   private Model               m_model;
   private ArrayList< Avatar > m_avatars;
   private LightAvatar         m_lightAvatar;
+  private MapAvatar           m_mapAvatar;
+  private PlayerAvatar        m_playerAvatar;
 
   public View( Model model, GameCanvas canvas )
   {
@@ -37,26 +39,19 @@ public class View
     }
     
     m_lightAvatar = new LightAvatar( m_model.getLight(), entities );
+    m_mapAvatar = new MapAvatar( m_model.getMap() );
+    m_playerAvatar = new PlayerAvatar( Model.getPlayer() );
   }
 
   public void paint( Graphics g )
   {
     g.setColor( Color.black );
-    g.fillRect( 0, 0, m_canvas.getWidth(), m_canvas.getHeight() );
+    g.fillRect( 0, 0, 1000, 1000 );
+//    g.fillRect( 0, 0, m_canvas.getWidth(), m_canvas.getHeight() );
     
-    double size = 1000;
-    Vector origin = new Vector( 0, 0 );
-    Vector right = new Vector( size, 0 );
-    Vector left = new Vector( -size, 0 );
-    Vector up = new Vector( 0, -size );
-    Vector down = new Vector( 0, size );
-    g.setColor( Color.white );
-    g.drawLine( (int)origin.getRX(), (int)origin.getRY(), (int)right.getRX(), (int)right.getRY() );
-    g.drawLine( (int)origin.getRX(), (int)origin.getRY(), (int)left.getRX(), (int)left.getRY() );
-    g.drawLine( (int)origin.getRX(), (int)origin.getRY(), (int)up.getRX(), (int)up.getRY() );
-    g.drawLine( (int)origin.getRX(), (int)origin.getRY(), (int)down.getRX(), (int)down.getRY() );
+    m_mapAvatar.paint( g );
     
-    m_lightAvatar.paint( g );
+    m_playerAvatar.paint( g );
 
     for ( Avatar avatar : m_avatars )
     {
