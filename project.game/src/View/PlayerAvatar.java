@@ -7,7 +7,7 @@ import java.io.IOException;
 
 import src.Model.Player;
 
-public class PlayerAvatar implements Avatar
+public class PlayerAvatar extends Avatar
 {
   private Player          m_player;
   private BufferedImage[] m_idleImg;
@@ -15,6 +15,7 @@ public class PlayerAvatar implements Avatar
   public PlayerAvatar( Player player )
   {
     m_player = player;
+    m_entity = player;
     try
     {
       m_idleImg = AvatarFactory.loadSprite( "resources/Spy/SMS_Adv_Idle_Gun_1_strip4.png", 1, 4 );
