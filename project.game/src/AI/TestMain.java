@@ -3,7 +3,6 @@ package src.AI;
 import java.util.ArrayList;
 
 import gal.ast.AST;
-import gal.ast.IVisitor;
 import gal.parser.Parser;
 
 public class TestMain

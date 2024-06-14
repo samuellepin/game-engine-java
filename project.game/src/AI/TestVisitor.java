@@ -82,8 +82,54 @@ public class TestVisitor implements IVisitor
   public Object build( FunCall funcall, List< Object > parameters )
   {
     System.out.println( "FunCall build " );
-    if(funcall.name == "Cell") {
-      return null;
+    switch ( funcall.name )
+    {
+    // Condition:
+    case "Cell":
+      break;
+    case "True":
+      break;
+    case "MyDir":
+      break;
+    case "Closest":
+      break;
+    case "Got" :
+      break;
+    case "Key" :
+      break;
+    // Action :
+    case "Add":
+      break;
+      case "Egg" :
+        break;
+      case "Explode" :
+        break;
+      case "Get" :
+        break;
+      case "Hit" :
+        break;
+      case "Jump" :
+        break;
+      case "Move" :
+        break;
+      case "Pick" :
+        break;
+      case "Protect" :
+        break;
+      case "Rest" :
+        break;
+      case "Store" :
+        break;
+      case "Throw" :
+        break;
+      case "Turn" :
+        break;
+      case "Wait" :
+        break;
+      case "Pop" :
+        break;
+      case "Wizz" :
+        break;    
     }
     return null;
   }
