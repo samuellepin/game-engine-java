@@ -7,19 +7,20 @@ import src.Model.World.Map;
 
 public class Model
 {
-  private boolean             m_isGameOver;
-  private ArrayList< Entity > m_entities;
-  private Light               m_light;
+  private boolean                   m_isGameOver;
+  private ArrayList< EntityTracker > m_trackers;
+  private ArrayList< Entity >       m_entities;
+  private Light                     m_light;
 
-  public static Vector        m_viewport;
-  public static Vector        m_viewPos;
+  public static Vector              m_viewport;
+  public static Vector              m_viewPos;
+  
+  public static Player              m_player;
+  public static Player              m_opponent;
 
-  public static Player        m_player;
-  public static Opponent      m_opponent;
+  private Map                       m_map;
 
-  private Map                 m_map;
-
-  public static Vector        m_screenCenter;
+  public static Vector              m_screenCenter;
 
   private static final Model  INSTANCE = new Model();
 
@@ -97,5 +98,9 @@ public class Model
   public static Player getOpponent()
   {
     return m_opponent;
+  }
+  
+  public ArrayList<EntityTracker> getTrackers() {
+    return m_trackers;
   }
 }
