@@ -3,7 +3,7 @@ import java.awt.Graphics;
 
 import src.Model.World.Map;
 
-public class MapAvatar implements Avatar
+public class MapAvatar extends Avatar
 {
   private Map            m_map;
   private TileAvatar[][] m_tiles;
