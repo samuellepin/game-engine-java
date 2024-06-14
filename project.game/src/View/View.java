@@ -12,16 +12,14 @@ import src.Model.Vector;
 
 public class View
 {
-  private GameCanvas          m_canvas;
   private Model               m_model;
   private ArrayList< Avatar > m_avatars;
-  private LightAvatar         m_lightAvatar;
   private MapAvatar           m_mapAvatar;
   private PlayerAvatar        m_playerAvatar;
+  private PlayerAvatar        m_opponentAvatar;
 
   public View( Model model, GameCanvas canvas )
   {
-    m_canvas = canvas;
     m_model = model;
     m_avatars = new ArrayList<>();
 
@@ -38,9 +36,9 @@ public class View
       }
     }
     
-    m_lightAvatar = new LightAvatar( m_model.getLight(), entities );
     m_mapAvatar = new MapAvatar( m_model.getMap() );
     m_playerAvatar = new PlayerAvatar( Model.getPlayer() );
+    m_opponentAvatar = new PlayerAvatar( Model.getOpponent() );
   }
 
   public void paint( Graphics g )
@@ -52,6 +50,8 @@ public class View
     m_mapAvatar.paint( g );
     
     m_playerAvatar.paint( g );
+    
+    m_opponentAvatar.paint( g );
 
     for ( Avatar avatar : m_avatars )
     {

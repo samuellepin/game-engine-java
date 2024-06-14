@@ -1,14 +1,11 @@
 package src;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 import info3.game.graphics.GameCanvas;
 import src.Model.Model;
@@ -17,7 +14,7 @@ import src.View.View;
 public class Game
 {
   private static Game     INSTANCE;
-  public static final int SCREEN_WIDTH = 720;
+  public static final int SCREEN_WIDTH  = 720;
   public static final int SCREEN_HEIGHT = 480;
 
   public static void main( String args[] ) throws Exception
@@ -46,17 +43,19 @@ public class Game
 
   public int getWidth()
   {
+    if( m_canvas == null ) return SCREEN_WIDTH;
     return m_canvas.getWidth();
   }
 
   public int getHeight()
   {
+    if( m_canvas == null ) return SCREEN_HEIGHT;
     return m_canvas.getHeight();
   }
 
   private Game() throws Exception
   {
-    m_model = new Model();
+    m_model = Model.getInstance();
     m_view = new View( m_model, null );
     m_listener = new CanvasListener( this );
     m_canvas = new GameCanvas( m_listener );
@@ -80,10 +79,4 @@ public class Game
   {
     m_view.paint( g );
   }
-
-  public Model getModel()
-  {
-    return m_model;
-  }
-
 }

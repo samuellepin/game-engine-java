@@ -15,32 +15,33 @@ public class Model
   public static Vector        m_viewPos;
 
   public static Player        m_player;
-  public static Player        m_opponent;
+  public static Opponent      m_opponent;
 
   private Map                 m_map;
 
   public static Vector        m_screenCenter;
 
-  public Model()
+  private static final Model  INSTANCE = new Model();
+
+  public static Model getInstance()
   {
-    m_map = Map.getInstance();
-    m_screenCenter = new Vector( Game.SCREEN_WIDTH / 2, Game.SCREEN_HEIGHT / 2 );
+    return INSTANCE;
+  }
+
+  private Model()
+  {
     m_isGameOver = false;
-    m_entities = new ArrayList< Entity >();
-    double W = Game.SCREEN_WIDTH / 2;
-    System.out.println( W );
-//    m_entities.add( new Light( 0, 0, 100.0f ) );
-    m_light = new Light( 0, 0, 100.0f );
-
-//    m_entities.add( new Rectangle( new Vector( 70 - 30, 0 ), new Vector( 70 - 20, 30 ), new Vector( 44 - 20, 50 ),
-//        new Vector( 40 - 20, -5 ) ) );
-
+    m_screenCenter = new Vector( Game.SCREEN_WIDTH / 2, Game.SCREEN_HEIGHT / 2 );
     m_viewPos = new Vector( 0, 0 );
+
+    m_map = Map.getInstance();
+    m_entities = new ArrayList< Entity >();
 
     m_player = new Player( null );
     m_player.setPos( m_map.getPos( 5, 5 ) );
-    m_opponent = new Player( null );
-
+    m_opponent = new Opponent( null );
+    m_opponent.setPos( m_map.getPos( 7, 7 ) );
+    
     updateViewPos();
   }
 
@@ -52,6 +53,7 @@ public class Model
   public void tick( long elapsed )
   {
     m_player.tick( elapsed );
+    m_opponent.tick( elapsed );
   }
 
   public boolean isGameOver()
@@ -62,11 +64,6 @@ public class Model
   public ArrayList< Entity > getEntities()
   {
     return m_entities;
-  }
-
-  public Light getLight()
-  {
-    return m_light;
   }
 
   public Map getMap()
@@ -92,5 +89,10 @@ public class Model
   public static Player getPlayer()
   {
     return m_player;
+  }
+
+  public static Player getOpponent()
+  {
+    return m_opponent;
   }
 }
