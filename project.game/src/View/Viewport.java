@@ -18,8 +18,9 @@ public class Viewport extends Component
   Image         m_background;
   Model         m_model;
 
-  public Viewport( Image background, Entity e, Model model )
+  public Viewport( Image background, Entity e, Model model, int x, int y, int width, int height )
   {
+    this.setBounds( x, y, width, height );
     m_tracker = new EntityTracker( e, model, getWidth(), getHeight() );
     m_background = background;
     m_model = model;
@@ -53,15 +54,16 @@ public class Viewport extends Component
 
     for ( Entity e : entities )
     {
-      Avatar avatar        = AvatarFactory.make( e );
+      Avatar avatar = AvatarFactory.make( e );
 
-      if (avatar != null) {
+      if( avatar != null )
+      {
         Vector pos           = worldPosToViewportPos( new Vector( e.getX(), e.getY() ) );
         int    avatar_x      = (int)pos.getX();
         int    avatar_y      = (int)pos.getY();
         int    avatar_width  = metersToPixels( e.getWidth() );
         int    avatar_height = metersToPixels( e.getHeight() );
-  
+
         avatar.paint( g.create( avatar_x, avatar_y, avatar_width, avatar_height ) );
       }
     }

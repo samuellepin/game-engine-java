@@ -23,7 +23,7 @@ public class RectangleAvatar extends Avatar
   public void paint( Graphics g )
   {
     g.setColor( m_color );
-    g.fillPolygon( m_rect.getRX(), m_rect.getRY(), m_rect.getNum() );
+    g.fillRect( 0, 0, g.getClipBounds().width, g.getClipBounds().height );
   }
   
 }
