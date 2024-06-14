@@ -26,12 +26,19 @@ public class Player extends Entity
         || Collision.detect( Model.getOpponent().getHitbox(), Model.getPlayer().getHitbox() )  )
     {
       m_pos = prevPos;
+      repulse();
     }
   }
   
   public void turn(double orientation)
   {
     m_orientation = orientation;
+  }
+  
+  public void repulse()
+  {
+    m_orientation += Math.PI;
+    move();
   }
   
 }

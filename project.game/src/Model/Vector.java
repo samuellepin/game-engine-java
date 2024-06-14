@@ -102,6 +102,11 @@ public class Vector
     return Math.sqrt( m_x * m_x + m_y * m_y );
   }
   
+  public double squaredNorm()
+  {
+    return m_x * m_x + m_y * m_y;
+  }
+  
   public Vector add( Vector v )
   {
     return new Vector( this.getX() + v.getX(), this.getY() + v.getY() );
