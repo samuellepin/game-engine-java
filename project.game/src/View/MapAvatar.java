@@ -1,82 +1,35 @@
 package src.View;
-
-import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
-
-import src.Model.Vector;
 import src.Model.World.Map;
-import src.Model.World.TILE_TYPE;
 
 public class MapAvatar implements Avatar
 {
-  private Map           m_map;
-  private BufferedImage m_floorImg;
+  private Map            m_map;
+  private TileAvatar[][] m_tiles;
 
   public MapAvatar( Map map )
   {
     m_map = map;
-    try
+    m_tiles = new TileAvatar[ Map.ROWS_NUM ][ Map.COLS_NUM ];
+    for ( int y = 0; y < Map.ROWS_NUM; y++ )
     {
-      m_floorImg = AvatarFactory.loadImage( "resources/Tile_Brick.png" );
+      for ( int x = 0; x < Map.COLS_NUM; x++ )
+      {
+        m_tiles[ y ][ x ] = new TileAvatar( m_map.getTile( x, y ) );
+      }
     }
-    catch ( IOException e )
-    {
-      e.printStackTrace();
-    }
-  }
-
-  public Color getTileColor( TILE_TYPE type )
-  {
-    switch ( type )
-    {
-    case EMPTY:
-      return Color.blue;
-    case FLOOR:
-      return Color.white;
-    case WALL:
-      return Color.black;
-    }
-    return Color.red;
-  }
-  
-  public BufferedImage getTileImage( TILE_TYPE type )
-  {
-    switch( type )
-    {
-    case FLOOR:
-      return m_floorImg;
-    }
-    return null;
   }
 
   @Override
   public void paint( Graphics g )
   {
-    BufferedImage img = null;
     for ( int y = 0; y < Map.ROWS_NUM; y++ )
     {
       for ( int x = 0; x < Map.COLS_NUM; x++ )
       {
-        TILE_TYPE type = m_map.getTile( x, y ).getType();
-        g.setColor( getTileColor( type ) );
-        img = getTileImage( type );
-        Vector pos = new Vector( x * Map.TILE_WIDTH, y * Map.TILE_HEIGHT );
-        if( img != null )
-        {
-          g.drawImage( m_floorImg, (int)pos.getVX(), (int)pos.getVY(), Map.TILE_WIDTH, Map.TILE_HEIGHT, null );
-        }
-        else
-        {
-          g.fillRect( (int)pos.getVX(), (int)pos.getVY(), Map.TILE_WIDTH, Map.TILE_HEIGHT );
-        }
-        AABBAvatar.paint( g, m_map.getTile( x, y ).getHitbox() );
+        m_tiles[ y ][ x ].paint( g );
       }
     }
   }
-
 }
