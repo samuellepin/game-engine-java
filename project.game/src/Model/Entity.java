@@ -3,6 +3,7 @@ package src.Model;
 import src.AI.Automaton;
 import src.AI.State;
 import src.Model.Collision.AABB;
+import src.Model.Collision.Collision;
 import src.Model.World.Map;
 
 public abstract class Entity
@@ -15,7 +16,8 @@ public abstract class Entity
   protected double        m_orientation;
   protected double        m_velocity;
   protected AABB          m_hitbox;
-  protected Model         m_model;
+  protected Model         m_model = Model.getInstance();
+  protected EntityTracker m_tracker;
 
   public Entity( Automaton automaton )
   {
@@ -26,6 +28,11 @@ public abstract class Entity
     m_dim = new Vector( 0, 0 );
     m_hitbox = new AABB( null, null );
     updateHitbox();
+  }
+  
+  public Entity setTracker( EntityTracker tracker) {
+    m_tracker = tracker;
+    return this;
   }
 
   public void updateHitbox()
@@ -57,8 +64,21 @@ public abstract class Entity
       m_pos = prevPos;
     }
     
-    for (EntityTracker tracker : m_model.m_trackers) {
-      
+    if (m_tracker == null)
+      callListener();
+    else {
+      m_tracker.getListener().moved();
+    }
+  }
+  
+  private void callListener () {
+    for (EntityTracker tracker : m_model.getTrackers()) {
+      if (!tracker.getEntities().contains( this ) && Collision.detect( m_hitbox, tracker.getHitbox() )) {
+        tracker.getListener().entered( this );
+      }
+      else if (tracker.getEntities().contains( this ) && !Collision.detect( m_hitbox, tracker.getHitbox() )) {
+        tracker.getListener().left( this );
+      }
     }
   }
 

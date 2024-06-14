@@ -8,7 +8,7 @@ import src.Model.World.Map;
 public class Model
 {
   private boolean                   m_isGameOver;
-  public ArrayList< EntityTracker > m_trackers;
+  private ArrayList< EntityTracker > m_trackers;
   private ArrayList< Entity >       m_entities;
   private Light                     m_light;
 
@@ -37,7 +37,6 @@ public class Model
 
     m_map = Map.getInstance();
     m_entities = new ArrayList< Entity >();
-    m_trackers = new ArrayList< EntityTracker >();
 
     m_player = new Player( null );
     m_player.setPos( m_map.getPos( 5, 5 ) );
@@ -99,5 +98,9 @@ public class Model
   public static Player getOpponent()
   {
     return m_opponent;
+  }
+  
+  public ArrayList<EntityTracker> getTrackers() {
+    return m_trackers;
   }
 }
