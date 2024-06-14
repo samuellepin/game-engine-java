@@ -124,6 +124,18 @@ TO DO pour demain :
 - Définition du planning global du projet pour les semaines à venir pour avoir un objectif clair et précis.
 - Définition d'un planning plus precis de la journée d'aujourd'hui et de demain.
 
+- Rémi et Greg s'occupent de faire le View port car c'est une fonctinnalité essentiel et importante de notre projet et cela va nous permettre de pouvoir voir les entités
+- Sam : Comprendre le fonctionnemnt du parser et du visitor 
+- David mis en place d'une Hitbox pour chaque entité 
+- Romain : continuer l'implémentation des biome de façon de façon aléatoire et mise en cohérence avec le code de David 
+
+### Jour 9 (14 juin):
+TO DO :
+- Remi et greg doivent charger les avatars pour tester si leur Viewport fonctionne bien 
+- Sam implementer le visitor et README pour le fichier de config
+- David : fusionner les Hitbox pour les objects inanimé pour éviter d'avoir trop d'Hitbox
+- Romain : finir la cohérence entre le code de David puis intégration entre les deux maps de biome et couloir et Hitbox  
+
 **Commande parser**
 
 Votre fichier automate : nom_AI.gal
@@ -132,13 +144,15 @@ Votre fichier automate : nom_AI.gal
 - make nom_AI.ast.dot OU make nom_AI.aut.dot
 - make nom_AI.ast.jpg OU make nom_AI.aut.jpg
 
-**Planning des deux jours :**
+**Planning quotidien :**
 
 - [ ] View => Greg et Rémi
-    - [ ] Afficher Viewport du modéle avec monde qui bouge 
+    - [ ] Afficher Viewport du modéle avec monde qui bouge ( A tester )
+    - [ ] Changer tout les avatars 
     - => Besoin du model 
 - [ ] AI (Automaton) => Sam 
-    - [ ] Faire un Visitor et comprendre commnent le parser appel les différent méthode 
+    - [ ] Faire un Visitor 
+    - [x] comprendre commnent le parser appel les différent méthode : 13/06
     - [ ] Créer les classes qui implémente action (move ,...)
     - [ ] Lier le parser et notre projet 
     - [ ] Gestion FSM (traduction ast en FSM)
@@ -146,10 +160,12 @@ Votre fichier automate : nom_AI.gal
     - [x] Fonctions qui détectes les collisons
     - [x] Géneration des biomes => Romain 
     - [ ] Supprimer ancien Viewport
-    - [ ] Integration des méthodes de collision 
-        - [ ] Hitbox aux entités
+    - [x] Integration des méthodes de collision : 13/06 
+        - [x] Hitbox aux entités : 13/06
     - [ ] Implémentation vision
     - [ ] Gestion des ticks
+    - [x] biomes : 13/06
+    - [ ] réunir carte biome et couloir 
 - [ ] Controler 
     - [ ] Interpréter les touches pour L'AI
 
