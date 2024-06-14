@@ -38,14 +38,80 @@ public class TestVisitor implements IVisitor
   public Object visit( Category cat )
   {
     System.out.println( "Category " + cat.toString() );
-    return null;
+    switch(cat.toString()) {
+      case "Adversary":
+        return CATEGORY.Adversary;
+      case "Clue":
+        return CATEGORY.Clue;
+      case "Danger":
+        return CATEGORY.Danger;
+      case "Gate":
+        return CATEGORY.Gate;
+      case "Icon":  
+        return CATEGORY.Icon;
+      case "Jumpable":
+        return CATEGORY.Jumpable;
+      case "Killable":
+        return CATEGORY.Killable;
+      case "Moveable":
+        return CATEGORY.Moveable;
+      case "Obstacle":
+        return CATEGORY.Obstacle;
+      case "Pickable":
+        return CATEGORY.Pickable;
+      case "Team":
+        return CATEGORY.Team;
+      case "Util":
+        return CATEGORY.Util;
+      case "Void":
+        return CATEGORY.Void;
+      case "PlayerT":
+        return CATEGORY.PlayerT;
+      case "PlayerA":
+        return CATEGORY.PlayerA;
+      case "Power":
+        return CATEGORY.Power;
+      case "Stuff":
+        return CATEGORY.Stuff;
+      default:
+        return null;
+    }
   }
 
   @Override
   public Object visit( Direction dir )
   {
     System.out.println( "Direction " + dir.toString() );
-    return null;
+    switch(dir.toString()) {
+      case "North":
+        return DIRECTION.North;
+      case "South":
+        return DIRECTION.South;
+      case "East":
+        return DIRECTION.East;
+      case "West":
+        return DIRECTION.West;
+      case "NE":
+        return DIRECTION.NE;
+      case "SE":
+        return DIRECTION.SE;
+      case "SW":
+        return DIRECTION.SW;
+      case "NW":
+        return DIRECTION.NW;
+      case "Forward":
+        return DIRECTION.Forward;
+      case "BackWard":
+        return DIRECTION.BackWard;
+      case "Left":
+        return DIRECTION.Left;
+      case "Right":
+        return DIRECTION.Right;
+      case "Here":
+        return DIRECTION.Here;
+      default:
+        return null;
+    }
   }
 
   @Override
@@ -59,14 +125,14 @@ public class TestVisitor implements IVisitor
   public Object visit( Value v )
   {
     System.out.println( "Value " + v.toString() );
-    return null;
+    return v.value;
   }
 
   @Override
   public Object visit( Underscore u )
   {
-    System.out.println( "Underscore " + u.toString() );
-    return null;
+    System.out.println( "Underscore ");
+    return "_";
   }
 
   @Override
@@ -95,75 +161,77 @@ public class TestVisitor implements IVisitor
     {
     // Condition:
     case "Cell":
-      // Cell o = new Cell(parameters);
-      break;
-    case "True":
-      // True o = new True();
-      break;
-    case "MyDir":
-      // MyDir o = new MyDir(parameters);
+      // return new Cell(parameters);
       break;
     case "Closest":
-      // Closest o = new Closest(parameters);
+      // return new Closest(parameters);
       break;
     case "Got":
-      // Got o = new Got(parameters);
+      // return new Got(parameters);
       break;
     case "Key":
-      // Key o = new Key(parameters);
+      // return new Key(parameters);
       break;
+    case "True":
+      // return new True(parameters);
+      break;
+    case "MyDir":
+      // return new MyDir(parameters);
+      break;
+
     // Action :
     case "Add":
-      // Add o = new Add(parameters);
+      // return new Add(parameters);
       break;
     case "Egg":
-      // Egg o = new Egg(parameters);
+      // return new Egg(parameters);
       break;
     case "Explode":
-      // Explode o = new Explode(parameters);
+      // return new Explode(parameters);
       break;
     case "Get":
-      // Get o = new Get(parameters);
+      // return new Get(parameters);
       break;
     case "Hit":
-      // Hit o = new Hit(parameters);
+      // return new Hit(parameters);
       break;
     case "Jump":
-      // Jump o = new Jump(parameters);
+      // return new Jump(parameters);
       break;
     case "Move":
-      // Move o = new Move(parameters);
+      // return new Move(parameters);
       break;
     case "Pick":
-      // Pick o = new Pick(parameters);
+      // return new Pick(parameters);
       break;
     case "Protect":
-      // Protect o = new Protect(parameters);
+      // return new Protect(parameters);
       break;
     case "Rest":
-      // Rest o = new Rest(parameters);
+      // return new Rest(parameters);
       break;
     case "Store":
-      // Store o = new Store(parameters);
+      // return new Store(parameters);
       break;
     case "Throw":
-      // Throw o = new Throw(parameters);
+      // return new Throw(parameters);
       break;
     case "Turn":
-      // Turn o = new Turn(parameters);
+      // return new Turn(parameters);
       break;
     case "Wait":
-      // Wait o = new Wait(parameters);
+      // return new Wait(parameters);
       break;
     case "Pop":
-      // Pop o = new Pop(parameters);
+      // return new Pop(parameters);
       break;
     case "Wizz":
-      // Wizz o = new Wizz(parameters);
+      // return new Wizz(parameters);
+      break;
+    default:
+      // return null;
       break;
     }
-    // Object obj = (Object) o;
-    // return obj;
     return null;
   }
 
@@ -189,6 +257,7 @@ public class TestVisitor implements IVisitor
   public Object build( BinaryOp binop, Object left, Object right )
   {
     //System.out.println( "BinaryOp build " + binop.toString() + ":\n" + left.toString() + "\n" + right.toString() );
+    System.out.println("Build BinaryOp not yet implement");
     return null;
   }
 
@@ -207,7 +276,8 @@ public class TestVisitor implements IVisitor
   @Override
   public Object build( UnaryOp unop, Object expression )
   {
-    System.out.println( "UnaryOp build " + unop.toString() + ":\n" + expression.toString() );
+    //System.out.println( "UnaryOp build " + unop.toString() + ":\n" + expression.toString() );
+    System.out.println("Build UnaryOp not yet implement");
     return null;
   }
 
@@ -227,7 +297,7 @@ public class TestVisitor implements IVisitor
       }
     }
 
-    return null;
+    return fsm_state;
   }
 
   @Override
@@ -251,6 +321,7 @@ public class TestVisitor implements IVisitor
   @Override
   public Object build( Mode mode, Object source_state, Object behaviour )
   {
+    // TO DO : build mode
     System.out.println( "Mode build " );
     return null;
   }
@@ -258,6 +329,7 @@ public class TestVisitor implements IVisitor
   @Override
   public Object visit( Behaviour behaviour, List< Object > transitions )
   {
+    // TO DO : build behaviour
     System.out.println( "Behaviour " );
     return null;
   }
@@ -277,6 +349,7 @@ public class TestVisitor implements IVisitor
   @Override
   public Object build( Condition condition, Object expression )
   {
+    // TO DO : build condition
     System.out.println( "Condition build " );
     return null;
   }
@@ -302,6 +375,7 @@ public class TestVisitor implements IVisitor
   @Override
   public Object build( Actions action, String operator, List< Object > funcalls )
   {
+    // TO DO : build action
     System.out.println( "Actions build " );
     return null;
   }
@@ -321,6 +395,7 @@ public class TestVisitor implements IVisitor
   @Override
   public Object build( Transition transition, Object condition, Object action, Object target_state )
   {
+    // TO DO : build transition , insert transition in the fsm
     System.out.println( "Transition build " );
     return new TransitionFsm((StateFsm)target_state,(ConditionFsm)condition,(ActionFsm)action);
   }
@@ -345,6 +420,7 @@ public class TestVisitor implements IVisitor
   @Override
   public Object build( Automaton automaton, Object initial_state, List< Object > modes )
   {
+    // TO DO : build automaton
     System.out.println( "Automaton build " );
     return null;
   }

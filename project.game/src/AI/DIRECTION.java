@@ -2,5 +2,5 @@ package src.AI;
 
 public enum DIRECTION
 {
-  UP, DOWN, RIGHT, LEFT, HERE
+  Here, North, South, East, West, NE, SE, SW, NW, Forward, BackWard, Left, Right;
 }
