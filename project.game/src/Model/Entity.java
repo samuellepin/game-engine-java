@@ -3,19 +3,19 @@ package src.Model;
 import src.AI.Automaton;
 import src.AI.State;
 import src.Model.Collision.AABB;
-import src.Model.Collision.Hitbox;
-import src.Game;
+import src.Model.World.Map;
 
 public abstract class Entity
 {
-  protected Automaton m_automaton;
-  protected State     m_state;
-  protected long      m_elapsedTime;
-  protected Vector    m_pos;
-  protected Vector    m_dim;
-  protected double    m_orientation;
-  protected double    m_velocity;
-  protected AABB      m_hitbox;
+  protected Automaton     m_automaton;
+  protected State         m_state;
+  protected long          m_elapsedTime;
+  protected Vector        m_pos;
+  protected Vector        m_dim;
+  protected double        m_orientation;
+  protected double        m_velocity;
+  protected AABB          m_hitbox;
+  protected EntityTracker m_tracker;
 
   public Entity( Automaton automaton )
   {
@@ -27,17 +27,100 @@ public abstract class Entity
     m_hitbox = new AABB( null, null );
     updateHitbox();
   }
-  
+
   public void updateHitbox()
   {
     Vector pos = m_pos;
-    pos = pos.sub( this.getWidth()/2, this.getHeight()/2 );
+    pos = pos.sub( this.getWidth() / 2, this.getHeight() / 2 );
     m_hitbox.resize( pos, pos.add( this.getWidth(), this.getHeight() ) );
   }
 
   public void tick( long elapsed )
   {
     m_elapsedTime = elapsed;
+  }
+
+  public void doWait()
+  {
+    // TODO
+    throw new RuntimeException( "NYI" );
+  }
+
+  public void doMove( double orientation )
+  {
+    double d       = m_velocity * (double)m_elapsedTime;
+    Vector prevPos = m_pos;
+    m_pos = m_pos.add( d * Math.cos( orientation ), d * Math.sin( orientation ) );
+    updateHitbox();
+    if( Map.getInstance().detectCollision( this ) )
+    {
+      m_pos = prevPos;
+    }
+  }
+
+  public void doTurn( double orientation )
+  {
+    m_orientation = orientation;
+  }
+
+  public void doJump( double orientation )
+  {
+    // TODO
+    throw new RuntimeException( "NYI" );
+  }
+
+  public void doHit( double orientation )
+  {
+    // TODO
+    throw new RuntimeException( "NYI" );
+  }
+
+  public void doProtect( double orientation )
+  {
+    // TODO
+    throw new RuntimeException( "NYI" );
+  }
+
+  public void doPick( double orientation )
+  {
+    // TODO
+    throw new RuntimeException( "NYI" );
+  }
+
+  public void doThrow( double orientation )
+  {
+    // TODO
+    throw new RuntimeException( "NYI" );
+  }
+
+  public void doStore()
+  {
+    // TODO
+    throw new RuntimeException( "NYI" );
+  }
+
+  public void doGet()
+  {
+    // TODO
+    throw new RuntimeException( "NYI" );
+  }
+
+  public void doPower()
+  {
+    // TODO
+    throw new RuntimeException( "NYI" );
+  }
+
+  public void doExplode()
+  {
+    // TODO
+    throw new RuntimeException( "NYI" );
+  }
+
+  public void doEgg()
+  {
+    // TODO
+    throw new RuntimeException( "NYI" );
   }
 
   public State getState()
@@ -115,17 +198,17 @@ public abstract class Entity
   {
     return m_velocity;
   }
-  
+
   public Vector getDim()
   {
     return m_dim;
   }
-  
+
   public void setDim( double width, double height )
   {
     m_dim.setPos( width, height );
   }
-  
+
   public AABB getHitbox()
   {
     return m_hitbox;
