@@ -41,7 +41,10 @@ public class Model
     m_player.setPos( m_map.getPos( 5, 5 ) );
     m_opponent = new Opponent( null );
     m_opponent.setPos( m_map.getPos( 7, 7 ) );
-    
+
+    m_entities.add( m_player );
+    m_entities.add( m_opponent );
+
     updateViewPos();
   }
 

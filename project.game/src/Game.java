@@ -30,7 +30,6 @@ public class Game
   }
 
   private JFrame         m_frame;
-  private JLabel         m_text;
   private CanvasListener m_listener;
   private Model          m_model;
   private View           m_view;
@@ -56,13 +55,15 @@ public class Game
   private Game() throws Exception
   {
     m_model = Model.getInstance();
-    m_view = new View( m_model, null );
+    
+    m_view = View.getInstance();
+    
     m_listener = new CanvasListener( this );
+    
     m_canvas = new GameCanvas( m_listener );
     m_canvas.setSize( new Dimension( SCREEN_WIDTH, SCREEN_HEIGHT ) );
+    
     m_frame = m_canvas.createFrame( new Dimension( 1280, 720 ) );
-    m_text = new JLabel();
-    m_text.setText( "Tick: 0ms FPS=0" );
     m_frame.setTitle( "Metal Gear" );
     m_frame.setLayout( new FlowLayout() );
     m_frame.add( m_canvas );
