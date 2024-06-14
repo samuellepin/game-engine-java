@@ -1,4 +1,4 @@
-package src.Model.Biome;
+package src.Model.World;
 
 import java.awt.Color;
 import java.util.ArrayList;

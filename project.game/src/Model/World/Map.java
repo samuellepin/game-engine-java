@@ -13,24 +13,26 @@ import src.Model.Collision.Collision;
 
 public class Map
 {
-  private Tile[][]        m_tiles;
-  private Archive         m_archive;
-  private Random          m_rand;
+  private Tile[][]           m_tiles;
+  private Archive            m_archive;
+  private Random             m_rand;
+  private Biome[]            m_biome_tab;                     // pour le random entre les différents biomes
+  private ArrayList< Biome > m_biomes;                        // pour afficher les biomes pas forcément utile
+  public static final int    TILE_WIDTH           = 100;
+  public static final int    TILE_HEIGHT          = 100;
+  public static final int    COLS_NUM             = 51;
+  public static final int    ROWS_NUM             = 51;
+  public int                 m_spaceBetweenBiomes = 3;
 
-  public static final int TILE_WIDTH  = 100;
-  public static final int TILE_HEIGHT = 100;
-  public static final int COLS_NUM    = 11;
-  public static final int ROWS_NUM    = 11;
-  
-  private static Map INSTANCE = new Map();
-  
+  private static Map         INSTANCE             = new Map();
+
   public static Map getInstance()
   {
     return INSTANCE;
   }
 
   /// < Backtracker algorithm
-  private Map()
+  public Map()
   {
     m_rand = new Random();
     m_rand.setSeed( Config.SEED );
@@ -45,6 +47,11 @@ public class Map
           m_tiles[ i ][ j ] = new Tile( TILE_TYPE.EMPTY, (double) ( j * Map.TILE_WIDTH ),
               (double) ( i * Map.TILE_HEIGHT ) );
         }
+        else if( i == 0 || j == 0 || i == ROWS_NUM - 1 || j == COLS_NUM - 1 )
+        {
+          m_tiles[ i ][ j ] = new Tile( TILE_TYPE.BORDER, (double) ( j * Map.TILE_WIDTH ),
+              (double) ( i * Map.TILE_HEIGHT ) );
+        }
         else
         {
           m_tiles[ i ][ j ] = new Tile( TILE_TYPE.WALL, (double) ( j * Map.TILE_WIDTH ),
@@ -52,6 +59,7 @@ public class Map
         }
       }
     }
+    fillMap();
 
     System.out.println( this.toString() );
 
@@ -59,15 +67,20 @@ public class Map
 
     System.out.println( this.toString() );
 
-    createRoom( ( new Random() ).nextInt() % 60 + 40 );
+    // createRoom( ( new Random() ).nextInt() % 60 + 40 );
 
-    System.out.println( this.toString() );
+    // System.out.println( this.toString() );
   }
 
   public Tile getTile( int x, int y )
   {
     assert y < ROWS_NUM && x < COLS_NUM;
     return m_tiles[ y ][ x ];
+  }
+
+  public ArrayList< Biome > getBiomes()
+  {
+    return m_biomes;
   }
 
   public void createPath( int x, int y )
@@ -78,7 +91,7 @@ public class Map
     directions.add( new Vector( -2, 0 ) );
     directions.add( new Vector( 2, 0 ) );
     directions.add( new Vector( 0, 2 ) );
-    Collections.shuffle( directions );
+    Collections.shuffle( directions ,m_rand);
 
     for ( int i = 0; i < 4; i++ )
     {
@@ -120,16 +133,22 @@ public class Map
         switch ( this.getTile( j, i ).getType() )
         {
         case EMPTY:
-          strb.append( "⬛" );
+          strb.append( "🟦" );
           break;
         case WALL:
-          strb.append( "🟦" );
+          strb.append( "⬛" );
           break;
         case FLOOR:
           strb.append( "⬜" );
           break;
-        default:
+        case BORDER:
           strb.append( "🟫" );
+          break;
+        case BIOME:
+          strb.append( "🟩" );
+          break;
+        default:
+          strb.append( "🟧" );
           break;
         }
       }
@@ -173,7 +192,7 @@ public class Map
     {
       for ( int j = 0; j < COLS_NUM; j++ )
       {
-        if( Collision.detect( entity.getHitbox(), m_tiles[i][j].getHitbox() ) )
+        if( Collision.detect( entity.getHitbox(), m_tiles[ i ][ j ].getHitbox() ) )
         {
           return true;
         }
@@ -181,15 +200,83 @@ public class Map
     }
     return false;
   }
-  
+
+  private boolean placeBiome( int x, int y, Biome biome )
+  {
+    if( x + biome.getWidth() + m_spaceBetweenBiomes <= COLS_NUM
+        && y + biome.getHeight() + m_spaceBetweenBiomes <= ROWS_NUM )
+    {
+      for ( int i = x - m_spaceBetweenBiomes; i < x + biome.getWidth() + m_spaceBetweenBiomes; i++ )
+      {
+        for ( int j = y - m_spaceBetweenBiomes; j < y + biome.getHeight() + m_spaceBetweenBiomes; j++ )
+        {
+          if( m_tiles[ j ][ i ].getType() == TILE_TYPE.BIOME )
+          {
+            return false;
+          }
+        }
+      }
+      for ( int i = x; i < x + biome.getWidth(); i++ )
+      {
+        for ( int j = y; j < y + biome.getHeight(); j++ )
+        {
+          m_tiles[ j ][ i ].setType( TILE_TYPE.BIOME );
+        }
+      }
+      int entryX = x + (int)biome.getEntry().getX();
+      int entryY = y + (int)biome.getEntry().getY();
+      while( entryY == 1 && entryX == 1 || entryY == ROWS_NUM - 2 && entryX == COLS_NUM - 2
+          || entryX == 1 && entryY == ROWS_NUM - 2 || entryX == COLS_NUM - 2 && entryY == 1 )
+      {
+        biome.entryNext();
+        entryX = x + (int)biome.getEntry().getX();
+        entryY = y + (int)biome.getEntry().getY();
+      }
+      m_tiles[ entryY ][ entryX ].setType( TILE_TYPE.EMPTY );
+      return true;
+    }
+    return false;
+  }
+
+  public void fillMap()
+  {
+    int   biomeX;
+    int   biomeY;
+    Biome biome;
+    int   i = 0;
+    while( i < 500 )
+    {
+      biomeX = m_rand.nextInt( COLS_NUM - 2 - m_spaceBetweenBiomes ) + m_spaceBetweenBiomes;// random entre
+                                                                                            // spaceBetweenBiomes et
+                                                                                            // COLS_NUM-2
+      biomeY = m_rand.nextInt( ROWS_NUM - 2 - m_spaceBetweenBiomes ) + m_spaceBetweenBiomes;// random entre
+                                                                                            // spaceBetweenBiomes et
+                                                                                            // ROWS_NUM-2
+      if( biomeX % 2 == 0 )
+      {
+        biomeX++ ;
+      }
+      if( biomeY % 2 == 0 )
+      {
+        biomeY++ ;
+      }
+      biome = new BiomeA( biomeX, biomeY );// random entre les différents biomes
+      placeBiome( biomeX, biomeY, biome );
+      i++ ;
+      // if( ! ( placeBiome( biomeX, biomeY, biome ) ) ) break;
+      // m_biomes.add( biome );
+
+    }
+  }
+
   public double getWidth()
   {
-    return (double)( Map.COLS_NUM * Map.TILE_WIDTH );
+    return (double) ( Map.COLS_NUM * Map.TILE_WIDTH );
   }
-  
+
   public double getHeight()
   {
-    return (double)( Map.ROWS_NUM * Map.TILE_HEIGHT );
+    return (double) ( Map.ROWS_NUM * Map.TILE_HEIGHT );
   }
-  
+
 }

@@ -40,6 +40,10 @@ public class MapAvatar implements Avatar
       return Color.white;
     case WALL:
       return Color.black;
+    case BORDER:
+      return Color.black;
+    case BIOME:
+      return Color.green;
     }
     return Color.red;
   }
@@ -50,6 +54,8 @@ public class MapAvatar implements Avatar
     {
     case FLOOR:
       return m_floorImg;
+    case BIOME:
+      return m_floorImg;//a modif
     }
     return null;
   }
