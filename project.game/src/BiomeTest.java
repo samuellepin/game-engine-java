@@ -1,9 +1,9 @@
 package src;
-import src.Model.Biome.Map;
+import src.Model.World.Map2;
 
 public class BiomeTest
 {
   public static void main(String[] args) {
-    new Map();
+    new Map2();
   }
 }
