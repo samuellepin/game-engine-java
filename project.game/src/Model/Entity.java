@@ -15,7 +15,7 @@ public abstract class Entity
   protected double        m_orientation;
   protected double        m_velocity;
   protected AABB          m_hitbox;
-  protected EntityTracker m_tracker;
+  protected Model         m_model;
 
   public Entity( Automaton automaton )
   {
@@ -55,6 +55,10 @@ public abstract class Entity
     if( Map.getInstance().detectCollision( this ) )
     {
       m_pos = prevPos;
+    }
+    
+    for (EntityTracker tracker : m_model.m_trackers) {
+      
     }
   }
 

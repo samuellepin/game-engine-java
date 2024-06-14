@@ -7,19 +7,20 @@ import src.Model.World.Map;
 
 public class Model
 {
-  private boolean             m_isGameOver;
-  private ArrayList< Entity > m_entities;
-  private Light               m_light;
+  private boolean                   m_isGameOver;
+  public ArrayList< EntityTracker > m_trackers;
+  private ArrayList< Entity >       m_entities;
+  private Light                     m_light;
 
-  public static Vector        m_viewport;
-  public static Vector        m_viewPos;
+  public static Vector              m_viewport;
+  public static Vector              m_viewPos;
 
-  public static Player        m_player;
-  public static Player        m_opponent;
+  public static Player              m_player;
+  public static Player              m_opponent;
 
-  private Map                 m_map;
+  private Map                       m_map;
 
-  public static Vector        m_screenCenter;
+  public static Vector              m_screenCenter;
 
   public Model()
   {
@@ -27,6 +28,7 @@ public class Model
     m_screenCenter = new Vector( Game.SCREEN_WIDTH / 2, Game.SCREEN_HEIGHT / 2 );
     m_isGameOver = false;
     m_entities = new ArrayList< Entity >();
+    m_trackers = new ArrayList< EntityTracker >();
     double W = Game.SCREEN_WIDTH / 2;
     System.out.println( W );
 //    m_entities.add( new Light( 0, 0, 100.0f ) );
