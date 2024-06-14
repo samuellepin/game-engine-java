@@ -9,21 +9,41 @@ import src.Model.Archive;
 import src.Model.Config;
 import src.Model.Entity;
 import src.Model.Vector;
+import src.Model.Collision.AABB;
 import src.Model.Collision.Collision;
 
 public class Map
 {
-  private Tile[][]        m_tiles;
-  private Archive         m_archive;
-  private Random          m_rand;
+  private Tile[][]          m_tiles;
+  private Archive           m_archive;
+  private Random            m_rand;
+//  private ArrayList< AABB > m_hitbox;
 
-  public static final int TILE_WIDTH  = 100;
-  public static final int TILE_HEIGHT = 100;
-  public static final int COLS_NUM    = 11;
-  public static final int ROWS_NUM    = 11;
-  
+  public static final int   TILE_WIDTH  = 100;
+  public static final int   TILE_HEIGHT = 100;
+  public static final int   COLS_NUM    = 11;
+  public static final int   ROWS_NUM    = 11;
+
+//  private void updateHitbox()
+//  {
+//    m_hitbox = new ArrayList<>();
+//    for ( int i = 0; i < ROWS_NUM; i++ )
+//    {
+//      for ( int j = 0; j < COLS_NUM; j++ )
+//      {
+//        m_hitbox.add( m_tiles[ i ][ j ].getHitbox() );
+//      }
+//    }
+//    
+//    // get optimal directions
+//    for( int i = 0; i < 4; i++ )
+//    {
+//      
+//    }
+//  }
+
   private static Map INSTANCE = new Map();
-  
+
   public static Map getInstance()
   {
     return INSTANCE;
@@ -173,7 +193,7 @@ public class Map
     {
       for ( int j = 0; j < COLS_NUM; j++ )
       {
-        if( Collision.detect( entity.getHitbox(), m_tiles[i][j].getHitbox() ) )
+        if( Collision.detect( entity.getHitbox(), m_tiles[ i ][ j ].getHitbox() ) )
         {
           return true;
         }
@@ -181,15 +201,15 @@ public class Map
     }
     return false;
   }
-  
+
   public double getWidth()
   {
-    return (double)( Map.COLS_NUM * Map.TILE_WIDTH );
+    return (double) ( Map.COLS_NUM * Map.TILE_WIDTH );
   }
-  
+
   public double getHeight()
   {
-    return (double)( Map.ROWS_NUM * Map.TILE_HEIGHT );
+    return (double) ( Map.ROWS_NUM * Map.TILE_HEIGHT );
   }
-  
+
 }

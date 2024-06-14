@@ -15,7 +15,7 @@ public class CanvasListener implements GameCanvasListener
   CanvasListener( Game game )
   {
     m_game = game;
-    m_model = m_game.getModel();
+    m_model = Model.getInstance();
   }
 
   @Override
