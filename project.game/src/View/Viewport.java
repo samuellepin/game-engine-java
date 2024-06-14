@@ -15,14 +15,12 @@ import src.Model.Vector;
 public class Viewport extends Component
 {
   EntityTracker m_tracker;
-  Image         m_background;
   Model         m_model;
 
-  public Viewport( Image background, Entity e, Model model, int x, int y, int width, int height )
+  public Viewport( Entity e, Model model, int x, int y, int width, int height )
   {
     this.setBounds( x, y, width, height );
     m_tracker = new EntityTracker( e, model, getWidth(), getHeight() );
-    m_background = background;
     m_model = model;
   }
 
