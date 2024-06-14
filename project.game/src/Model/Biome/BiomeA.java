@@ -12,8 +12,8 @@ public class BiomeA extends Biome
   {
     m_x = x;
     m_y = y;
-    m_height = 3;
-    m_width = 3;
+    m_height = 5;
+    m_width = 5;
     m_entryIndex = 0;
     m_color = Color.green;
     m_name = "BiomeA";

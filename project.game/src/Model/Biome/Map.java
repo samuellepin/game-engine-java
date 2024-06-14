@@ -8,11 +8,12 @@ import java.util.ArrayList;
 public class Map
 {
   private Tile[][]           m_tiles;
-  private Random             m_random = new Random();
+  private Random             m_random             = new Random();
   private Biome[]            m_biome_tab;
   private ArrayList< Biome > m_biomes;
-  public static final int    COLS_NUM = 15;
-  public static final int    ROWS_NUM = 15;
+  public static final int    COLS_NUM             = 51;
+  public static final int    ROWS_NUM             = 51;
+  public int                 m_spaceBetweenBiomes = 3;
 
   public Map()
   {
@@ -46,11 +47,12 @@ public class Map
 
   private boolean placeBiome( int x, int y, Biome biome )
   {
-    if( x + biome.getWidth() < COLS_NUM && y + biome.getHeight() < ROWS_NUM )
+    if( x + biome.getWidth() + m_spaceBetweenBiomes <= COLS_NUM
+        && y + biome.getHeight() + m_spaceBetweenBiomes <= ROWS_NUM )
     {
-      for ( int i = x - 1; i < x + biome.getWidth() + 1; i++ )
+      for ( int i = x - m_spaceBetweenBiomes; i < x + biome.getWidth() + m_spaceBetweenBiomes; i++ )
       {
-        for ( int j = y - 1; j < y + biome.getHeight() + 1; j++ )
+        for ( int j = y - m_spaceBetweenBiomes; j < y + biome.getHeight() + m_spaceBetweenBiomes; j++ )
         {
           if( m_tiles[ j ][ i ].getType() != TILE_TYPE.EMPTY )
           {
@@ -86,10 +88,14 @@ public class Map
     int   biomeY;
     Biome biome;
     int   i = 0;
-    while( i < 5000 )
+    while( i < 500 )
     {
-      biomeX = m_random.nextInt( COLS_NUM - 2 ) + 1;// random entre 1 et COLS_NUM-1
-      biomeY = m_random.nextInt( ROWS_NUM - 2 ) + 1;// random entre 1 et ROWS_NUM-1
+      biomeX = m_random.nextInt( COLS_NUM - 2 - m_spaceBetweenBiomes ) + m_spaceBetweenBiomes;// random entre
+                                                                                              // spaceBetweenBiomes et
+                                                                                              // COLS_NUM-2
+      biomeY = m_random.nextInt( ROWS_NUM - 2 - m_spaceBetweenBiomes ) + m_spaceBetweenBiomes;// random entre
+                                                                                              // spaceBetweenBiomes et
+                                                                                              // ROWS_NUM-2
       if( biomeX % 2 == 0 )
       {
         biomeX++ ;
