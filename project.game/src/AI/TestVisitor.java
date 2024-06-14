@@ -93,43 +93,43 @@ public class TestVisitor implements IVisitor
       break;
     case "Closest":
       break;
-    case "Got" :
+    case "Got":
       break;
-    case "Key" :
+    case "Key":
       break;
     // Action :
     case "Add":
       break;
-      case "Egg" :
-        break;
-      case "Explode" :
-        break;
-      case "Get" :
-        break;
-      case "Hit" :
-        break;
-      case "Jump" :
-        break;
-      case "Move" :
-        break;
-      case "Pick" :
-        break;
-      case "Protect" :
-        break;
-      case "Rest" :
-        break;
-      case "Store" :
-        break;
-      case "Throw" :
-        break;
-      case "Turn" :
-        break;
-      case "Wait" :
-        break;
-      case "Pop" :
-        break;
-      case "Wizz" :
-        break;    
+    case "Egg":
+      break;
+    case "Explode":
+      break;
+    case "Get":
+      break;
+    case "Hit":
+      break;
+    case "Jump":
+      break;
+    case "Move":
+      break;
+    case "Pick":
+      break;
+    case "Protect":
+      break;
+    case "Rest":
+      break;
+    case "Store":
+      break;
+    case "Throw":
+      break;
+    case "Turn":
+      break;
+    case "Wait":
+      break;
+    case "Pop":
+      break;
+    case "Wizz":
+      break;
     }
     return null;
   }
