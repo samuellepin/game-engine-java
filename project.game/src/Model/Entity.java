@@ -1,7 +1,7 @@
 package src.Model;
 
 import src.AI.FSM;
-import src.AI.State;
+import src.AI.StateFsm;
 import src.Model.Collision.AABB;
 import src.Model.Collision.Hitbox;
 import src.Game;
@@ -9,7 +9,7 @@ import src.Game;
 public abstract class Entity
 {
   protected FSM m_automaton;
-  protected State     m_state;
+  protected StateFsm     m_state;
   protected long      m_elapsedTime;
   protected Vector    m_pos;
   protected Vector    m_dim;
@@ -40,7 +40,7 @@ public abstract class Entity
     m_elapsedTime = elapsed;
   }
 
-  public State getState()
+  public StateFsm getState()
   {
     return m_state;
   }

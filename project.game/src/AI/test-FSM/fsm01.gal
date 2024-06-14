@@ -1,3 +1,17 @@
+Poule(Pondre){
+  * (Pondre)
+  | Cell(F,V) ? Egg(F)  :(Couver)
+  | True ? Move :(Pondre)
+
+  * (Couver)
+  | Cell(F,T) ? Move(N,F)    :(Attendre)
+  | True ? Wait :(Cover)
+
+  * (Attendre)
+  | Cell(H,V) ?          :(Pondre) 
+  | True ? :(Attendre)
+}
+
 Philosopher(Think){
   * (Think)
 }
