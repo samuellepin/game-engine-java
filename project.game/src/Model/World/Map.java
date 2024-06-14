@@ -14,7 +14,6 @@ import src.Model.Collision.Collision;
 public class Map
 {
   private Tile[][]           m_tiles;
-  private Archive            m_archive;
   private Random             m_rand;
   private Biome[]            m_biome_tab;                     // pour le random entre les différents biomes
   private ArrayList< Biome > m_biomes;                        // pour afficher les biomes pas forcément utile
@@ -32,11 +31,10 @@ public class Map
   }
 
   /// < Backtracker algorithm
-  public Map()
+  private Map()
   {
     m_rand = new Random();
     m_rand.setSeed( Config.SEED );
-    m_archive = new Archive( null );
     m_tiles = new Tile[ ROWS_NUM ][ COLS_NUM ];
     for ( int i = 0; i < ROWS_NUM; i++ )
     {

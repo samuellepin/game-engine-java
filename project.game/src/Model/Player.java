@@ -1,6 +1,7 @@
 package src.Model;
 
 import src.AI.Automaton;
+import src.Model.Collision.Collision;
 import src.Model.World.Map;
 
 public class Player extends Entity
@@ -21,7 +22,8 @@ public class Player extends Entity
     Vector prevPos = m_pos;
     m_pos = m_pos.add( d * Math.cos( m_orientation ), d * Math.sin( m_orientation ) );
     super.updateHitbox();
-    if( Map.getInstance().detectCollision( this ) )
+    if( Map.getInstance().detectCollision( this ) 
+        || Collision.detect( Model.getOpponent().getHitbox(), Model.getPlayer().getHitbox() )  )
     {
       m_pos = prevPos;
     }
