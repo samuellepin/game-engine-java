@@ -9,11 +9,12 @@ import javax.imageio.ImageIO;
 import src.*;
 import src.Model.Entity;
 import src.Model.Light;
+import src.Model.Player;
 import src.Model.Rectangle;
 
 public class AvatarFactory
 {
-  public static Avatar make( Entity e ) throws Exception
+  public static Avatar make( Entity e )
   {
     if( e instanceof Light )
     {
@@ -23,7 +24,14 @@ public class AvatarFactory
     {
       return new RectangleAvatar( (Rectangle)e );
     }
-    throw new Exception( "Unknow entity" );
+    else if( e instanceof Player )
+    {
+      return new PlayerAvatar( (Player)e );
+    }
+
+    // TODO return default avatar if the entity is unknown
+    // throw new Exception( "Unknow entity" );
+    return null;
   }
 
   public static BufferedImage loadImage( String filename ) throws IOException

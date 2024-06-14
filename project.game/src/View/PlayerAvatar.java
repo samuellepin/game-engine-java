@@ -8,7 +8,7 @@ import java.io.IOException;
 import src.Model.Player;
 import src.Model.Collision.Hitbox;
 
-public class PlayerAvatar implements Avatar
+public class PlayerAvatar extends Avatar
 {
   private Player          m_player;
   private BufferedImage[] m_idleImg;
@@ -16,6 +16,7 @@ public class PlayerAvatar implements Avatar
   public PlayerAvatar( Player player )
   {
     m_player = player;
+    m_entity = player;
     try
     {
       m_idleImg = AvatarFactory.loadSprite( "resources/Spy/SMS_Adv_Idle_Gun_1_strip4.png", 1, 4 );
@@ -32,8 +33,7 @@ public class PlayerAvatar implements Avatar
   {
 //    g.setColor( Color.red );
 //    g.drawRect( (int)m_player.getVX(), (int)m_player.getVY(), (int)m_player.getWidth(), (int)m_player.getHeight() );
-    g.drawImage( m_idleImg[ 0 ], (int)m_player.getVX(), (int)m_player.getVY(), (int)m_player.getWidth(),
-        (int)m_player.getHeight(), null );
+    g.drawImage( m_idleImg[ 0 ], 0, 0, g.getClipBounds().width, g.getClipBounds().height, null );
 //    System.out.println( m_player.getPos() );
 //    System.out.println( m_player.getHitbox().getMin() );
 //    System.out.println( m_player.getHitbox().getMax() );

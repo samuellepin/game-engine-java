@@ -10,7 +10,7 @@ import src.Model.Model;
 import src.Model.Rectangle;
 import src.Model.Vector;
 
-public class LightAvatar implements Avatar
+public class LightAvatar extends Avatar
 {
   private Light       m_light;
   private Color       m_color;
@@ -19,6 +19,7 @@ public class LightAvatar implements Avatar
   public LightAvatar( Light light )
   {
     m_light = light;
+    m_entity = light;
     m_color = new Color( 1.0f, 1.0f, 0.0f, 1f );
   }
 

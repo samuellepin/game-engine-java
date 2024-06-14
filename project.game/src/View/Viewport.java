@@ -1,34 +1,41 @@
 package src.View;
 
+import java.awt.Component;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
 
-import src.Model.Camera;
+import src.Model.Entity;
+import src.Model.EntityTracker;
+import src.Model.Model;
 import src.Model.Vector;
 
-public class Viewport
+public class Viewport extends Component
 {
-  JFrame                      m_frame;
-  Camera                      m_cam;
-  private ArrayList< Avatar > m_avatars;
-  /* Width and height of the viewport in pixels */
-  int                         m_width, m_height;
+  EntityTracker m_tracker;
+  Image         m_background;
+  Model         m_model;
 
-  public Viewport( JFrame frame, Camera cam, ArrayList< Avatar > avatars )
+  public Viewport( Image background, Entity e, Model model, int x, int y, int width, int height )
   {
-    m_frame = frame;
-    m_cam = cam;
-    m_avatars = avatars;
+    this.setBounds( x, y, width, height );
+    m_tracker = new EntityTracker( e, model, getWidth(), getHeight() );
+    m_background = background;
+    m_model = model;
+  }
 
-    m_width = frame.getWidth();
-    m_height = frame.getHeight();
+  public void setTrack( Entity e )
+  {
+    m_tracker = new EntityTracker( e, m_model, getWidth(), getHeight() );
   }
 
   public int metersToPixels( double d )
   {
-    double d_px = d * m_width / m_cam.getWidth();
+    Vector trackerDims = m_tracker.getDim();
+
+    double d_px        = d * this.getWidth() / trackerDims.getX();
 
     return (int)d_px;
   }
@@ -36,13 +43,29 @@ public class Viewport
   /* Converts the world position pos to a pixel coordinate on the viewport */
   public Vector worldPosToViewportPos( Vector pos )
   {
-    Vector cameraPos   = new Vector( pos.getX() - m_cam.getPos().getX(), pos.getY() - m_cam.getPos().getY() );
+    Vector cameraPos   = new Vector( pos.getX() - m_tracker.getPos().getX(), pos.getY() - m_tracker.getPos().getY() );
     Vector viewportPos = new Vector( metersToPixels( cameraPos.getX() ), metersToPixels( cameraPos.getY() ) );
     return new Vector( (int)viewportPos.getX(), (int)viewportPos.getY() );
   }
 
   public void paint( Graphics g )
   {
+    ArrayList< Entity > entities = m_tracker.getEntities();
 
+    for ( Entity e : entities )
+    {
+      Avatar avatar = AvatarFactory.make( e );
+
+      if( avatar != null )
+      {
+        Vector pos           = worldPosToViewportPos( new Vector( e.getX(), e.getY() ) );
+        int    avatar_x      = (int)pos.getX();
+        int    avatar_y      = (int)pos.getY();
+        int    avatar_width  = metersToPixels( e.getWidth() );
+        int    avatar_height = metersToPixels( e.getHeight() );
+
+        avatar.paint( g.create( avatar_x, avatar_y, avatar_width, avatar_height ) );
+      }
+    }
   }
 }
