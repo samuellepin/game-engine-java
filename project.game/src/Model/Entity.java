@@ -162,6 +162,12 @@ public abstract class Entity
     m_pos = pos;
     this.updateHitbox();
   }
+  
+  public void setPos( double x, double y )
+  {
+    m_pos.setX( x );
+    m_pos.setY( y );
+  }
 
   public void setWidth( double width )
   {

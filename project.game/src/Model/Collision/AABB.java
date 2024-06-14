@@ -59,8 +59,8 @@ public class AABB implements Hitbox
   {
     double minX = AABB.min( hitbox1.getMin().getX(), hitbox2.getMin().getX() );
     double minY = AABB.min( hitbox1.getMin().getY(), hitbox2.getMin().getY() );
-    double maxX = AABB.max( hitbox1.getMin().getX(), hitbox2.getMin().getX() );
-    double maxY = AABB.max( hitbox1.getMin().getY(), hitbox2.getMin().getY() );
+    double maxX = AABB.max( hitbox1.getMax().getX(), hitbox2.getMax().getX() );
+    double maxY = AABB.max( hitbox1.getMax().getY(), hitbox2.getMax().getY() );
     
     return new AABB( minX, minY, maxX, maxY );
   }

@@ -13,5 +13,4 @@ public class Player extends Entity
     super.setVelocity( 6 );
     super.updateHitbox();
   }
-  
 }
