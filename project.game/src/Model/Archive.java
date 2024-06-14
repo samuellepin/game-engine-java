@@ -1,11 +1,11 @@
 package src.Model;
 
-import src.AI.Automaton;
+import src.AI.FSM;
 
 ///< Documentation succinte de LUSTRE
 public class Archive extends Entity
 {
-  public Archive( Automaton automaton )
+  public Archive( FSM automaton )
   {
     super( null );
   }

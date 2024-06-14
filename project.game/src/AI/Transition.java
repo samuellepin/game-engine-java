@@ -34,4 +34,24 @@ public class Transition
   {
     return m_act;
   }
+
+  public void setSource( State st )
+  {
+    m_src = st;
+  }
+
+  public void setDestination( State dst )
+  {
+    m_dst = dst;
+  }
+
+  public void setCondition( Condition cond )
+  {
+    m_cond = cond;
+  }
+
+  public void setAction( Action act )
+  {
+    m_act = act;
+  }
 }

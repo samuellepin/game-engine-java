@@ -23,10 +23,12 @@ import gal.ast.Value;
 public class TestVisitor implements IVisitor
 {
 
+  private FSM m_fsm;
+
   @Override
   public Object visit( Category cat )
   {
-    System.out.println( "Category " + cat.toString());
+    System.out.println( "Category " + cat.toString() );
     return null;
   }
 
@@ -40,21 +42,21 @@ public class TestVisitor implements IVisitor
   @Override
   public Object visit( Key key )
   {
-    System.out.println( "Key " + key.toString()) ;
+    System.out.println( "Key " + key.toString() );
     return null;
   }
 
   @Override
   public Object visit( Value v )
   {
-    System.out.println( "Value " + v.toString());
+    System.out.println( "Value " + v.toString() );
     return null;
   }
 
   @Override
   public Object visit( Underscore u )
   {
-    System.out.println( "Underscore " + u.toString());
+    System.out.println( "Underscore " + u.toString() );
     return null;
   }
 
@@ -67,38 +69,41 @@ public class TestVisitor implements IVisitor
   @Override
   public void visit( FunCall funcall )
   {
-    System.out.println( "FunCall visit " + funcall.toString());
+    System.out.println( "FunCall visit " + funcall.toString() );
   }
 
   @Override
   public void exit( FunCall funcall )
   {
-    System.out.println( "FunCall exit " + funcall.toString());
+    System.out.println( "FunCall exit " + funcall.toString() );
   }
 
   @Override
   public Object build( FunCall funcall, List< Object > parameters )
   {
     System.out.println( "FunCall build " );
+    if(funcall.name == "Cell") {
+      return null;
+    }
     return null;
   }
 
   @Override
   public void enter( BinaryOp binop )
   {
-    System.out.println( "BinaryOP enter " + binop.toString());
+    System.out.println( "BinaryOP enter " + binop.toString() );
   }
 
   @Override
   public void visit( BinaryOp binop )
   {
-    System.out.println( "BinaryOp visit " + binop.toString());
+    System.out.println( "BinaryOp visit " + binop.toString() );
   }
 
   @Override
   public void exit( BinaryOp binop )
   {
-    System.out.println( "BinaryOp exit " + binop.toString());
+    System.out.println( "BinaryOp exit " + binop.toString() );
   }
 
   @Override
@@ -111,26 +116,26 @@ public class TestVisitor implements IVisitor
   @Override
   public void enter( UnaryOp unop )
   {
-    System.out.println( "UnaryOp enter " + unop.toString());
+    System.out.println( "UnaryOp enter " + unop.toString() );
   }
 
   @Override
   public void exit( UnaryOp unop )
   {
-    System.out.println( "UnaryOp exit " + unop.toString());
+    System.out.println( "UnaryOp exit " + unop.toString() );
   }
 
   @Override
   public Object build( UnaryOp unop, Object expression )
   {
-    System.out.println( "UnaryOp build " + unop.toString() + ":\n" + expression.toString());
+    System.out.println( "UnaryOp build " + unop.toString() + ":\n" + expression.toString() );
     return null;
   }
 
   @Override
   public Object visit( State state )
   {
-    System.out.println( "State " + state.toString());
+    System.out.println( "State " + state.toString() );
     return null;
   }
 
@@ -175,7 +180,7 @@ public class TestVisitor implements IVisitor
   @Override
   public void exit( Condition condition )
   {
-    System.out.println( "Condition exit" + condition.toString());
+    System.out.println( "Condition exit" + condition.toString() );
   }
 
   @Override
@@ -188,25 +193,25 @@ public class TestVisitor implements IVisitor
   @Override
   public void enter( Actions action )
   {
-    System.out.println( "Actions enter " + action.toString());
+    System.out.println( "Actions enter " + action.toString() );
   }
 
   @Override
   public void visit( Actions action )
   {
-    System.out.println( "Actions visit " + action.toString());
+    System.out.println( "Actions visit " + action.toString() );
   }
 
   @Override
   public void exit( Actions action )
   {
-    System.out.println( "Actions exit " + action.toString());
+    System.out.println( "Actions exit " + action.toString() );
   }
 
   @Override
   public Object build( Actions action, String operator, List< Object > funcalls )
   {
-    System.out.println( "Actions build ");
+    System.out.println( "Actions build " );
     return null;
   }
 
@@ -219,7 +224,7 @@ public class TestVisitor implements IVisitor
   @Override
   public void exit( Transition transition )
   {
-    System.out.println( "Transition exit " + transition.toString());
+    System.out.println( "Transition exit " + transition.toString() );
   }
 
   @Override
@@ -232,19 +237,23 @@ public class TestVisitor implements IVisitor
   @Override
   public void enter( Automaton automaton )
   {
-    System.out.println( "Automaton enter " + automaton.toString());
+    System.out.println( "\n" );
+    System.out.println( "-------------" + automaton.toString() + "-------------" );
+    System.out.println( "Automaton enter " + automaton.toString() );
+
+    m_fsm = new FSM();
   }
 
   @Override
   public void exit( Automaton automaton )
   {
-    System.out.println( "Automaton exit " + automaton.toString());
+    System.out.println( "Automaton exit " + automaton.toString() );
   }
 
   @Override
   public Object build( Automaton automaton, Object initial_state, List< Object > modes )
   {
-    System.out.println( "Automaton build ");
+    System.out.println( "Automaton build " );
     return null;
   }
 

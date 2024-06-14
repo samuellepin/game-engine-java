@@ -1,17 +1,18 @@
 package src.AI;
 
+import java.util.ArrayList;
+
 import gal.ast.AST;
 import gal.ast.IVisitor;
 import gal.parser.Parser;
 
 public class TestMain
 {
-  public static Object loadAutomata(String filename) {
-    Object fsm_list;
+  public static ArrayList<FSM>  loadAutomata(String filename) {
     try {
       AST ast = (AST) Parser.from_file(filename);
       TestVisitor visitor = new TestVisitor();
-      Object FSM_list = ast.accept( visitor );
+      ArrayList<FSM> FSM_list =(ArrayList<FSM> ) ast.accept( visitor );
       return FSM_list;
     } catch (Exception ex) {
       return null;
@@ -19,7 +20,7 @@ public class TestMain
   }
 
     public static void main(String[] args) {
-      loadAutomata("/home/samuel/Documents/cours-TP-TD/projet/g6/JavaProject/src/gal/demo/test/"
-          + "a03.gal");
+      loadAutomata("/home/samuel/Documents/cours-TP-TD/projet/g6/project.game/src/AI/test-FSM/"
+          + "fsm01.gal");
     }
 }
