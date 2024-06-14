@@ -24,8 +24,6 @@ public class View
   {
     m_model = Model.getInstance();
     m_viewports = new Viewport[ 1 ];
-
-    m_viewports[ 0 ] = new Viewport( m_model.getPlayer(), m_model, 0, 0, m_width, m_height );
   }
 
   public void paint( Graphics g )
