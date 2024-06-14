@@ -15,7 +15,7 @@ public class CanvasListener implements GameCanvasListener
   CanvasListener( Game game )
   {
     m_game = game;
-    m_model = m_game.getModel();
+    m_model = Model.getInstance();
   }
 
   @Override
@@ -84,20 +84,16 @@ public class CanvasListener implements GameCanvasListener
   public void keyPressed( KeyEvent e )
   {
 //    System.out.println( "Key pressed: " + e.getKeyChar() + " code=" + e.getKeyCode() );
-    double offset = 8;
-    switch( e.getKeyCode() )
+    double orientations[] = { -Math.PI, -Math.PI/2, 0, Math.PI/2 };
+    int code = e.getKeyCode();
+    switch( code )
     {
-    case 38: // UP
-      Model.translateViewport( 0, -offset );
-      break;
-    case 40: // DOWN
-      Model.translateViewport( 0, offset );
-      break;
     case 37: // LEFT
-      Model.translateViewport( -offset, 0 );
-      break;
+    case 38: // UP
     case 39: // RIGHT
-      Model.translateViewport( offset, 0 );
+    case 40: // DOWN
+      m_model.getPlayer().turn( orientations[ code - 37 ] );
+      m_model.getPlayer().move();
       break;
     }
     Model.updateViewPos();

@@ -12,20 +12,20 @@ import src.Model.Vector;
 
 public class View
 {
-  private GameCanvas          m_canvas;
+  private static final View   INSTANCE = new View();
+
   private Model               m_model;
   private ArrayList< Avatar > m_avatars;
-  private LightAvatar         m_lightAvatar;
   private MapAvatar           m_mapAvatar;
   private PlayerAvatar        m_playerAvatar;
+  private PlayerAvatar        m_opponentAvatar;
 
-  public View( Model model, GameCanvas canvas )
+  private View()
   {
-    m_canvas = canvas;
-    m_model = model;
+    m_model = Model.getInstance();
     m_avatars = new ArrayList<>();
 
-    ArrayList< Entity > entities = model.getEntities();
+    ArrayList< Entity > entities = m_model.getEntities();
     for ( Entity e : entities )
     {
       try
@@ -37,10 +37,10 @@ public class View
         e1.printStackTrace();
       }
     }
-    
-    m_lightAvatar = new LightAvatar( m_model.getLight(), entities );
+
     m_mapAvatar = new MapAvatar( m_model.getMap() );
     m_playerAvatar = new PlayerAvatar( Model.getPlayer() );
+    m_opponentAvatar = new PlayerAvatar( Model.getOpponent() );
   }
 
   public void paint( Graphics g )
@@ -48,15 +48,22 @@ public class View
     g.setColor( Color.black );
     g.fillRect( 0, 0, 1000, 1000 );
 //    g.fillRect( 0, 0, m_canvas.getWidth(), m_canvas.getHeight() );
-    
+
     m_mapAvatar.paint( g );
-    
+
     m_playerAvatar.paint( g );
+
+    m_opponentAvatar.paint( g );
 
     for ( Avatar avatar : m_avatars )
     {
       avatar.paint( g );
     }
 
+  }
+
+  public static View getInstance()
+  {
+    return INSTANCE;
   }
 }
