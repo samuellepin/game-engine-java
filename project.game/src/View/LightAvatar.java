@@ -12,6 +12,7 @@ import src.Model.Vector;
 
 public class LightAvatar extends Avatar
 {
+  private static final long serialVersionUID = 1L;
   private Light       m_light;
   private Color       m_color;
   ArrayList< Entity > m_entities;
@@ -35,7 +36,7 @@ public class LightAvatar extends Avatar
     double radius = 10 * m_light.getRadius();
 
     Vector points[] = rect.getPoints();
-    Vector playerPos = Model.getPlayerPos();
+    Vector playerPos = Model.getInstance().getPlayerPos();
 
     int minIdx = -1;
     double minAngle = 0;
@@ -88,7 +89,7 @@ public class LightAvatar extends Avatar
   public void paint( Graphics g )
   {
     double width  = 2 * m_light.getRadius();
-    Vector pos    = Model.getPlayerPos();
+    Vector pos    = Model.getInstance().getPlayerPos();
     double posX   = pos.getVX() - m_light.getRadius();
     double posY   = pos.getVY() - m_light.getRadius();
 

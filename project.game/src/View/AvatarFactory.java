@@ -11,6 +11,7 @@ import src.Model.Entity;
 import src.Model.Light;
 import src.Model.Player;
 import src.Model.Rectangle;
+import src.Model.Wall;
 
 public class AvatarFactory
 {
@@ -27,6 +28,10 @@ public class AvatarFactory
     else if( e instanceof Player )
     {
       return new PlayerAvatar( (Player)e );
+    }
+    else if ( e instanceof Wall)
+    {
+      return new WallAvatar( (Wall) e);
     }
 
     // TODO return default avatar if the entity is unknown

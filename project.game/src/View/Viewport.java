@@ -2,10 +2,7 @@ package src.View;
 
 import java.awt.Component;
 import java.awt.Graphics;
-import java.awt.Image;
 import java.util.ArrayList;
-
-import javax.swing.JFrame;
 
 import src.Model.Entity;
 import src.Model.EntityTracker;
@@ -14,19 +11,20 @@ import src.Model.Vector;
 
 public class Viewport extends Component
 {
+  private static final long serialVersionUID = 1L;
   EntityTracker m_tracker;
   Model         m_model;
 
-  public Viewport( Entity e, Model model, int x, int y, int width, int height )
+  public Viewport( Entity e, int x, int y, int width, int height )
   {
     this.setBounds( x, y, width, height );
-    m_tracker = new EntityTracker( e, model, getWidth(), getHeight() );
-    m_model = model;
+    m_tracker = new EntityTracker( e, getWidth(), getHeight() );
+    m_model = Model.getInstance();
   }
 
   public void setTrack( Entity e )
   {
-    m_tracker = new EntityTracker( e, m_model, getWidth(), getHeight() );
+    m_tracker = new EntityTracker( e, getWidth(), getHeight() );
   }
 
   public int metersToPixels( double d )

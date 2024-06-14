@@ -1,19 +1,17 @@
 package src.Model.World;
 
-import src.Model.Entity;
 import src.Model.Vector;
 import src.Model.Collision.AABB;
 
-public class Tile extends Entity
+public class Tile
 {
   private TILE_TYPE m_type;
+  private AABB      m_hitbox;
 
   public Tile( TILE_TYPE type, double x, double y )
   {
-    super( null );
     m_type = type;
     m_hitbox = new AABB( new Vector( x, y ), new Vector( x + Map.TILE_WIDTH, y + Map.TILE_HEIGHT ) );
-    super.setPos( x, y );
   }
 
   public TILE_TYPE getType()
@@ -28,5 +26,10 @@ public class Tile extends Entity
     {
       m_hitbox = null;
     }
+  }
+
+  public AABB getHitbox()
+  {
+    return m_hitbox;
   }
 }

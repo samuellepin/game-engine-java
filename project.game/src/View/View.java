@@ -2,13 +2,9 @@ package src.View;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.util.ArrayList;
 
 import info3.game.graphics.GameCanvas;
-import src.Game;
-import src.Model.Entity;
 import src.Model.Model;
-import src.Model.Vector;
 
 public class View
 {
@@ -40,7 +36,7 @@ public class View
     this.m_canvas = canvas;
     m_width = m_canvas.getWidth();
     m_height = m_canvas.getHeight();
-    m_viewports[ 0 ] = new Viewport( m_model.getPlayer(), m_model, 0, 0, m_width, m_height );
+    m_viewports[ 0 ] = new Viewport( m_model.getPlayer(), 0, 0, m_width, m_height );
   }
 
   public static View getInstance()

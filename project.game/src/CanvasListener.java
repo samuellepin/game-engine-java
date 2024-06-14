@@ -92,11 +92,11 @@ public class CanvasListener implements GameCanvasListener
     case 38: // UP
     case 39: // RIGHT
     case 40: // DOWN
-      Model.getPlayer().doTurn( orientations[ code - 37 ] );
-      Model.getPlayer().doMove( orientations[ code - 37 ] );
+      Model.getInstance().getPlayer().doTurn( orientations[ code - 37 ] );
+      Model.getInstance().getPlayer().doMove( orientations[ code - 37 ] );
       break;
     }
-    Model.updateViewPos();
+    Model.getInstance().updateViewPos();
   }
 
   @Override

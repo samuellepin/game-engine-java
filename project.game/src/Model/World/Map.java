@@ -2,20 +2,16 @@ package src.Model.World;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.Random;
 
-import src.Model.Archive;
 import src.Model.Config;
 import src.Model.Entity;
 import src.Model.Vector;
-import src.Model.Collision.AABB;
 import src.Model.Collision.Collision;
 
 public class Map
 {
   private Tile[][]          m_tiles;
-  private Archive           m_archive;
   private Random            m_rand;
 //  private ArrayList< AABB > m_hitbox;
 
@@ -54,7 +50,6 @@ public class Map
   {
     m_rand = new Random();
     m_rand.setSeed( Config.SEED );
-    m_archive = new Archive( null );
     m_tiles = new Tile[ ROWS_NUM ][ COLS_NUM ];
     for ( int i = 0; i < ROWS_NUM; i++ )
     {

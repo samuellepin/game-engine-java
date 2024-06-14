@@ -34,7 +34,7 @@ public class Opponent extends Player
     // theta = Arctan( QP/EQ )
     super.setOrientation( Math.atan2( EP.getY(), EP.getX() ) );
     
-    move();
+    doMove(m_orientation);
   }
   
   @Override
@@ -45,7 +45,7 @@ public class Opponent extends Player
     
     if( m_wait > WAIT_TIME_BEFORE_MOVING )
     {
-      follow( Model.getPlayer() );
+      follow( Model.getInstance().getPlayer() );
       m_wait -= WAIT_TIME_BEFORE_MOVING;
     }
     

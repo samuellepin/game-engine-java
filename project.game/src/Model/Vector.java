@@ -41,7 +41,7 @@ public class Vector
   
   public double getVX() ///< Position dans la vue 
   {
-    return m_x + Model.getViewPos().getX();
+    return m_x + Model.getInstance().getViewPos().getX();
   }
 
   public double getY()
@@ -51,7 +51,7 @@ public class Vector
 
   public double getVY()
   {
-    return m_y + Model.getViewPos().getY();
+    return m_y + Model.getInstance().getViewPos().getY();
   }
 
   public void setPos( double x, double y )

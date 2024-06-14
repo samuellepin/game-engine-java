@@ -10,7 +10,7 @@ import src.Model.Collision.AABB;
  */
 public class EntityTracker
 {
-  private static final int    RATIO_MAP = 10;
+  private static final int    RATIO_MAP = 5;
 
   private Entity              m_e;
   private Model               m_model;
@@ -38,10 +38,10 @@ public class EntityTracker
     }
   }
 
-  public EntityTracker( Entity e, Model model, int ratio_w, int ratio_h )
+  public EntityTracker( Entity e, int ratio_w, int ratio_h )
   {
     m_e = e;
-    m_model = model;
+    m_model = Model.getInstance();
     double width = m_model.getMap().getWidth() / RATIO_MAP;
     m_dim = new Vector( width, width * ratio_h / ratio_w );
     m_pos = new Vector(0,0);

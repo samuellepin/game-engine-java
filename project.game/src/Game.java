@@ -5,7 +5,6 @@ import java.awt.FlowLayout;
 import java.awt.Graphics;
 
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 
 import info3.game.graphics.GameCanvas;
 import src.Model.Model;

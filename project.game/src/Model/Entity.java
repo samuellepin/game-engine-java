@@ -16,7 +16,6 @@ public abstract class Entity
   protected double        m_orientation;
   protected double        m_velocity;
   protected AABB          m_hitbox;
-  protected Model         m_model = Model.getInstance();
   protected EntityTracker m_tracker;
 
   public Entity( Automaton automaton )
@@ -45,6 +44,7 @@ public abstract class Entity
   public void tick( long elapsed )
   {
     m_elapsedTime = elapsed;
+    callListener();
   }
 
   public void doWait()
@@ -72,7 +72,7 @@ public abstract class Entity
   }
   
   private void callListener () {
-    for (EntityTracker tracker : m_model.getTrackers()) {
+    for (EntityTracker tracker : Model.getInstance().getTrackers()) {
       if (!tracker.getEntities().contains( this ) && Collision.detect( m_hitbox, tracker.getHitbox() )) {
         tracker.getListener().entered( this );
       }
