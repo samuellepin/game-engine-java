@@ -10,7 +10,7 @@ import src.Model.Collision.AABB;
  */
 public class EntityTracker
 {
-  private static final int    RATIO_MAP = 5;
+  private static final double    RATIO_MAP = 1.5;
 
   private Entity              m_e;
   private Model               m_model;

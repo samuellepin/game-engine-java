@@ -33,7 +33,7 @@ public class PlayerAvatar extends Avatar
   {
 //    g.setColor( Color.red );
 //    g.drawRect( (int)m_player.getVX(), (int)m_player.getVY(), (int)m_player.getWidth(), (int)m_player.getHeight() );
-    g.drawImage( m_idleImg[ 0 ], 0, 0, g.getClipBounds().width, g.getClipBounds().height, null );
+    g.drawImage( m_idleImg[ 0 ], 0, 0, g.getClipBounds().width - 1, g.getClipBounds().height - 1, null );
 //    System.out.println( m_player.getPos() );
 //    System.out.println( m_player.getHitbox().getMin() );
 //    System.out.println( m_player.getHitbox().getMax() );
