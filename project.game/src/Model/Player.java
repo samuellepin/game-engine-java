@@ -43,7 +43,9 @@ public class Player extends Entity
   public void repulse()
   {
     m_orientation += Math.PI;
-    move();
+    double d       = 4;
+    m_pos = m_pos.add( d * Math.cos( m_orientation ), d * Math.sin( m_orientation ) );
+    super.updateHitbox();
   }
 
   public Circle getVisionField()
