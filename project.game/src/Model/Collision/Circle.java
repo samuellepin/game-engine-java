@@ -12,6 +12,12 @@ public class Circle implements Hitbox
     m_center = center;
     m_radius = radius;
   }
+  
+  public Circle( double x, double y, double radius )
+  {
+    m_center = new Vector( x, y );
+    m_radius = radius;
+  }
 
   public void setRadius( double radius )
   {
