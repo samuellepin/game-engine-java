@@ -14,7 +14,7 @@ public class CircularHitboxAvatar
   public static void paint( Graphics g, Circle hitbox )
   {
     if( hitbox == null ) return;
-
+ 
     Vector c = hitbox.getCenter();
     double r = hitbox.getRadius();
     int dim = (int)(2 * r);

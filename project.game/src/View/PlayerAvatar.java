@@ -31,7 +31,7 @@ public class PlayerAvatar implements Avatar
   @Override
   public void paint( Graphics g )
   {
-    CircularHitboxAvatar.paint( g, new Circle( m_player.getPos(), 150.0 ) );
+    CircularHitboxAvatar.paint( g, new Circle( m_player.getPos(), 150 ) );
     g.drawImage( m_idleImg[ 0 ], (int)m_player.getVX(), (int)m_player.getVY(), (int)m_player.getWidth(),
         (int)m_player.getHeight(), null );
     AABBAvatar.paint( g, m_player.getHitbox() );
