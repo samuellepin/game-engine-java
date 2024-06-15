@@ -4,14 +4,10 @@ import src.AI.Automaton;
 
 public class Opponent extends Player
 {
-  public static final int WAIT_TIME_BEFORE_MOVING = 100;
-  long m_wait;
-  
   public Opponent( Automaton automaton )
   {
     super( automaton );
-    super.setVelocity( 5 );
-    m_wait = 0;
+    super.setVelocity( 0.1 );
   }
   
   /*
@@ -33,7 +29,6 @@ public class Opponent extends Player
     Vector EP = Vector.sub( OP, OE ); 
     // theta = Arctan( QP/EQ )
     super.setOrientation( Math.atan2( EP.getY(), EP.getX() ) );
-    
     move();
   }
   
@@ -41,14 +36,7 @@ public class Opponent extends Player
   public void tick( long elapsed )
   {
     m_elapsedTime = elapsed;
-    m_wait += elapsed;
-    
-    if( m_wait > WAIT_TIME_BEFORE_MOVING )
-    {
-      follow( Model.getPlayer() );
-      m_wait -= WAIT_TIME_BEFORE_MOVING;
-    }
-    
+    follow( Model.getPlayer() );
   }
   
 }
