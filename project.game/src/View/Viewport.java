@@ -20,6 +20,7 @@ public class Viewport extends Component
     this.setBounds( x, y, width, height );
     m_tracker = new EntityTracker( e, getWidth(), getHeight() );
     m_model = Model.getInstance();
+    m_model.getTrackers().add( m_tracker );
   }
 
   public void setTrack( Entity e )
