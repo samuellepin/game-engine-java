@@ -60,16 +60,6 @@ public abstract class Entity
     return m_pos.getY();
   }
 
-  public double getVX()
-  {
-    return m_pos.getVX() - this.getWidth() / 2;
-  }
-
-  public double getVY()
-  {
-    return m_pos.getVY() - this.getHeight() / 2;
-  }
-
   public void setPos( Vector pos )
   {
     m_pos = pos;
@@ -135,5 +125,15 @@ public abstract class Entity
   public AABB getHitbox()
   {
     return m_hitbox;
+  }
+  
+  public void turn( double theta )
+  {
+    
+  }
+  
+  public void move()
+  {
+    
   }
 }

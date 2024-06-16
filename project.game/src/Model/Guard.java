@@ -2,9 +2,9 @@ package src.Model;
 
 import src.AI.Automaton;
 
-public class Opponent extends Player
+public class Guard extends Spy
 {
-  public Opponent( Automaton automaton )
+  public Guard( Automaton automaton )
   {
     super( automaton );
     super.setVelocity( 0.1 );
@@ -36,7 +36,7 @@ public class Opponent extends Player
   public void tick( long elapsed )
   {
     m_elapsedTime = elapsed;
-    follow( Model.getPlayer() );
+    follow( Model.getInstance().getPlayer1() );
   }
   
 }

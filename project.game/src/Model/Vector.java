@@ -38,20 +38,10 @@ public class Vector
   {
     return m_x;
   }
-  
-  public double getVX() ///< Position dans la vue 
-  {
-    return m_x + Model.getViewPos().getX();
-  }
 
   public double getY()
   {
     return m_y;
-  }
-
-  public double getVY()
-  {
-    return m_y + Model.getViewPos().getY();
   }
 
   public void setPos( double x, double y )
@@ -125,11 +115,9 @@ public class Vector
   @Override
   public String toString()
   {
-    return "(mx=" + this.getX() 
-         + ", my=" + this.getY() 
-         + ", vx=" + this.getVX()
-         + ", vy=" + this.getVY()
-         + ")";
+    return "( x = " + this.getX() 
+         + ", y = " + this.getY()
+         + " )";
   }
 
   /// < Pas de cross product, on est en 2D

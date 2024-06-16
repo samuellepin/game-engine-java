@@ -6,20 +6,14 @@ import java.awt.Graphics;
 import src.Model.Collision.AABB;
 import src.Model.Collision.Hitbox;
 
-public class AABBAvatar 
+public class AABBAvatar extends Avatar
 {
-  public static void paint( Graphics g, AABB hitbox )
+  private static final Color COLOR = new Color( 255, 255, 0, 180 );
+  
+  @Override
+  public void paint( Graphics g )
   {
-    if( hitbox == null ) return;
-    g.setColor( Color.red );
-    g.drawRect( 
-        (int)hitbox.getMin().getVX(), 
-        (int)hitbox.getMin().getVY(), 
-        (int)hitbox.getWidth(),
-        (int)hitbox.getHeight() );
-//    System.out.println( (int)hitbox.getMin().getVX() 
-//        + ", " + (int)hitbox.getMin().getVY()
-//        + ", " +  (int)hitbox.getMax().getVX() 
-//        + ", " +  (int)hitbox.getMax().getVY() );
+    g.setColor( COLOR );
+    g.drawRect( 0, 0, this.getWidth( g )-1, this.getHeight( g )-1 );
   }
 }

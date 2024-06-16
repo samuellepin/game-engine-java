@@ -6,24 +6,31 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import src.*;
 import src.Model.Entity;
 import src.Model.Light;
-import src.Model.Rectangle;
+import src.Model.Spy;
+import src.Model.Wall;
 
 public class AvatarFactory
 {
-  public static Avatar make( Entity e ) throws Exception
+  public static Avatar make( Entity e )
   {
     if( e instanceof Light )
     {
       return new LightAvatar( (Light)e );
     }
-    else if( e instanceof Rectangle )
+    else if( e instanceof Spy )
     {
-      return new RectangleAvatar( (Rectangle)e );
+      return new SpyAvatar( (Spy)e );
     }
-    throw new Exception( "Unknow entity" );
+    else if( e instanceof Wall )
+    {
+      return new WallAvatar( (Wall)e );
+    }
+
+    // TODO return default avatar if the entity is unknown
+    // throw new Exception( "Unknow entity" );
+    return null;
   }
 
   public static BufferedImage loadImage( String filename ) throws IOException

@@ -10,7 +10,7 @@ import src.Model.World.Map;
 import src.Model.World.TILE_TYPE;
 import src.Model.World.Tile;
 
-public class TileAvatar implements Avatar
+public class TileAvatar extends Avatar
 {
   private static BufferedImage m_floorImg;
   private Tile                 m_tile;
@@ -61,19 +61,18 @@ public class TileAvatar implements Avatar
   @Override
   public void paint( Graphics g )
   {
-    TILE_TYPE     type = m_tile.getType();
-//    g.setColor( this.getColor( type ) );
-    BufferedImage img  = this.getImage( type );
-    Vector        pos  = m_tile.getPos();
+    TILE_TYPE     type  = m_tile.getType();
+    Color         color = this.getColor( type );
+    BufferedImage img   = this.getImage( type );
     if( img != null )
     {
-      g.drawImage( m_floorImg, (int)pos.getVX(), (int)pos.getVY(), Map.TILE_WIDTH, Map.TILE_HEIGHT, null );
+      g.drawImage( m_floorImg, 0, 0, this.getWidth( g ), this.getHeight( g ), null );
     }
-//    else
-//    {
-//      g.fillRect( (int)pos.getVX(), (int)pos.getVY(), Map.TILE_WIDTH, Map.TILE_HEIGHT );
-//    }
-    AABBAvatar.paint( g, m_tile.getHitbox() );
+    else
+    {
+      g.setColor( color );
+      g.drawRect( 0, 0, this.getWidth( g ), this.getHeight( g ) );
+    }
   }
 
 }

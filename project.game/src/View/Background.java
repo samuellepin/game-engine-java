@@ -3,12 +3,12 @@ import java.awt.Graphics;
 
 import src.Model.World.Map;
 
-public class MapAvatar implements Avatar
+public class Background extends Avatar
 {
   private Map            m_map;
   private TileAvatar[][] m_tiles;
 
-  public MapAvatar( Map map )
+  public Background( Map map )
   {
     m_map = map;
     m_tiles = new TileAvatar[ Map.ROWS_NUM ][ Map.COLS_NUM ];
@@ -24,12 +24,12 @@ public class MapAvatar implements Avatar
   @Override
   public void paint( Graphics g )
   {
-    for ( int y = 0; y < Map.ROWS_NUM; y++ )
-    {
-      for ( int x = 0; x < Map.COLS_NUM; x++ )
-      {
-        m_tiles[ y ][ x ].paint( g );
-      }
-    }
+//    for ( int y = 0; y < Map.ROWS_NUM; y++ )
+//    {
+//      for ( int x = 0; x < Map.COLS_NUM; x++ )
+//      {
+//        m_tiles[ y ][ x ].paint( g );
+//      }
+//    }
   }
 }

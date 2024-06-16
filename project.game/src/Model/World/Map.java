@@ -9,6 +9,7 @@ import src.Model.Archive;
 import src.Model.Config;
 import src.Model.Entity;
 import src.Model.Vector;
+import src.Model.Wall;
 import src.Model.Collision.AABB;
 import src.Model.Collision.Collision;
 
@@ -210,6 +211,27 @@ public class Map
   public double getHeight()
   {
     return (double) ( Map.ROWS_NUM * Map.TILE_HEIGHT );
+  }
+
+  public ArrayList<Entity> getEntities()
+  {
+    ArrayList<Entity> entities = new ArrayList<>();
+    
+    for ( int y = 0; y < ROWS_NUM; y++ )
+    {
+      for ( int x = 0; x < COLS_NUM; x++ )
+      {
+        if( this.getTile( x, y ).getType() == TILE_TYPE.WALL )
+        {
+          Wall wall = new Wall( null );
+          wall.setPos( x * Map.TILE_WIDTH, y * Map.TILE_HEIGHT );
+          wall.setDim( Map.TILE_WIDTH, Map.TILE_HEIGHT );
+          entities.add( wall );
+        }
+      }
+    }
+    
+    return entities;
   }
 
 }

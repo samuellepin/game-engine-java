@@ -5,6 +5,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
 import info3.game.graphics.GameCanvasListener;
+import src.Model.Entity;
 import src.Model.Model;
 
 public class CanvasListener implements GameCanvasListener
@@ -86,17 +87,17 @@ public class CanvasListener implements GameCanvasListener
 //    System.out.println( "Key pressed: " + e.getKeyChar() + " code=" + e.getKeyCode() );
     double orientations[] = { -Math.PI, -Math.PI/2, 0, Math.PI/2 };
     int code = e.getKeyCode();
+    Entity player1 = Model.getInstance().getPlayer1();
     switch( code )
     {
     case 37: // LEFT
     case 38: // UP
     case 39: // RIGHT
     case 40: // DOWN
-      m_model.getPlayer().turn( orientations[ code - 37 ] );
-      m_model.getPlayer().move();
+      player1.turn( orientations[ code - 37 ] );
+      player1.move();
       break;
     }
-    Model.updateViewPos();
   }
 
   @Override
