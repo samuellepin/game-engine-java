@@ -1,5 +1,6 @@
 package src.View;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -101,5 +102,7 @@ public class Viewport extends Component
         avatar.paint( g.create( avatar_x, avatar_y, avatar_width, avatar_height ) );
       }
     }
+    g.setColor( Color.black );
+    g.drawRect( 0, 0, this.getWidth(), this.getHeight() );
   }
 }
