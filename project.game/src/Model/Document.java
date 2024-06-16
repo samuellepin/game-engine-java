@@ -9,5 +9,6 @@ public class Document extends Entity
   {
     super( null );
     super.setDim( 25, 25 );
+    super.setHasCollision( false );
   }
 }

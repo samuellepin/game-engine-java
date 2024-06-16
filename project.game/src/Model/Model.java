@@ -34,6 +34,11 @@ public class Model
       m_entities.add( e );
     }
 
+    Document doc = new Document( null );
+    doc.setPos( m_map.getPos( 3, 3 ) );
+    m_entities.add( doc );
+    m_document = doc;
+    
     Spy spy = new Spy( null );
     spy.setPos( m_map.getPos( 5, 5 ) );
     this.setPlayer1( spy );
@@ -44,10 +49,13 @@ public class Model
     this.setPlayer2( guard );
     m_entities.add( guard );
 
-    Document doc = new Document( null );
-    doc.setPos( m_map.getPos( 3, 3 ) );
-    m_entities.add( doc );
-    m_document = doc;
+    guard = new Guard( null );
+    guard.setPos( m_map.getPos( 9, 9 ) );
+    m_entities.add( guard );
+
+    guard = new Guard( null );
+    guard.setPos( m_map.getPos( 1, 3 ) );
+    m_entities.add( guard );
     
   }
 

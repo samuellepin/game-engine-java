@@ -17,6 +17,7 @@ public abstract class Entity
   protected double    m_velocity;
   protected Circle    m_visionField;
   protected boolean   m_isMoving;
+  protected boolean   m_hasCollision;
 
   public Entity( Automaton automaton )
   {
@@ -25,6 +26,17 @@ public abstract class Entity
     m_elapsedTime = 0;
     m_hitbox = new AABB( 0, 0, 0, 0 );
     m_visionField = new Circle( this.getHitbox().getMin(), Config.VISION_FIELD_RADIUS );
+    m_hasCollision = true;
+  }
+  
+  public void setHasCollision( boolean hasCollision )
+  {
+    m_hasCollision = hasCollision;
+  }
+  
+  public boolean hasCollision()
+  {
+    return m_hasCollision;
   }
 
   public void setIsMoving( boolean isMoving )
@@ -131,10 +143,16 @@ public abstract class Entity
     }
     this.getHitbox().translate( d * Math.cos( m_orientation ), d * Math.sin( m_orientation ) );
     Model m = Model.getInstance();
-    if( Map.getInstance().detectCollision( this )
-        || Collision.detect( m.getPlayer1().getHitbox(), m.getPlayer2().getHitbox() ) )
+    if( Map.getInstance().detectCollision( this ) )
     {
       repulse();
+    }
+    for ( Entity e : Model.getInstance().getEntities() )
+    {
+      if( e != this && e.hasCollision() && Collision.detect( this.getHitbox(), e.getHitbox() ) )
+      {
+        e.repulse();
+      }
     }
   }
 
