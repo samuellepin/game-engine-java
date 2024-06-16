@@ -2,7 +2,6 @@ package src.Model;
 
 import java.util.ArrayList;
 
-import src.Game;
 import src.Model.World.Map;
 import src.View.View;
 
@@ -28,7 +27,7 @@ public class Model
     m_entities = new ArrayList< Entity >();
 
     m_map = Map.getInstance();
-    for( Entity e : Map.getInstance().getEntities() )
+    for ( Entity e : Map.getInstance().getWalls() )
     {
       m_entities.add( e );
     }
@@ -38,11 +37,13 @@ public class Model
     this.setPlayer1( spy );
     m_entities.add( spy );
 
+//    this.setPlayer2( spy );
+
     Guard guard = new Guard( null );
     guard.setPos( m_map.getPos( 7, 7 ) );
     this.setPlayer2( guard );
     m_entities.add( guard );
-    
+
   }
 
   public void tick( long elapsed )
@@ -68,12 +69,12 @@ public class Model
   {
     return m_player1;
   }
-  
+
   public void setPlayer1( Entity e )
   {
     m_player1 = e;
   }
-  
+
   public void setPlayer2( Entity e )
   {
     m_player2 = e;

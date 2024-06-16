@@ -8,7 +8,7 @@ public class Light extends Entity
   {
     super( null );
     m_radius = r;
-    m_pos = new Vector( x, y );
+    super.setPos( x, y );
   }
   
   public double getRadius()

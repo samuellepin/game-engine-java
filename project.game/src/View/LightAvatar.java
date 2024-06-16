@@ -84,7 +84,7 @@ public class LightAvatar extends Avatar
 //  }
 
   @Override
-  public void paint( Graphics g )
+  public void paint( Graphics g, int x, int y, int width, int height )
   {
 //    double width  = 2 * m_light.getRadius();
 //    Vector pos    = Model.getPlayerPos();

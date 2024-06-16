@@ -2,46 +2,22 @@ package src.Model.World;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.Random;
-
-import src.Model.Archive;
 import src.Model.Config;
 import src.Model.Entity;
 import src.Model.Vector;
 import src.Model.Wall;
-import src.Model.Collision.AABB;
 import src.Model.Collision.Collision;
 
 public class Map
 {
   private Tile[][]          m_tiles;
-  private Archive           m_archive;
   private Random            m_rand;
+  private ArrayList<Wall>   m_walls;
 //  private ArrayList< AABB > m_hitbox;
 
-  public static final int   TILE_WIDTH  = 100;
-  public static final int   TILE_HEIGHT = 100;
   public static final int   COLS_NUM    = 11;
   public static final int   ROWS_NUM    = 11;
-
-//  private void updateHitbox()
-//  {
-//    m_hitbox = new ArrayList<>();
-//    for ( int i = 0; i < ROWS_NUM; i++ )
-//    {
-//      for ( int j = 0; j < COLS_NUM; j++ )
-//      {
-//        m_hitbox.add( m_tiles[ i ][ j ].getHitbox() );
-//      }
-//    }
-//    
-//    // get optimal directions
-//    for( int i = 0; i < 4; i++ )
-//    {
-//      
-//    }
-//  }
 
   private static Map INSTANCE = new Map();
 
@@ -55,7 +31,6 @@ public class Map
   {
     m_rand = new Random();
     m_rand.setSeed( Config.SEED );
-    m_archive = new Archive( null );
     m_tiles = new Tile[ ROWS_NUM ][ COLS_NUM ];
     for ( int i = 0; i < ROWS_NUM; i++ )
     {
@@ -63,26 +38,37 @@ public class Map
       {
         if( ( i % 2 != 0 ) && ( j % 2 != 0 ) )
         {
-          m_tiles[ i ][ j ] = new Tile( TILE_TYPE.EMPTY, (double) ( j * Map.TILE_WIDTH ),
-              (double) ( i * Map.TILE_HEIGHT ) );
+          m_tiles[ i ][ j ] = new Tile( TILE_TYPE.EMPTY, (double) ( j * Tile.WIDTH ),
+              (double) ( i * Tile.HEIGHT ) );
         }
         else
         {
-          m_tiles[ i ][ j ] = new Tile( TILE_TYPE.WALL, (double) ( j * Map.TILE_WIDTH ),
-              (double) ( i * Map.TILE_HEIGHT ) );
+          m_tiles[ i ][ j ] = new Tile( TILE_TYPE.WALL, (double) ( j * Tile.WIDTH ),
+              (double) ( i * Tile.HEIGHT ) );
         }
       }
     }
 
-    System.out.println( this.toString() );
-
     createPath( 1, 1 );
-
-    System.out.println( this.toString() );
-
     createRoom( ( new Random() ).nextInt() % 60 + 40 );
-
     System.out.println( this.toString() );
+
+    m_walls = new ArrayList<>();
+    
+    for ( int y = 0; y < ROWS_NUM; y++ )
+    {
+      for ( int x = 0; x < COLS_NUM; x++ )
+      {
+        if( this.getTile( x, y ).getType() == TILE_TYPE.WALL )
+        {
+          Wall wall = new Wall( null );
+          wall.setPos( x * Tile.WIDTH, y * Tile.HEIGHT );
+          wall.setDim( Tile.WIDTH, Tile.HEIGHT );
+          m_walls.add( wall );
+        }
+      }
+    }    
+    
   }
 
   public Tile getTile( int x, int y )
@@ -184,20 +170,17 @@ public class Map
 
   public Vector getPos( int x, int y )
   {
-    return new Vector( (double) ( x * Map.TILE_WIDTH ) + (double)Map.TILE_WIDTH / 2,
-        (double) ( y * Map.TILE_HEIGHT ) + (double)Map.TILE_HEIGHT / 2 );
+    return new Vector( (double) ( x * Tile.WIDTH ) + (double)Tile.WIDTH / 2,
+        (double) ( y * Tile.HEIGHT ) + (double)Tile.HEIGHT / 2 );
   }
 
   public boolean detectCollision( Entity entity )
   {
-    for ( int i = 0; i < ROWS_NUM; i++ )
+    for( Wall wall : m_walls )
     {
-      for ( int j = 0; j < COLS_NUM; j++ )
+      if( Collision.detect( entity.getHitbox(), wall.getHitbox() ) )
       {
-        if( Collision.detect( entity.getHitbox(), m_tiles[ i ][ j ].getHitbox() ) )
-        {
-          return true;
-        }
+        return true;
       }
     }
     return false;
@@ -205,33 +188,17 @@ public class Map
 
   public double getWidth()
   {
-    return (double) ( Map.COLS_NUM * Map.TILE_WIDTH );
+    return (double) ( Map.COLS_NUM * Tile.WIDTH );
   }
 
   public double getHeight()
   {
-    return (double) ( Map.ROWS_NUM * Map.TILE_HEIGHT );
+    return (double) ( Map.ROWS_NUM * Tile.HEIGHT );
   }
 
-  public ArrayList<Entity> getEntities()
+  public ArrayList<Wall> getWalls()
   {
-    ArrayList<Entity> entities = new ArrayList<>();
-    
-    for ( int y = 0; y < ROWS_NUM; y++ )
-    {
-      for ( int x = 0; x < COLS_NUM; x++ )
-      {
-        if( this.getTile( x, y ).getType() == TILE_TYPE.WALL )
-        {
-          Wall wall = new Wall( null );
-          wall.setPos( x * Map.TILE_WIDTH, y * Map.TILE_HEIGHT );
-          wall.setDim( Map.TILE_WIDTH, Map.TILE_HEIGHT );
-          entities.add( wall );
-        }
-      }
-    }
-    
-    return entities;
+    return m_walls;
   }
 
 }

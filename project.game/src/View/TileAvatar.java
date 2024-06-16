@@ -5,8 +5,6 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-import src.Model.Vector;
-import src.Model.World.Map;
 import src.Model.World.TILE_TYPE;
 import src.Model.World.Tile;
 
@@ -59,19 +57,19 @@ public class TileAvatar extends Avatar
   }
 
   @Override
-  public void paint( Graphics g )
+  public void paint( Graphics g, int x, int y, int width, int height )
   {
     TILE_TYPE     type  = m_tile.getType();
     Color         color = this.getColor( type );
     BufferedImage img   = this.getImage( type );
     if( img != null )
     {
-      g.drawImage( m_floorImg, 0, 0, this.getWidth( g ), this.getHeight( g ), null );
+      g.drawImage( m_floorImg, x, y, width, height, null );
     }
     else
     {
       g.setColor( color );
-      g.drawRect( 0, 0, this.getWidth( g ), this.getHeight( g ) );
+      g.drawRect( x, y, width, height );
     }
   }
 

@@ -1,19 +1,13 @@
 package src.View;
 
-import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Rectangle;
-import java.awt.Shape;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import src.Model.Spy;
-import src.Model.Collision.Circle;
-import src.Model.Collision.Hitbox;
 
 public class SpyAvatar extends Avatar
 {
-  private Spy             m_spy;
   private BufferedImage[] m_idleImg;
   private AABBAvatar      m_hitbox;
 
@@ -32,10 +26,10 @@ public class SpyAvatar extends Avatar
   }
 
   @Override
-  public void paint( Graphics g )
+  public void paint( Graphics g, int x, int y, int width, int height )
   {
-    g.drawImage( m_idleImg[ 0 ], 0, 0, this.getWidth(g), this.getHeight(g), null );
-    m_hitbox.paint( g );
+    g.drawImage( m_idleImg[ 0 ], x, y, width, height, null );
+    m_hitbox.paint( g, x, y, width, height );
   }
 
 }

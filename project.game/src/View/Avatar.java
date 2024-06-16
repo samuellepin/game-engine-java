@@ -8,20 +8,10 @@ public abstract class Avatar
 {
   protected Entity m_entity;
 
-  public abstract void paint( Graphics g );
+  public abstract void paint( Graphics g, int x, int y, int width, int height );
 
   public Entity getEntity()
   {
     return m_entity;
-  }
-
-  public int getWidth( Graphics g )
-  {
-    return (int)g.getClipBounds().getWidth();
-  }
-  
-  public int getHeight( Graphics g )
-  {
-    return (int)g.getClipBounds().getHeight();
   }
 }

@@ -119,6 +119,12 @@ public class Vector
          + ", y = " + this.getY()
          + " )";
   }
+  
+  public void translate( double x, double y )
+  {
+    m_x += x;
+    m_y += y;
+  }
 
   /// < Pas de cross product, on est en 2D
 

@@ -15,21 +15,18 @@ public class Spy extends Entity
     super( automaton );
     super.setDim( 25, 50 );
     super.setOrientation( 0 );
-    super.setVelocity( 6 );
-    super.updateHitbox();
-
+    super.setVelocity( 1 );
     m_visionField = new Circle( this.getPos(), 150.0 );
   }
 
   public void move()
   {
-    double d       = m_velocity * (double)m_elapsedTime;
-    Vector prevPos = m_pos;
-    m_pos = m_pos.add( d * Math.cos( m_orientation ), d * Math.sin( m_orientation ) );
-    super.updateHitbox();
-    if( Map.getInstance().detectCollision( this ) ) // || Collision.detect( Model.getPlayer2().getHitbox(), Model.getPlayer().getHitbox() 
+    double d = m_velocity * (double)m_elapsedTime;
+    super.getHitbox().translate( d * Math.cos( m_orientation ), d * Math.sin( m_orientation ) );
+    Model m = Model.getInstance();
+    if( Map.getInstance().detectCollision( this )
+        || Collision.detect( m.getPlayer1().getHitbox(), m.getPlayer2().getHitbox() ) )
     {
-      m_pos = prevPos;
       repulse();
     }
   }
@@ -42,9 +39,7 @@ public class Spy extends Entity
   public void repulse()
   {
     m_orientation += Math.PI;
-    double d       = 4;
-    m_pos = m_pos.add( d * Math.cos( m_orientation ), d * Math.sin( m_orientation ) );
-    super.updateHitbox();
+    move();
   }
 
   public Circle getVisionField()

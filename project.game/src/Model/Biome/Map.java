@@ -9,7 +9,6 @@ public class Map
 {
   private Tile[][]           m_tiles;
   private Random             m_random = new Random();
-  private Biome[]            m_biome_tab;
   private ArrayList< Biome > m_biomes;
   public static final int    COLS_NUM = 15;
   public static final int    ROWS_NUM = 15;
