@@ -8,15 +8,13 @@ import src.Model.World.Map;
 public class Spy extends Entity
 {
 
-  private Circle m_visionField;
-
   public Spy( Automaton automaton )
   {
     super( automaton );
     super.setDim( 25, 50 );
     super.setOrientation( 0 );
     super.setVelocity( 2 );
-    m_visionField = new Circle( this.getPos(), 150.0 );
+
   }
 
   public void move()

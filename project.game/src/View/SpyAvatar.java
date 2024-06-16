@@ -17,6 +17,7 @@ public class SpyAvatar extends Avatar
   @Override
   public void paint( Graphics g, int x, int y, int width, int height )
   {
+    super.paintVisionField( g, x, y );
     g.drawImage( AvatarFactory.m_idleSpyImg[ 0 ], x, y, width, height, null );
     super.paintHitbox( g, x, y, width, height );
   }

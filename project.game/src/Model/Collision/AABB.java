@@ -111,4 +111,11 @@ public class AABB implements Hitbox
 
     return new AABB( minX, minY, maxX, maxY );
   }
+  
+  @Override
+  public String toString()
+  {
+    return "(min=" + this.getMin().toString()
+        + ", " + "max=" + this.getMax().toString() + ")";
+  }
 }

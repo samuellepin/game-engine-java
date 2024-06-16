@@ -69,10 +69,10 @@ public class View
     posY += 16;
     g.drawString( "y = " + e.getY(), posX, posY );
     posY += 16;
-    g.drawString( "width = " + e.getWidth(), posX, posY );
-    posY += 16;
-    g.drawString( "height = " + e.getHeight(), posX, posY );
-    posY += 16 * 2;
+//    g.drawString( "width = " + e.getWidth(), posX, posY );
+//    posY += 16;
+//    g.drawString( "height = " + e.getHeight(), posX, posY );
+//    posY += 16 * 2;
 
     return posY;
   }

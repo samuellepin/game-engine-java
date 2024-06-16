@@ -39,8 +39,6 @@ public class Model
     this.setPlayer1( spy );
     m_entities.add( spy );
 
-//    this.setPlayer2( spy );
-
     Guard guard = new Guard( null );
     guard.setPos( m_map.getPos( 7, 7 ) );
     this.setPlayer2( guard );

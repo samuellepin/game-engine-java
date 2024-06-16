@@ -3,6 +3,7 @@ package src.Model;
 import src.AI.Automaton;
 import src.AI.State;
 import src.Model.Collision.AABB;
+import src.Model.Collision.Circle;
 
 public abstract class Entity
 {
@@ -12,6 +13,8 @@ public abstract class Entity
   protected AABB      m_hitbox;
   protected double    m_orientation;
   protected double    m_velocity;
+  protected Circle    m_visionField;
+  
 
   public Entity( Automaton automaton )
   {
@@ -19,6 +22,7 @@ public abstract class Entity
     if( m_automaton != null ) m_state = automaton.getInitialState();
     m_elapsedTime = 0;
     m_hitbox = new AABB( 0, 0, 0, 0 );
+    m_visionField = new Circle( this.getHitbox().getMin(), Config.VISION_FIELD_RADIUS );
   }
 
   public void tick( long elapsed )
@@ -94,6 +98,11 @@ public abstract class Entity
   public AABB getHitbox()
   {
     return m_hitbox;
+  }
+  
+  public Circle getVisionField()
+  {
+    return m_visionField;
   }
 
   public void turn( double theta )
