@@ -2,6 +2,7 @@ package src.Model;
 
 import java.util.ArrayList;
 
+import src.Model.Collision.Collision;
 import src.Model.World.Map;
 import src.View.View;
 
@@ -14,6 +15,7 @@ public class Model
   private boolean             m_isGameOver;
   private Entity              m_player1;
   private Entity              m_player2;
+  private Entity              m_document;
 
   public static Model getInstance()
   {
@@ -44,6 +46,11 @@ public class Model
     this.setPlayer2( guard );
     m_entities.add( guard );
 
+    Document doc = new Document( null );
+    doc.setPos( m_map.getPos( 3, 3 ) );
+    m_entities.add( doc );
+    m_document = doc;
+    
   }
 
   public void tick( long elapsed )
@@ -53,6 +60,10 @@ public class Model
       e.tick( elapsed );
     }
     View.getInstance().updateTrackers();
+    if( Collision.detect( m_player1.getHitbox(), m_document.getHitbox() ) )
+    {
+      m_isGameOver = true;
+    }
   }
 
   public boolean isGameOver()

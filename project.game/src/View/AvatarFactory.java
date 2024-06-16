@@ -15,7 +15,8 @@ import src.Model.Wall;
 public class AvatarFactory
 {
   public static BufferedImage[] m_idleSpyImg;
-  public static BufferedImage m_floorImg;
+  public static BufferedImage   m_floorImg;
+  public static BufferedImage   m_docImg;
 
   public static void Initialize()
   {
@@ -23,6 +24,7 @@ public class AvatarFactory
     {
       m_floorImg = AvatarFactory.loadImage( "resources/Tile_Brick.png" );
       m_idleSpyImg = AvatarFactory.loadSprite( "resources/Spy/SMS_Adv_Idle_Gun_1_strip4.png", 1, 4 );
+      m_docImg = AvatarFactory.loadImage( "resources/ConciseDocumentationOfLustre.png" );
     }
     catch ( IOException e )
     {

@@ -49,7 +49,8 @@ public class View
     }
 
     int halfWidth = Game.SCREEN_WIDTH / 2;
-    m_leftViewport = new Viewport( Model.getInstance().getPlayer1(), 0, 0, halfWidth, Game.SCREEN_HEIGHT, m_avatars, m_tileAvatars );
+    m_leftViewport = new Viewport( Model.getInstance().getPlayer1(), 0, 0, halfWidth, Game.SCREEN_HEIGHT, m_avatars,
+        m_tileAvatars );
     m_rightViewport = new Viewport( Model.getInstance().getPlayer2(), halfWidth, 0, halfWidth, Game.SCREEN_HEIGHT,
         m_avatars, m_tileAvatars );
   }
@@ -88,6 +89,15 @@ public class View
 
   public void paint( Graphics g )
   {
+    if( Model.getInstance().isGameOver() )
+    {
+      g.setColor( Color.black );
+      g.fillRect( 0, 0, Game.SCREEN_WIDTH, Game.SCREEN_HEIGHT );
+      g.setColor( Color.red );
+      g.drawString( "Game Over", Game.SCREEN_WIDTH/2 - 20, Game.SCREEN_HEIGHT/2 );
+      return;
+    }
+    
     Graphics g1 = g.create( m_leftViewport.getX(), m_leftViewport.getY(), m_leftViewport.getWidth(),
         m_leftViewport.getHeight() );
     m_leftViewport.setColor( Color.red );
