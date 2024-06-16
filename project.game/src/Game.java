@@ -52,14 +52,14 @@ public class Game
   private Game() throws Exception
   {
     m_model = Model.getInstance();
-    
+
     m_view = View.getInstance();
-    
+
     m_listener = new CanvasListener( this );
-    
+
     m_canvas = new GameCanvas( m_listener );
     m_canvas.setSize( new Dimension( SCREEN_WIDTH, SCREEN_HEIGHT ) );
-    
+
     m_frame = m_canvas.createFrame( new Dimension( SCREEN_WIDTH, SCREEN_HEIGHT ) );
     m_frame.setTitle( "Metal Gear" );
     m_frame.setLayout( new FlowLayout() );

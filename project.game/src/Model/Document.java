@@ -3,10 +3,11 @@ package src.Model;
 import src.AI.Automaton;
 
 ///< Documentation succinte de LUSTRE
-public class Archive extends Entity
+public class Document extends Entity
 {
-  public Archive( Automaton automaton )
+  public Document( Automaton automaton )
   {
     super( null );
+    super.setDim( 25, 25 );
   }
 }

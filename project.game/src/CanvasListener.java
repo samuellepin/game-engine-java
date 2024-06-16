@@ -10,7 +10,7 @@ import src.Model.Model;
 
 public class CanvasListener implements GameCanvasListener
 {
-  Game m_game;
+  Game  m_game;
   Model m_model;
 
   CanvasListener( Game game )
@@ -85,10 +85,10 @@ public class CanvasListener implements GameCanvasListener
   public void keyPressed( KeyEvent e )
   {
 //    System.out.println( "Key pressed: " + e.getKeyChar() + " code=" + e.getKeyCode() );
-    double orientations[] = { -Math.PI, -Math.PI/2, 0, Math.PI/2 };
-    int code = e.getKeyCode();
-    Entity player1 = Model.getInstance().getPlayer1();
-    switch( code )
+    double orientations[] = { -Math.PI, -Math.PI / 2, 0, Math.PI / 2 };
+    int    code           = e.getKeyCode();
+    Entity player1        = Model.getInstance().getPlayer1();
+    switch ( code )
     {
     case 37: // LEFT
     case 38: // UP

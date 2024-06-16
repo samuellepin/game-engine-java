@@ -6,38 +6,52 @@ import java.util.ArrayList;
 
 import src.Game;
 import src.Model.Entity;
+import src.Model.EntityTracker;
 import src.Model.Model;
+import src.Model.World.Map;
+import src.Model.World.TILE_TYPE;
+import src.Model.World.Tile;
 
 public class View
 {
-  private static final View   INSTANCE = new View();
+  private static final View       INSTANCE = new View();
 
-  private Model               m_model;
-  private Viewport            m_leftViewport, m_rightViewport;
-  private ArrayList< Avatar > m_avatars;
+  private Model                   m_model;
+  private Viewport                m_leftViewport, m_rightViewport;
+  private ArrayList< Avatar >     m_avatars;
+  private ArrayList< TileAvatar > m_tileAvatars;
 
   private View()
   {
+    AvatarFactory.Initialize();
+
     m_model = Model.getInstance();
     m_avatars = new ArrayList<>();
+    m_tileAvatars = new ArrayList<>();
 
     ArrayList< Entity > entities = m_model.getEntities();
     for ( Entity e : entities )
     {
-      try
+      m_avatars.add( AvatarFactory.make( e ) );
+    }
+
+    Map map = Map.getInstance();
+    for ( int Y = 0; Y < Map.ROWS_NUM; Y++ )
+    {
+      for ( int X = 0; X < Map.COLS_NUM; X++ )
       {
-        m_avatars.add( AvatarFactory.make( e ) );
-      }
-      catch ( Exception e1 )
-      {
-        e1.printStackTrace();
+        Tile tile = map.getTile( X, Y );
+        if( tile.getType() == TILE_TYPE.FLOOR )
+        {
+          m_tileAvatars.add( new TileAvatar( tile ) );
+        }
       }
     }
 
     int halfWidth = Game.SCREEN_WIDTH / 2;
-    m_leftViewport = new Viewport( Model.getInstance().getPlayer1(), 0, 0, halfWidth, Game.SCREEN_HEIGHT, m_avatars );
+    m_leftViewport = new Viewport( Model.getInstance().getPlayer1(), 0, 0, halfWidth, Game.SCREEN_HEIGHT, m_avatars, m_tileAvatars );
     m_rightViewport = new Viewport( Model.getInstance().getPlayer2(), halfWidth, 0, halfWidth, Game.SCREEN_HEIGHT,
-        m_avatars );
+        m_avatars, m_tileAvatars );
   }
 
   public void updateTrackers()

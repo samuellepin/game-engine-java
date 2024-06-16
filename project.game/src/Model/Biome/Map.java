@@ -20,7 +20,7 @@ public class Map
     {
       for ( int j = 0; j < COLS_NUM; j++ )
       {
-        m_tiles[ i ][ j ] = new Tile( TILE_TYPE.EMPTY, j, i );
+        m_tiles[ i ][ j ] = new Tile( TILE_TYPE.EMPTY, j * Tile.WIDTH, i * Tile.HEIGHT );
       }
     }
     m_random.setSeed( 123485789 );

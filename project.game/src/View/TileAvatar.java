@@ -3,31 +3,24 @@ package src.View;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 
+import src.Model.Entity;
 import src.Model.World.TILE_TYPE;
 import src.Model.World.Tile;
 
 public class TileAvatar extends Avatar
 {
-  private static BufferedImage m_floorImg;
-  private Tile                 m_tile;
-
-  static
+  private Tile m_tile;
+  
+  public TileAvatar( Tile t )
   {
-    try
-    {
-      m_floorImg = AvatarFactory.loadImage( "resources/Tile_Brick.png" );
-    }
-    catch ( IOException e )
-    {
-      e.printStackTrace();
-    }
+    super( null );
+    m_tile = t;
   }
-
-  public TileAvatar( Tile tile )
+  
+  public Tile getTile()
   {
-    m_tile = tile;
+    return m_tile;
   }
 
   public Color getColor( TILE_TYPE type )
@@ -49,7 +42,7 @@ public class TileAvatar extends Avatar
     switch ( type )
     {
     case FLOOR:
-      return m_floorImg;
+      return AvatarFactory.m_floorImg;
     default:
       break;
     }
@@ -62,9 +55,10 @@ public class TileAvatar extends Avatar
     TILE_TYPE     type  = m_tile.getType();
     Color         color = this.getColor( type );
     BufferedImage img   = this.getImage( type );
+    
     if( img != null )
     {
-      g.drawImage( m_floorImg, x, y, width, height, null );
+      g.drawImage( img, x, y, width, height, null );
     }
     else
     {

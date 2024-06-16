@@ -3,12 +3,25 @@ package src.Model.World;
 public class Tile
 {
   private TILE_TYPE m_type;
+  private double m_x, m_y;
   public static final double   HEIGHT = 100;
   public static final double   WIDTH  = 100;
 
   public Tile( TILE_TYPE type, double x, double y )
   {
     m_type = type;
+    m_x = x;
+    m_y = y;
+  }
+  
+  public double getX()
+  {
+    return m_x;
+  }
+  
+  public double getY()
+  {
+    return m_y;
   }
 
   public TILE_TYPE getType()

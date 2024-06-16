@@ -15,7 +15,7 @@ public class Spy extends Entity
     super( automaton );
     super.setDim( 25, 50 );
     super.setOrientation( 0 );
-    super.setVelocity( 1 );
+    super.setVelocity( 2 );
     m_visionField = new Circle( this.getPos(), 150.0 );
   }
 

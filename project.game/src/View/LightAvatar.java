@@ -11,23 +11,36 @@ import src.Model.Vector;
 
 public class LightAvatar extends Avatar
 {
-  private Light       m_light;
-  private Color       m_color;
-  ArrayList< Entity > m_entities;
 
-  public LightAvatar( Light light )
+  public LightAvatar( Entity e )
   {
-    m_light = light;
-    m_entity = light;
-    m_color = new Color( 1.0f, 1.0f, 0.0f, 1f );
+    super( e );
+    // TODO Auto-generated constructor stub
   }
 
-  public LightAvatar( Light light, ArrayList< Entity > entities )
+  @Override
+  public void paint( Graphics g, int x, int y, int width, int height )
   {
-    m_light = light;
-    m_color = new Color( 1.0f, 1.0f, 0.0f, 0.2f );
-    m_entities = entities;
+    // TODO Auto-generated method stub
+    
   }
+//  private Light       m_light;
+//  private Color       m_color;
+//  ArrayList< Entity > m_entities;
+//
+//  public LightAvatar( Light light )
+//  {
+//    m_light = light;
+//    m_entity = light;
+//    m_color = new Color( 1.0f, 1.0f, 0.0f, 1f );
+//  }
+//
+//  public LightAvatar( Light light, ArrayList< Entity > entities )
+//  {
+//    m_light = light;
+//    m_color = new Color( 1.0f, 1.0f, 0.0f, 0.2f );
+//    m_entities = entities;
+//  }
 
 //  public void paintShadow( Graphics g, Rectangle rect )
 //  {
@@ -82,10 +95,10 @@ public class LightAvatar extends Avatar
 //                (int)shadow[ 2 ].getVY(), 
 //                (int)shadow[ 3 ].getVY() }, shadow.length );
 //  }
-
-  @Override
-  public void paint( Graphics g, int x, int y, int width, int height )
-  {
+//
+//  @Override
+//  public void paint( Graphics g, int x, int y, int width, int height )
+//  {
 //    double width  = 2 * m_light.getRadius();
 //    Vector pos    = Model.getPlayerPos();
 //    double posX   = pos.getVX() - m_light.getRadius();
@@ -103,6 +116,6 @@ public class LightAvatar extends Avatar
 //    
 //    if( m_entities.size() > 0 )
 //    this.paintShadow( g, (Rectangle)m_entities.get( 0 ) );
-  }
+//  }
 
 }
