@@ -2,12 +2,15 @@ package src.View;
 
 import java.awt.Component;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.util.ArrayList;
 
 import src.Model.Entity;
 import src.Model.EntityTracker;
 import src.Model.Model;
 import src.Model.Vector;
+import src.Model.World.Map;
+import info3.game.graphics.GameCanvas;
 
 public class Viewport extends Component
 {
@@ -48,6 +51,21 @@ public class Viewport extends Component
     Vector cameraPos   = new Vector( pos.getX() - m_tracker.getPos().getX(), pos.getY() - m_tracker.getPos().getY() );
     Vector viewportPos = new Vector( metersToPixels( cameraPos.getX() ), metersToPixels( cameraPos.getY() ) );
     return new Vector( (int)viewportPos.getX(), (int)viewportPos.getY() );
+  }
+  
+  private void paintTiles( Graphics g ) {
+    double xMin = m_tracker.getPos().getX();
+    double xMax = m_tracker.getPos().getX() + m_tracker.getDim().getX();
+    double yMin = m_tracker.getPos().getY();
+    double yMax = m_tracker.getPos().getY() + m_tracker.getDim().getY();
+    
+    for (int i = metersToPixels(xMin - (xMin % 100)); i < metersToPixels(xMax - (xMax % 100)); i += Map.TILE_WIDTH)
+    {
+      for (int j = metersToPixels(yMin - (yMin % 100)); j < metersToPixels(yMax - (yMax % 100)); j += Map.TILE_HEIGHT)
+      {
+        
+      }
+    }
   }
 
   public void paint( Graphics g )
