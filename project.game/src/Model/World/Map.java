@@ -89,7 +89,7 @@ public class Map
     directions.add( new Vector( -2, 0 ) );
     directions.add( new Vector( 2, 0 ) );
     directions.add( new Vector( 0, 2 ) );
-    Collections.shuffle( directions ,m_rand);
+    Collections.shuffle( directions, m_rand );
 
     for ( int i = 0; i < 4; i++ )
     {
@@ -99,18 +99,15 @@ public class Map
       if( isValidTile( dx, dy ) && this.getTile( dx, dy ).getType() == TILE_TYPE.EMPTY )
       {
         tile = this.getTile( dx, dy );
-        if( tile.getType() == TILE_TYPE.EMPTY )
-        {
-          tile.setType( TILE_TYPE.FLOOR );
+        tile.setType( TILE_TYPE.FLOOR );
 
-          int ddx = x + (int)directions.get( i ).getX() / 2;
-          int ddy = y + (int)directions.get( i ).getY() / 2;
+        int ddx = x + (int)directions.get( i ).getX() / 2;
+        int ddy = y + (int)directions.get( i ).getY() / 2;
 
-          tile = this.getTile( ddx, ddy );
-          tile.setType( TILE_TYPE.FLOOR );
+        tile = this.getTile( ddx, ddy );
+        tile.setType( TILE_TYPE.FLOOR );
 
-          createPath( dx, dy );
-        }
+        createPath( dx, dy );
       }
     }
   }
