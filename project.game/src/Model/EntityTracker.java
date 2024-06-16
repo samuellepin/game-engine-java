@@ -34,8 +34,8 @@ public class EntityTracker extends AABB
 
   public void centerOnTarget()
   {
-    double halfWidth  = Game.SCREEN_WIDTH / ( 4 * RATIO );
-    double halfHeight = Game.SCREEN_HEIGHT / ( 2 * RATIO );
+    double halfWidth  = Game.SCREEN_WIDTH / ( 4 * RATIO ) - m_target.getWidth() / 2;
+    double halfHeight = Game.SCREEN_HEIGHT / ( 2 * RATIO ) - m_target.getHeight() / 2;
     super.resize( new Vector( m_target.getX() - halfWidth, m_target.getY() - halfHeight ),
         new Vector( m_target.getX() + halfWidth, m_target.getY() + halfHeight ) );
   }

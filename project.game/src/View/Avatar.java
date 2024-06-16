@@ -31,6 +31,8 @@ public abstract class Avatar
   {
     int r = (int)Config.VISION_FIELD_RADIUS;
     g.setColor( VISION_FIELD_COLOR );
+    x += m_entity.getWidth()/2;
+    y += m_entity.getHeight()/2;
     g.fillOval( x - r, y - r, 2 * r, 2 * r );
   }
 

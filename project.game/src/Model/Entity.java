@@ -4,6 +4,8 @@ import src.AI.Automaton;
 import src.AI.State;
 import src.Model.Collision.AABB;
 import src.Model.Collision.Circle;
+import src.Model.Collision.Collision;
+import src.Model.World.Map;
 
 public abstract class Entity
 {
@@ -105,14 +107,31 @@ public abstract class Entity
     return m_visionField;
   }
 
-  public void turn( double theta )
-  {
-
-  }
-
   public void move()
   {
+    double d = m_velocity * (double)m_elapsedTime;
+    if( d >= 3 * m_velocity )
+    {
+      d = 3 * m_velocity;
+    }
+    this.getHitbox().translate( d * Math.cos( m_orientation ), d * Math.sin( m_orientation ) );
+    Model m = Model.getInstance();
+    if( Map.getInstance().detectCollision( this )
+        || Collision.detect( m.getPlayer1().getHitbox(), m.getPlayer2().getHitbox() ) )
+    {
+      repulse();
+    }
+  }
 
+  public void turn( double orientation )
+  {
+    m_orientation = orientation;
+  }
+
+  public void repulse()
+  {
+    m_orientation += Math.PI;
+    move();
   }
 
   @Override

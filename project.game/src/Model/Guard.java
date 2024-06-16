@@ -6,7 +6,6 @@ import src.Model.Collision.Collision;
 
 public class Guard extends Spy
 {
-
   public Guard( Automaton automaton )
   {
     super( automaton );
@@ -33,5 +32,4 @@ public class Guard extends Spy
       follow( Model.getInstance().getPlayer1() );
     }
   }
-
 }
