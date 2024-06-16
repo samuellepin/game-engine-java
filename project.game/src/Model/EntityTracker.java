@@ -46,7 +46,7 @@ public class EntityTracker
     m_dim = new Vector( width, width * ratio_h / ratio_w );
     m_pos = new Vector(0,0);
     setPos();
-    m_hitbox = new AABB( m_pos, m_dim );
+    m_hitbox = new AABB( m_pos, m_pos.add( m_dim ) );
     m_entities = m_model.getEntities();
     
     m_listener = new TrackerListener();
@@ -55,7 +55,7 @@ public class EntityTracker
   private void setPos() {
     m_pos.setX( m_e.getX() + m_e.getWidth() / 2 - m_dim.getX() / 2);
     m_pos.setY( m_e.getY() + m_e.getHeight() / 2 - m_dim.getY() / 2);
-    m_hitbox = new AABB( m_pos, m_dim );
+    m_hitbox = new AABB( m_pos, m_pos.add( m_dim ) );
   }
 
   public Vector getPos()
