@@ -96,6 +96,7 @@ public class CanvasListener implements GameCanvasListener
     case 40: // DOWN
       player1.turn( orientations[ code - 37 ] );
       player1.move();
+      player1.setIsMoving( true );
       break;
     }
   }
@@ -104,6 +105,17 @@ public class CanvasListener implements GameCanvasListener
   public void keyReleased( KeyEvent e )
   {
 //    System.out.println( "Key released: " + e.getKeyChar() + " code=" + e.getKeyCode() );
+    int    code           = e.getKeyCode();
+    Entity player1        = Model.getInstance().getPlayer1();
+    switch ( code )
+    {
+    case 37: // LEFT
+    case 38: // UP
+    case 39: // RIGHT
+    case 40: // DOWN
+      player1.setIsMoving( false );
+      break;
+    }
   }
 
   @Override

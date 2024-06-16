@@ -23,6 +23,11 @@ public abstract class Avatar
 
   public void paintHitbox( Graphics g, int x, int y, int width, int height )
   {
+    if( width < 0 )
+    {
+      width *= -1;
+      x -= width;
+    }
     g.setColor( HITBOX_COLOR );
     g.drawRect( x, y, width, height );
   }
@@ -31,8 +36,8 @@ public abstract class Avatar
   {
     int r = (int)Config.VISION_FIELD_RADIUS;
     g.setColor( VISION_FIELD_COLOR );
-    x += m_entity.getWidth()/2;
-    y += m_entity.getHeight()/2;
+    x += m_entity.getWidth() / 2;
+    y += m_entity.getHeight() / 2;
     g.fillOval( x - r, y - r, 2 * r, 2 * r );
   }
 
@@ -45,4 +50,11 @@ public abstract class Avatar
   {
     m_entity = e;
   }
+  
+  static final long ANIMATION_TIME = 50;
+  
+  protected void updateAnimation( int img_num )
+  {
+  }
+  
 }

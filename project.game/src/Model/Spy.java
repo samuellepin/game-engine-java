@@ -12,6 +12,6 @@ public class Spy extends Entity
     super( automaton );
     super.setDim( 25, 50 );
     super.setOrientation( 0 );
-    super.setVelocity( 2 );
+    super.setVelocity( 4 );
   }
 }

@@ -104,4 +104,18 @@ public class Vector
     return Vector.scale( v1, 1.0f / v1.getMagnitude() );
   }
 
+  public static double normalizeAngle( double angle )
+  {
+    angle = angle % ( 2 * Math.PI );
+    if( angle >= Math.PI )
+    {
+      angle -= 2 * Math.PI;
+    }
+    else if( angle < -Math.PI )
+    {
+      angle += 2 * Math.PI;
+    }
+    return angle;
+  }
+
 }

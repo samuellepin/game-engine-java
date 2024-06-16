@@ -16,7 +16,7 @@ public abstract class Entity
   protected double    m_orientation;
   protected double    m_velocity;
   protected Circle    m_visionField;
-  
+  protected boolean   m_isMoving;
 
   public Entity( Automaton automaton )
   {
@@ -25,6 +25,16 @@ public abstract class Entity
     m_elapsedTime = 0;
     m_hitbox = new AABB( 0, 0, 0, 0 );
     m_visionField = new Circle( this.getHitbox().getMin(), Config.VISION_FIELD_RADIUS );
+  }
+
+  public void setIsMoving( boolean isMoving )
+  {
+    m_isMoving = isMoving;
+  }
+
+  public boolean isMoving()
+  {
+    return m_isMoving;
   }
 
   public void tick( long elapsed )
@@ -101,10 +111,15 @@ public abstract class Entity
   {
     return m_hitbox;
   }
-  
+
   public Circle getVisionField()
   {
     return m_visionField;
+  }
+
+  public long getElapsedTime()
+  {
+    return m_elapsedTime;
   }
 
   public void move()
