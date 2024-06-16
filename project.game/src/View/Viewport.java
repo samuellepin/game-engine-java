@@ -2,7 +2,7 @@ package src.View;
 
 import java.awt.Component;
 import java.awt.Graphics;
-import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import src.Model.Entity;
@@ -17,12 +17,22 @@ public class Viewport extends Component
   private static final long serialVersionUID = 1L;
   EntityTracker             m_tracker;
   Model                     m_model;
+  BufferedImage             m_img;
 
   public Viewport( Entity e, int x, int y, int width, int height )
   {
     this.setBounds( x, y, width, height );
     m_model = Model.getInstance();
     setTrack( e );
+
+    try
+    {
+      m_img = AvatarFactory.loadImage( "resources/Tile_Brick.png" );
+    }
+    catch ( Exception exception )
+    {
+      throw new RuntimeException( "Can't find the tile image" );
+    }
   }
 
   public void setTrack( Entity e )
@@ -52,24 +62,25 @@ public class Viewport extends Component
     Vector viewportPos = new Vector( metersToPixels( cameraPos.getX() ), metersToPixels( cameraPos.getY() ) );
     return new Vector( (int)viewportPos.getX(), (int)viewportPos.getY() );
   }
-  
-  private void paintTiles( Graphics g ) {
-    double xMin = m_tracker.getPos().getX();
-    double xMax = m_tracker.getPos().getX() + m_tracker.getDim().getX();
-    double yMin = m_tracker.getPos().getY();
-    double yMax = m_tracker.getPos().getY() + m_tracker.getDim().getY();
-    
-    for (int i = metersToPixels(xMin - (xMin % 100)); i < metersToPixels(xMax - (xMax % 100)); i += Map.TILE_WIDTH)
+
+  private void paintTiles( Graphics g )
+  {
+    Vector mini = m_tracker.getPos();
+    Vector maxi = m_tracker.getPos().add( m_tracker.getDim() );
+    for ( int i = -metersToPixels( mini.getX() % Map.TILE_WIDTH ); i < this.getWidth()
+        - metersToPixels( maxi.getX() % 100 ); i += metersToPixels( Map.TILE_WIDTH ) )
     {
-      for (int j = metersToPixels(yMin - (yMin % 100)); j < metersToPixels(yMax - (yMax % 100)); j += Map.TILE_HEIGHT)
+      for ( int j = -metersToPixels( mini.getY() % Map.TILE_HEIGHT ); j < 
+          this.getHeight() - metersToPixels( maxi.getY() % 100 ); j += metersToPixels( Map.TILE_HEIGHT ) )
       {
-        
+        g.drawImage( m_img, i, j, metersToPixels( Map.TILE_WIDTH ), metersToPixels( Map.TILE_HEIGHT ), null );
       }
     }
   }
 
   public void paint( Graphics g )
   {
+    paintTiles( g );
     ArrayList< Entity > entities = m_tracker.getEntities();
 
     for ( Entity e : entities )

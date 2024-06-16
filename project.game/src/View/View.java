@@ -27,7 +27,7 @@ public class View
     g.setColor( Color.black );
     g.fillRect( 0, 0, m_width, m_height );
 //    g.fillRect( 0, 0, m_canvas.getWidth(), m_canvas.getHeight() );
-    m_viewports[ 0 ].paint( g );
+    if( m_viewports[ 0 ] != null ) m_viewports[ 0 ].paint( g );
 
   }
 
