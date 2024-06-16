@@ -39,7 +39,7 @@ public class Collision
     Vector AB = Vector.sub( OB, OA );
     double R  = c1.getRadius() + c2.getRadius();
 
-    return AB.squaredNorm() <= R * R; /// < On évite la racine carré de Vector.norm( AB ) <= R
+    return AB.getSquaredMagnitude() <= R * R; /// < On évite la racine carré de Vector.norm( AB ) <= R
   }
 
   public static Vector getBarycenter( Vector[] points )
@@ -47,7 +47,7 @@ public class Collision
     Vector sum = new Vector( 0, 0 );
     for ( Vector point : points )
     {
-      sum = Vector.add( sum, point );
+      sum.translate( point.getX(), point.getY() );
     }
     return Vector.scale( sum, 1.0 / (double)points.length );
   }
@@ -94,7 +94,7 @@ public class Collision
 
     for ( Vector point : points )
     {
-      double distance = Vector.sub( point, center ).squaredNorm();
+      double distance = Vector.sub( point, center ).getSquaredMagnitude();
       if( distance > radius * radius )
       {
         radius = Math.sqrt( distance );
