@@ -12,20 +12,25 @@ import src.Model.Vector;
 public class Viewport extends Component
 {
   private static final long serialVersionUID = 1L;
-  EntityTracker m_tracker;
-  Model         m_model;
+  EntityTracker             m_tracker;
+  Model                     m_model;
 
   public Viewport( Entity e, int x, int y, int width, int height )
   {
     this.setBounds( x, y, width, height );
-    m_tracker = new EntityTracker( e, getWidth(), getHeight() );
     m_model = Model.getInstance();
-    m_model.getTrackers().add( m_tracker );
+    setTrack( e );
   }
 
   public void setTrack( Entity e )
   {
+    if( m_tracker != null )
+    {
+      m_model.getTrackers().remove( m_tracker );
+    }
     m_tracker = new EntityTracker( e, getWidth(), getHeight() );
+    e.setTracker( m_tracker );
+    m_model.getTrackers().add( m_tracker );
   }
 
   public int metersToPixels( double d )
