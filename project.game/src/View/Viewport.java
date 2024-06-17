@@ -72,10 +72,10 @@ public class Viewport extends Component
     if( maxi.getY() > Map.ROWS_NUM * Map.TILE_HEIGHT ) maxi.setY( Map.ROWS_NUM * Map.TILE_HEIGHT );
 
     for ( int i = -metersToPixels( mini.getX() % Map.TILE_WIDTH ) - Map.TILE_WIDTH; i < this.getWidth()
-        - metersToPixels( maxi.getX() % 100 ); i += metersToPixels( Map.TILE_WIDTH ) )
+        - metersToPixels( maxi.getX() % Map.TILE_WIDTH ); i += metersToPixels( Map.TILE_WIDTH ) )
     {
       for ( int j = -metersToPixels( mini.getY() % Map.TILE_HEIGHT ) - Map.TILE_HEIGHT; j < this.getHeight()
-          - metersToPixels( maxi.getY() % 100 ); j += metersToPixels( Map.TILE_HEIGHT ) )
+          - metersToPixels( maxi.getY() % Map.TILE_HEIGHT ); j += metersToPixels( Map.TILE_HEIGHT ) )
       {
         g.drawImage( m_img, i, j, metersToPixels( Map.TILE_WIDTH ), metersToPixels( Map.TILE_HEIGHT ), null );
       }
