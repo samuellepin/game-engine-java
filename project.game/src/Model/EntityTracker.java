@@ -47,7 +47,7 @@ public class EntityTracker
     m_pos = new Vector(0,0);
     setPos();
     m_hitbox = new AABB( m_pos, m_pos.add( m_dim ) );
-    m_entities = m_model.getEntities();
+    m_entities = (ArrayList<Entity>) m_model.getEntities().clone();
     
     m_listener = new TrackerListener();
   }
