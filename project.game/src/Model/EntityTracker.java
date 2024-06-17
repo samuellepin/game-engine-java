@@ -12,8 +12,6 @@ import src.Model.Collision.AABB;
 
 public class EntityTracker extends AABB
 {
-  public static final double  RATIO = 1; // 1m -> 2px
-
   private Entity              m_target;
   private Model               m_model;
   private ArrayList< Entity > m_entities;
@@ -34,8 +32,8 @@ public class EntityTracker extends AABB
 
   public void centerOnTarget()
   {
-    double halfWidth  = Game.SCREEN_WIDTH / ( 4 * RATIO ) - m_target.getWidth() / 2;
-    double halfHeight = Game.SCREEN_HEIGHT / ( 2 * RATIO ) - m_target.getHeight() / 2;
+    double halfWidth  = Game.SCREEN_WIDTH / ( 4 * Config.RATIO ) - m_target.getWidth() / 2;
+    double halfHeight = Game.SCREEN_HEIGHT / ( 2 * Config.RATIO ) - m_target.getHeight() / 2;
     super.resize( new Vector( m_target.getX() - halfWidth, m_target.getY() - halfHeight ),
         new Vector( m_target.getX() + halfWidth, m_target.getY() + halfHeight ) );
   }

@@ -3,6 +3,8 @@ package src.View;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
+
+import src.Model.Config;
 import src.Model.Entity;
 import src.Model.EntityTracker;
 import src.Model.Model;
@@ -40,20 +42,20 @@ public class Viewport
     for ( TileAvatar tileAvatar : m_tileAvatars )
     {
       Tile t = tileAvatar.getTile();
-      int x      = (int) ( EntityTracker.RATIO * ( t.getX() - trackerPos.getX() ) );
-      int y      = (int) ( EntityTracker.RATIO * ( t.getY() - trackerPos.getY() ) );
-      int width  = (int) ( EntityTracker.RATIO * Tile.WIDTH );
-      int height = (int) ( EntityTracker.RATIO * Tile.HEIGHT );
+      int x      = (int) ( Config.RATIO * ( t.getX() - trackerPos.getX() ) );
+      int y      = (int) ( Config.RATIO * ( t.getY() - trackerPos.getY() ) );
+      int width  = (int) ( Config.RATIO * Tile.WIDTH );
+      int height = (int) ( Config.RATIO * Tile.HEIGHT );
       tileAvatar.paint( g, x, y, width, height );
     }
 
     for ( Avatar avatar : m_avatars )
     {
       Entity e      = avatar.getEntity();
-      int    x      = (int) ( EntityTracker.RATIO * ( e.getX() - trackerPos.getX() ) );
-      int    y      = (int) ( EntityTracker.RATIO * ( e.getY() - trackerPos.getY() ) );
-      int    width  = (int) ( EntityTracker.RATIO * e.getWidth() );
-      int    height = (int) ( EntityTracker.RATIO * e.getHeight() );
+      int    x      = (int) ( Config.RATIO * ( e.getX() - trackerPos.getX() ) );
+      int    y      = (int) ( Config.RATIO * ( e.getY() - trackerPos.getY() ) );
+      int    width  = (int) ( Config.RATIO * e.getWidth() );
+      int    height = (int) ( Config.RATIO * e.getHeight() );
       avatar.paint( g, x, y, width, height );
     }
 

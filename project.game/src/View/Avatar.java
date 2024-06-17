@@ -34,10 +34,10 @@ public abstract class Avatar
 
   public void paintVisionField( Graphics g, int x, int y )
   {
-    int r = (int)Config.VISION_FIELD_RADIUS;
+    int r = (int) ( Config.VISION_FIELD_RADIUS * Config.RATIO );
     g.setColor( VISION_FIELD_COLOR );
-    x += m_entity.getWidth() / 2;
-    y += m_entity.getHeight() / 2;
+    x += m_entity.getWidth() * Config.RATIO  / 2;
+    y += m_entity.getHeight() * Config.RATIO / 2;
     g.fillOval( x - r, y - r, 2 * r, 2 * r );
   }
 
