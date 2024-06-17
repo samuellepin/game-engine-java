@@ -2,8 +2,8 @@ package src.Model;
 
 import java.util.ArrayList;
 
+import src.Game;
 import src.Model.Collision.AABB;
-import src.Model.World.Map;
 
 /**
  * This class tracks an entity for the view. It shows all the entities in the
@@ -16,6 +16,7 @@ public class EntityTracker extends AABB
   private Entity              m_target;
   private ArrayList< Entity > m_entities;
   private TrackerListener     m_listener;
+  double                      m_ratioWidth, m_ratioHeight;
 
   public class TrackerListener
   {
@@ -39,10 +40,12 @@ public class EntityTracker extends AABB
 // Le probleme vient d'ici !!!
 //  private static final double DEFAULT_WIDTH = Map.getInstance().getWidth(); // / Config.RATIO;
 //super( 0, 0, DEFAULT_WIDTH, DEFAULT_WIDTH * ratio_h / ratio_w );
-  
+
   public EntityTracker( Entity e, int screenWidth, int screenHeight )
   {
     super( 0, 0, screenWidth, screenHeight );
+    m_ratioWidth = screenWidth;
+    m_ratioHeight = screenHeight;
     m_target = e;
     centerOnTarget();
     m_entities = new ArrayList< Entity >();
@@ -55,8 +58,8 @@ public class EntityTracker extends AABB
     {
       return;
     }
-    double x = m_target.getX() + m_target.getWidth() / 2 - this.getWidth() / 2;
-    double y = m_target.getY() + m_target.getHeight() / 2 - this.getHeight() / 2;
+    double x = m_target.getX() + m_target.getWidth() / 2 - m_ratioWidth / ( 2 * Config.RATIO );
+    double y = m_target.getY() + m_target.getHeight() / 2 - m_ratioHeight / ( 2 * Config.RATIO );
     this.setPos( x, y );
   }
 

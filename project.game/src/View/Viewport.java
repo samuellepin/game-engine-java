@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+import src.Model.Config;
 import src.Model.Entity;
 import src.Model.EntityTracker;
 import src.Model.Model;
@@ -37,14 +38,13 @@ public class Viewport
       m_model.getTrackers().remove( m_tracker );
     }
     m_tracker = new EntityTracker( e, m_width, m_height ); // on donne des pixels par des ratios ici...
-    if( e != null )
-    e.setTracker( m_tracker );
+    if( e != null ) e.setTracker( m_tracker );
     m_model.getTrackers().add( m_tracker );
   }
 
   public int metersToPixels( double d )
   {
-    return (int) ( d * 1 );
+    return (int) ( d * Config.RATIO );
   }
   ///< d * (double)m_width / m_tracker.getWidth()
 
@@ -77,12 +77,11 @@ public class Viewport
 
       if( avatar != null )
       {
-        int avatar_x      = metersToPixels( e.getX() - m_tracker.getX() );
-        int avatar_y      = metersToPixels( e.getY() - m_tracker.getY() );
-        int avatar_width  = metersToPixels( e.getWidth() );
-        int avatar_height = metersToPixels( e.getHeight() );
-
-        avatar.paint( g, avatar_x, avatar_y, avatar_width, avatar_height );
+        int x      = metersToPixels( e.getX() - m_tracker.getX() );
+        int y      = metersToPixels( e.getY() - m_tracker.getY() );
+        int width  = metersToPixels( e.getWidth() );
+        int height = metersToPixels( e.getHeight() );
+        avatar.paint( g, x, y, width, height );
       }
     }
     
@@ -107,5 +106,4 @@ public class Viewport
   {
     return m_height;
   }
-  
 }

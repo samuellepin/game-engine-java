@@ -5,7 +5,6 @@ import src.AI.State;
 import src.Model.Collision.AABB;
 import src.Model.Collision.Circle;
 import src.Model.Collision.Collision;
-import src.Model.World.Map;
 
 public abstract class Entity
 {
@@ -30,10 +29,10 @@ public abstract class Entity
     m_hasCollision = true;
   }
 
-  public Entity setTracker( EntityTracker tracker )
+  // pourquoi return this ?
+  public void setTracker( EntityTracker tracker )
   {
     m_tracker = tracker;
-    return this;
   }
 
   public void setHasCollision( boolean hasCollision )
@@ -71,24 +70,28 @@ public abstract class Entity
   public void doMove( double orientation )
   {
     double d = m_velocity * (double)m_elapsedTime;
-    if( d >= 3 * m_velocity )
+    if( d >= 3 * m_velocity || d <= 0 )
     {
       d = 3 * m_velocity;
     }
+    double prevX = this.getHitbox().getX();
+    double prevY = this.getHitbox().getY();
     this.getHitbox().translate( d * Math.cos( m_orientation ), d * Math.sin( m_orientation ) );
-//    for ( Entity e : Model.getInstance().getEntities() )
-//    {
-//      if( e != this && e.hasCollision() && Collision.detect( this.getHitbox(), e.getHitbox() ) )
-//      {
+    for ( Entity e : Model.getInstance().getEntities() )
+    {
+      if( e != this && e.hasCollision() && Collision.detect( this.getHitbox(), e.getHitbox() ) )
+      {
+        this.setPos( prevX, prevY );
 //        e.repulse();
-//      }
-//    }
+      }
+    }
 
-    if( m_tracker == null ) callListener();
-    else
+    if( m_tracker != null )
     {
       m_tracker.getListener().moved();
     }
+    
+    callListener();
   }
 
   private void callListener()
