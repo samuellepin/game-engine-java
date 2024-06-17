@@ -10,8 +10,7 @@ import src.Model.Entity;
 import src.Model.EntityTracker;
 import src.Model.Model;
 import src.Model.Vector;
-import src.Model.World.Map;
-import info3.game.graphics.GameCanvas;
+import src.Model.World.*;
 
 public class Viewport extends Component
 {
@@ -49,35 +48,24 @@ public class Viewport extends Component
 
   public int metersToPixels( double d )
   {
-    Vector trackerDims = m_tracker.getDim();
 
-    double d_px        = d * this.getWidth() / trackerDims.getX();
-
-    return (int)d_px;
-  }
-
-  /* Converts the world position pos to a pixel coordinate on the viewport */
-  public Vector worldPosToViewportPos( Vector pos )
-  {
-    Vector cameraPos   = new Vector( pos.getX() - m_tracker.getPos().getX(), pos.getY() - m_tracker.getPos().getY() );
-    Vector viewportPos = new Vector( metersToPixels( cameraPos.getX() ), metersToPixels( cameraPos.getY() ) );
-    return new Vector( (int)viewportPos.getX(), (int)viewportPos.getY() );
+    return (int)(d * this.getWidth() / m_tracker.getWidth());
   }
 
   private void paintTiles( Graphics g )
   {
-    Vector mini = m_tracker.getPos();
-    Vector maxi = m_tracker.getPos().add( m_tracker.getDim() );
-    if( maxi.getX() > Map.COLS_NUM * Map.TILE_WIDTH ) maxi.setX( Map.COLS_NUM * Map.TILE_WIDTH );
-    if( maxi.getY() > Map.ROWS_NUM * Map.TILE_HEIGHT ) maxi.setY( Map.ROWS_NUM * Map.TILE_HEIGHT );
+    Vector mini = m_tracker.getMin();
+    Vector maxi = m_tracker.getMax();
+    if( maxi.getX() > Map.COLS_NUM * Tile.WIDTH ) maxi.setX( Map.COLS_NUM * Tile.WIDTH );
+    if( maxi.getY() > Map.ROWS_NUM * Tile.HEIGHT ) maxi.setY( Map.ROWS_NUM * Tile.HEIGHT );
 
-    for ( int i = -metersToPixels( mini.getX() % Map.TILE_WIDTH ) - Map.TILE_WIDTH; i < this.getWidth()
-        - metersToPixels( maxi.getX() % Map.TILE_WIDTH ); i += metersToPixels( Map.TILE_WIDTH ) )
+    for ( int i = -metersToPixels( ( mini.getX() % Tile.WIDTH ) + Tile.WIDTH ); i < this.getWidth()
+        - metersToPixels( maxi.getX() % Tile.WIDTH ); i += metersToPixels( Tile.WIDTH ) )
     {
-      for ( int j = -metersToPixels( mini.getY() % Map.TILE_HEIGHT ) - Map.TILE_HEIGHT; j < this.getHeight()
-          - metersToPixels( maxi.getY() % Map.TILE_HEIGHT ); j += metersToPixels( Map.TILE_HEIGHT ) )
+      for ( int j = -metersToPixels( ( mini.getY() % Tile.HEIGHT ) + Tile.HEIGHT ); j < this.getHeight()
+          - metersToPixels( maxi.getY() % Tile.HEIGHT ); j += metersToPixels( Tile.HEIGHT ) )
       {
-        g.drawImage( m_img, i, j, metersToPixels( Map.TILE_WIDTH ), metersToPixels( Map.TILE_HEIGHT ), null );
+        g.drawImage( m_img, i, j, metersToPixels( Tile.WIDTH ), metersToPixels( Tile.HEIGHT ), null );
       }
     }
   }
@@ -93,11 +81,10 @@ public class Viewport extends Component
 
       if( avatar != null )
       {
-        Vector pos           = worldPosToViewportPos( new Vector( e.getX(), e.getY() ) );
-        int    avatar_x      = (int)pos.getX();
-        int    avatar_y      = (int)pos.getY();
-        int    avatar_width  = metersToPixels( e.getWidth() ) + 1;
-        int    avatar_height = metersToPixels( e.getHeight() ) + 1;
+        int    avatar_x      = metersToPixels(e.getX() - m_tracker.getPos().getX());
+        int    avatar_y      = metersToPixels(e.getY() - m_tracker.getPos().getY());
+        int    avatar_width  = metersToPixels( e.getWidth() );
+        int    avatar_height = metersToPixels( e.getHeight() );
 
         avatar.paint( g, avatar_x, avatar_y, avatar_width, avatar_height );
       }

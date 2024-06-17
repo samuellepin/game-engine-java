@@ -4,7 +4,7 @@ import src.Model.World.Map;
 
 public class MapTest
 {
-  public static void main(String[] args)
+  public static void main( String[] args )
   {
     Map.getInstance();
   }

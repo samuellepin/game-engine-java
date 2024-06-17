@@ -9,7 +9,6 @@ public class Map
 {
   private Tile[][]           m_tiles;
   private Random             m_random = new Random();
-  private Biome[]            m_biome_tab;
   private ArrayList< Biome > m_biomes;
   public static final int    COLS_NUM = 15;
   public static final int    ROWS_NUM = 15;
@@ -21,7 +20,7 @@ public class Map
     {
       for ( int j = 0; j < COLS_NUM; j++ )
       {
-        m_tiles[ i ][ j ] = new Tile( TILE_TYPE.EMPTY, j, i );
+        m_tiles[ i ][ j ] = new Tile( TILE_TYPE.EMPTY, j * Tile.WIDTH, i * Tile.HEIGHT );
       }
     }
     m_random.setSeed( 123485789 );

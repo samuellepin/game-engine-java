@@ -3,7 +3,6 @@ package src;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
-
 import javax.swing.JFrame;
 
 import info3.game.graphics.GameCanvas;
@@ -13,8 +12,8 @@ import src.View.View;
 public class Game
 {
   private static Game     INSTANCE;
-  public static final int SCREEN_WIDTH  = 720;
-  public static final int SCREEN_HEIGHT = 480;
+  public static final int SCREEN_WIDTH  = 1000;
+  public static final int SCREEN_HEIGHT = 500;
 
   public static void main( String args[] ) throws Exception
   {
@@ -54,16 +53,15 @@ public class Game
   private Game() throws Exception
   {
     m_model = Model.getInstance();
-    
+
     m_view = View.getInstance();
-    
+
     m_listener = new CanvasListener( this );
-    
+
     m_canvas = new GameCanvas( m_listener );
     m_canvas.setSize( new Dimension( SCREEN_WIDTH, SCREEN_HEIGHT ) );
-    
-    m_view.setCanvas( m_canvas );
-    m_frame = m_canvas.createFrame( new Dimension( 1280, 720 ) );
+
+    m_frame = m_canvas.createFrame( new Dimension( SCREEN_WIDTH, SCREEN_HEIGHT ) );
     m_frame.setTitle( "Metal Gear" );
     m_frame.setLayout( new FlowLayout() );
     m_frame.add( m_canvas );

@@ -3,19 +3,17 @@ package src.Model;
 import java.util.ArrayList;
 
 import src.Model.Collision.AABB;
+import src.Model.World.Map;
 
 /**
  * This class tracks an entity for the view. It shows all the entities in the
  * current rectangular focus.
  */
-public class EntityTracker
-{
-  private static final double    RATIO_MAP = 1.5;
 
-  private Entity              m_e;
-  private Model               m_model;
-  private AABB                m_hitbox;
-  private Vector              m_pos, m_dim;
+public class EntityTracker extends AABB
+{
+
+  private Entity              m_target;
   private ArrayList< Entity > m_entities;
   private TrackerListener     m_listener;
 
@@ -34,58 +32,31 @@ public class EntityTracker
     
     void moved ()
     {
-      setPos();
+      centerOnTarget();
     }
   }
+  
+  private static final double DEFAULT_WIDTH = Map.getInstance().getWidth(); // / Config.RATIO;
 
   public EntityTracker( Entity e, int ratio_w, int ratio_h )
   {
-    m_e = e;
-    m_model = Model.getInstance();
-    double width = m_model.getMap().getWidth() / RATIO_MAP;
-    m_dim = new Vector( width, width * ratio_h / ratio_w );
-    m_pos = new Vector(0,0);
-    setPos();
-    m_hitbox = new AABB( m_pos, m_pos.add( m_dim ) );
-    m_entities = (ArrayList<Entity>) m_model.getEntities().clone();
+    super (0,0,DEFAULT_WIDTH ,DEFAULT_WIDTH * ratio_h / ratio_w);
+    m_target = e;
+    centerOnTarget();
+    m_entities = new ArrayList<Entity>();
     
     m_listener = new TrackerListener();
   }
   
-  private void setPos() {
-    m_pos.setX( m_e.getX() + m_e.getWidth() / 2 - m_dim.getX() / 2);
-    m_pos.setY( m_e.getY() + m_e.getHeight() / 2 - m_dim.getY() / 2);
-    m_hitbox = new AABB( m_pos, m_pos.add( m_dim ) );
-  }
-
-  public Vector getPos()
-  {
-    return m_pos;
-  }
-
-  public Vector getDim()
-  {
-    return m_dim;
+  private void centerOnTarget() {
+    double x = m_target.getX() + m_target.getWidth() / 2 - this.getWidth()/ 2;
+    double y = m_target.getY() + m_target.getHeight() / 2 - this.getHeight() / 2;
+    this.setPos( x , y );
   }
 
   public ArrayList< Entity > getEntities()
   {
     return m_entities;
-  }
-
-  public void setAspectRatio( int ratio_w, int ratio_h )
-  {
-    m_dim.setY( m_dim.getX() * ratio_h / ratio_w );
-    setPos();
-  }
-
-  public TrackerListener getTracker()
-  {
-    return m_listener;
-  }
-  
-  public AABB getHitbox() {
-    return m_hitbox;
   }
   
   public TrackerListener getListener () {

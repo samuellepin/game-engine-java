@@ -2,15 +2,13 @@ package src.Model;
 
 import src.AI.Automaton;
 
-public class Player extends Entity
+public class Spy extends Entity
 {
-
-  public Player( Automaton automaton )
+  public Spy( Automaton automaton )
   {
     super( automaton );
     super.setDim( 25, 50 );
     super.setOrientation( 0 );
-    super.setVelocity( 6 );
-    super.updateHitbox();
+    super.setVelocity( 4 );
   }
 }

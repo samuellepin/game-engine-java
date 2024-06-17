@@ -1,10 +1,13 @@
 package src.View;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 
-import info3.game.graphics.GameCanvas;
+import src.Model.Entity;
+import src.Model.EntityTracker;
 import src.Model.Model;
+import src.Game;
 
 public class View
 {
@@ -12,32 +15,65 @@ public class View
 
   private Model             m_model;
   private Viewport[]        m_viewports;
-  private int               m_width;
-  private int               m_height;
-  private GameCanvas        m_canvas;
 
   private View()
   {
+    AvatarFactory.Initialize();
+
     m_model = Model.getInstance();
     m_viewports = new Viewport[ 2 ];
+    int halfWidth = Game.SCREEN_WIDTH /2;
+    m_viewports[ 0 ] = new Viewport( m_model.getPlayer1(), 0, 0, halfWidth, Game.SCREEN_HEIGHT );
+    m_viewports[ 1 ] = new Viewport( m_model.getPlayer2(), halfWidth, 0, halfWidth, Game.SCREEN_HEIGHT );
+  }
+
+  public int paintInfoEntity( Graphics g, String title, Entity e, int posX, int posY )
+  {
+    g.drawString( title, posX, posY );
+    posY += 16;
+    g.drawString( "x = " + e.getX(), posX, posY );
+    posY += 16;
+    g.drawString( "y = " + e.getY(), posX, posY );
+    posY += 16;
+//    g.drawString( "width = " + e.getWidth(), posX, posY );
+//    posY += 16;
+//    g.drawString( "height = " + e.getHeight(), posX, posY );
+//    posY += 16 * 2;
+
+    return posY;
+  }
+
+  public void paintInfo( Graphics g )
+  {
+    g.setColor( Color.white );
+    int    posX    = 5;
+    int    posY    = 20;
+
+    Entity player1 = Model.getInstance().getPlayer1();
+    posY += this.paintInfoEntity( g, "Player 1", player1, posX, posY );
+    EntityTracker tracker1 = Model.getInstance().getTrackers().get( 0 );
+    g.drawString( "tracker1 width = " + tracker1.getWidth() , posX , posY );
   }
 
   public void paint( Graphics g )
   {
+    if( Model.getInstance().isGameOver() )
+    {
+      g.setColor( Color.black );
+      g.fillRect( 0, 0, Game.SCREEN_WIDTH, Game.SCREEN_HEIGHT );
+      g.setColor( Color.red );
+      g.setFont( new Font(null, 0, 0) );
+      g.setFont(new Font("Serif", Font.BOLD, 32));
+      g.drawString( "Game Over", Game.SCREEN_WIDTH/2 - 85, Game.SCREEN_HEIGHT/2 );
+      return;
+    }
+    
     g.setColor( Color.black );
-    g.fillRect( 0, 0, m_width, m_height );
-//    g.fillRect( 0, 0, m_canvas.getWidth(), m_canvas.getHeight() );
-    if( m_viewports[ 0 ] != null ) m_viewports[ 0 ].paint( g.create( 0, 0, m_width / 2, m_height ) );
-    if( m_viewports[ 1 ] != null ) m_viewports[ 1 ].paint( g.create( m_width / 2, 0, m_width / 2, m_height ) );
-  }
+    g.fillRect( 0, 0, Game.SCREEN_WIDTH, Game.SCREEN_HEIGHT );
+    if( m_viewports[ 0 ] != null ) m_viewports[ 0 ].paint( g.create( 0, 0, m_viewports[0].getWidth(), Game.SCREEN_HEIGHT ) );
+    if( m_viewports[ 1 ] != null ) m_viewports[ 1 ].paint( g.create( m_viewports[ 0 ].getWidth(), 0, m_viewports[1].getWidth(), Game.SCREEN_HEIGHT ) );
 
-  public void setCanvas( GameCanvas canvas )
-  {
-    this.m_canvas = canvas;
-    m_width = m_canvas.getWidth();
-    m_height = m_canvas.getHeight();
-    m_viewports[ 0 ] = new Viewport( m_model.getPlayer(), 0, 0, m_width / 2, m_height );
-    m_viewports[ 1 ] = new Viewport( m_model.getOpponent(), 0, 0, m_width / 2, m_height );
+    this.paintInfo( g );
   }
 
   public static View getInstance()
