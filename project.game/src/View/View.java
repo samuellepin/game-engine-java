@@ -1,6 +1,7 @@
 package src.View;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
@@ -94,7 +95,9 @@ public class View
       g.setColor( Color.black );
       g.fillRect( 0, 0, Game.SCREEN_WIDTH, Game.SCREEN_HEIGHT );
       g.setColor( Color.red );
-      g.drawString( "Game Over", Game.SCREEN_WIDTH/2 - 20, Game.SCREEN_HEIGHT/2 );
+      g.setFont( new Font(null, 0, 0) );
+      g.setFont(new Font("Serif", Font.BOLD, 32));
+      g.drawString( "Game Over", Game.SCREEN_WIDTH/2 - 85, Game.SCREEN_HEIGHT/2 );
       return;
     }
     
