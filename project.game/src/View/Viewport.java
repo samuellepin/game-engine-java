@@ -103,6 +103,6 @@ public class Viewport extends Component
       }
     }
     g.setColor( Color.black );
-    g.drawRect( 0, 0, this.getWidth(), this.getHeight() );
+    g.drawRect( 0, 0, this.getWidth() - 1, this.getHeight() - 1 );
   }
 }
