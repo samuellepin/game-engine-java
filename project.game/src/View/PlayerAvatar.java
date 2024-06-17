@@ -29,11 +29,11 @@ public class PlayerAvatar extends Avatar
   }
 
   @Override
-  public void paint( Graphics g )
+  public void paint( Graphics g, int x, int y, int width, int height )
   {
 //    g.setColor( Color.red );
 //    g.drawRect( (int)m_player.getVX(), (int)m_player.getVY(), (int)m_player.getWidth(), (int)m_player.getHeight() );
-    g.drawImage( m_idleImg[ 0 ], 0, 0, g.getClipBounds().width - 1, g.getClipBounds().height - 1, null );
+    g.drawImage( m_idleImg[ 0 ], x, y, width, height, null );
 //    System.out.println( m_player.getPos() );
 //    System.out.println( m_player.getHitbox().getMin() );
 //    System.out.println( m_player.getHitbox().getMax() );

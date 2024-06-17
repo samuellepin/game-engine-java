@@ -19,11 +19,11 @@ public class WallAvatar extends Avatar
   }
 
   @Override
-  public void paint( Graphics g )
+  public void paint( Graphics g, int x, int y, int width, int height )
   {
     g.setColor( Color.pink );
     Rectangle rect = g.getClipBounds();
-    g.fillRect( 0, 0, rect.width, rect.height );
+    g.fillRect( x, y, width, height );
 
   }
 

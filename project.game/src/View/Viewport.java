@@ -99,7 +99,7 @@ public class Viewport extends Component
         int    avatar_width  = metersToPixels( e.getWidth() );
         int    avatar_height = metersToPixels( e.getHeight() );
 
-        avatar.paint( g.create( avatar_x, avatar_y, avatar_width, avatar_height ) );
+        avatar.paint( g, avatar_x, avatar_y, avatar_width, avatar_height );
       }
     }
     g.setColor( Color.black );

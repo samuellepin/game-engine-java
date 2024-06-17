@@ -9,7 +9,7 @@ public abstract class Avatar extends Component
 {
   protected Entity m_entity;
 
-  public abstract void paint( Graphics g );
+  public abstract void paint( Graphics g, int x, int y, int width, int height );
 
   public Entity getEntity()
   {

@@ -20,10 +20,10 @@ public class RectangleAvatar extends Avatar
   }
 
   @Override
-  public void paint( Graphics g )
+  public void paint( Graphics g, int x, int y, int width, int height )
   {
     g.setColor( m_color );
-    g.fillRect( 0, 0, g.getClipBounds().width, g.getClipBounds().height );
+    g.fillRect( x, y, width, height );
   }
   
 }

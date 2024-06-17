@@ -86,9 +86,9 @@ public class LightAvatar extends Avatar
   }
 
   @Override
-  public void paint( Graphics g )
+  public void paint( Graphics g, int x, int y, int width, int height )
   {
-    double width  = 2 * m_light.getRadius();
+    double diameter  = 2 * m_light.getRadius();
     Vector pos    = Model.getInstance().getPlayerPos();
     double posX   = pos.getVX() - m_light.getRadius();
     double posY   = pos.getVY() - m_light.getRadius();
@@ -98,10 +98,10 @@ public class LightAvatar extends Avatar
 
     g.setColor( Color.red );
     
-    width = 20;
+    diameter = 20;
     posX = pos.getVX() - 10;
     posY = pos.getVY() - 10;
-    g.fillOval( (int)posX, (int)posY, (int)width, (int)width );
+    g.fillOval( (int)posX, (int)posY, (int)diameter, (int)diameter );
     
     if( m_entities.size() > 0 )
     this.paintShadow( g, (Rectangle)m_entities.get( 0 ) );
