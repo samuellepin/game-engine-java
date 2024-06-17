@@ -38,18 +38,6 @@ public class Game
     return INSTANCE;
   }
 
-  public int getWidth()
-  {
-    if( m_canvas == null ) return SCREEN_WIDTH;
-    return m_canvas.getWidth();
-  }
-
-  public int getHeight()
-  {
-    if( m_canvas == null ) return SCREEN_HEIGHT;
-    return m_canvas.getHeight();
-  }
-
   private Game() throws Exception
   {
     m_model = Model.getInstance();

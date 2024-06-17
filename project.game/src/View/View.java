@@ -22,7 +22,7 @@ public class View
 
     m_model = Model.getInstance();
     m_viewports = new Viewport[ 2 ];
-    int halfWidth = Game.SCREEN_WIDTH /2;
+    int halfWidth = Game.SCREEN_WIDTH / 2;
     m_viewports[ 0 ] = new Viewport( m_model.getPlayer1(), 0, 0, halfWidth, Game.SCREEN_HEIGHT );
     m_viewports[ 1 ] = new Viewport( m_model.getPlayer2(), halfWidth, 0, halfWidth, Game.SCREEN_HEIGHT );
   }
@@ -52,7 +52,7 @@ public class View
     Entity player1 = Model.getInstance().getPlayer1();
     posY += this.paintInfoEntity( g, "Player 1", player1, posX, posY );
     EntityTracker tracker1 = Model.getInstance().getTrackers().get( 0 );
-    g.drawString( "tracker1 width = " + tracker1.getWidth() , posX , posY );
+    g.drawString( "x=" + tracker1.getX() + ", y=" + tracker1.getY(), posX, posY );
   }
 
   public void paint( Graphics g )
@@ -62,16 +62,26 @@ public class View
       g.setColor( Color.black );
       g.fillRect( 0, 0, Game.SCREEN_WIDTH, Game.SCREEN_HEIGHT );
       g.setColor( Color.red );
-      g.setFont( new Font(null, 0, 0) );
-      g.setFont(new Font("Serif", Font.BOLD, 32));
-      g.drawString( "Game Over", Game.SCREEN_WIDTH/2 - 85, Game.SCREEN_HEIGHT/2 );
+      g.setFont( new Font( null, 0, 0 ) );
+      g.setFont( new Font( "Serif", Font.BOLD, 32 ) );
+      g.drawString( "Game Over", Game.SCREEN_WIDTH / 2 - 85, Game.SCREEN_HEIGHT / 2 );
       return;
     }
-    
+
     g.setColor( Color.black );
     g.fillRect( 0, 0, Game.SCREEN_WIDTH, Game.SCREEN_HEIGHT );
-    if( m_viewports[ 0 ] != null ) m_viewports[ 0 ].paint( g.create( 0, 0, m_viewports[0].getWidth(), Game.SCREEN_HEIGHT ) );
-    if( m_viewports[ 1 ] != null ) m_viewports[ 1 ].paint( g.create( m_viewports[ 0 ].getWidth(), 0, m_viewports[1].getWidth(), Game.SCREEN_HEIGHT ) );
+
+    // Corrigé - oublie de détruire graphics et position/dimension pas cohérentes
+    for ( int i = 0; i < m_viewports.length; i++ )
+    {
+      Viewport vp = m_viewports[ i ];
+      if( vp != null )
+      {
+        Graphics graphics = g.create( (int)vp.getX(), (int)vp.getY(), (int)vp.getWidth(), (int)vp.getHeight() );
+        vp.paint( graphics );
+        graphics.dispose();
+      }
+    }
 
     this.paintInfo( g );
   }

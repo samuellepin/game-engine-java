@@ -76,17 +76,13 @@ public abstract class Entity
       d = 3 * m_velocity;
     }
     this.getHitbox().translate( d * Math.cos( m_orientation ), d * Math.sin( m_orientation ) );
-    if( Map.getInstance().detectCollision( this ) )
-    {
-      repulse();
-    }
-    for ( Entity e : Model.getInstance().getEntities() )
-    {
-      if( e != this && e.hasCollision() && Collision.detect( this.getHitbox(), e.getHitbox() ) )
-      {
-        e.repulse();
-      }
-    }
+//    for ( Entity e : Model.getInstance().getEntities() )
+//    {
+//      if( e != this && e.hasCollision() && Collision.detect( this.getHitbox(), e.getHitbox() ) )
+//      {
+//        e.repulse();
+//      }
+//    }
 
     if( m_tracker == null ) callListener();
     else

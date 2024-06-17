@@ -43,21 +43,13 @@ public class Model
     Spy spy = new Spy( null );
     spy.setPos( m_map.getPos( 5, 5 ) );
     this.setPlayer1( spy );
+//    this.setPlayer2( spy );
     m_entities.add( spy );
 
-    Guard guard = new Guard( null );
-    guard.setPos( m_map.getPos( 7, 7 ) );
-    this.setPlayer2( spy );
+//    Guard guard = new Guard( null );
+//    guard.setPos( m_map.getPos( 7, 7 ) );
+//    this.setPlayer2( guard );
 //    m_entities.add( guard );
-
-    guard = new Guard( null );
-    guard.setPos( m_map.getPos( 9, 9 ) );
-//    m_entities.add( guard );
-
-    guard = new Guard( null );
-    guard.setPos( m_map.getPos( 1, 3 ) );
-//    m_entities.add( guard );
-
   }
 
   public void tick( long elapsed )

@@ -173,17 +173,18 @@ public class Map
         (double) ( y * Tile.HEIGHT ) + (double)Tile.HEIGHT / 2 );
   }
 
-  public boolean detectCollision( Entity entity )
-  {
-    for ( Wall wall : m_walls )
-    {
-      if( Collision.detect( entity.getHitbox(), wall.getHitbox() ) )
-      {
-        return true;
-      }
-    }
-    return false;
-  }
+// Inutile - les murs sont dans la liste des entités
+//  public boolean detectCollision( Entity entity )
+//  {
+//    for ( Wall wall : m_walls )
+//    {
+//      if( Collision.detect( entity.getHitbox(), wall.getHitbox() ) )
+//      {
+//        return true;
+//      }
+//    }
+//    return false;
+//  }
 
   public double getWidth()
   {
