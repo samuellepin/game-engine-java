@@ -29,9 +29,9 @@ public class AvatarFactory
     {
       return new PlayerAvatar( (Player)e );
     }
-    else if ( e instanceof Wall)
+    else if( e instanceof Wall )
     {
-      return new WallAvatar( (Wall) e);
+      return new WallAvatar( (Wall)e );
     }
 
     // TODO return default avatar if the entity is unknown

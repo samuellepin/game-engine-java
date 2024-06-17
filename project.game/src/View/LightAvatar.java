@@ -13,9 +13,9 @@ import src.Model.Vector;
 public class LightAvatar extends Avatar
 {
   private static final long serialVersionUID = 1L;
-  private Light       m_light;
-  private Color       m_color;
-  ArrayList< Entity > m_entities;
+  private Light             m_light;
+  private Color             m_color;
+  ArrayList< Entity >       m_entities;
 
   public LightAvatar( Light light )
   {
@@ -33,17 +33,17 @@ public class LightAvatar extends Avatar
 
   public void paintShadow( Graphics g, Rectangle rect )
   {
-    double radius = 10 * m_light.getRadius();
+    double radius    = 10 * m_light.getRadius();
 
-    Vector points[] = rect.getPoints();
+    Vector points[]  = rect.getPoints();
     Vector playerPos = Model.getInstance().getPlayerPos();
 
-    int minIdx = -1;
-    double minAngle = 0;
-    int maxIdx = -1;
-    double maxAngle = 0;
-    
-    for( int i = 0; i < points.length; i++ )
+    int    minIdx    = -1;
+    double minAngle  = 0;
+    int    maxIdx    = -1;
+    double maxAngle  = 0;
+
+    for ( int i = 0; i < points.length; i++ )
     {
       double theta = Math.atan2( ( points[ i ].getY() - playerPos.getY() ), ( points[ i ].getX() - playerPos.getX() ) );
       if( minIdx == -1 && maxIdx == -1 )
@@ -65,46 +65,42 @@ public class LightAvatar extends Avatar
         maxAngle = theta;
       }
     }
-    Vector[] shadow = new Vector[4];
+    Vector[] shadow = new Vector[ 4 ];
     shadow[ 0 ] = points[ minIdx ];
     shadow[ 1 ] = new Vector( radius * Math.cos( minAngle ), radius * Math.sin( minAngle ) );
     shadow[ 1 ] = Vector.add( shadow[ 0 ], shadow[ 1 ] );
     shadow[ 3 ] = points[ maxIdx ];
     shadow[ 2 ] = new Vector( radius * Math.cos( maxAngle ), radius * Math.sin( maxAngle ) );
     shadow[ 2 ] = Vector.add( shadow[ 2 ], shadow[ 3 ] );
-    
+
     g.setColor( Color.black );
-    g.fillPolygon( new int[] { 
-            (int)shadow[ 0 ].getVX(), 
-            (int)shadow[ 1 ].getVX(), 
-            (int)shadow[ 2 ].getVX(), 
-            (int)shadow[ 3 ].getVX() }, new int[] { 
-                (int)shadow[ 0 ].getVY(), 
-                (int)shadow[ 1 ].getVY(), 
-                (int)shadow[ 2 ].getVY(), 
-                (int)shadow[ 3 ].getVY() }, shadow.length );
+    g.fillPolygon(
+        new int[] { (int)shadow[ 0 ].getVX(), (int)shadow[ 1 ].getVX(), (int)shadow[ 2 ].getVX(),
+            (int)shadow[ 3 ].getVX() },
+        new int[] { (int)shadow[ 0 ].getVY(), (int)shadow[ 1 ].getVY(), (int)shadow[ 2 ].getVY(),
+            (int)shadow[ 3 ].getVY() },
+        shadow.length );
   }
 
   @Override
   public void paint( Graphics g, int x, int y, int width, int height )
   {
-    double diameter  = 2 * m_light.getRadius();
-    Vector pos    = Model.getInstance().getPlayerPos();
-    double posX   = pos.getVX() - m_light.getRadius();
-    double posY   = pos.getVY() - m_light.getRadius();
+    double diameter = 2 * m_light.getRadius();
+    Vector pos      = Model.getInstance().getPlayerPos();
+    double posX     = pos.getVX() - m_light.getRadius();
+    double posY     = pos.getVY() - m_light.getRadius();
 
     g.setColor( m_color );
     g.fillOval( (int)posX, (int)posY, (int)width, (int)width );
 
     g.setColor( Color.red );
-    
+
     diameter = 20;
     posX = pos.getVX() - 10;
     posY = pos.getVY() - 10;
     g.fillOval( (int)posX, (int)posY, (int)diameter, (int)diameter );
-    
-    if( m_entities.size() > 0 )
-    this.paintShadow( g, (Rectangle)m_entities.get( 0 ) );
+
+    if( m_entities.size() > 0 ) this.paintShadow( g, (Rectangle)m_entities.get( 0 ) );
   }
 
 }

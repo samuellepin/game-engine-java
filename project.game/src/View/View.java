@@ -27,8 +27,8 @@ public class View
     g.setColor( Color.black );
     g.fillRect( 0, 0, m_width, m_height );
 //    g.fillRect( 0, 0, m_canvas.getWidth(), m_canvas.getHeight() );
-    if( m_viewports[ 0 ] != null ) m_viewports[ 0 ].paint( g.create( 0, 0, m_width/2, m_height ) );
-    if( m_viewports[ 1 ] != null ) m_viewports[ 1 ].paint( g.create( m_width/2, 0, m_width/2, m_height ) );
+    if( m_viewports[ 0 ] != null ) m_viewports[ 0 ].paint( g.create( 0, 0, m_width / 2, m_height ) );
+    if( m_viewports[ 1 ] != null ) m_viewports[ 1 ].paint( g.create( m_width / 2, 0, m_width / 2, m_height ) );
   }
 
   public void setCanvas( GameCanvas canvas )
@@ -36,8 +36,8 @@ public class View
     this.m_canvas = canvas;
     m_width = m_canvas.getWidth();
     m_height = m_canvas.getHeight();
-    m_viewports[ 0 ] = new Viewport( m_model.getPlayer(), 0, 0, m_width/2, m_height );
-    m_viewports[ 1 ] = new Viewport( m_model.getOpponent(), 0, 0, m_width/2, m_height );
+    m_viewports[ 0 ] = new Viewport( m_model.getPlayer(), 0, 0, m_width / 2, m_height );
+    m_viewports[ 1 ] = new Viewport( m_model.getOpponent(), 0, 0, m_width / 2, m_height );
   }
 
   public static View getInstance()

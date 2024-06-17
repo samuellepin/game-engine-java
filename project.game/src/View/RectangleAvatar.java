@@ -10,13 +10,13 @@ import src.Model.Vector;
 public class RectangleAvatar extends Avatar
 {
   private Rectangle m_rect;
-  private Color m_color;
-  
+  private Color     m_color;
+
   public RectangleAvatar( Rectangle rect )
   {
     m_rect = rect;
     m_entity = rect;
-    m_color = new Color(0.1f, 0.5f, 0.1f, 1.0f);
+    m_color = new Color( 0.1f, 0.5f, 0.1f, 1.0f );
   }
 
   @Override
@@ -25,5 +25,5 @@ public class RectangleAvatar extends Avatar
     g.setColor( m_color );
     g.fillRect( x, y, width, height );
   }
-  
+
 }
