@@ -149,7 +149,8 @@ public abstract class Entity
     }
     for ( Entity e : Model.getInstance().getEntities() )
     {
-      if( e != this && e.hasCollision() && Collision.detect( this.getHitbox(), e.getHitbox() ) )
+      if( e != this && e.hasCollision() 
+          && Collision.detect( this.getHitbox(), e.getHitbox() ) )
       {
         e.repulse();
       }

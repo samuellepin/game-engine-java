@@ -15,7 +15,7 @@ import src.Model.Wall;
 public class AvatarFactory
 {
   public static BufferedImage[] m_idleSpyImg;
-  public static  BufferedImage[] m_runningSpyImg;
+  public static BufferedImage[] m_runningSpyImg;
   public static BufferedImage   m_floorImg;
   public static BufferedImage   m_docImg;
 

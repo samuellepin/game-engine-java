@@ -13,13 +13,13 @@ public class Map
 {
   private Tile[][]          m_tiles;
   private Random            m_rand;
-  private ArrayList<Wall>   m_walls;
+  private ArrayList< Wall > m_walls;
 //  private ArrayList< AABB > m_hitbox;
 
-  public static final int   COLS_NUM    = 11;
-  public static final int   ROWS_NUM    = 11;
+  public static final int   COLS_NUM = 11;
+  public static final int   ROWS_NUM = 11;
 
-  private static Map INSTANCE = new Map();
+  private static Map        INSTANCE = new Map();
 
   public static Map getInstance()
   {
@@ -38,13 +38,11 @@ public class Map
       {
         if( ( i % 2 != 0 ) && ( j % 2 != 0 ) )
         {
-          m_tiles[ i ][ j ] = new Tile( TILE_TYPE.EMPTY, (double) ( j * Tile.WIDTH ),
-              (double) ( i * Tile.HEIGHT ) );
+          m_tiles[ i ][ j ] = new Tile( TILE_TYPE.EMPTY, (double) ( j * Tile.WIDTH ), (double) ( i * Tile.HEIGHT ) );
         }
         else
         {
-          m_tiles[ i ][ j ] = new Tile( TILE_TYPE.WALL, (double) ( j * Tile.WIDTH ),
-              (double) ( i * Tile.HEIGHT ) );
+          m_tiles[ i ][ j ] = new Tile( TILE_TYPE.WALL, (double) ( j * Tile.WIDTH ), (double) ( i * Tile.HEIGHT ) );
         }
       }
     }
@@ -54,7 +52,7 @@ public class Map
     System.out.println( this.toString() );
 
     m_walls = new ArrayList<>();
-    
+
     for ( int y = 0; y < ROWS_NUM; y++ )
     {
       for ( int x = 0; x < COLS_NUM; x++ )
@@ -67,8 +65,8 @@ public class Map
           m_walls.add( wall );
         }
       }
-    }    
-    
+    }
+
   }
 
   public Tile getTile( int x, int y )
@@ -176,7 +174,7 @@ public class Map
 
   public boolean detectCollision( Entity entity )
   {
-    for( Wall wall : m_walls )
+    for ( Wall wall : m_walls )
     {
       if( Collision.detect( entity.getHitbox(), wall.getHitbox() ) )
       {
@@ -196,9 +194,71 @@ public class Map
     return (double) ( Map.ROWS_NUM * Tile.HEIGHT );
   }
 
-  public ArrayList<Wall> getWalls()
+  public ArrayList< Wall > getWalls()
   {
     return m_walls;
   }
+
+//  public int getOptimalDirection( int posX, int posY )
+//  {
+//    int bestDir = 0;
+//    int bestDirCnt = 0;
+//    int c = 0;
+//    
+//    ///< DROITE
+//    for( c = 0; c < Map.ROWS_NUM - posX; c++ )
+//    {
+//      if( this.getTile( posX + c, posY ).getType() != TILE_TYPE.WALL ) break;
+//    }
+//    if( c > bestDirCnt )
+//    {
+//      bestDirCnt = c;
+//      bestDir = 0;
+//    }
+//    
+//    ///< GAUCHE
+//    for( c = 0; c < Map.ROWS_NUM - posX; c++ )
+//    {
+//      if( this.getTile( posX + c, posY ).getType() != TILE_TYPE.WALL ) break;
+//    }
+//    if( c > bestDirCnt )
+//    {
+//      bestDirCnt = c;
+//      bestDir = 0;
+//    }
+//    
+//    for( c = 0; c < posX-1; c++ )
+//    {
+//      if( this.getTile( c, posY ).getType() != TILE_TYPE.WALL ) break;
+//    }
+//    if( c > bestDirCnt )
+//    {
+//      bestDirCnt = c;
+//      bestDir = 0;
+//    }
+//    
+//    for( c = 0; c < Map.ROWS_NUM - posX; c++ )
+//    {
+//      if( this.getTile( posX + c, posY ).getType() != TILE_TYPE.WALL ) break;
+//    }
+//    if( c > bestDirCnt )
+//    {
+//      bestDirCnt = c;
+//      bestDir = 0;
+//    }
+//    
+//    return 0;
+//  }
+//
+//  public ArrayList< Wall > getMergeWalls()
+//  {
+//    for ( int y = 0; y < Map.ROWS_NUM; y++ )
+//    {
+//      for ( int x = 0; x < Map.ROWS_NUM; x++ )
+//      {
+//
+//      }
+//    }
+//  }
 
 }

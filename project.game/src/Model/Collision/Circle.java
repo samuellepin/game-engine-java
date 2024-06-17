@@ -34,6 +34,11 @@ public class Circle implements Hitbox
     return new Vector( m_topLeftCorner.getX() + this.getRadius(), m_topLeftCorner.getY() + this.getRadius() );
   }
   
+  public Vector getTopLeftCorner()
+  {
+    return m_topLeftCorner;
+  }
+  
   @Override
   public String toString()
   {
