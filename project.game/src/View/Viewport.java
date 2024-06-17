@@ -96,8 +96,8 @@ public class Viewport extends Component
         Vector pos           = worldPosToViewportPos( new Vector( e.getX(), e.getY() ) );
         int    avatar_x      = (int)pos.getX();
         int    avatar_y      = (int)pos.getY();
-        int    avatar_width  = metersToPixels( e.getWidth() );
-        int    avatar_height = metersToPixels( e.getHeight() );
+        int    avatar_width  = metersToPixels( e.getWidth() ) + 1;
+        int    avatar_height = metersToPixels( e.getHeight() ) + 1;
 
         avatar.paint( g, avatar_x, avatar_y, avatar_width, avatar_height );
       }
