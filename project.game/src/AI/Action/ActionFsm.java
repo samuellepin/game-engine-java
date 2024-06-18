@@ -4,5 +4,5 @@ import src.Model.Entity;
 
 public interface ActionFsm
 {
-  public boolean run( Entity entity );
+  public void execute( Entity entity );
 }
