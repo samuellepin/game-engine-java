@@ -136,6 +136,20 @@ TO DO :
 - David : fusionner les Hitbox pour les objects inanimé pour éviter d'avoir trop d'Hitbox
 - Romain : finir la cohérence entre le code de David puis intégration entre les deux maps de biome et couloir et Hitbox  
 
+## Jour 10 (17 juin):
+
+- Réunion de début de journée pour discuter de l'avancement du projet et des tâches à réaliser pour la journée.
+- David/Greg/Rémi : merge des différentes parties 
+- Romain / Sam : implémentation des automates et du Visitor
+
+## Jour 11 (18 juin):
+
+- Redéfinition des objectifs de la semaine et de la journée.
+
+- David : s'occupe des fichier de config pour les jeux 
+- Sam/ Romain : continuation implémentation des automates et du Visitor
+
+
 **Commande parser**
 
 Votre fichier automate : nom_AI.gal
@@ -147,25 +161,25 @@ Votre fichier automate : nom_AI.gal
 **Planning quotidien :**
 
 - [ ] View => Greg et Rémi
-    - [ ] Afficher Viewport du modéle avec monde qui bouge ( A tester )
-    - [ ] Changer tout les avatars 
+    - [x] Afficher Viewport du modéle avec monde qui bouge ( A tester )
+    - [ ] Charger tout les avatars 
     - => Besoin du model 
 - [ ] AI (Automaton) => Sam 
     - [ ] Faire un Visitor 
     - [x] comprendre commnent le parser appel les différent méthode : 13/06
     - [ ] Créer les classes qui implémente action (move ,...)
-    - [ ] Lier le parser et notre projet 
+    - [x] Lier le parser et notre projet 
     - [ ] Gestion FSM (traduction ast en FSM)
 - [ ] Model => David 
     - [x] Fonctions qui détectes les collisons
     - [x] Géneration des biomes => Romain 
-    - [ ] Supprimer ancien Viewport
     - [x] Integration des méthodes de collision : 13/06 
         - [x] Hitbox aux entités : 13/06
-    - [ ] Implémentation vision
+    - [x] Implémentation champ vision
     - [ ] Gestion des ticks
+        - Besoin des automates pour tester
     - [x] biomes : 13/06
-    - [ ] réunir carte biome et couloir 
+    - [x] réunir carte biome et couloir 
 - [ ] Controler 
     - [ ] Interpréter les touches pour L'AI
 
@@ -174,43 +188,43 @@ Votre fichier automate : nom_AI.gal
 
 Jeudi 13 juin :
 
-- [ ] Finir premier jet du moteur (1/2)
-    - [ ] Finir chaque morceau
+- [x] Finir premier jet du moteur (1/2)
+    - [x] Finir chaque morceau
 
 Vendredi 14 juin :
 
-- [ ] Finir premier jet du moteur (2/2)
-    - [ ] Assembler les morceaux
+- [x] Finir premier jet du moteur (2/2)
+    - [x] Assembler les morceaux
 
 Lundi 17 juin :
 
-- [ ] Implémenter fonctionnalité MG (1/2)
-    - [ ] Implémenter les entités
-    - [ ] Implémenter les automates
+- [x] Finir premier jet du moteur (3/3)
+    - [x] Assembler les morceaux
+    - [x] Debug
+    - [x] Merge
 
 Mardi 18 juin :
 
-- [ ] Implémenter fonctionnalité MG (2/2)
+- Continuation du moteur 
+
+Mercredi 19 juin :
+
+- [ ] Implémenter fonctionnalité MG (1/1)
     - [ ] Implémenter les entités
     - [ ] Implémenter les automates
 - Soir : Première version du jeu MG
 
-Mercredi 19 juin :
+Jeudi 20 juin :
 
 - [ ] Implémenter fonctionnalité PN (1/1)
     - [ ] Implémenter les entités
     - [ ] Implémenter les automates
 - Soir : Première version du jeu PN
 
-Jeudi 20 juin :
-
-- [ ] Debug (1/2)
-- [ ] Ajout visuel et son (1/2)
-
 Vendredi 21 juin :
 
-- [ ] Debug (2/2)
-- [ ] Ajout visuel et son (2/2)
+- [ ] Debug 
+- [ ] Ajout visuel et son 
 
 Lundi 24 juin :
 
