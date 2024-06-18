@@ -5,11 +5,12 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
 import info3.game.graphics.GameCanvasListener;
+import src.Model.Entity;
 import src.Model.Model;
 
 public class CanvasListener implements GameCanvasListener
 {
-  Game m_game;
+  Game  m_game;
   Model m_model;
 
   CanvasListener( Game game )
@@ -84,25 +85,37 @@ public class CanvasListener implements GameCanvasListener
   public void keyPressed( KeyEvent e )
   {
 //    System.out.println( "Key pressed: " + e.getKeyChar() + " code=" + e.getKeyCode() );
-    double orientations[] = { -Math.PI, -Math.PI/2, 0, Math.PI/2 };
-    int code = e.getKeyCode();
-    switch( code )
+    double orientations[] = { -Math.PI, -Math.PI / 2, 0, Math.PI / 2 };
+    int    code           = e.getKeyCode();
+    Entity player1        = Model.getInstance().getPlayer1();
+    switch ( code )
     {
     case 37: // LEFT
     case 38: // UP
     case 39: // RIGHT
     case 40: // DOWN
-      m_model.getPlayer().turn( orientations[ code - 37 ] );
-      m_model.getPlayer().move();
+      player1.turn( orientations[ code - 37 ] );
+      player1.doMove( player1.getOrientation() );
+      player1.setIsMoving( true );
       break;
     }
-    Model.updateViewPos();
   }
 
   @Override
   public void keyReleased( KeyEvent e )
   {
 //    System.out.println( "Key released: " + e.getKeyChar() + " code=" + e.getKeyCode() );
+    int    code           = e.getKeyCode();
+    Entity player1        = Model.getInstance().getPlayer1();
+    switch ( code )
+    {
+    case 37: // LEFT
+    case 38: // UP
+    case 39: // RIGHT
+    case 40: // DOWN
+      player1.setIsMoving( false );
+      break;
+    }
   }
 
   @Override

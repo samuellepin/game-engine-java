@@ -1,19 +1,28 @@
 package src.Model.World;
-
-import src.Model.Entity;
-import src.Model.Vector;
-import src.Model.Collision.AABB;
-
-public class Tile extends Entity
+  
+public class Tile
 {
+  public static final double   HEIGHT = 100;
+  public static final double   WIDTH  = 100;
+  
   private TILE_TYPE m_type;
+  private double m_x, m_y;
 
   public Tile( TILE_TYPE type, double x, double y )
   {
-    super( null );
     m_type = type;
-    m_hitbox = new AABB( new Vector( x, y ), new Vector( x + Map.TILE_WIDTH, y + Map.TILE_HEIGHT ) );
-    super.setPos( x, y );
+    m_x = x;
+    m_y = y;
+  }
+  
+  public double getX()
+  {
+    return m_x;
+  }
+  
+  public double getY()
+  {
+    return m_y;
   }
 
   public TILE_TYPE getType()
@@ -24,9 +33,5 @@ public class Tile extends Entity
   public void setType( TILE_TYPE type )
   {
     m_type = type;
-    if( type == TILE_TYPE.FLOOR )
-    {
-      m_hitbox = null;
-    }
   }
 }
