@@ -26,15 +26,14 @@ public class ActionMultiple implements ActionFsm
   }
 
   @Override
-  public boolean run( Entity entity )
+  public void execute( Entity entity )
   {
-    Iterator iter = m_actions.iterator();
+    Iterator< ActionFsm > iter = m_actions.iterator();
     while( iter.hasNext() )
     {
       ActionFsm act = (ActionFsm)iter.next();
-      act.run( entity );
+      act.execute( entity );
     }
-    return false;
   }
 
 }
