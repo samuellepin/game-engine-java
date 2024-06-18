@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import src.AI.Action.ActionFsm;
+import src.AI.Condition.ConditionFsm;
 import src.Model.Entity;
 
 public class FSM

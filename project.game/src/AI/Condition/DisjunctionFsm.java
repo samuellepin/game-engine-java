@@ -1,4 +1,4 @@
-package src.AI;
+package src.AI.Condition;
 
 import src.Model.Entity;
 

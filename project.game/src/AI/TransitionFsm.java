@@ -1,6 +1,7 @@
 package src.AI;
 
 import src.AI.Action.ActionFsm;
+import src.AI.Condition.ConditionFsm;
 
 public class TransitionFsm
 {

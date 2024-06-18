@@ -1,5 +1,6 @@
 package src.AI;
 
+import src.AI.Condition.ConditionFsm;
 import src.Model.Entity;
 
 public class DefaultCondition implements ConditionFsm
