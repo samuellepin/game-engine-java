@@ -1,10 +1,7 @@
 package src.View;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Graphics;
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 
 import src.Model.Config;
 import src.Model.Entity;
@@ -13,8 +10,6 @@ import src.Model.Model;
 import src.Model.Vector;
 import src.Model.World.*;
 
-// Corrigé - Viewport n'est plus un component #pas de bounds
-// Suppression de m_img, l'image est déjà chargé par AvatarFactory
 public class Viewport
 {
   private EntityTracker m_tracker;
@@ -46,7 +41,7 @@ public class Viewport
   {
     return (int) ( d * Config.RATIO );
   }
-  ///< d * (double)m_width / m_tracker.getWidth()
+  /// < d * (double)m_width / m_tracker.getWidth()
 
   private void paintTiles( Graphics g )
   {
@@ -56,10 +51,10 @@ public class Viewport
     if( maxi.getY() > Map.ROWS_NUM * Tile.HEIGHT ) maxi.setY( Map.ROWS_NUM * Tile.HEIGHT );
 
     for ( int i = -metersToPixels( ( mini.getX() % Tile.WIDTH ) + Tile.WIDTH ); i < m_width
-        - metersToPixels( maxi.getX() % Tile.WIDTH ); i += metersToPixels( Tile.WIDTH ) )
+        - metersToPixels( ( maxi.getX() % Tile.WIDTH ) - Tile.WIDTH ); i += metersToPixels( Tile.WIDTH ) )
     {
       for ( int j = -metersToPixels( ( mini.getY() % Tile.HEIGHT ) + Tile.HEIGHT ); j < m_height
-          - metersToPixels( maxi.getY() % Tile.HEIGHT ); j += metersToPixels( Tile.HEIGHT ) )
+          - metersToPixels( ( maxi.getY() % Tile.HEIGHT ) - Tile.WIDTH ); j += metersToPixels( Tile.HEIGHT ) )
       {
         g.drawImage( AvatarFactory.m_floorImg, i, j, metersToPixels( Tile.WIDTH ), metersToPixels( Tile.HEIGHT ),
             null );
@@ -68,7 +63,7 @@ public class Viewport
   }
 
   public void paint( Graphics g )
-  {    
+  {
     this.paintTiles( g );
 
     for ( Entity e : m_tracker.getEntities() )
@@ -84,24 +79,26 @@ public class Viewport
         avatar.paint( g, x, y, width, height );
       }
     }
-    
+
+    g.setColor( Color.black );
+    g.drawRect( 0, 0, this.getWidth() - 1, this.getHeight() - 1 );
   }
-  
+
   public int getX()
   {
     return m_x;
   }
-  
+
   public int getY()
   {
     return m_y;
   }
-  
+
   public int getWidth()
   {
     return m_width;
   }
-  
+
   public int getHeight()
   {
     return m_height;

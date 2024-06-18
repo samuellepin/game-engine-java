@@ -35,10 +35,6 @@ public class View
     posY += 16;
     g.drawString( "y = " + e.getY(), posX, posY );
     posY += 16;
-//    g.drawString( "width = " + e.getWidth(), posX, posY );
-//    posY += 16;
-//    g.drawString( "height = " + e.getHeight(), posX, posY );
-//    posY += 16 * 2;
 
     return posY;
   }
@@ -71,7 +67,6 @@ public class View
     g.setColor( Color.black );
     g.fillRect( 0, 0, Game.SCREEN_WIDTH, Game.SCREEN_HEIGHT );
 
-    // Corrigé - oublie de détruire graphics et position/dimension pas cohérentes
     for ( int i = 0; i < m_viewports.length; i++ )
     {
       Viewport vp = m_viewports[ i ];

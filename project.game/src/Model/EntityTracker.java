@@ -2,7 +2,6 @@ package src.Model;
 
 import java.util.ArrayList;
 
-import src.Game;
 import src.Model.Collision.AABB;
 
 /**
@@ -37,15 +36,11 @@ public class EntityTracker extends AABB
     }
   }
 
-// Le probleme vient d'ici !!!
-//  private static final double DEFAULT_WIDTH = Map.getInstance().getWidth(); // / Config.RATIO;
-//super( 0, 0, DEFAULT_WIDTH, DEFAULT_WIDTH * ratio_h / ratio_w );
-
-  public EntityTracker( Entity e, int screenWidth, int screenHeight )
+  public EntityTracker( Entity e, int ratioWidth, int ratioHeight )
   {
-    super( 0, 0, screenWidth, screenHeight );
-    m_ratioWidth = screenWidth;
-    m_ratioHeight = screenHeight;
+    super( 0, 0, ratioWidth, ratioHeight );
+    m_ratioWidth = ratioWidth;
+    m_ratioHeight = ratioHeight;
     m_target = e;
     centerOnTarget();
     m_entities = new ArrayList< Entity >();
