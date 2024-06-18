@@ -1,18 +1,13 @@
 Poule(Pondre){
   * (Pondre)
   | Cell(F,V) ? Egg(F)  :(Couver)
-  | True ? Move :(Pondre)
+  | Key(k) & Key(l) & Key(j) ?  Hit(NE)   :(Pondre) 
 
   * (Couver)
-  | Cell(F,T) ? Move(N,F)    :(Attendre)
-  | True ? Wait :(Cover)
+  | Cell(F,T) ? Move(10)    :(Attendre)
 
   * (Attendre)
-  | Cell(H,V) ?          :(Pondre) 
-  | True ? :(Attendre)
-}
-
-Philosopher(Think){
-  * (Think)
+  | Cell(H,V) ?  Turn(S)   :(Pondre) 
+  | True ? 40%Pop / 60% Wizz :(Attendre)
 }
 

@@ -24,57 +24,56 @@ import gal.ast.Value;
 
 public class TestVisitor implements IVisitor
 {
-
- 
   /*
    * Indicates if the initial state has been set : true if the initial state has
    * been set, false otherwise
    */
   private boolean m_init;
   private FSM     m_fsm;
-  private int m_id_state;
+  private int     m_id_state;
 
   @Override
   public Object visit( Category cat )
   {
     System.out.println( "Category " + cat.toString() );
-    switch(cat.toString()) {
-      case "Adversary":
-        return CATEGORY.Adversary;
-      case "Clue":
-        return CATEGORY.Clue;
-      case "Danger":
-        return CATEGORY.Danger;
-      case "Gate":
-        return CATEGORY.Gate;
-      case "Icon":  
-        return CATEGORY.Icon;
-      case "Jumpable":
-        return CATEGORY.Jumpable;
-      case "Killable":
-        return CATEGORY.Killable;
-      case "Moveable":
-        return CATEGORY.Moveable;
-      case "Obstacle":
-        return CATEGORY.Obstacle;
-      case "Pickable":
-        return CATEGORY.Pickable;
-      case "Team":
-        return CATEGORY.Team;
-      case "Util":
-        return CATEGORY.Util;
-      case "Void":
-        return CATEGORY.Void;
-      case "PlayerT":
-        return CATEGORY.PlayerT;
-      case "PlayerA":
-        return CATEGORY.PlayerA;
-      case "Power":
-        return CATEGORY.Power;
-      case "Stuff":
-        return CATEGORY.Stuff;
-      default:
-        return null;
+    switch ( cat.toString() )
+    {
+    case "Adversary":
+      return CATEGORY.Adversary;
+    case "Clue":
+      return CATEGORY.Clue;
+    case "Danger":
+      return CATEGORY.Danger;
+    case "Gate":
+      return CATEGORY.Gate;
+    case "Icon":
+      return CATEGORY.Icon;
+    case "Jumpable":
+      return CATEGORY.Jumpable;
+    case "Killable":
+      return CATEGORY.Killable;
+    case "Moveable":
+      return CATEGORY.Moveable;
+    case "Obstacle":
+      return CATEGORY.Obstacle;
+    case "Pickable":
+      return CATEGORY.Pickable;
+    case "Team":
+      return CATEGORY.Team;
+    case "Util":
+      return CATEGORY.Util;
+    case "Void":
+      return CATEGORY.Void;
+    case "PlayerT":
+      return CATEGORY.PlayerT;
+    case "PlayerA":
+      return CATEGORY.PlayerA;
+    case "Power":
+      return CATEGORY.Power;
+    case "Stuff":
+      return CATEGORY.Stuff;
+    default:
+      return null;
     }
   }
 
@@ -82,35 +81,36 @@ public class TestVisitor implements IVisitor
   public Object visit( Direction dir )
   {
     System.out.println( "Direction " + dir.toString() );
-    switch(dir.toString()) {
-      case "North":
-        return DIRECTION.North;
-      case "South":
-        return DIRECTION.South;
-      case "East":
-        return DIRECTION.East;
-      case "West":
-        return DIRECTION.West;
-      case "NE":
-        return DIRECTION.NE;
-      case "SE":
-        return DIRECTION.SE;
-      case "SW":
-        return DIRECTION.SW;
-      case "NW":
-        return DIRECTION.NW;
-      case "Forward":
-        return DIRECTION.Forward;
-      case "BackWard":
-        return DIRECTION.BackWard;
-      case "Left":
-        return DIRECTION.Left;
-      case "Right":
-        return DIRECTION.Right;
-      case "Here":
-        return DIRECTION.Here;
-      default:
-        return null;
+    switch ( dir.toString() )
+    {
+    case "North":
+      return DIRECTION.North;
+    case "South":
+      return DIRECTION.South;
+    case "East":
+      return DIRECTION.East;
+    case "West":
+      return DIRECTION.West;
+    case "NE":
+      return DIRECTION.NE;
+    case "SE":
+      return DIRECTION.SE;
+    case "SW":
+      return DIRECTION.SW;
+    case "NW":
+      return DIRECTION.NW;
+    case "Forward":
+      return DIRECTION.Forward;
+    case "BackWard":
+      return DIRECTION.BackWard;
+    case "Left":
+      return DIRECTION.Left;
+    case "Right":
+      return DIRECTION.Right;
+    case "Here":
+      return DIRECTION.Here;
+    default:
+      return null;
     }
   }
 
@@ -118,39 +118,40 @@ public class TestVisitor implements IVisitor
   public Object visit( Key key )
   {
     System.out.println( "Key " + key.toString() );
-    return null;
+    return new KeyFsm( key.toString() );
   }
 
   @Override
   public Object visit( Value v )
   {
     System.out.println( "Value " + v.toString() );
-    return v.value;
+    return new ValueFsm( v.value );
   }
 
   @Override
   public Object visit( Underscore u )
   {
-    System.out.println( "Underscore ");
+    System.out.println( "Underscore (= pour les destination aléatoire " );
+    System.out.println( "Not Yet Implement" );
     return "_";
   }
 
   @Override
   public void enter( FunCall funcall )
   {
-    //System.out.println( "FunCall enter " + funcall.toString() );
+    System.out.println( "FunCall enter " + funcall.toString() );
   }
 
   @Override
   public void visit( FunCall funcall )
   {
-    //System.out.println( "FunCall visit " + funcall.toString() );
+    System.out.println( "FunCall visit " + funcall.toString() );
   }
 
   @Override
   public void exit( FunCall funcall )
   {
-    //System.out.println( "FunCall exit " + funcall.toString() );
+    System.out.println( "FunCall exit " + funcall.toString() );
   }
 
   @Override
@@ -238,46 +239,48 @@ public class TestVisitor implements IVisitor
   @Override
   public void enter( BinaryOp binop )
   {
-    //System.out.println( "BinaryOP enter " + binop.toString() );
+    System.out.println( "BinaryOP enter " + binop.toString() );
   }
 
   @Override
   public void visit( BinaryOp binop )
   {
-    //System.out.println( "BinaryOp visit " + binop.toString() );
+    System.out.println( "BinaryOp visit " + binop.toString() );
   }
 
   @Override
   public void exit( BinaryOp binop )
   {
-    //System.out.println( "BinaryOp exit " + binop.toString() );
+    System.out.println( "BinaryOp exit " + binop.toString() );
   }
 
   @Override
   public Object build( BinaryOp binop, Object left, Object right )
   {
-    //System.out.println( "BinaryOp build " + binop.toString() + ":\n" + left.toString() + "\n" + right.toString() );
-    System.out.println("Build BinaryOp not yet implement");
+    // System.out.println( "BinaryOp build " + binop.toString() + ":\n" +
+    // left.toString() + "\n" + right.toString() );
+    System.out.println( "Build BinaryOp not yet implement" );
     return null;
   }
 
   @Override
   public void enter( UnaryOp unop )
   {
-    //System.out.println( "UnaryOp enter " + unop.toString() );
+    System.out.println( "UnaryOp enter " + unop.toString() );
   }
 
   @Override
   public void exit( UnaryOp unop )
   {
-    //System.out.println( "UnaryOp exit " + unop.toString() );
+    System.out.println( "UnaryOp exit " + unop.toString() );
   }
 
   @Override
   public Object build( UnaryOp unop, Object expression )
   {
-    //System.out.println( "UnaryOp build " + unop.toString() + ":\n" + expression.toString() );
-    System.out.println("Build UnaryOp not yet implement");
+    // System.out.println( "UnaryOp build " + unop.toString() + ":\n" +
+    // expression.toString() );
+    System.out.println( "Build UnaryOp not yet implement" );
     return null;
   }
 
@@ -285,16 +288,17 @@ public class TestVisitor implements IVisitor
   public Object visit( State state )
   {
     System.out.println( "State " + state.toString() );
-    
-    StateFsm fsm_state = new StateFsm(m_id_state ,state.name);
-    if(m_fsm.containState(fsm_state)){
-      if(!m_init) {
-        m_fsm.setInitState( fsm_state);
-        m_id_state++;
-      }else {
-        m_fsm.addState(fsm_state);
-        m_id_state++;
-      }
+
+    StateFsm fsm_state = new StateFsm( m_id_state, state.name );
+    if( !m_init )
+    {
+      m_fsm.setInitState( fsm_state );
+      m_id_state++ ;
+    }
+    else
+    {
+      m_fsm.addState( fsm_state );
+      m_id_state++ ;
     }
 
     return fsm_state;
@@ -303,19 +307,19 @@ public class TestVisitor implements IVisitor
   @Override
   public void enter( Mode mode )
   {
-    //System.out.println( "Mode enter " );
+    System.out.println( "Mode enter " );
   }
 
   @Override
   public void visit( Mode mode )
   {
-    //System.out.println( "Mode visit " );
+    System.out.println( "Mode visit " );
   }
 
   @Override
   public void exit( Mode mode )
   {
-    //System.out.println( "Mode exit " );
+    System.out.println( "Mode exit " );
   }
 
   @Override
@@ -337,13 +341,13 @@ public class TestVisitor implements IVisitor
   @Override
   public void enter( Condition condition )
   {
-    //System.out.println( "Condition enter " + condition.toString() );
+    System.out.println( "Condition enter " + condition.toString() );
   }
 
   @Override
   public void exit( Condition condition )
   {
-    //System.out.println( "Condition exit" + condition.toString() );
+    System.out.println( "Condition exit" + condition.toString() );
   }
 
   @Override
@@ -357,19 +361,19 @@ public class TestVisitor implements IVisitor
   @Override
   public void enter( Actions action )
   {
-    //System.out.println( "Actions enter " + action.toString() );
+    System.out.println( "Actions enter " + action.toString() );
   }
 
   @Override
   public void visit( Actions action )
   {
-    //System.out.println( "Actions visit " + action.toString() );
+    System.out.println( "Actions visit " + action.toString() );
   }
 
   @Override
   public void exit( Actions action )
   {
-    //System.out.println( "Actions exit " + action.toString() );
+    System.out.println( "Actions exit " + action.toString() );
   }
 
   @Override
@@ -383,13 +387,13 @@ public class TestVisitor implements IVisitor
   @Override
   public void enter( Transition transition )
   {
-    //System.out.println( "Transition enter " + transition.toString() );
+    System.out.println( "Transition enter " + transition.toString() );
   }
 
   @Override
   public void exit( Transition transition )
   {
-    //System.out.println( "Transition exit " + transition.toString() );
+    System.out.println( "Transition exit " + transition.toString() );
   }
 
   @Override
@@ -397,7 +401,7 @@ public class TestVisitor implements IVisitor
   {
     // TO DO : build transition , insert transition in the fsm
     System.out.println( "Transition build " );
-    return new TransitionFsm((StateFsm)target_state,(ConditionFsm)condition,(ActionFsm)action);
+    return new TransitionFsm( (StateFsm)target_state, (ConditionFsm)condition, (ActionFsm)action );
   }
 
   @Override
@@ -408,7 +412,7 @@ public class TestVisitor implements IVisitor
     System.out.println( "Automaton enter " + automaton.toString() );
 
     m_init = false;
-    m_fsm = new FSM(automaton.name);
+    m_fsm = new FSM( automaton.name );
   }
 
   @Override
@@ -431,7 +435,7 @@ public class TestVisitor implements IVisitor
     System.out.println( "AST enter " );
     m_fsm = null;
     m_init = false;
-    m_id_state =0;
+    m_id_state = 0;
   }
 
   @Override
@@ -444,11 +448,12 @@ public class TestVisitor implements IVisitor
   public Object build( AST ast, List< Object > automata )
   {
     System.out.println( "AST build " );
-    Iterator iterator = automata.iterator();
-    ArrayList<FSM> Fsm_list = new ArrayList<FSM>();
-    while(iterator.hasNext()) {
+    Iterator         iterator = automata.iterator();
+    ArrayList< FSM > Fsm_list = new ArrayList< FSM >();
+    while( iterator.hasNext() )
+    {
       FSM fsm = (FSM)iterator.next();
-      Fsm_list.add(fsm);
+      Fsm_list.add( fsm );
     }
     return Fsm_list;
   }

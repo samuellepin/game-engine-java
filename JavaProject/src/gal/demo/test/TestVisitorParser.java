@@ -173,7 +173,7 @@ public class TestVisitorParser implements IVisitor
   public Object visit( Behaviour behaviour, List< Object > transitions )
   {
     // TO DO : build behaviour
-    System.out.println( "Behaviour " );
+    System.out.println( "Behaviour  " );
     return null;
   }
 
@@ -246,7 +246,6 @@ public class TestVisitorParser implements IVisitor
   @Override
   public void enter( Automaton automaton )
   {
-    System.out.println( "\n" );
     System.out.println( "-------------" + automaton.toString() + "-------------" );
     System.out.println( "Automaton enter " + automaton.toString() );
   }
