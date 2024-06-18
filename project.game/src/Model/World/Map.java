@@ -12,14 +12,12 @@ public class Map
   private Tile[][]           m_tiles;
   private Biome[]            m_biome_tab;                     // pour le random entre les différents biomes
   private ArrayList< Biome > m_biomes;                        // pour afficher les biomes pas forcément utile
-  public static final int    TILE_WIDTH           = 100;
-  public static final int    TILE_HEIGHT          = 100;
   public static final int    COLS_NUM             = 51;
   public static final int    ROWS_NUM             = 51;
   public int                 m_spaceBetweenBiomes = 3;
 
   private static Map         INSTANCE             = new Map();
-  private ArrayList< Wall > m_walls;
+  private ArrayList< Wall >  m_walls;
 //  private ArrayList< AABB > m_hitbox;
 
   public static Map getInstance()
@@ -41,8 +39,7 @@ public class Map
         }
         else if( i == 0 || j == 0 || i == ROWS_NUM - 1 || j == COLS_NUM - 1 )
         {
-          m_tiles[ i ][ j ] = new Tile( TILE_TYPE.WALL, (double) ( j * Map.TILE_WIDTH ),
-              (double) ( i * Map.TILE_HEIGHT ) );
+          m_tiles[ i ][ j ] = new Tile( TILE_TYPE.WALL, (double) ( j * Tile.WIDTH ), (double) ( i * Tile.HEIGHT ) );
         }
         else
         {
@@ -245,11 +242,11 @@ public class Map
     while( i < 500 )
     {
       biomeX = Config.RANDOM.nextInt( COLS_NUM - 2 - m_spaceBetweenBiomes ) + m_spaceBetweenBiomes;// random entre
-                                                                                            // spaceBetweenBiomes et
-                                                                                            // COLS_NUM-2
+      // spaceBetweenBiomes et
+      // COLS_NUM-2
       biomeY = Config.RANDOM.nextInt( ROWS_NUM - 2 - m_spaceBetweenBiomes ) + m_spaceBetweenBiomes;// random entre
-                                                                                            // spaceBetweenBiomes et
-                                                                                            // ROWS_NUM-2
+      // spaceBetweenBiomes et
+      // ROWS_NUM-2
       if( biomeX % 2 == 0 )
       {
         biomeX++ ;
