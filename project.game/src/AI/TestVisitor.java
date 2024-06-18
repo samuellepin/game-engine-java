@@ -21,6 +21,7 @@ import gal.ast.Transition;
 import gal.ast.UnaryOp;
 import gal.ast.Underscore;
 import gal.ast.Value;
+import src.AI.Action.ActionFsm;
 
 public class TestVisitor implements IVisitor
 {

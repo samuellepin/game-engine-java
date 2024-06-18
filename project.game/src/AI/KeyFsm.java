@@ -1,6 +1,8 @@
 package src.AI;
 
-public class KeyFsm
+import src.Model.Entity;
+
+public class KeyFsm implements ConditionFsm
 {
   String m_key;
 
@@ -21,5 +23,12 @@ public class KeyFsm
   public boolean isEqual( String st )
   {
     return m_key.equals( st );
+  }
+
+  @Override
+  public boolean evaluate( Entity entity )
+  {
+    System.out.println("Not yet implement , need controler");
+    return false;
   }
 }

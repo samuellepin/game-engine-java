@@ -1,4 +1,4 @@
-package src.AI;
+package src.AI.Action;
 
 import src.Model.Entity;
 

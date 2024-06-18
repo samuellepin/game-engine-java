@@ -3,6 +3,7 @@ package src.AI;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import src.AI.Action.ActionFsm;
 import src.Model.Entity;
 
 public class FSM
@@ -96,9 +97,8 @@ public class FSM
     {
       if( state.isEqual( entity.getState() ) )
       {
-
-        return false;
-
+        
+        return true;
       }
     }
     return false;

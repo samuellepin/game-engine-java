@@ -7,7 +7,7 @@ Poule(Pondre){
   | Cell(F,T) ? Move(10)    :(Attendre)
 
   * (Attendre)
-  | Cell(H,V) ?  Turn(S)   :(Pondre) 
+  | Cell(25) ?  Turn(S)   :(Pondre) 
   | True ? 40%Pop / 60% Wizz :(Attendre)
 }
 
