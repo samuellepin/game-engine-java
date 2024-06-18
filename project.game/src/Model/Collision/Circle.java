@@ -4,12 +4,18 @@ import src.Model.Vector;
 
 public class Circle implements Hitbox
 {
-  private Vector m_center;
+  private Vector m_topLeftCorner;
   private double m_radius;
 
-  public Circle( Vector center, double radius )
+  public Circle( Vector topLeftCorner, double radius )
   {
-    m_center = center;
+    m_topLeftCorner = topLeftCorner;
+    m_radius = radius;
+  }
+  
+  public Circle( double x, double y, double radius )
+  {
+    m_topLeftCorner = new Vector( x, y );
     m_radius = radius;
   }
 
@@ -23,13 +29,19 @@ public class Circle implements Hitbox
     return m_radius;
   }
 
-  public void setCenter( Vector center )
-  {
-    m_center = center;
-  }
-
   public Vector getCenter()
   {
-    return m_center;
+    return new Vector( m_topLeftCorner.getX() + this.getRadius(), m_topLeftCorner.getY() + this.getRadius() );
+  }
+  
+  public Vector getTopLeftCorner()
+  {
+    return m_topLeftCorner;
+  }
+  
+  @Override
+  public String toString()
+  {
+    return "(x=" + this.getCenter().getX() + ", y=" + this.getCenter().getY() + ", r=" + this.getRadius() + ")";
   }
 }
