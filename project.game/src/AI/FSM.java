@@ -1,16 +1,17 @@
 package src.AI;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import src.Model.Entity;
 
 public class FSM
 {
-  private ArrayList< StateFsm >   m_states;
-  private StateFsm                m_init_state;
-  private String                  m_name;
+  private ArrayList< StateFsm > m_states;
+  private StateFsm              m_init_state;
+  private String                m_name;
 
-  public FSM(String name)
+  public FSM( String name )
   {
     m_states = new ArrayList< StateFsm >();
     m_name = name;
@@ -45,10 +46,17 @@ public class FSM
    */
   public void addState( StateFsm st )
   {
-    if( !m_states.contains( st ) )
+    Iterator iter = m_states.iterator();
+    while( iter.hasNext() )
     {
-      m_states.add( st );
+      StateFsm s = (StateFsm)iter.next();
+      if( !s.getName().equals( st ) )
+      {
+        return;
+      }
     }
+    m_states.add( st );
+    
   }
 
   /*
@@ -64,27 +72,9 @@ public class FSM
    */
   public void addTransition( StateFsm src, StateFsm dst, ConditionFsm cond, ActionFsm act )
   {
-    src.addTransition(new TransitionFsm(dst,cond,act) );
+    src.addTransition( new TransitionFsm( dst, cond, act ) );
   }
 
-  /*
-   * Check if the FSM contains a state
-   * 
-   * @param state The state to check
-   * 
-   * @return true if the state is in the FSM, false otherwise
-   */
-  public boolean containState( StateFsm state )
-  {
-    for ( StateFsm st : m_states )
-    {
-      if( st.isEqual( state ) )
-      {
-        return true;
-      }
-    }
-    return false;
-  }
 
   /*
    * Evaluate the next state of the entity
@@ -96,22 +86,19 @@ public class FSM
   public boolean nextState( Entity entity )
   {
     /*
-    for ( Transition transition : m_transitions )
-    {
-      if( transition.getSource().isEqual( entity.getState() ) && transition.getCondition().evaluate( entity ) )
-      {
-        return transition.getAction().run( entity );
-      }
-    }
-      */
-    System.out.println("TO DO nexte State");
+     * for ( Transition transition : m_transitions ) { if(
+     * transition.getSource().isEqual( entity.getState() ) &&
+     * transition.getCondition().evaluate( entity ) ) { return
+     * transition.getAction().run( entity ); } }
+     */
+    System.out.println( "TO DO nexte State" );
     for ( StateFsm state : m_states )
     {
       if( state.isEqual( entity.getState() ) )
       {
-       
+
         return false;
-        
+
       }
     }
     return false;
