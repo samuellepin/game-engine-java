@@ -2,5 +2,5 @@ package src.Model.World;
 
 public enum TILE_TYPE
 {
-  EMPTY, WALL, FLOOR, BORDER, BIOME
+  EMPTY, WALL, FLOOR, BIOME
 }

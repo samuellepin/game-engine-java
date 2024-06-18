@@ -45,7 +45,7 @@ public class Map
         }
         else if( i == 0 || j == 0 || i == ROWS_NUM - 1 || j == COLS_NUM - 1 )
         {
-          m_tiles[ i ][ j ] = new Tile( TILE_TYPE.BORDER, (double) ( j * Map.TILE_WIDTH ),
+          m_tiles[ i ][ j ] = new Tile( TILE_TYPE.WALL, (double) ( j * Map.TILE_WIDTH ),
               (double) ( i * Map.TILE_HEIGHT ) );
         }
         else
@@ -147,9 +147,6 @@ public class Map
           break;
         case FLOOR:
           strb.append( "⬜" );
-          break;
-        case BORDER:
-          strb.append( "🟫" );
           break;
         case BIOME:
           strb.append( "🟩" );
