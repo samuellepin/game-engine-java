@@ -44,6 +44,11 @@ public class Model
     spy.setPos( m_map.getPos( 5, 5 ) );
     this.setPlayer1( spy );
     m_entities.add( spy );
+    
+    Guard guard = new Guard( null );
+    guard.setPos( m_map.getPos( 6, 6 ) );
+    this.setPlayer2( guard );
+    m_entities.add( guard );
     }
 
   public void tick( long elapsed )
