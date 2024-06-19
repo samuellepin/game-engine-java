@@ -28,6 +28,10 @@ import src.AI.Condition.*;
 public class TestVisitor implements IVisitor
 {
 
+  
+  private ArrayList<StateFsm> m_current_states;
+  
+  
   @Override
   public Object visit( Category cat )
   {
@@ -68,6 +72,8 @@ public class TestVisitor implements IVisitor
       return CATEGORY.Power;
     case "Stuff":
       return CATEGORY.Stuff;
+    case "_":
+      return CATEGORY.Underscore;
     default:
       return null;
     }
@@ -105,6 +111,8 @@ public class TestVisitor implements IVisitor
       return DIRECTION.Right;
     case "H":
       return DIRECTION.Here;
+    case "_":
+      return DIRECTION.Underscore;
     default:
       return null;
     }
@@ -130,7 +138,7 @@ public class TestVisitor implements IVisitor
   {
     System.out.println( "Underscore (= pour les destination aléatoire " );
     System.out.println( "Not Yet Implement" );
-    return "_";
+    throw new IllegalStateException("should not enter the underscore visit");
   }
 
   @Override
@@ -299,7 +307,14 @@ public class TestVisitor implements IVisitor
   public Object visit( State state )
   {
     System.out.println( "State " + state.toString() );
-
+    
+    Iterator<StateFsm> iter = m_current_states.iterator();
+    while(iter.hasNext()) {
+      StateFsm st = iter.next();
+      if(st.getName().equals( state.name )) {
+        return st;
+      }
+    }
     return new StateFsm( state.name );
   }
 
@@ -469,8 +484,8 @@ public class TestVisitor implements IVisitor
   @Override
   public Object build( Automaton automaton, Object initial_state, List< Object > modes )
   {
-    // TO DO : build automaton
     System.out.println( "Automaton build " );
+    /*
     FSM fsm = new FSM(automaton.name);
     fsm.setInitState( (StateFsm) initial_state);
     Iterator<Object> iter = modes.iterator();
@@ -479,6 +494,8 @@ public class TestVisitor implements IVisitor
       fsm.addState( st );
     }
     return fsm;
+    */
+    return new FSM(automaton.name, m_current_states);
   }
 
   @Override

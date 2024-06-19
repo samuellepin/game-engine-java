@@ -19,6 +19,12 @@ public class FSM
     m_name = name;
   }
 
+  public FSM( String name, ArrayList< StateFsm > st )
+  {
+    m_states = st;
+    m_name = name;
+  }
+
   /*
    * Set the initial state of the FSM, the initial state is added to the list of
    * states.
@@ -58,9 +64,8 @@ public class FSM
       }
     }
     m_states.add( st );
-    
-  }
 
+  }
 
   /*
    * Evaluate the next state of the entity
@@ -75,7 +80,7 @@ public class FSM
     {
       if( state.isEqual( e.getState() ) )
       {
-        return state.evaluate(e);
+        return state.evaluate( e );
       }
     }
     return false;
