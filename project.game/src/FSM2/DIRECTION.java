@@ -1,0 +1,18 @@
+package src.FSM2;
+
+public enum DIRECTION
+{
+  HERE,
+  NORTH,
+  SOUTH,
+  EAST,
+  WEST,
+  NORTH_EAST,
+  SOUTH_EAST,
+  SOUTH_WEST,
+  NORTH_WEST,
+  FORWARD,
+  BACKWARD,
+  LEFT,
+  RIGHT
+}

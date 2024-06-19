@@ -10,8 +10,8 @@ import src.Model.Model;
 
 public class CanvasListener implements GameCanvasListener
 {
-  Game  m_game;
-  Model m_model;
+  private Game  m_game;
+  private Model m_model;
 
   CanvasListener( Game game )
   {
@@ -105,8 +105,8 @@ public class CanvasListener implements GameCanvasListener
   public void keyReleased( KeyEvent e )
   {
 //    System.out.println( "Key released: " + e.getKeyChar() + " code=" + e.getKeyCode() );
-    int    code           = e.getKeyCode();
-    Entity player1        = Model.getInstance().getPlayer1();
+    int    code    = e.getKeyCode();
+    Entity player1 = Model.getInstance().getPlayer1();
     switch ( code )
     {
     case 37: // LEFT

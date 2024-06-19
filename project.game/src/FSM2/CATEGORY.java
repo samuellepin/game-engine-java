@@ -1,0 +1,17 @@
+package src.FSM2;
+
+public enum CATEGORY
+{
+  ADVERSARY,
+  CLUE,
+  GATE,
+  JUMPABLE,
+  OBSTACLE,
+  PICKABLE,
+  TEAM,
+  VOID,
+  PLAYER_T,
+  PLAYER_A,
+  POWER,
+  STUFF
+}
