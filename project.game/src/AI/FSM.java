@@ -74,7 +74,7 @@ public class FSM
    * 
    * @return true if the entity has changed state, false otherwise
    */
-  public boolean nextState( Entity e )
+  public TransitionFsm nextState( Entity e )
   {
     for ( StateFsm state : m_states )
     {
@@ -83,6 +83,6 @@ public class FSM
         return state.evaluate( e );
       }
     }
-    return false;
+    return null;
   }
 }

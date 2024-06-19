@@ -41,14 +41,12 @@ public class StateFsm
     return this.getName() == state.getName() ;
   }
   
-  public boolean evaluate(Entity e) {
+  public TransitionFsm evaluate(Entity e) {
     for(TransitionFsm t : m_transitions) {
       if(t.evaluate( e )) {
-        t.getAction().execute( e );
-        e.setState( t.getDestination() );
-        return true;
+        return t;
       }
     }
-    return false;
+    return null;
   }
 }
