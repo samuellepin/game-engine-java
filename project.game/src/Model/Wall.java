@@ -1,10 +1,10 @@
 package src.Model;
 
-import src.AI.Automaton;
+import src.AI.FSM;
 
 public class Wall extends Entity
 {
-  public Wall( Automaton automaton )
+  public Wall( FSM automaton )
   {
     super( automaton );
   }

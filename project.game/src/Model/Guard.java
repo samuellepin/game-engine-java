@@ -1,12 +1,12 @@
 package src.Model;
 
-import src.AI.Automaton;
+import src.AI.FSM;
 import src.Model.Collision.Circle;
 import src.Model.Collision.Collision;
 
 public class Guard extends Spy
 {
-  public Guard( Automaton automaton )
+  public Guard( FSM automaton )
   {
     super( automaton );
     super.setVelocity( 0.1 );

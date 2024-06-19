@@ -1,10 +1,10 @@
 package src.Model;
 
-import src.AI.Automaton;
+import src.AI.FSM;
 
 public class Spy extends Entity
 {
-  public Spy( Automaton automaton )
+  public Spy( FSM automaton )
   {
     super( automaton );
     super.setDim( 25, 50 );

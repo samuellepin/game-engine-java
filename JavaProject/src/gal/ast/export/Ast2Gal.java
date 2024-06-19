@@ -276,6 +276,7 @@ public class Ast2Gal implements IVisitor {
   }
 
   public void exit(AST ast) {
+    System.out.println(string_builder.toString());
   }
 
   @Override

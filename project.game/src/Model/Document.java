@@ -1,11 +1,11 @@
 package src.Model;
 
-import src.AI.Automaton;
+import src.AI.FSM;
 
 ///< Documentation succinte de LUSTRE
 public class Document extends Entity
 {
-  public Document( Automaton automaton )
+  public Document( FSM automaton )
   {
     super( null );
     super.setDim( 25, 25 );

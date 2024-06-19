@@ -1,16 +1,16 @@
 package src.Model;
 
-import src.AI.Automaton;
-import src.AI.State;
+import src.AI.FSM;
+import src.AI.StateFsm;
 import src.Model.Collision.AABB;
 import src.Model.Collision.Circle;
 import src.Model.Collision.Collision;
 
 public abstract class Entity
 {
+  protected FSM           m_automaton;
+  protected StateFsm      m_state;
   protected EntityTracker m_tracker;
-  protected Automaton     m_automaton;
-  protected State         m_state;
   protected long          m_elapsedTime;
   protected AABB          m_hitbox;
   protected double        m_orientation;
@@ -19,7 +19,7 @@ public abstract class Entity
   protected boolean       m_isMoving;
   protected boolean       m_hasCollision;
 
-  public Entity( Automaton automaton )
+  public Entity( FSM automaton )
   {
     m_automaton = automaton;
     if( m_automaton != null ) m_state = automaton.getInitialState();
@@ -90,7 +90,7 @@ public abstract class Entity
     {
       m_tracker.getListener().moved();
     }
-    
+
     callListener();
   }
 
@@ -181,9 +181,13 @@ public abstract class Entity
     doMove( m_orientation );
   }
 
-  public State getState()
+  public StateFsm getState()
   {
     return m_state;
+  }
+  
+  public void setState(StateFsm s) {
+    m_state = s;
   }
 
   public Vector getPos()

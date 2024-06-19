@@ -1,0 +1,13 @@
+Poule(Pondre){
+  * (Pondre)
+  | Cell(F,V) ? Egg(F)  :(Couver)
+  | Key(k) & Key(l) & Key(j) ?  Hit(NE)   :(Pondre) 
+
+  * (Couver)
+  | Cell(F,T) ? Move(10)    :(Attendre)
+
+  * (Attendre)
+  | Cell(25) ?  Turn(S)   :(Pondre) 
+  | True ? 40%Pop / 60% Wizz :(Attendre)
+}
+
