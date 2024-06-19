@@ -2,22 +2,21 @@ package src.AI;
 
 import java.util.ArrayList;
 
+import src.Model.Entity;
+
 public class StateFsm
 {
-  private int                     m_id;
   private String                  m_name;
   private ArrayList< TransitionFsm > m_transitions;
 
-  public StateFsm( int id, String name )
+  public StateFsm(String name )
   {
-    m_id = id;
     m_name = name;
     m_transitions = new ArrayList< TransitionFsm >();
   }
 
-  public StateFsm( int id, String name, ArrayList< TransitionFsm > trans )
+  public StateFsm( String name, ArrayList< TransitionFsm > trans )
   {
-    m_id = id;
     m_name = name;
     m_transitions = trans;
   }
@@ -25,16 +24,6 @@ public class StateFsm
   public void addTransition( TransitionFsm trans )
   {
     m_transitions.add( trans );
-  }
-
-  public void setID( int id )
-  {
-    m_id = id;
-  }
-
-  public int getID()
-  {
-    return m_id;
   }
 
   public void setName( String name )
@@ -49,6 +38,17 @@ public class StateFsm
 
   public boolean isEqual( StateFsm state )
   {
-    return ( this.getID() == state.getID() ) && ( this.getName() == state.getName() );
+    return this.getName() == state.getName() ;
+  }
+  
+  public boolean evaluate(Entity e) {
+    for(TransitionFsm t : m_transitions) {
+      if(t.evaluate( e )) {
+        t.getAction().execute( e );
+        e.setState( t.getDestination() );
+        return true;
+      }
+    }
+    return false;
   }
 }

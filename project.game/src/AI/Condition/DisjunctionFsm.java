@@ -6,7 +6,7 @@ public class DisjunctionFsm
 {
   ConditionFsm m_c1, m_c2;
 
-  DisjunctionFsm( ConditionFsm c1, ConditionFsm c2 )
+  public DisjunctionFsm( ConditionFsm c1, ConditionFsm c2 )
   {
     m_c1 = c1;
     m_c2 = c2;

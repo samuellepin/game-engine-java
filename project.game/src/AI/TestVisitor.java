@@ -2,6 +2,7 @@ package src.AI;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 import gal.ast.AST;
@@ -21,18 +22,11 @@ import gal.ast.Transition;
 import gal.ast.UnaryOp;
 import gal.ast.Underscore;
 import gal.ast.Value;
-import src.AI.Action.ActionFsm;
-import src.AI.Condition.ConditionFsm;
+import src.AI.Action.*;
+import src.AI.Condition.*;
 
 public class TestVisitor implements IVisitor
 {
-  /*
-   * Indicates if the initial state has been set : true if the initial state has
-   * been set, false otherwise
-   */
-  private boolean m_init;
-  private FSM     m_fsm;
-  private int     m_id_state;
 
   @Override
   public Object visit( Category cat )
@@ -40,35 +34,35 @@ public class TestVisitor implements IVisitor
     System.out.println( "Category " + cat.toString() );
     switch ( cat.toString() )
     {
-    case "Adversary":
+    case "A":
       return CATEGORY.Adversary;
-    case "Clue":
+    case "C":
       return CATEGORY.Clue;
-    case "Danger":
+    case "D":
       return CATEGORY.Danger;
-    case "Gate":
+    case "G":
       return CATEGORY.Gate;
-    case "Icon":
+    case "I":
       return CATEGORY.Icon;
-    case "Jumpable":
+    case "J":
       return CATEGORY.Jumpable;
-    case "Killable":
+    case "K":
       return CATEGORY.Killable;
-    case "Moveable":
+    case "M":
       return CATEGORY.Moveable;
-    case "Obstacle":
+    case "O":
       return CATEGORY.Obstacle;
-    case "Pickable":
+    case "P":
       return CATEGORY.Pickable;
-    case "Team":
+    case "T":
       return CATEGORY.Team;
-    case "Util":
+    case "U":
       return CATEGORY.Util;
-    case "Void":
+    case "V":
       return CATEGORY.Void;
-    case "PlayerT":
+    case "@":
       return CATEGORY.PlayerT;
-    case "PlayerA":
+    case "#":
       return CATEGORY.PlayerA;
     case "Power":
       return CATEGORY.Power;
@@ -85,13 +79,13 @@ public class TestVisitor implements IVisitor
     System.out.println( "Direction " + dir.toString() );
     switch ( dir.toString() )
     {
-    case "North":
+    case "N":
       return DIRECTION.North;
-    case "South":
+    case "S":
       return DIRECTION.South;
-    case "East":
+    case "E":
       return DIRECTION.East;
-    case "West":
+    case "W":
       return DIRECTION.West;
     case "NE":
       return DIRECTION.NE;
@@ -101,15 +95,15 @@ public class TestVisitor implements IVisitor
       return DIRECTION.SW;
     case "NW":
       return DIRECTION.NW;
-    case "Forward":
+    case "F":
       return DIRECTION.Forward;
-    case "BackWard":
+    case "B":
       return DIRECTION.BackWard;
-    case "Left":
+    case "L":
       return DIRECTION.Left;
-    case "Right":
+    case "R":
       return DIRECTION.Right;
-    case "Here":
+    case "H":
       return DIRECTION.Here;
     default:
       return null;
@@ -261,8 +255,17 @@ public class TestVisitor implements IVisitor
   {
     // System.out.println( "BinaryOp build " + binop.toString() + ":\n" +
     // left.toString() + "\n" + right.toString() );
-    System.out.println( "Build BinaryOp not yet implement" );
-    return null;
+//    System.out.println( "Build BinaryOp not yet implement" );
+
+    switch ( binop.operator )
+    {
+    case "&":
+      return new ConjunctionFsm( (ConditionFsm)left, (ConditionFsm)right );
+    case "/":
+      return new DisjunctionFsm( (ConditionFsm)left, (ConditionFsm)right );
+    default:
+      throw new IllegalStateException();
+    }
   }
 
   @Override
@@ -282,8 +285,13 @@ public class TestVisitor implements IVisitor
   {
     // System.out.println( "UnaryOp build " + unop.toString() + ":\n" +
     // expression.toString() );
-    System.out.println( "Build UnaryOp not yet implement" );
-    return null;
+    System.out.println( "Build UnaryOp" );
+    switch(unop.operator) {
+    case "!":
+      return new NegationFsm((ConditionFsm)expression);
+    default:
+      throw new IllegalStateException();
+    }
   }
 
   @Override
@@ -291,19 +299,7 @@ public class TestVisitor implements IVisitor
   {
     System.out.println( "State " + state.toString() );
 
-    StateFsm fsm_state = new StateFsm( m_id_state, state.name );
-    if( !m_init )
-    {
-      m_fsm.setInitState( fsm_state );
-      m_id_state++ ;
-    }
-    else
-    {
-      m_fsm.addState( fsm_state );
-      m_id_state++ ;
-    }
-
-    return fsm_state;
+    return new StateFsm( state.name );
   }
 
   @Override
@@ -327,17 +323,22 @@ public class TestVisitor implements IVisitor
   @Override
   public Object build( Mode mode, Object source_state, Object behaviour )
   {
-    // TO DO : build mode
     System.out.println( "Mode build " );
-    return null;
+    StateFsm st =(StateFsm) source_state;
+    LinkedList<Object> transition_list = (LinkedList<Object>) behaviour;
+    Iterator< Object > iter = transition_list.iterator();
+    while(iter.hasNext()) {
+      TransitionFsm trans = (TransitionFsm) iter.next();
+      st.addTransition( trans );
+    }
+    return st;
   }
 
   @Override
   public Object visit( Behaviour behaviour, List< Object > transitions )
   {
-    // TO DO : build behaviour
     System.out.println( "Behaviour " );
-    return null;
+    return transitions;
   }
 
   @Override
@@ -357,7 +358,7 @@ public class TestVisitor implements IVisitor
   {
     // TO DO : build condition
     System.out.println( "Condition build " );
-    return null;
+    return expression;
   }
 
   @Override
@@ -383,6 +384,50 @@ public class TestVisitor implements IVisitor
   {
     // TO DO : build action
     System.out.println( "Actions build " );
+    switch(action.operator) {
+    case "/":
+      // Find percentage for action with no percentage
+      Iterator<FunCall> iter = action.actions.iterator();
+      int nb_percent = 100;
+      int nb_act_nopercent = 0;
+      while(iter.hasNext()) {
+        FunCall fc = iter.next();
+        if(fc.percent <= 0) {
+          nb_act_nopercent ++;
+        }else {
+          nb_percent = nb_percent - fc.percent;
+        }
+      }
+      int percent_per_actNI =0;
+      if(nb_act_nopercent != 0) {
+        percent_per_actNI = nb_percent /nb_act_nopercent;
+      }
+      if(nb_percent < 0) {
+        throw new IllegalStateException("too much perccent ( more than 100%)");
+      }
+      // Creating the Actions with percentage
+      ActionPercentage actpc = new ActionPercentage();
+      iter = action.actions.iterator();
+      Iterator< Object > iteract = funcalls.iterator();
+      while(iteract.hasNext()) {
+        ActionFsm act = (ActionFsm) iteract.next();
+        FunCall fc = iter.next();
+        if(fc.percent <= 0) {
+          actpc.add( act, percent_per_actNI );
+        }else {
+          actpc.add( act, fc.percent );
+        }
+      }
+      return actpc;
+    case ";":
+      ActionMultiple actm = new ActionMultiple();      
+      iteract = funcalls.iterator();
+      while(iteract.hasNext()) {
+        ActionFsm act = (ActionFsm) iteract.next();
+        actm.addAction( act );
+      }
+      return actm;
+    }
     return null;
   }
 
@@ -412,9 +457,6 @@ public class TestVisitor implements IVisitor
     System.out.println( "\n" );
     System.out.println( "-------------" + automaton.toString() + "-------------" );
     System.out.println( "Automaton enter " + automaton.toString() );
-
-    m_init = false;
-    m_fsm = new FSM( automaton.name );
   }
 
   @Override
@@ -428,16 +470,20 @@ public class TestVisitor implements IVisitor
   {
     // TO DO : build automaton
     System.out.println( "Automaton build " );
-    return null;
+    FSM fsm = new FSM(automaton.name);
+    fsm.setInitState( (StateFsm) initial_state);
+    Iterator<Object> iter = modes.iterator();
+    while(iter.hasNext()) {
+      StateFsm st = (StateFsm)iter.next();
+      fsm.addState( st );
+    }
+    return fsm;
   }
 
   @Override
   public void enter( AST ast )
   {
     System.out.println( "AST enter " );
-    m_fsm = null;
-    m_init = false;
-    m_id_state = 0;
   }
 
   @Override
@@ -450,8 +496,8 @@ public class TestVisitor implements IVisitor
   public Object build( AST ast, List< Object > automata )
   {
     System.out.println( "AST build " );
-    Iterator         iterator = automata.iterator();
-    ArrayList< FSM > Fsm_list = new ArrayList< FSM >();
+    Iterator< Object > iterator = automata.iterator();
+    ArrayList< FSM >   Fsm_list = new ArrayList< FSM >();
     while( iterator.hasNext() )
     {
       FSM fsm = (FSM)iterator.next();

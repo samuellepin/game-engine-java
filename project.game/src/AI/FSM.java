@@ -61,22 +61,6 @@ public class FSM
     
   }
 
-  /*
-   * Add a transition to the FSM
-   * 
-   * @param src The source state of the transition
-   * 
-   * @param dst The destination state of the transition
-   * 
-   * @param cond The condition to evaluate
-   * 
-   * @param act The action to perform
-   */
-  public void addTransition( StateFsm src, StateFsm dst, ConditionFsm cond, ActionFsm act )
-  {
-    src.addTransition( new TransitionFsm( dst, cond, act ) );
-  }
-
 
   /*
    * Evaluate the next state of the entity
@@ -85,21 +69,13 @@ public class FSM
    * 
    * @return true if the entity has changed state, false otherwise
    */
-  public boolean nextState( Entity entity )
+  public boolean nextState( Entity e )
   {
-    /*
-     * for ( Transition transition : m_transitions ) { if(
-     * transition.getSource().isEqual( entity.getState() ) &&
-     * transition.getCondition().evaluate( entity ) ) { return
-     * transition.getAction().run( entity ); } }
-     */
-    System.out.println( "TO DO nexte State" );
     for ( StateFsm state : m_states )
     {
-      if( state.isEqual( entity.getState() ) )
+      if( state.isEqual( e.getState() ) )
       {
-        
-        return true;
+        return state.evaluate(e);
       }
     }
     return false;
