@@ -5,6 +5,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.management.openmbean.KeyAlreadyExistsException;
+
 import gal.ast.AST;
 import gal.ast.Actions;
 import gal.ast.Automaton;
@@ -28,10 +30,9 @@ import src.AI.Condition.*;
 public class TestVisitor implements IVisitor
 {
 
-  private FuncallFactory m_funcallfact;
-  private ArrayList<StateFsm> m_current_states;
-  
-  
+  private FuncallFactory        m_funcallfact;
+  private ArrayList< StateFsm > m_current_states;
+
   @Override
   public Object visit( Category cat )
   {
@@ -122,7 +123,96 @@ public class TestVisitor implements IVisitor
   public Object visit( Key key )
   {
     System.out.println( "Key " + key.toString() );
-    return new KeyFsm( key.toString() );
+    switch ( key.terminal.content )
+    {
+    case "a":
+      return KEY.A;
+    case "z":
+      return KEY.Z;
+    case "e":
+      return KEY.E;
+    case "r":
+      return KEY.R;
+    case "t":
+      return KEY.T;
+    case "y":
+      return KEY.Y;
+    case "u":
+      return KEY.U;
+    case "i":
+      return KEY.I;
+    case "o":
+      return KEY.O;
+    case "p":
+      return KEY.P;
+    case "q":
+      return KEY.Q;
+    case "s":
+      return KEY.S;
+    case "d":
+      return KEY.D;
+    case "f":
+      return KEY.F;
+    case "g":
+      return KEY.G;
+    case "h":
+      return KEY.H;
+    case "j":
+      return KEY.J;
+    case "k":
+      return KEY.K;
+    case "l":
+      return KEY.L;
+    case "m":
+      return KEY.M;
+    case "w":
+      return KEY.W;
+    case "x":
+      return KEY.X;
+    case "c":
+      return KEY.C;
+    case "v":
+      return KEY.V;
+    case "b":
+      return KEY.B;
+    case "n":
+      return KEY.N;
+
+    case "_":
+      return KEY.UNDERSCORE;
+    case "ENTER":
+      return KEY.ENTER;
+    case "SPACE":
+      return KEY.SPACE;
+    case "FU":
+      return KEY.UP;
+    case "FD":
+      return KEY.DOWN;
+    case "FL":
+      return KEY.LEFT;
+    case "FR":
+      return KEY.RIGHT;
+
+    case "RBP":
+      return KEY.RBP;
+    case "RBR":
+      return KEY.RBR;
+    case "LBP":
+      return KEY.LBP;
+    case "LBR":
+      return KEY.LBR;
+    case "MBP":
+      return KEY.MBP;
+    case "MBR":
+      return KEY.MBR;
+    case "WLU":
+      return KEY.WLU;
+    case "WLD":
+      return KEY.WLD;
+
+    default:
+      return null;
+    }
   }
 
   @SuppressWarnings( "deprecation" )
@@ -130,7 +220,7 @@ public class TestVisitor implements IVisitor
   public Object visit( Value v )
   {
     System.out.println( "Value " + v.toString() );
-    return new Integer(v.value);
+    return new Integer( v.value );
   }
 
   @Override
@@ -138,7 +228,7 @@ public class TestVisitor implements IVisitor
   {
     System.out.println( "Underscore (= pour les destination aléatoire " );
     System.out.println( "Not Yet Implement" );
-    throw new IllegalStateException("should not enter the underscore visit");
+    throw new IllegalStateException( "should not enter the underscore visit" );
   }
 
   @Override
@@ -220,9 +310,10 @@ public class TestVisitor implements IVisitor
     // System.out.println( "UnaryOp build " + unop.toString() + ":\n" +
     // expression.toString() );
     System.out.println( "Build UnaryOp" );
-    switch(unop.operator) {
+    switch ( unop.operator )
+    {
     case "!":
-      return new NegationFsm((ConditionFsm)expression);
+      return new NegationFsm( (ConditionFsm)expression );
     default:
       throw new IllegalStateException();
     }
@@ -232,11 +323,13 @@ public class TestVisitor implements IVisitor
   public Object visit( State state )
   {
     System.out.println( "State " + state.toString() );
-    
-    Iterator<StateFsm> iter = m_current_states.iterator();
-    while(iter.hasNext()) {
+
+    Iterator< StateFsm > iter = m_current_states.iterator();
+    while( iter.hasNext() )
+    {
       StateFsm st = iter.next();
-      if(st.getName().equals( state.name )) {
+      if( st.getName().equals( state.name ) )
+      {
         return st;
       }
     }
@@ -265,11 +358,12 @@ public class TestVisitor implements IVisitor
   public Object build( Mode mode, Object source_state, Object behaviour )
   {
     System.out.println( "Mode build " );
-    StateFsm st =(StateFsm) source_state;
-    LinkedList<Object> transition_list = (LinkedList<Object>) behaviour;
-    Iterator< Object > iter = transition_list.iterator();
-    while(iter.hasNext()) {
-      TransitionFsm trans = (TransitionFsm) iter.next();
+    StateFsm             st              = (StateFsm)source_state;
+    LinkedList< Object > transition_list = (LinkedList< Object >)behaviour;
+    Iterator< Object >   iter            = transition_list.iterator();
+    while( iter.hasNext() )
+    {
+      TransitionFsm trans = (TransitionFsm)iter.next();
       st.addTransition( trans );
     }
     return st;
@@ -323,46 +417,58 @@ public class TestVisitor implements IVisitor
   public Object build( Actions action, String operator, List< Object > funcalls )
   {
     System.out.println( "Actions build " );
-    switch(action.operator) {
+    switch ( action.operator )
+    {
     case "/":
       // Find percentage for action with no percentage
-      Iterator<FunCall> iter = action.actions.iterator();
+      Iterator< FunCall > iter = action.actions.iterator();
       int nb_percent = 100;
       int nb_act_nopercent = 0;
-      while(iter.hasNext()) {
+      while( iter.hasNext() )
+      {
         FunCall fc = iter.next();
-        if(fc.percent <= 0) {
-          nb_act_nopercent ++;
-        }else {
+        if( fc.percent <= 0 )
+        {
+          nb_act_nopercent++ ;
+        }
+        else
+        {
           nb_percent = nb_percent - fc.percent;
         }
       }
-      int percent_per_actNI =0;
-      if(nb_act_nopercent != 0) {
-        percent_per_actNI = nb_percent /nb_act_nopercent;
+      int percent_per_actNI = 0;
+      if( nb_act_nopercent != 0 )
+      {
+        percent_per_actNI = nb_percent / nb_act_nopercent;
       }
-      if(nb_percent < 0) {
-        throw new IllegalStateException("too much perccent ( more than 100%)");
+      if( nb_percent < 0 )
+      {
+        throw new IllegalStateException( "too much perccent ( more than 100%)" );
       }
       // Creating the Actions with percentage
       ActionPercentage actpc = new ActionPercentage();
       iter = action.actions.iterator();
       Iterator< Object > iteract = funcalls.iterator();
-      while(iteract.hasNext()) {
-        ActionFsm act = (ActionFsm) iteract.next();
-        FunCall fc = iter.next();
-        if(fc.percent <= 0) {
+      while( iteract.hasNext() )
+      {
+        ActionFsm act = (ActionFsm)iteract.next();
+        FunCall   fc  = iter.next();
+        if( fc.percent <= 0 )
+        {
           actpc.add( act, percent_per_actNI );
-        }else {
+        }
+        else
+        {
           actpc.add( act, fc.percent );
         }
       }
       return actpc;
     case ";":
-      ActionMultiple actm = new ActionMultiple();      
+      ActionMultiple actm = new ActionMultiple();
       iteract = funcalls.iterator();
-      while(iteract.hasNext()) {
-        ActionFsm act = (ActionFsm) iteract.next();
+      while( iteract.hasNext() )
+      {
+        ActionFsm act = (ActionFsm)iteract.next();
         actm.addAction( act );
       }
       return actm;
@@ -408,23 +514,19 @@ public class TestVisitor implements IVisitor
   {
     System.out.println( "Automaton build " );
     /*
-    FSM fsm = new FSM(automaton.name);
-    fsm.setInitState( (StateFsm) initial_state);
-    Iterator<Object> iter = modes.iterator();
-    while(iter.hasNext()) {
-      StateFsm st = (StateFsm)iter.next();
-      fsm.addState( st );
-    }
-    return fsm;
-    */
-    return new FSM(automaton.name, m_current_states);
+     * FSM fsm = new FSM(automaton.name); fsm.setInitState( (StateFsm)
+     * initial_state); Iterator<Object> iter = modes.iterator();
+     * while(iter.hasNext()) { StateFsm st = (StateFsm)iter.next(); fsm.addState( st
+     * ); } return fsm;
+     */
+    return new FSM( automaton.name, m_current_states );
   }
 
   @Override
   public void enter( AST ast )
   {
     System.out.println( "AST enter " );
-    m_current_states = new ArrayList<StateFsm>();
+    m_current_states = new ArrayList< StateFsm >();
     m_funcallfact = new FuncallFactory();
   }
 
