@@ -117,11 +117,12 @@ public class TestVisitor implements IVisitor
     return new KeyFsm( key.toString() );
   }
 
+  @SuppressWarnings( "deprecation" )
   @Override
   public Object visit( Value v )
   {
     System.out.println( "Value " + v.toString() );
-    return new ValueFsm( v.value );
+    return new Integer(v.value);
   }
 
   @Override
