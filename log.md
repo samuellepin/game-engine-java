@@ -156,10 +156,13 @@ TO DO :
 - David : parser le fichier de config pour les jeux et l'intégrer dans le projet
 - Sam / Rémi : finir les classes des automates et finir le Visitor
 - Greg : définit formellement que fait chaque action ,quel paramètres,... et implémentation du Brain qui va permettre de lier l'automate et l'entité
-- Romain : matin EC et après-midi support pour les autres membres du groupe
+- Romain : matin EC et après-midi support pour les autres membres du groupe + commentateur non sportif
 
 Pour demain :
     - Tester si les automates sont bien générés avec le Visitor
+    - Implémenter les actions pour les entités
+    - Vérifier si le brain fonctionne
+    - Finir le moteur pour de vrai
 
 **Commande parser**
 
