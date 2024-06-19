@@ -7,6 +7,6 @@
 	</classpathentry>
 	<classpathentry kind="src" path=""/>
 	<classpathentry kind="lib" path="info3.game.jar" sourcepath="/info3.game.given.2021"/>
-	<classpathentry kind="lib" path="parser.jar"/>
+	<classpathentry kind="lib" path="parser.jar" sourcepath="/JavaProject"/>
 	<classpathentry kind="output" path=""/>
 </classpath>
