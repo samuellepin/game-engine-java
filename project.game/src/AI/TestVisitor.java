@@ -28,7 +28,7 @@ import src.AI.Condition.*;
 public class TestVisitor implements IVisitor
 {
 
-  
+  private FuncallFactory m_funcallfact;
   private ArrayList<StateFsm> m_current_states;
   
   
@@ -163,7 +163,7 @@ public class TestVisitor implements IVisitor
   public Object build( FunCall funcall, List< Object > parameters )
   {
     System.out.println( "FunCall build " );
-    return funcall;
+    return m_funcallfact.get( funcall.name, parameters );
   }
 
   @Override
@@ -297,7 +297,6 @@ public class TestVisitor implements IVisitor
   @Override
   public Object build( Condition condition, Object expression )
   {
-    // TODO : build condition
     System.out.println( "Condition build " );
     return expression;
   }
@@ -323,7 +322,6 @@ public class TestVisitor implements IVisitor
   @Override
   public Object build( Actions action, String operator, List< Object > funcalls )
   {
-    // TO DO : build action
     System.out.println( "Actions build " );
     switch(action.operator) {
     case "/":
@@ -387,7 +385,6 @@ public class TestVisitor implements IVisitor
   @Override
   public Object build( Transition transition, Object condition, Object action, Object target_state )
   {
-    // TO DO : build transition , insert transition in the fsm
     System.out.println( "Transition build " );
     return new TransitionFsm( (StateFsm)target_state, (ConditionFsm)condition, (ActionFsm)action );
   }
@@ -427,6 +424,8 @@ public class TestVisitor implements IVisitor
   public void enter( AST ast )
   {
     System.out.println( "AST enter " );
+    m_current_states = new ArrayList<StateFsm>();
+    m_funcallfact = new FuncallFactory();
   }
 
   @Override
