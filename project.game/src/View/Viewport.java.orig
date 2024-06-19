@@ -1,0 +1,198 @@
+package src.View;
+
+import java.awt.Color;
+<<<<<<< HEAD
+import java.awt.Component;
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+
+=======
+import java.awt.Graphics;
+import java.util.ArrayList;
+
+import src.Model.Config;
+>>>>>>> feature-viewport
+import src.Model.Entity;
+import src.Model.EntityTracker;
+import src.Model.Model;
+import src.Model.Vector;
+import src.Model.World.Map;
+<<<<<<< HEAD
+import info3.game.graphics.GameCanvas;
+=======
+import src.Model.World.Tile;
+>>>>>>> feature-viewport
+
+public class Viewport
+{
+<<<<<<< HEAD
+  private static final long serialVersionUID = 1L;
+  EntityTracker             m_tracker;
+  Model                     m_model;
+  BufferedImage             m_img;
+
+  public Viewport( Entity e, int x, int y, int width, int height )
+  {
+    this.setBounds( x, y, width, height );
+    m_model = Model.getInstance();
+    setTrack( e );
+
+    try
+    {
+      m_img = AvatarFactory.loadImage( "resources/Tile_Brick.png" );
+    }
+    catch ( Exception exception )
+    {
+      throw new RuntimeException( "Can't find the tile image" );
+    }
+  }
+
+  public void setTrack( Entity e )
+  {
+    if( m_tracker != null )
+    {
+      m_model.getTrackers().remove( m_tracker );
+    }
+    m_tracker = new EntityTracker( e, getWidth(), getHeight() );
+    e.setTracker( m_tracker );
+    m_model.getTrackers().add( m_tracker );
+  }
+
+  public int metersToPixels( double d )
+  {
+    Vector trackerDims = m_tracker.getDim();
+
+    double d_px        = d * this.getWidth() / trackerDims.getX();
+
+    return (int)d_px;
+  }
+
+  /* Converts the world position pos to a pixel coordinate on the viewport */
+  public Vector worldPosToViewportPos( Vector pos )
+  {
+    Vector cameraPos   = new Vector( pos.getX() - m_tracker.getPos().getX(), pos.getY() - m_tracker.getPos().getY() );
+    Vector viewportPos = new Vector( metersToPixels( cameraPos.getX() ), metersToPixels( cameraPos.getY() ) );
+    return new Vector( (int)viewportPos.getX(), (int)viewportPos.getY() );
+=======
+  private EntityTracker           m_tracker;
+  private Color                   m_color;
+  private int                     m_x, m_y, m_width, m_height;
+  private ArrayList< Avatar >     m_avatars;
+  private ArrayList< TileAvatar > m_tileAvatars;
+
+  public Viewport( Entity e, int x, int y, int width, int height, ArrayList< Avatar > avatars,
+      ArrayList< TileAvatar > tileAvatars )
+  {
+    m_x = x;
+    m_y = y;
+    m_width = width;
+    m_height = height;
+    m_tracker = new EntityTracker( Model.getInstance(), e );
+    m_avatars = avatars;
+    m_tileAvatars = tileAvatars;
+>>>>>>> feature-viewport
+  }
+
+  private void paintTiles( Graphics g )
+  {
+    Vector mini = m_tracker.getPos();
+    Vector maxi = m_tracker.getPos().add( m_tracker.getDim() );
+    if( maxi.getX() > Map.COLS_NUM * Map.TILE_WIDTH ) maxi.setX( Map.COLS_NUM * Map.TILE_WIDTH );
+    if( maxi.getY() > Map.ROWS_NUM * Map.TILE_HEIGHT ) maxi.setY( Map.ROWS_NUM * Map.TILE_HEIGHT );
+
+    for ( int i = -metersToPixels( mini.getX() % Map.TILE_WIDTH ) - Map.TILE_WIDTH; i < this.getWidth()
+        - metersToPixels( maxi.getX() % Map.TILE_WIDTH ); i += metersToPixels( Map.TILE_WIDTH ) )
+    {
+      for ( int j = -metersToPixels( mini.getY() % Map.TILE_HEIGHT ) - Map.TILE_HEIGHT; j < this.getHeight()
+          - metersToPixels( maxi.getY() % Map.TILE_HEIGHT ); j += metersToPixels( Map.TILE_HEIGHT ) )
+      {
+        g.drawImage( m_img, i, j, metersToPixels( Map.TILE_WIDTH ), metersToPixels( Map.TILE_HEIGHT ), null );
+      }
+    }
+  }
+
+  public void paint( Graphics g )
+  {
+<<<<<<< HEAD
+    paintTiles( g );
+    ArrayList< Entity > entities = m_tracker.getEntities();
+=======
+    g.setColor( Color.darkGray );
+    g.fillRect( 0, 0, m_width, m_height );
+>>>>>>> feature-viewport
+
+    Vector trackerPos = m_tracker.getMin();
+
+    for ( TileAvatar tileAvatar : m_tileAvatars )
+    {
+<<<<<<< HEAD
+      Avatar avatar = AvatarFactory.make( e );
+
+      if( avatar != null )
+      {
+        Vector pos           = worldPosToViewportPos( new Vector( e.getX(), e.getY() ) );
+        int    avatar_x      = (int)pos.getX();
+        int    avatar_y      = (int)pos.getY();
+        int    avatar_width  = metersToPixels( e.getWidth() ) + 1;
+        int    avatar_height = metersToPixels( e.getHeight() ) + 1;
+
+        avatar.paint( g, avatar_x, avatar_y, avatar_width, avatar_height );
+      }
+    }
+    g.setColor( Color.black );
+    g.drawRect( 0, 0, this.getWidth() - 1, this.getHeight() - 1 );
+=======
+      Tile t = tileAvatar.getTile();
+      int x      = (int) ( Config.RATIO * ( t.getX() - trackerPos.getX() ) );
+      int y      = (int) ( Config.RATIO * ( t.getY() - trackerPos.getY() ) );
+      int width  = (int) ( Config.RATIO * Tile.WIDTH );
+      int height = (int) ( Config.RATIO * Tile.HEIGHT );
+      tileAvatar.paint( g, x, y, width, height );
+    }
+
+    for ( Avatar avatar : m_avatars )
+    {
+      Entity e      = avatar.getEntity();
+      int    x      = (int) ( Config.RATIO * ( e.getX() - trackerPos.getX() ) );
+      int    y      = (int) ( Config.RATIO * ( e.getY() - trackerPos.getY() ) );
+      int    width  = (int) ( Config.RATIO * e.getWidth() );
+      int    height = (int) ( Config.RATIO * e.getHeight() );
+      avatar.paint( g, x, y, width, height );
+    }
+
+    g.setColor( m_color );
+    g.drawRect( 0, 0, m_width - 1, m_height - 1 );
+  }
+
+  public int getX()
+  {
+    return m_x;
+  }
+
+  public int getY()
+  {
+    return m_y;
+  }
+
+  public int getWidth()
+  {
+    return m_width;
+  }
+
+  public int getHeight()
+  {
+    return m_height;
+  }
+
+  public void setColor( Color c )
+  {
+    m_color = c;
+  }
+
+  public void updateTracker()
+  {
+    m_tracker.centerOnTarget();
+>>>>>>> feature-viewport
+  }
+}

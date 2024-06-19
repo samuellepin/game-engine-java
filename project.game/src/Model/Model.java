@@ -2,56 +2,65 @@ package src.Model;
 
 import java.util.ArrayList;
 
-import src.Game;
+import src.Model.Collision.Collision;
 import src.Model.World.Map;
 
 public class Model
 {
-  private boolean             m_isGameOver;
-  private ArrayList< Entity > m_entities;
-  private Light               m_light;
+  private static final Model         INSTANCE = new Model();
 
-  public static Vector        m_viewport;
-  public static Vector        m_viewPos;
+  private Map                        m_map;                 /// < Background with no collisions : Floor
+  private ArrayList< Entity >        m_entities;            /// < Players, Walls, Items, etc.
+  private ArrayList< EntityTracker > m_trackers;
+  private boolean                    m_isGameOver;
+  private Entity                     m_player1;
+  private Entity                     m_player2;
+  private Entity                     m_document;
 
-  public static Player        m_player;
-  public static Player        m_opponent;
-
-  private Map                 m_map;
-
-  public static Vector        m_screenCenter;
-
-  public Model()
+  public static Model getInstance()
   {
-    m_map = new Map();
-    m_screenCenter = new Vector( Game.SCREEN_WIDTH / 2, Game.SCREEN_HEIGHT / 2 );
+    return INSTANCE;
+  }
+
+  private Model()
+  {
     m_isGameOver = false;
+
     m_entities = new ArrayList< Entity >();
-    double W = Game.SCREEN_WIDTH / 2;
-    System.out.println( W );
-//    m_entities.add( new Light( 0, 0, 100.0f ) );
-    m_light = new Light( 0, 0, 100.0f );
+    m_trackers = new ArrayList< EntityTracker >();
 
-//    m_entities.add( new Rectangle( new Vector( 70 - 30, 0 ), new Vector( 70 - 20, 30 ), new Vector( 44 - 20, 50 ),
-//        new Vector( 40 - 20, -5 ) ) );
+    m_map = Map.getInstance();
+    for ( Entity e : Map.getInstance().getWalls() )
+    {
+      m_entities.add( e );
+    }
 
-    m_viewPos = new Vector( 0, 0 );
+    Document doc = new Document( null );
+    doc.setPos( m_map.getPos( 3, 3 ) );
+    m_entities.add( doc );
+    m_document = doc;
 
-    m_player = new Player( null );
-    m_player.setPos( m_map.getPos( 5, 5 ) );
-    m_opponent = new Player( null );
-
-    updateViewPos();
-  }
-
-  public static Vector getViewPos()
-  {
-    return m_viewPos;
-  }
+    Spy spy = new Spy( null );
+    spy.setPos( m_map.getPos( 5, 5 ) );
+    this.setPlayer1( spy );
+    m_entities.add( spy );
+    
+    Guard guard = new Guard( null );
+    guard.setPos( m_map.getPos( 6, 6 ) );
+    this.setPlayer2( guard );
+    m_entities.add( guard );
+    }
 
   public void tick( long elapsed )
   {
-    m_player.tick( elapsed );
+    for ( Entity e : m_entities )
+    {
+      e.tick( elapsed );
+    }
+    if( Collision.detect( m_player1.getHitbox(), m_document.getHitbox() ) )
+    {
+      m_isGameOver = true;
+    }
   }
 
   public boolean isGameOver()
@@ -64,33 +73,28 @@ public class Model
     return m_entities;
   }
 
-  public Light getLight()
+  public Entity getPlayer1()
   {
-    return m_light;
+    return m_player1;
   }
 
-  public Map getMap()
+  public void setPlayer1( Entity e )
   {
-    return m_map;
+    m_player1 = e;
   }
 
-  public static void translateViewport( double x, double y )
+  public void setPlayer2( Entity e )
   {
-    m_player.setPos( Vector.add( m_player.getPos(), new Vector( x, y ) ) );
+    m_player2 = e;
   }
 
-  public static Vector getPlayerPos()
+  public Entity getPlayer2()
   {
-    return m_player.getPos();
+    return m_player2;
   }
 
-  public static void updateViewPos()
+  public ArrayList< EntityTracker > getTrackers()
   {
-    m_viewPos.setPos( m_screenCenter.getX() - m_player.getX(), m_screenCenter.getY() - m_player.getY() );
-  }
-
-  public static Player getPlayer()
-  {
-    return m_player;
+    return m_trackers;
   }
 }

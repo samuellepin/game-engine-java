@@ -6,24 +6,55 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import src.*;
+import src.Model.Document;
 import src.Model.Entity;
-import src.Model.Light;
-import src.Model.Rectangle;
+import src.Model.Spy;
+import src.Model.Wall;
 
 public class AvatarFactory
 {
-  public static Avatar make( Entity e ) throws Exception
+  public static BufferedImage[] m_idleSpyImg;
+  public static BufferedImage[] m_runningSpyImg;
+  public static BufferedImage   m_floorImg;
+  public static BufferedImage   m_docImg;
+
+  public static void Initialize()
   {
-    if( e instanceof Light )
+    try
     {
-      return new LightAvatar( (Light)e );
+      m_floorImg = AvatarFactory.loadImage( "resources/Tile_Brick.png" );
+      m_idleSpyImg = AvatarFactory.loadSprite( "resources/Spy/SMS_Adv_Idle_Gun_1_strip4.png", 1, 4 );
+      m_runningSpyImg = AvatarFactory.loadSprite( "resources/Spy/SMS_Adv_Idle_strip4.png", 1, 4 );
+      m_docImg = AvatarFactory.loadImage( "resources/ConciseDocumentationOfLustre.png" );
     }
-    else if( e instanceof Rectangle )
+    catch ( IOException e )
     {
-      return new RectangleAvatar( (Rectangle)e );
+      e.printStackTrace();
     }
-    throw new Exception( "Unknow entity" );
+  }
+
+  public static Avatar make( Entity e )
+  {
+    if( e instanceof Spy )
+    {
+      return new SpyAvatar( (Spy)e );
+    }
+    else if( e instanceof Wall )
+    {
+      return new WallAvatar( (Wall)e );
+    }
+    else if( e instanceof Document )
+    {
+      return new DocumentAvatar( (Document)e );
+    }
+    else if( e instanceof Wall )
+    {
+      return new WallAvatar( (Wall)e );
+    }
+
+    // TODO return default avatar if the entity is unknown
+    // throw new Exception( "Unknow entity" );
+    return null;
   }
 
   public static BufferedImage loadImage( String filename ) throws IOException
