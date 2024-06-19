@@ -148,7 +148,18 @@ TO DO :
 
 - David : s'occupe des fichier de config pour les jeux 
 - Sam/ Romain : continuation implémentation des automates et du Visitor
+- Rémi : aide sur l'implémentation des automates et du Visitor
+- Greg : support et aide sur les différentes implémentations
 
+## Jour 12 (19 juin):
+
+- David : parser le fichier de config pour les jeux et l'intégrer dans le projet
+- Sam / Rémi : finir les classes des automates et finir le Visitor
+- Greg : définit formellement que fait chaque action ,quel paramètres,... et implémentation du Brain qui va permettre de lier l'automate et l'entité
+- Romain : matin EC et après-midi support pour les autres membres du groupe
+
+Pour demain :
+    - Tester si les automates sont bien générés avec le Visitor
 
 **Commande parser**
 
