@@ -8,8 +8,8 @@ import src.Model.Collision.Collision;
 
 public abstract class Entity
 {
-  protected FSM m_automaton;
-  protected StateFsm     m_state;
+  protected FSM           m_automaton;
+  protected StateFsm      m_state;
   protected EntityTracker m_tracker;
   protected long          m_elapsedTime;
   protected AABB          m_hitbox;
@@ -18,7 +18,7 @@ public abstract class Entity
   protected Circle        m_visionField;
   protected boolean       m_isMoving;
   protected boolean       m_hasCollision;
-  
+
   public Entity( FSM automaton )
   {
     m_automaton = automaton;
@@ -90,7 +90,7 @@ public abstract class Entity
     {
       m_tracker.getListener().moved();
     }
-    
+
     callListener();
   }
 
@@ -184,6 +184,10 @@ public abstract class Entity
   public StateFsm getState()
   {
     return m_state;
+  }
+  
+  public void setState(StateFsm s) {
+    m_state = s;
   }
 
   public Vector getPos()

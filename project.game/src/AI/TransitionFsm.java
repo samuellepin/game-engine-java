@@ -2,6 +2,7 @@ package src.AI;
 
 import src.AI.Action.ActionFsm;
 import src.AI.Condition.ConditionFsm;
+import src.Model.Entity;
 
 public class TransitionFsm
 {
@@ -46,4 +47,7 @@ public class TransitionFsm
     m_act = act;
   }
  
+  public boolean evaluate( Entity e ) {
+    return m_cond.evaluate(e);
+  }
 }

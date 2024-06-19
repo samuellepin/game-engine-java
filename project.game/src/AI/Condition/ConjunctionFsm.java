@@ -6,7 +6,7 @@ public class ConjunctionFsm implements ConditionFsm
 {
   ConditionFsm m_c1, m_c2;
 
-  ConjunctionFsm( ConditionFsm c1, ConditionFsm c2 )
+  public ConjunctionFsm( ConditionFsm c1, ConditionFsm c2 )
   {
     m_c1 = c1;
     m_c2 = c2;
