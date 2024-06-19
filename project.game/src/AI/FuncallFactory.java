@@ -15,7 +15,7 @@ public class FuncallFactory
 
   // FIELDS
 
-  ActionFactory m_actionFact;
+  ActionFactory    m_actionFact;
   ConditionFactory m_conditionFact;
 
   // METHODS
@@ -57,20 +57,20 @@ public class FuncallFactory
       return m_actionFact.setPop();
     case "Wizz":
       return m_actionFact.setWizz();
-    
+
     // TODO Condition
-//    case "True":
-//      return m_conditionFact.set( new True(), parameters );
-//    case "MyDir":
-//      return m_conditionFact.set( new MyDir(), parameters );
-//    case "Cell":
-//      return m_conditionFact.set( new Cell(), parameters );
-//    case "Closest":
-//      return m_conditionFact.set( new Closest(), parameters );
-//    case "Got":
-//      return m_conditionFact.set( new Got(), parameters );
-//    case "Key":
-//      return m_conditionFact.set( new Key(), parameters );
+    case "True":
+      return m_conditionFact.setTrue();
+    case "MyDir":
+      return m_conditionFact.setMyDir( parameters );
+    case "Cell":
+      return m_conditionFact.setCell( parameters );
+    case "Closest":
+      return m_conditionFact.setClosest( parameters );
+    case "Got":
+      return m_conditionFact.setGot( parameters );
+    case "Key":
+      return m_conditionFact.setKey( parameters );
     }
     return null;
   }
