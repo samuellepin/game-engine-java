@@ -3,6 +3,7 @@ package src.AI.Action;
 import src.AI.DIRECTION;
 import src.Model.Entity;
 
+/*Se déplace pendant t milli-secondes, dans la direction dir avec la vélocite actuelle de l'entité*/
 public class Move implements ActionFsm
 {
 

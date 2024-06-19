@@ -2,7 +2,8 @@ package src.AI.Action;
 
 import src.AI.DIRECTION;
 import src.Model.Entity;
-
+/*Ignore les getHit() qu'il reçoit des entités
+ * dans la direction dir, pendant t mili-secondes.*/
 public class Protect implements ActionFsm
 {
   

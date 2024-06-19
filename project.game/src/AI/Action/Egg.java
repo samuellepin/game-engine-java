@@ -2,7 +2,7 @@ package src.AI.Action;
 
 import src.AI.DIRECTION;
 import src.Model.Entity;
-
+/*Crée une nouvelle entité de la même classe, dans la direction dir.*/
 public class Egg implements ActionFsm
 {
 

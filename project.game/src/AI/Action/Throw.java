@@ -2,7 +2,7 @@ package src.AI.Action;
 
 import src.AI.DIRECTION;
 import src.Model.Entity;
-
+/*Lache l'objet qu'il a en main, dans la direction dir.*/
 public class Throw implements ActionFsm
 {
 
