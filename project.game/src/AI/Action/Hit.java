@@ -2,7 +2,7 @@ package src.AI.Action;
 
 import src.AI.DIRECTION;
 import src.Model.Entity;
-
+/*L'entité appelle getHit() sur chaque entité dans son champ de vision, dans la direction dir*/
 public class Hit implements ActionFsm
 {
 

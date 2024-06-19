@@ -3,6 +3,9 @@ package src.AI.Action;
 import src.AI.DIRECTION;
 import src.Model.Entity;
 
+/* Se dipisce de dist metres dans 1a direction dir,
+ * en ignorant les obstacles. Si l'entité aterrit sur un obstacle,
+ * le saut s'arrete avant cet obstacle.*/
 public class Jump implements ActionFsm
 {
 

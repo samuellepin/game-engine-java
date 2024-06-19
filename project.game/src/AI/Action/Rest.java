@@ -1,7 +1,8 @@
 package src.AI.Action;
 
 import src.Model.Entity;
-
+/*Ne fait rien pendant t mili-secondes,
+ *et appelle la méthode addPow(pow)*/
 public class Rest implements ActionFsm
 {
 

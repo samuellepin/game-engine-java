@@ -1,7 +1,7 @@
 package src.AI.Action;
 
 import src.Model.Entity;
-
+/*Incrémente la variable globale nommée var de n.*/
 public class Add implements ActionFsm
 {
 

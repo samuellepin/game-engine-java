@@ -2,6 +2,7 @@ package src.AI.Action;
 
 import src.Model.Entity;
 
+/*L'entité ne fait rien pendant t milli-secondes*/
 public class Wait implements ActionFsm
 {
 
