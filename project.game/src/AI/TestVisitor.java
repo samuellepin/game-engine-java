@@ -163,82 +163,7 @@ public class TestVisitor implements IVisitor
   public Object build( FunCall funcall, List< Object > parameters )
   {
     System.out.println( "FunCall build " );
-    switch ( funcall.name )
-    {
-    // Condition:
-    case "Cell":
-      // return new Cell(parameters);
-      break;
-    case "Closest":
-      // return new Closest(parameters);
-      break;
-    case "Got":
-      // return new Got(parameters);
-      break;
-    case "Key":
-      // return new Key(parameters);
-      break;
-    case "True":
-      // return new True(parameters);
-      break;
-    case "MyDir":
-      // return new MyDir(parameters);
-      break;
-
-    // Action :
-    case "Add":
-      // return new Add(parameters);
-      break;
-    case "Egg":
-      // return new Egg(parameters);
-      break;
-    case "Explode":
-      // return new Explode(parameters);
-      break;
-    case "Get":
-      // return new Get(parameters);
-      break;
-    case "Hit":
-      // return new Hit(parameters);
-      break;
-    case "Jump":
-      // return new Jump(parameters);
-      break;
-    case "Move":
-      // return new Move(parameters);
-      break;
-    case "Pick":
-      // return new Pick(parameters);
-      break;
-    case "Protect":
-      // return new Protect(parameters);
-      break;
-    case "Rest":
-      // return new Rest(parameters);
-      break;
-    case "Store":
-      // return new Store(parameters);
-      break;
-    case "Throw":
-      // return new Throw(parameters);
-      break;
-    case "Turn":
-      // return new Turn(parameters);
-      break;
-    case "Wait":
-      // return new Wait(parameters);
-      break;
-    case "Pop":
-      // return new Pop(parameters);
-      break;
-    case "Wizz":
-      // return new Wizz(parameters);
-      break;
-    default:
-      // return null;
-      break;
-    }
-    return null;
+    return funcall;
   }
 
   @Override
@@ -372,7 +297,7 @@ public class TestVisitor implements IVisitor
   @Override
   public Object build( Condition condition, Object expression )
   {
-    // TO DO : build condition
+    // TODO : build condition
     System.out.println( "Condition build " );
     return expression;
   }
