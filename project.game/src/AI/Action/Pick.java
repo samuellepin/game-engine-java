@@ -14,7 +14,7 @@ public class Pick implements ActionFsm
   public Pick()
   {
     // TODO define default values
-    m_dir = new Direction(Direction.DIRECTION.Forward);
+    m_dir = new Direction( Direction.DIRECTION.Forward );
   }
 
   public Pick( Direction dir )
@@ -27,6 +27,17 @@ public class Pick implements ActionFsm
   {
     // TODO Auto-generated method stub
 
+  }
+
+  @Override
+  public boolean equals( Object action )
+  {
+    if( action instanceof Pick )
+    {
+      Pick pick = (Pick)action;
+      if( pick.m_dir.equals( m_dir ) ) return true;
+    }
+    return false;
   }
 
 }

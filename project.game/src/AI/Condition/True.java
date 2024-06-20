@@ -12,4 +12,10 @@ public class True implements ConditionFsm
     return false;
   }
 
+  @Override
+  public boolean equals( Object action )
+  {
+    if( action instanceof True ) return true;
+    return false;
+  }
 }

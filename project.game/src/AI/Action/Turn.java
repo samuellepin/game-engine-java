@@ -26,4 +26,15 @@ public class Turn implements ActionFsm
 
   }
 
+  @Override
+  public boolean equals( Object action )
+  {
+    if( action instanceof Turn )
+    {
+      Turn turn = (Turn)action;
+      if( turn.m_dir.equals( m_dir ) ) return true;
+    }
+    return false;
+  }
+
 }

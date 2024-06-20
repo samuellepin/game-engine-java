@@ -26,4 +26,15 @@ public class Wait implements ActionFsm
 
   }
 
+  @Override
+  public boolean equals( Object action )
+  {
+    if( action instanceof Wait )
+    {
+      Wait w = (Wait)action;
+      if( w.m_time == m_time ) return true;
+    }
+    return false;
+  }
+
 }

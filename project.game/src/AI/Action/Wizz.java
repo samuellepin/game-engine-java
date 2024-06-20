@@ -12,4 +12,11 @@ public class Wizz implements ActionFsm
 
   }
 
+  @Override
+  public boolean equals( Object action )
+  {
+    if( action instanceof Wizz ) return true;
+    return false;
+  }
+
 }

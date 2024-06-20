@@ -1,6 +1,7 @@
 package src.AI.Action;
 
 import src.Model.Entity;
+
 /*Ne fait rien pendant t mili-secondes,
  *et appelle la méthode addPow(pow)*/
 public class Rest implements ActionFsm
@@ -27,6 +28,17 @@ public class Rest implements ActionFsm
   {
     // TODO Auto-generated method stub
 
+  }
+
+  @Override
+  public boolean equals( Object action )
+  {
+    if( action instanceof Rest )
+    {
+      Rest rest = (Rest)action;
+      if( rest.m_time == m_time && rest.m_pow == m_pow ) return true;
+    }
+    return false;
   }
 
 }

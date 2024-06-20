@@ -25,4 +25,14 @@ public class Key implements ConditionFsm
     return false;
   }
 
+  @Override
+  public boolean equals( Object action )
+  {
+    if( action instanceof Key )
+    {
+      Key key = (Key)action;
+      if( key.m_key.equals( m_key ) ) return true;
+    }
+    return false;
+  }
 }

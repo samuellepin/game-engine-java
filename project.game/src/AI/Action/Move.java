@@ -29,5 +29,16 @@ public class Move implements ActionFsm
     // TODO Auto-generated method stub
 
   }
+  
+  @Override
+  public boolean equals( Object action )
+  {
+    if( action instanceof Move )
+    {
+      Move move = (Move)action;
+      if( move.m_dir.equals( m_dir ) && move.m_time == m_time ) return true;
+    }
+    return false;
+  }
 
 }
