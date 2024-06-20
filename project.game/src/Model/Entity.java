@@ -2,7 +2,6 @@ package src.Model;
 
 import src.AI.Brain;
 import src.AI.FSM;
-import src.AI.StateFsm;
 import src.Model.Collision.AABB;
 import src.Model.Collision.Circle;
 import src.Model.Collision.Collision;
@@ -76,7 +75,7 @@ public abstract class Entity
 
   public void doAdd( String var, int n )
   {
-
+    
   }
 
   public void doWait()
