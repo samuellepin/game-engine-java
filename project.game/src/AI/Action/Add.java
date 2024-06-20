@@ -8,7 +8,7 @@ public class Add implements ActionFsm
 {
 
   private CATEGORY m_cat;
-  private int    m_n;
+  private int      m_n;
 
   public Add()
   {
@@ -26,6 +26,17 @@ public class Add implements ActionFsm
   public void execute( Entity entity )
   {
     entity.doAdd( m_cat, m_n );
+  }
+
+  @Override
+  public boolean equals( Object action )
+  {
+    if( action instanceof Add )
+    {
+      Add add = (Add)action;
+      if( add.m_cat.equals( m_cat ) && add.m_n == m_n ) return true;
+    }
+    return false;
   }
 
 }

@@ -29,5 +29,16 @@ public class Egg implements ActionFsm
   {
     entity.doEgg( m_dir );
   }
+  
+  @Override
+  public boolean equals( Object action )
+  {
+    if( action instanceof Egg )
+    {
+      Egg egg = (Egg)action;
+      if( egg.m_dir.equals( m_dir ) ) return true;
+    }
+    return false;
+  }
 
 }

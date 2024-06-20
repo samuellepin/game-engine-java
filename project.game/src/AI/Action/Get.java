@@ -10,7 +10,13 @@ public class Get implements ActionFsm
   public void execute( Entity entity )
   {
     entity.doGet();
-
+  }
+  
+  @Override
+  public boolean equals( Object action )
+  {
+    if( action instanceof Get ) return true;
+    return false;
   }
 
 }

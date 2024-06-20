@@ -36,4 +36,15 @@ public class Got implements ConditionFsm
     return false;
   }
 
+  @Override
+  public boolean equals( Object action )
+  {
+    if( action instanceof Got )
+    {
+      Got got = (Got)action;
+      if( got.m_cat.equals( m_cat ) && got.m_floorVal == m_floorVal ) return true;
+    }
+    return false;
+  }
+
 }

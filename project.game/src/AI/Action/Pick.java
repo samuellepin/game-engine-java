@@ -13,7 +13,7 @@ public class Pick implements ActionFsm
 
   public Pick()
   {
-    m_dir = new Direction(Direction.DIRECTION.Forward);
+    m_dir = new Direction( Direction.DIRECTION.Forward );
   }
 
   public Pick( Direction dir )
@@ -25,6 +25,17 @@ public class Pick implements ActionFsm
   public void execute( Entity entity )
   {
     entity.doPick( m_dir.toAngle( entity.getOrientation() ) );
+  }
+
+  @Override
+  public boolean equals( Object action )
+  {
+    if( action instanceof Pick )
+    {
+      Pick pick = (Pick)action;
+      if( pick.m_dir.equals( m_dir ) ) return true;
+    }
+    return false;
   }
 
 }
