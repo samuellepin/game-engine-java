@@ -1,5 +1,7 @@
 package src.Model;
 
+import java.util.ArrayList;
+
 import src.AI.FSM;
 import src.AI.StateFsm;
 import src.Model.Collision.AABB;
@@ -8,16 +10,18 @@ import src.Model.Collision.Collision;
 
 public abstract class Entity
 {
-  protected FSM           m_automaton;
-  protected StateFsm      m_state;
-  protected EntityTracker m_tracker;
-  protected long          m_elapsedTime;
-  protected AABB          m_hitbox;
-  protected double        m_orientation;
-  protected double        m_velocity;
-  protected Circle        m_visionField;
-  protected boolean       m_isMoving;
-  protected boolean       m_hasCollision;
+  protected FSM                 m_automaton;
+  protected StateFsm            m_state;
+  protected EntityTracker       m_tracker;
+  protected long                m_elapsedTime;
+  protected AABB                m_hitbox;
+  protected double              m_orientation;
+  protected double              m_velocity;
+  protected Circle              m_visionField;
+  protected boolean             m_isMoving;
+  protected boolean             m_hasCollision;
+  protected Entity              m_objectInHand;
+  protected ArrayList< Entity > m_inventory;
 
   public Entity( FSM automaton )
   {
@@ -146,14 +150,17 @@ public abstract class Entity
 
   public void doStore()
   {
-    // TODO
-    throw new RuntimeException( "NYI" );
+    Entity e = m_objectInHand;
+    m_objectInHand = null;
+    m_inventory.add( e );
+
   }
 
   public void doGet()
   {
-    // TODO
-    throw new RuntimeException( "NYI" );
+    Entity e=m_inventory.remove( 0 );
+    doStore();
+    m_objectInHand=e;
   }
 
   public void doPower()
@@ -185,8 +192,9 @@ public abstract class Entity
   {
     return m_state;
   }
-  
-  public void setState(StateFsm s) {
+
+  public void setState( StateFsm s )
+  {
     m_state = s;
   }
 
