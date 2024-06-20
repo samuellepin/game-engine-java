@@ -144,8 +144,10 @@ public abstract class Entity
 
   public void doThrow( double orientation )
   {
-    // TODO
-    throw new RuntimeException( "NYI" );
+    Entity e = m_objectInHand;
+    Model model=Model.getInstance();
+    m_objectInHand = null;
+    model.addEntities( e );
   }
 
   public void doStore()
