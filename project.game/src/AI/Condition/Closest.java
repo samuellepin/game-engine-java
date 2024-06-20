@@ -1,23 +1,23 @@
 package src.AI.Condition;
 
 import src.AI.CATEGORY;
-import src.AI.DIRECTION;
+import src.AI.Direction;
 import src.Model.Entity;
 
 public class Closest implements ConditionFsm
 {
 
   private CATEGORY  m_cat;
-  private DIRECTION m_dir;
+  private Direction m_dir;
 
   public Closest()
   {
     // TODO define default values
     m_cat = CATEGORY.Adversary;
-    m_dir = DIRECTION.Forward;
+    m_dir = new Direction(Direction.DIRECTION.Forward);
   }
 
-  public Closest( CATEGORY cat, DIRECTION dir )
+  public Closest( CATEGORY cat, Direction dir )
   {
     m_cat = cat;
     m_dir = dir;

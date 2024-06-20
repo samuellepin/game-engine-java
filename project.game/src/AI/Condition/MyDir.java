@@ -1,20 +1,20 @@
 package src.AI.Condition;
 
-import src.AI.DIRECTION;
+import src.AI.Direction;
 import src.Model.Entity;
 
 public class MyDir implements ConditionFsm
 {
 
-  private DIRECTION m_dir;
+  private Direction m_dir;
   
   public MyDir()
   {
     // TODO define default values
-    m_dir = DIRECTION.Forward;
+    m_dir = new Direction(Direction.DIRECTION.Forward);
   }
   
-  public MyDir( DIRECTION dir )
+  public MyDir( Direction dir )
   {
     m_dir = dir;
   }
