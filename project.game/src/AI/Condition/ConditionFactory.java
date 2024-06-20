@@ -31,7 +31,7 @@ public class ConditionFactory
     MyDir condition = new MyDir();
     if( parameters.size() >= 1 && parameters.get( 0 ) instanceof Direction )
     {
-      condition = new MyDir( new Direction( (Direction.DIRECTION)parameters.get( 0 ) ) );
+      condition = new MyDir( (Direction)parameters.get( 0 ) );
     }
     return add( condition );
   }
@@ -46,7 +46,7 @@ public class ConditionFactory
       Object o2 = parameters.get( 1 );
       if( o1 instanceof Direction && o2 instanceof CATEGORY )
       {
-        condition = new Cell( new Direction( (Direction.DIRECTION)o1 ), (CATEGORY)o2 );
+        condition = new Cell( (Direction)o1, (CATEGORY)o2 );
       }
     }
     return add( condition );
@@ -62,7 +62,7 @@ public class ConditionFactory
       Object o2 = parameters.get( 1 );
       if( o1 instanceof CATEGORY && o2 instanceof Direction )
       {
-        condition = new Closest( (CATEGORY)o1, new Direction( (Direction.DIRECTION)o2 ) );
+        condition = new Closest( (CATEGORY)o1, (Direction)o2 );
       }
     }
     return add( condition );
