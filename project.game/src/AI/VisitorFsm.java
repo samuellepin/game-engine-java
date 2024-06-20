@@ -27,7 +27,7 @@ import gal.ast.Value;
 import src.AI.Action.*;
 import src.AI.Condition.*;
 
-public class TestVisitor implements IVisitor
+public class VisitorFsm implements IVisitor
 {
 
   private FuncallFactory        m_funcallfact;
@@ -333,7 +333,9 @@ public class TestVisitor implements IVisitor
         return st;
       }
     }
-    return new StateFsm( state.name );
+    StateFsm s = new StateFsm( state.name );
+    m_current_states.add( s );
+    return s;
   }
 
   @Override
@@ -501,6 +503,7 @@ public class TestVisitor implements IVisitor
     System.out.println( "\n" );
     System.out.println( "-------------" + automaton.toString() + "-------------" );
     System.out.println( "Automaton enter " + automaton.toString() );
+    m_current_states = new ArrayList< StateFsm >();
   }
 
   @Override
@@ -513,20 +516,13 @@ public class TestVisitor implements IVisitor
   public Object build( Automaton automaton, Object initial_state, List< Object > modes )
   {
     System.out.println( "Automaton build " );
-    /*
-     * FSM fsm = new FSM(automaton.name); fsm.setInitState( (StateFsm)
-     * initial_state); Iterator<Object> iter = modes.iterator();
-     * while(iter.hasNext()) { StateFsm st = (StateFsm)iter.next(); fsm.addState( st
-     * ); } return fsm;
-     */
-    return new FSM( automaton.name, m_current_states );
+    return new FSM( automaton.name, m_current_states, (StateFsm)initial_state );
   }
 
   @Override
   public void enter( AST ast )
   {
     System.out.println( "AST enter " );
-    m_current_states = new ArrayList< StateFsm >();
     m_funcallfact = new FuncallFactory();
   }
 

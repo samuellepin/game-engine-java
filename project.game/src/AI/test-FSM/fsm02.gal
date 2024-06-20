@@ -1,5 +1,5 @@
 Poule(Pondre){
   * (Pondre)
-  | ! Cell(_) ? Move(_) :(_)
+  | Cell(N,@) ? Move(N,10) :(Pondre)
 }
 
