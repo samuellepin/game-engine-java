@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import src.Model.Entity;
-import src.Model.Config;
+import src.Config;
 
 public class ActionPercentage implements ActionFsm
 {
