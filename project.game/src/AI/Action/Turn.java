@@ -11,7 +11,7 @@ public class Turn implements ActionFsm
   public Turn()
   {
     // TODO define default values
-    m_dir = new Direction(Direction.DIRECTION.Right);
+    m_dir = new Direction( Direction.DIRECTION.Right );
   }
 
   public Turn( Direction dir )
@@ -22,7 +22,7 @@ public class Turn implements ActionFsm
   @Override
   public void execute( Entity entity )
   {
-    // TODO Auto-generated method stub
+    entity.doTurn( m_dir.toAngle( entity.getOrientation() ) );
 
   }
 
