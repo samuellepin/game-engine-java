@@ -11,7 +11,6 @@ public class Throw implements ActionFsm
 
   public Throw()
   {
-    // TODO define default values
     m_dir = new Direction( Direction.DIRECTION.Forward );
   }
 

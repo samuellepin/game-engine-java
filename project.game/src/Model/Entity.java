@@ -19,6 +19,7 @@ public abstract class Entity
   protected double              m_velocity;
   protected Circle              m_visionField;
   protected boolean             m_isMoving;
+  protected boolean             m_isWaiting;
   protected boolean             m_isResting;
   protected double              m_moveDirection;
   protected long                m_timeToWait;
@@ -64,6 +65,7 @@ public abstract class Entity
   {
     m_elapsedTime = elapsed;
     tickMove( elapsed );
+    tickWait( elapsed );
     tickRest( elapsed );
     callListener();
   }
@@ -87,10 +89,19 @@ public abstract class Entity
   {
   }
 
-  public void doWait()
+  public void doWait( long time )
   {
-    // TODO
-    throw new RuntimeException( "NYI" );
+    m_isWaiting = true;
+    m_timeToWait = time;
+  }
+
+  /* Called every tick, wait if the entity is supposed to wait */
+  private void tickWait( long elapsed )
+  {
+    if( m_isWaiting )
+    {
+      m_timeToWait -= elapsed;
+    }
   }
 
   public void doMove( Direction dir )
