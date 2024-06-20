@@ -26,7 +26,7 @@ public class Add implements ActionFsm
   @Override
   public void execute( Entity entity )
   {
-    entity.doAdd( m_var, m_n );
+    entity.doAdd( m_cat, m_n );
   }
 
 }

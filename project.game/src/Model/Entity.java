@@ -2,6 +2,7 @@ package src.Model;
 
 import java.util.ArrayList;
 import src.AI.Brain;
+import src.AI.CATEGORY;
 import src.AI.FSM;
 import src.Model.Collision.AABB;
 import src.Model.Collision.Circle;
@@ -76,7 +77,7 @@ public abstract class Entity
     }
   }
 
-  public void doAdd( String var, int n )
+  public void doAdd( CATEGORY var, int n )
   {
 
   }
