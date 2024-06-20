@@ -25,6 +25,13 @@ public class FSM
     m_name = name;
   }
 
+  public FSM( String name, ArrayList< StateFsm > st, StateFsm init )
+  {
+    m_states = st;
+    m_name = name;
+    m_init_state = init;
+  }
+
   /*
    * Set the initial state of the FSM, the initial state is added to the list of
    * states.

@@ -124,25 +124,76 @@ TO DO pour demain :
 - Définition du planning global du projet pour les semaines à venir pour avoir un objectif clair et précis.
 - Définition d'un planning plus precis de la journée d'aujourd'hui et de demain.
 
+- Rémi et Greg s'occupent de faire le View port car c'est une fonctinnalité essentiel et importante de notre projet et cela va nous permettre de pouvoir voir les entités
+- Sam : Comprendre le fonctionnemnt du parser et du visitor 
+- David mis en place d'une Hitbox pour chaque entité 
+- Romain : continuer l'implémentation des biome de façon de façon aléatoire et mise en cohérence avec le code de David 
 
-**Planning des deux jours :**
+### Jour 9 (14 juin):
+TO DO :
+- Remi et greg doivent charger les avatars pour tester si leur Viewport fonctionne bien 
+- Sam implementer le visitor et README pour le fichier de config
+- David : fusionner les Hitbox pour les objects inanimé pour éviter d'avoir trop d'Hitbox
+- Romain : finir la cohérence entre le code de David puis intégration entre les deux maps de biome et couloir et Hitbox  
+
+## Jour 10 (17 juin):
+
+- Réunion de début de journée pour discuter de l'avancement du projet et des tâches à réaliser pour la journée.
+- David/Greg/Rémi : merge des différentes parties 
+- Romain / Sam : implémentation des automates et du Visitor
+
+## Jour 11 (18 juin):
+
+- Redéfinition des objectifs de la semaine et de la journée.
+
+- David : s'occupe des fichier de config pour les jeux 
+- Sam/ Romain : continuation implémentation des automates et du Visitor
+- Rémi : aide sur l'implémentation des automates et du Visitor
+- Greg : support et aide sur les différentes implémentations
+
+## Jour 12 (19 juin):
+
+- David : parser le fichier de config pour les jeux et l'intégrer dans le projet
+- Sam / Rémi : finir les classes des automates et finir le Visitor
+- Greg : définit formellement que fait chaque action ,quel paramètres,... et implémentation du Brain qui va permettre de lier l'automate et l'entité
+- Romain : matin EC et après-midi support pour les autres membres du groupe + commentateur non sportif
+
+Pour demain :
+    - Tester si les automates sont bien générés avec le Visitor
+    - Implémenter les actions pour les entités
+    - Vérifier si le brain fonctionne
+    - Finir le moteur pour de vrai
+
+**Commande parser**
+
+Votre fichier automate : nom_AI.gal
+
+- make nom_AI.txt
+- make nom_AI.ast.dot OU make nom_AI.aut.dot
+- make nom_AI.ast.jpg OU make nom_AI.aut.jpg
+
+**Planning quotidien :**
 
 - [ ] View => Greg et Rémi
-    - [ ] Afficher Viewport du modéle avec monde qui bouge 
+    - [x] Afficher Viewport du modéle avec monde qui bouge ( A tester )
+    - [ ] Charger tout les avatars 
     - => Besoin du model 
 - [ ] AI (Automaton) => Sam 
-    - [ ] Faire un Visitor et comprendre commnent le parser appel les différent méthode 
+    - [ ] Faire un Visitor 
+    - [x] comprendre commnent le parser appel les différent méthode : 13/06
     - [ ] Créer les classes qui implémente action (move ,...)
-    - [ ] Lier le parser et notre projet 
+    - [x] Lier le parser et notre projet 
     - [ ] Gestion FSM (traduction ast en FSM)
 - [ ] Model => David 
     - [x] Fonctions qui détectes les collisons
     - [x] Géneration des biomes => Romain 
-    - [ ] Supprimer ancien Viewport
-    - [ ] Integration des méthodes de collision 
-        - [ ] Hitbox aux entités
-    - [ ] Implémentation vision
+    - [x] Integration des méthodes de collision : 13/06 
+        - [x] Hitbox aux entités : 13/06
+    - [x] Implémentation champ vision
     - [ ] Gestion des ticks
+        - Besoin des automates pour tester
+    - [x] biomes : 13/06
+    - [x] réunir carte biome et couloir 
 - [ ] Controler 
     - [ ] Interpréter les touches pour L'AI
 
@@ -151,43 +202,43 @@ TO DO pour demain :
 
 Jeudi 13 juin :
 
-- [ ] Finir premier jet du moteur (1/2)
-    - [ ] Finir chaque morceau
+- [x] Finir premier jet du moteur (1/2)
+    - [x] Finir chaque morceau
 
 Vendredi 14 juin :
 
-- [ ] Finir premier jet du moteur (2/2)
-    - [ ] Assembler les morceaux
+- [x] Finir premier jet du moteur (2/2)
+    - [x] Assembler les morceaux
 
 Lundi 17 juin :
 
-- [ ] Implémenter fonctionnalité MG (1/2)
-    - [ ] Implémenter les entités
-    - [ ] Implémenter les automates
+- [x] Finir premier jet du moteur (3/3)
+    - [x] Assembler les morceaux
+    - [x] Debug
+    - [x] Merge
 
 Mardi 18 juin :
 
-- [ ] Implémenter fonctionnalité MG (2/2)
+- Continuation du moteur 
+
+Mercredi 19 juin :
+
+- [ ] Implémenter fonctionnalité MG (1/1)
     - [ ] Implémenter les entités
     - [ ] Implémenter les automates
 - Soir : Première version du jeu MG
 
-Mercredi 19 juin :
+Jeudi 20 juin :
 
 - [ ] Implémenter fonctionnalité PN (1/1)
     - [ ] Implémenter les entités
     - [ ] Implémenter les automates
 - Soir : Première version du jeu PN
 
-Jeudi 20 juin :
-
-- [ ] Debug (1/2)
-- [ ] Ajout visuel et son (1/2)
-
 Vendredi 21 juin :
 
-- [ ] Debug (2/2)
-- [ ] Ajout visuel et son (2/2)
+- [ ] Debug 
+- [ ] Ajout visuel et son 
 
 Lundi 24 juin :
 
