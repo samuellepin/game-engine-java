@@ -13,7 +13,6 @@ public class Pick implements ActionFsm
 
   public Pick()
   {
-    // TODO define default values
     m_dir = new Direction( Direction.DIRECTION.Forward );
   }
 
@@ -25,8 +24,7 @@ public class Pick implements ActionFsm
   @Override
   public void execute( Entity entity )
   {
-    // TODO Auto-generated method stub
-
+    entity.doPick( m_dir.toAngle( entity.getOrientation() ) );
   }
 
   @Override

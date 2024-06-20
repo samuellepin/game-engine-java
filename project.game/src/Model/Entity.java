@@ -11,6 +11,7 @@ import src.Model.Collision.Collision;
 
 public abstract class Entity
 {
+  protected Brain               m_brain;
   protected EntityTracker       m_tracker;
   protected long                m_elapsedTime;
   protected AABB                m_hitbox;
@@ -18,10 +19,12 @@ public abstract class Entity
   protected double              m_velocity;
   protected Circle              m_visionField;
   protected boolean             m_isMoving;
+  protected boolean             m_isResting;
+  protected double              m_moveDirection;
+  protected long                m_timeToWait;
   protected boolean             m_hasCollision;
   protected Entity              m_objectInHand;
   protected ArrayList< Entity > m_inventory;
-  protected Brain               m_brain;
 
   public Entity( FSM automaton )
   {
@@ -60,6 +63,8 @@ public abstract class Entity
   public void tick( long elapsed )
   {
     m_elapsedTime = elapsed;
+    tickMove( elapsed );
+    tickRest( elapsed );
     callListener();
   }
 
@@ -88,22 +93,91 @@ public abstract class Entity
     throw new RuntimeException( "NYI" );
   }
 
-  public void doMove( double orientation )
+  public void doMove( Direction dir )
   {
-    double d = m_velocity * (double)m_elapsedTime;
-    if( d >= 3 * m_velocity || d <= 0 )
+    m_moveDirection = dir.toAngle( m_orientation );
+    m_timeToWait = 20;
+    m_isMoving = true;
+  }
+
+  public void doMove( double dir )
+  {
+    m_moveDirection = dir;
+    m_timeToWait = 20;
+    m_isMoving = true;
+  }
+
+  public void doMove( Direction dir, long time )
+  {
+    m_moveDirection = dir.toAngle( m_orientation );
+    m_timeToWait = time;
+    m_isMoving = true;
+  }
+
+  public void doMove( double dir, long time )
+  {
+    m_moveDirection = dir;
+    m_timeToWait = time;
+    m_isMoving = true;
+  }
+
+  /* Called every tick, moves the entity if the entity is supposed to move */
+  private void tickMove( long elapsed )
+  {
+    if( m_isMoving )
     {
-      d = 3 * m_velocity;
+      double dt = elapsed / 1000;
+      if( m_timeToWait < elapsed )
+      {
+        dt = m_timeToWait / 1000;
+      }
+      m_timeToWait -= elapsed;
+
+      double d     = m_velocity * dt;
+
+      double prevX = this.getHitbox().getX();
+      double prevY = this.getHitbox().getY();
+      this.getHitbox().translate( d * Math.cos( m_moveDirection ), d * Math.sin( m_moveDirection ) );
+      for ( Entity e : Model.getInstance().getEntities() )
+      {
+        if( e != this && e.hasCollision() && Collision.detect( this.getHitbox(), e.getHitbox() ) )
+        {
+          this.setPos( prevX, prevY );
+//        e.repulse();
+        }
+      }
+
+      if( m_tracker != null )
+      {
+        m_tracker.getListener().moved();
+      }
+
+      callListener();
+
+      if( m_timeToWait <= 0 )
+      {
+        m_isMoving = false;
+        m_brain.step();
+      }
     }
+  }
+
+  public void doTurn( double orientation )
+  {
+    m_orientation = orientation;
+  }
+
+  public void doJump( double orientation, double dist )
+  {
     double prevX = this.getHitbox().getX();
     double prevY = this.getHitbox().getY();
-    this.getHitbox().translate( d * Math.cos( m_orientation ), d * Math.sin( m_orientation ) );
+    this.getHitbox().translate( dist * Math.cos( orientation ), dist * Math.sin( orientation ) );
     for ( Entity e : Model.getInstance().getEntities() )
     {
       if( e != this && e.hasCollision() && Collision.detect( this.getHitbox(), e.getHitbox() ) )
       {
         this.setPos( prevX, prevY );
-//        e.repulse();
+//      e.repulse();
       }
     }
 
@@ -113,17 +187,8 @@ public abstract class Entity
     }
 
     callListener();
-  }
 
-  public void doTurn( double orientation )
-  {
-    m_orientation = orientation;
-  }
-
-  public void doJump( double orientation )
-  {
-    // TODO
-    throw new RuntimeException( "NYI" );
+    m_brain.step();
   }
 
   public void doHit( double orientation )
@@ -140,8 +205,26 @@ public abstract class Entity
 
   public void doPick( double orientation )
   {
-    // TODO
-    throw new RuntimeException( "NYI" );
+    ArrayList< Entity > entities = Model.getInstance().getEntities();
+    for ( Entity e : entities )
+    {
+      Vector  dist         = Vector.sub( e.getPos(), this.getPos() );
+
+      boolean closeEnough  = m_visionField.getRadius() >= dist.getMagnitude();
+      boolean correctAngle = orientation - ( Math.PI / 4 ) <= dist.getAngle();
+      correctAngle = correctAngle && dist.getAngle() <= orientation + ( Math.PI / 4 );
+
+      if( closeEnough && correctAngle )
+      {
+        if( m_objectInHand != null )
+        {
+          m_inventory.add( m_objectInHand );
+        }
+        entities.remove( e );
+        m_objectInHand = e;
+      }
+    }
+    m_brain.step();
   }
 
   public void doThrow( double orientation )
@@ -167,10 +250,29 @@ public abstract class Entity
     m_objectInHand = e;
   }
 
-  public void doPower()
+  public void doRest( long time, int pow )
   {
-    // TODO
-    throw new RuntimeException( "NYI" );
+    m_isResting = true;
+    m_timeToWait = time;
+    addPow( pow );
+  }
+
+  private void tickRest( long elapsed )
+  {
+    if( m_isResting )
+    {
+      m_timeToWait -= elapsed;
+      if (m_timeToWait <= 0) {
+        m_isResting = false;
+        m_brain.step();
+      }
+    }
+  }
+
+  /* Ne fait rien par défaut, à override si l'entité en a besoin */
+  public void addPow( int pow )
+  {
+
   }
 
   public void doExplode()
@@ -182,14 +284,14 @@ public abstract class Entity
   public void doEgg( Direction dir )
   {
     Model model = Model.getInstance();
-    
+
   }
 
   // Spécifique à notre physique
   public void repulse()
   {
     m_orientation += Math.PI;
-    doMove( m_orientation );
+//    doMove( m_orientation );
   }
 
   public Vector getPos()
