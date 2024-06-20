@@ -1,25 +1,98 @@
 package src;
 
+import java.util.Random;
+
+import src.Model.Entity;
+
+import src.Model.Model;
+import src.Model.Spy;
+
 public class Config
 {
   private static final Config INSTANCE = Serializer.deserialize( "resources/Config.json", Config.class );
+
+  private static final Random RANDOM   = new Random( Config.getInstance().getParameters().getSeed() );
+
+  public static Random getRandom()
+  {
+    return RANDOM;
+  }
 
   public static Config getInstance()
   {
     return INSTANCE;
   }
 
-  class Parameters
+  private src.Model.Entity StringToEntity( Entity e )
+  {
+    switch ( e.getType() )
+    {
+    case "Spy":
+      return new src.Model.Spy( null, e.getId(), e.getWidth(), e.getHeight(), e.getVelocity(), e.hasCollision() );
+    case "Guard":
+      return new src.Model.Guard( null, e.getId(), e.getWidth(), e.getHeight(), e.getVelocity(), e.hasCollision() );
+    case "Wall":
+      return new src.Model.Wall( null );
+    case "Document":
+      return new src.Model.Document( null, e.getId(), e.getWidth(), e.getHeight(), e.getVelocity(), e.hasCollision() );
+    }
+    return null;
+  }
+
+  public void initialize()
+  {
+    // create all the entities
+    Model model = Model.getInstance();
+    for ( Entity e : this.getEntities() )
+    {
+      src.Model.Entity newEntity = StringToEntity( e );
+      newEntity.setId( e.getId() );
+      model.addEntity( newEntity );
+    }
+    
+    // put the viewports on the right entities
+    model.setPlayer1( this.getParameters().getPlayer1() );
+    model.setPlayer2( this.getParameters().getPlayer2() );
+    model.setItemToWin( this.getParameters().getItemToWin() );
+    
+    // make copy of the enenmies
+    for( int i = 0; i < this.enenmies.length; i++ )
+    {
+      Enemy enemy = this.enenmies[ i ];
+      for ( src.Model.Entity e : model.getEntities() )
+      {
+        if( e.getId() == enemy.getId() )
+        {
+          model.addEnenmies( e, enemy.getMin(), enemy.getMax() );
+          break;
+        }
+      }
+    }
+    
+  }
+
+  public class Parameters
   {
     public int     seed;
     public String  visionFieldRadius;
-    public String  player1;
-    public String  player2;
-    public String  zoom;
-    public int     screenWidth;
-    public int     screenHeight;
-    public String  title;
+    public int     player1;
+    public int     player2;
+    public int     itemToWin;
     public boolean enableBSP;
+    public boolean enableWalls;
+
+    public src.Model.Entity getItemToWin()
+    {
+      Model model = Model.getInstance();
+      for ( src.Model.Entity e : model.getEntities() )
+      {
+        if( e.getId() == itemToWin )
+        {
+          return e;
+        }
+      }
+      return null;
+    }
 
     public int getSeed()
     {
@@ -31,43 +104,44 @@ public class Config
       return Double.parseDouble( visionFieldRadius );
     }
 
-    public Entity getPlayer1()
+    public src.Model.Entity getPlayer1()
     {
+      Model model = Model.getInstance();
+      for ( src.Model.Entity e : model.getEntities() )
+      {
+        if( e.getId() == player1 )
+        {
+          return e;
+        }
+      }
       return null;
     }
 
-    public Entity getPlayer2()
+    public src.Model.Entity getPlayer2()
     {
+      Model model = Model.getInstance();
+      for ( src.Model.Entity e : model.getEntities() )
+      {
+        if( e.getId() == player2 )
+        {
+          return e;
+        }
+      }
       return null;
-    }
-
-    public double getZoom()
-    {
-      return Double.parseDouble( zoom );
-    }
-
-    public int getScreenWidth()
-    {
-      return screenWidth;
-    }
-
-    public int getScreenHeight()
-    {
-      return screenHeight;
-    }
-
-    public String getTitle()
-    {
-      return title;
     }
 
     public boolean isBSPEnabled()
     {
       return enableBSP;
     }
+    
+    public boolean isWallsEnabled()
+    {
+      return enableWalls;
+    }
   }
 
-  class World
+  public class World
   {
     public int   rowsNum;
     public int   colsNum;
@@ -95,7 +169,7 @@ public class Config
     }
   }
 
-  class Tile
+  public class Tile
   {
     public String width;
     public String height;
@@ -111,7 +185,7 @@ public class Config
     }
   }
 
-  class Biome
+  public class Biome
   {
     public int width;
     public int height;
@@ -133,10 +207,35 @@ public class Config
     }
   }
 
-  class View
+  public class View
   {
+    public String  zoom;
+    public int     screenWidth;
+    public int     screenHeight;
+    public String  title;
+
     public boolean paintHitbox;
     public boolean paintVisionField;
+
+    public double getZoom()
+    {
+      return Double.parseDouble( zoom );
+    }
+
+    public int getScreenWidth()
+    {
+      return screenWidth;
+    }
+
+    public int getScreenHeight()
+    {
+      return screenHeight;
+    }
+
+    public String getTitle()
+    {
+      return title;
+    }
 
     public boolean shouldPaintHitbox()
     {
@@ -151,7 +250,7 @@ public class Config
 
   class Entity
   {
-    public String  id;
+    public int     id;
     public String  type;
     public String  width;
     public String  height;
@@ -161,7 +260,7 @@ public class Config
 
     public int getId()
     {
-      return Integer.parseInt( id );
+      return id;
     }
 
     public String getType()
@@ -237,13 +336,13 @@ public class Config
 
   class Enemy
   {
-    public String id;
-    public int    min;
-    public int    max;
+    public int id;
+    public int min;
+    public int max;
 
     public int getId()
     {
-      return Integer.parseInt( id );
+      return id;
     }
 
     public int getMin()
@@ -259,13 +358,13 @@ public class Config
 
   class ItemsToPickToWin
   {
-    public String id;
-    public int    min;
-    public int    max;
+    public int id;
+    public int min;
+    public int max;
 
     public int getId()
     {
-      return Integer.parseInt( id );
+      return id;
     }
 
     public int getMin()
@@ -284,39 +383,39 @@ public class Config
   public View             view;
   public Entity[]         entities;
   public Controllers      controllers;
-  public Enemy[]          enemies;
+  public Enemy[]          enenmies;
   public ItemsToPickToWin itemsToPickToWin;
-  
+
   public Parameters getParameters()
   {
     return parameters;
   }
-  
+
   public World getWorld()
   {
     return world;
   }
-  
+
   public View getView()
   {
     return view;
   }
-  
+
   public Entity[] getEntities()
   {
     return entities;
   }
-  
+
   public Controllers getControllers()
   {
     return controllers;
   }
-  
-  public Enemy[] getEnemies()
+
+  public Enemy[] getEnenmies()
   {
-    return enemies;
+    return enenmies;
   }
-  
+
   public ItemsToPickToWin getItemsToPickToWin()
   {
     return itemsToPickToWin;

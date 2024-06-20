@@ -2,10 +2,18 @@ package src.Model.Collision;
 
 import src.Model.Vector;
 
-public class AABB implements Hitbox
+public class AABB implements Hitbox, Cloneable
 {
   private Vector m_min;
   private Vector m_max;
+  
+  public AABB clone() throws CloneNotSupportedException
+  {
+    AABB cloned = (AABB)super.clone();
+    cloned.m_min = cloned.m_min.clone();
+    cloned.m_max = cloned.m_max.clone();
+    return cloned;
+  }
 
   public AABB( Vector pmin, Vector pmax )
   {

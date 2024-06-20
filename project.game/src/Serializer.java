@@ -24,8 +24,7 @@ public class Serializer
 
   public static void main( String[] args )
   {
-    Config cfg = Config.getInstance();
-    
-    System.out.println( cfg.parameters.getSeed() );
+    System.out.println( "TEST - SERIALIZER" );
+    System.out.println( "Seed = " + Config.getInstance().parameters.getSeed() );
   }
 }

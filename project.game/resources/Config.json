@@ -1,20 +1,18 @@
 {
 	"parameters" :
 	{
-		"seed": 123,
-		"visionFieldRadius": "50.0",
-		"player1" : "0x86244934", 
-		"player2" : "0xBEB86A1E",
-		"zoom" : "1.0",
-		"screenWidth" : 500,
-		"screenHeight" : 500,
-		"title" : "Metal Gear",
-		"enableBSP" : false
+		"seed": 1,
+		"visionFieldRadius": "100.0",
+		"player1" : 1234, 
+		"player2" : 5678,
+		"itemToWin" : 9012,
+		"enableBSP" : false,
+		"enableWalls" : true
 	},
 	"world" : 
 	{
-		"rowsNum" : 51,
-		"colsNum" : 51,
+		"rowsNum" : 11,
+		"colsNum" : 11,
 		"tile" : 
 		{
 			"width" : "100.0",
@@ -22,53 +20,48 @@
 		},
 		"biome" : 
 		{
-			"width" : 5,
-			"height" : 5,
+			"width" : 3,
+			"height" : 3,
 			"space" : 3
 		}
 	},
 	"view" : 
 	{
-		"paintHitbox" : false,
-		"paintVisionField" : false
+		"paintHitbox" : true,
+		"paintVisionField" : true,
+		"zoom" : "1.0",
+		"screenWidth" : 500,
+		"screenHeight" : 500,
+		"title" : "Metal Gear"
 	},
 	"entities" : 
 	[
 		{
-			"id" : "0xBE46709F",
+			"id" : 1234,
 			"type" : "Spy",
-			"width" : "25.0",
-			"height" : "50.0",
+			"width" : "20.0",
+			"height" : "40.0",
 			"hasCollision" : true,
 			"velocity" : "4.0",
 			"fsm" : "spy.gal"
 		},
 		{
-			"id" : "0xF2AB0F75",
+			"id" : 5678,
 			"type" : "Guard",
-			"width" : "25.0",
-			"height" : "50.0",
+			"width" : "20.0",
+			"height" : "40.0",
 			"hasCollision" : true,
 			"velocity" : "0.1",
 			"fsm" : "guard.gal"
 		},
 		{
-			"id" : "0x413D3EAC",
+			"id" : 9012,
 			"type" : "Document",
-			"width" : "25.0",
-			"height" : "25.0",
+			"width" : "20.0",
+			"height" : "20.0",
 			"hasCollision" : false,
 			"velocity" : "0.0",
 			"fsm" : "document.gal"
-		},
-		{
-			"id" : "0x413D3EAC",
-			"type" : "Wall",
-			"width" : "100.0",
-			"height" : "100.0",
-			"hasCollision" : true,
-			"velocity" : "0.0",
-			"fsm" : "wall.gal"
 		}
 	],
 	"controllers" :
@@ -91,14 +84,14 @@
 	"enenmies" :
 	[
 		{
-			"id" : "0xF2AB0F75",
-			"min" : 1,
-			"max" : 5
+			"id" : 5678,
+			"min" : 2,
+			"max" : 3
 		}
 	],
 	"itemsToPickToWin" : 
 	{
-		"id" : "0x413D3EAC",
+		"id" : 9012,
 		"min" : 1,
 		"max" : 1
 	}

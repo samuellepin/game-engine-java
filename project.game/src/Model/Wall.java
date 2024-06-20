@@ -9,4 +9,10 @@ public class Wall extends Entity
     super( automaton );
   }
 
+  @Override
+  public String toString()
+  {
+    return "Wall - " + super.toString();
+  }
+  
 }

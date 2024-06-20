@@ -1,12 +1,14 @@
 package src.Model.World;
-  
+
+import src.Config;
+
 public class Tile
 {
-  public static final double   HEIGHT = 100;
-  public static final double   WIDTH  = 100;
-  
-  private TILE_TYPE m_type;
-  private double m_x, m_y;
+  public static final double HEIGHT = Config.getInstance().getWorld().getTile().getWidth();
+  public static final double WIDTH  = Config.getInstance().getWorld().getTile().getHeight();
+
+  private TILE_TYPE          m_type;
+  private double             m_x, m_y;
 
   public Tile( TILE_TYPE type, double x, double y )
   {
@@ -14,12 +16,12 @@ public class Tile
     m_x = x;
     m_y = y;
   }
-  
+
   public double getX()
   {
     return m_x;
   }
-  
+
   public double getY()
   {
     return m_y;

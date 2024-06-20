@@ -20,7 +20,7 @@ public class WallAvatar extends Avatar
   {
     g.setColor( COLOR );
     g.fillRect( x, y, width, height );
-    super.paintHitbox( g, x, y, width, height );
+//    super.paintHitbox( g, x, y, width, height );
   }
   
 }

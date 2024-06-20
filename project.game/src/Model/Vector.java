@@ -1,11 +1,16 @@
 package src.Model;
 
-public class Vector
+public class Vector implements Cloneable
 {
   public static final Vector e_x = new Vector( 1, 0 );
   public static final Vector e_y = new Vector( 0, 1 );
 
   private double             m_x, m_y;
+  
+  public Vector clone() throws CloneNotSupportedException
+  {
+    return (Vector)super.clone();
+  }
 
   public Vector( double x, double y )
   {

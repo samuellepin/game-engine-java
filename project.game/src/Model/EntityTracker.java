@@ -3,6 +3,7 @@ package src.Model;
 import java.util.ArrayList;
 
 import src.Model.Collision.AABB;
+import src.Config;
 
 /**
  * This class tracks an entity for the view. It shows all the entities in the
@@ -19,14 +20,21 @@ public class EntityTracker extends AABB
 
   public class TrackerListener
   {
+    @Override
+    public String toString()
+    {
+      return "Entity tracker of " + m_target.toString();
+    }
 
     void entered( Entity e )
     {
+      System.out.println( this.toString() + " - " + e.toString() + " entered" );
       m_entities.add( e );
     }
 
     void left( Entity e )
     {
+      System.out.println( this.toString() + " - " + e.toString() + " left" );
       m_entities.remove( e );
     }
 
@@ -53,8 +61,9 @@ public class EntityTracker extends AABB
     {
       return;
     }
-    double x = m_target.getX() + m_target.getWidth() / 2 - m_ratioWidth / ( 2 * Config.RATIO );
-    double y = m_target.getY() + m_target.getHeight() / 2 - m_ratioHeight / ( 2 * Config.RATIO );
+    double zoom = Config.getInstance().getView().getZoom();
+    double x    = m_target.getX() + m_target.getWidth() / 2 - m_ratioWidth / ( 2 * zoom );
+    double y    = m_target.getY() + m_target.getHeight() / 2 - m_ratioHeight / ( 2 * zoom );
     this.setPos( x, y );
   }
 

@@ -3,11 +3,12 @@ package src.View;
 import java.awt.Color;
 import java.awt.Graphics;
 
-import src.Model.Config;
+import src.Config;
 import src.Model.Entity;
 import src.Model.EntityTracker;
 import src.Model.Model;
 import src.Model.Vector;
+import src.Model.Collision.AABB;
 import src.Model.World.*;
 
 public class Viewport
@@ -39,7 +40,7 @@ public class Viewport
 
   public int metersToPixels( double d )
   {
-    return (int) ( d * Config.RATIO );
+    return (int) ( d * Config.getInstance().getView().getZoom() );
   }
   /// < d * (double)m_width / m_tracker.getWidth()
 
@@ -66,7 +67,7 @@ public class Viewport
   {
     this.paintTiles( g );
 
-    for ( Entity e : m_tracker.getEntities() )
+    for ( Entity e : Model.getInstance().getEntities() ) ///< m_tracker.getEntities() 
     {
       Avatar avatar = AvatarFactory.make( e );
 
@@ -77,6 +78,13 @@ public class Viewport
         int width  = metersToPixels( e.getWidth() );
         int height = metersToPixels( e.getHeight() );
         avatar.paint( g, x, y, width, height );
+        
+        AABB hitbox = e.getHitbox();
+        x = metersToPixels( hitbox.getX() - m_tracker.getX() );
+        y = metersToPixels( hitbox.getY() - m_tracker.getY() );
+        width = metersToPixels( hitbox.getWidth() );
+        height = metersToPixels( hitbox.getHeight() );
+        avatar.paintHitbox( g, x, y, width, height );
       }
     }
 
