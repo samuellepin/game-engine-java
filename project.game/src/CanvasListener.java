@@ -10,13 +10,15 @@ import src.Model.Model;
 
 public class CanvasListener implements GameCanvasListener
 {
-  private Game  m_game;
-  private Model m_model;
+  private Game       m_game;
+  private Model      m_model;
+  private Controller m_controller;
 
   CanvasListener( Game game )
   {
     m_game = game;
     m_model = Model.getInstance();
+    m_controller = Controller.getInstance();
   }
 
   @Override
@@ -84,7 +86,10 @@ public class CanvasListener implements GameCanvasListener
   @Override
   public void keyPressed( KeyEvent e )
   {
-//    System.out.println( "Key pressed: " + e.getKeyChar() + " code=" + e.getKeyCode() );
+    System.out.println( "Key pressed: " + e.getKeyChar() + " code=" + e.getKeyCode() );
+    
+    m_controller.updateKeyPressed( e );
+
     double orientations[] = { -Math.PI, -Math.PI / 2, 0, Math.PI / 2 };
     int    code           = e.getKeyCode();
     Entity player1        = Model.getInstance().getPlayer1();
@@ -99,12 +104,14 @@ public class CanvasListener implements GameCanvasListener
       player1.setIsMoving( true );
       break;
     }
+
   }
 
   @Override
   public void keyReleased( KeyEvent e )
   {
-//    System.out.println( "Key released: " + e.getKeyChar() + " code=" + e.getKeyCode() );
+    m_controller.updateKeyReleased( e );
+
     int    code    = e.getKeyCode();
     Entity player1 = Model.getInstance().getPlayer1();
     switch ( code )
@@ -116,11 +123,15 @@ public class CanvasListener implements GameCanvasListener
       player1.setIsMoving( false );
       break;
     }
+
+    // System.out.println( "Key released: " + e.getKeyChar() + " code=" +
+    // e.getKeyCode() );
   }
 
   @Override
   public void tick( long elapsed )
   {
+    m_controller.poll();
     m_game.tick( elapsed );
   }
 
