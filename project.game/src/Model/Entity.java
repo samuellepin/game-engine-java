@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import src.AI.Brain;
+import src.AI.Direction;
 import src.AI.FSM;
 import src.Model.Collision.AABB;
 import src.Model.Collision.Circle;
@@ -115,10 +116,12 @@ public abstract class Entity
       if ( var.equals( variable.getName() ) )
       {
         variable.updateValue( n );
+        m_brain.step();
         return;
       }
     }
     m_variables.add( new EntityVar( var, n ) );
+    m_brain.step();
   }
 
   public void doWait()
@@ -213,10 +216,10 @@ public abstract class Entity
     throw new RuntimeException( "NYI" );
   }
 
-  public void doEgg()
+  public void doEgg( Direction dir )
   {
-    // TODO
-    throw new RuntimeException( "NYI" );
+    Model model = Model.getInstance();
+    
   }
 
   // Spécifique à notre physique

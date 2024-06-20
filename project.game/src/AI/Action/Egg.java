@@ -2,7 +2,12 @@ package src.AI.Action;
 
 import src.AI.Direction;
 import src.Model.Entity;
-/*Crée une nouvelle entité de la même classe, dans la direction dir.*/
+
+/**
+ * Crée une nouvelle entité de la même classe, dans la direction dir.
+ * 
+ * @field m_dir
+ */
 public class Egg implements ActionFsm
 {
 
@@ -22,8 +27,7 @@ public class Egg implements ActionFsm
   @Override
   public void execute( Entity entity )
   {
-    // TODO Auto-generated method stub
-
+    entity.doEgg( m_dir );
   }
 
 }
