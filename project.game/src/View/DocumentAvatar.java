@@ -13,7 +13,7 @@ public class DocumentAvatar extends Avatar
   @Override
   public void paint( Graphics g, int x, int y, int width, int height )
   {
-    g.drawImage( AvatarFactory.m_docImg, x, y, width, height, null );
+    g.drawImage( m_factory.getDocumentSprite(), x, y, width, height, null );
 //    this.paintHitbox( g, x, y, width, height );
   }
 
