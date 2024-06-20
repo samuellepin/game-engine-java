@@ -96,6 +96,6 @@ public class CollisionTest
   
   void translateAABB( double x, double y )
   {
-    m_aabb.getMin().translate( x, y );
+    m_aabb.translate( x, y );
   }
 }
