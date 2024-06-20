@@ -81,10 +81,9 @@ public abstract class Entity
 
   }
 
-  public void doWait()
+  public void doWait(long time)
   {
-    // TODO
-    throw new RuntimeException( "NYI" );
+    
   }
 
   public void doMove( double orientation )
