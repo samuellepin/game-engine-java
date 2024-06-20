@@ -339,8 +339,13 @@ public abstract class Entity
 
   public void doExplode()
   {
-    // TODO
-    throw new RuntimeException( "NYI" );
+    Model  model = Model.getInstance();
+    model.removeEntities( this );
+    ArrayList< EntityTracker > trackers =model.getTrackers();
+    for(EntityTracker tracker:trackers) {
+      tracker.getListener().left( this );
+    }
+    m_brain.step();
   }
 
   public void doEgg( Direction dir )
