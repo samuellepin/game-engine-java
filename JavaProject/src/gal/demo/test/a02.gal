@@ -1,0 +1,4 @@
+Wall(Idle){
+* (Idle):
+  | True ? Move(N) :(Idle)
+}

@@ -1,7 +1,6 @@
 package src.Model;
 
-import src.AI.Automaton;
-import src.Model.Collision.AABB;
+import src.AI.FSM;
 import src.Model.Collision.Circle;
 import src.Model.Collision.Collision;
 import src.Model.World.Map;
@@ -15,9 +14,9 @@ public class Guard extends Spy
 //    super.setVelocity( 0.1 );
 //  }
 
-  public Guard( Automaton automaton, int id, double width, double height, double velocity, boolean hasCollision )
+  public Guard( FSM fsm, int id, double width, double height, double velocity, boolean hasCollision )
   {
-    super( automaton, id, width, height, velocity, hasCollision );
+    super( fsm, id, width, height, velocity, hasCollision );
     this.setPos( Map.getInstance().getRandomPos() );
   }
 
@@ -43,7 +42,7 @@ public class Guard extends Spy
 //    AABB h1 = Model.getInstance().getPlayer1().getHitbox();
     Circle c1 = Model.getInstance().getPlayer1().getVisionField();
     Circle c2 = super.getVisionField();
-    System.out.println( "Tick " + this.toString() );
+//    System.out.println( "Tick " + this.toString() );
     if( Collision.detect( c1, c2 ) )
     {
 //      System.out.println( "Collision : " + c1.toString() + " - " + c2.toString() );

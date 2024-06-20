@@ -28,13 +28,13 @@ public class EntityTracker extends AABB
 
     void entered( Entity e )
     {
-      System.out.println( this.toString() + " - " + e.toString() + " entered" );
+//      System.out.println( this.toString() + " - " + e.toString() + " entered" );
       m_entities.add( e );
     }
 
     void left( Entity e )
     {
-      System.out.println( this.toString() + " - " + e.toString() + " left" );
+//      System.out.println( this.toString() + " - " + e.toString() + " left" );
       m_entities.remove( e );
     }
 

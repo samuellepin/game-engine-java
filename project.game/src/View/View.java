@@ -3,6 +3,7 @@ package src.View;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.text.DecimalFormat;
 
 import src.Model.Entity;
 import src.Model.EntityTracker;
@@ -29,11 +30,12 @@ public class View
 
   public int paintInfoEntity( Graphics g, String title, Entity e, int posX, int posY )
   {
+    DecimalFormat df = new DecimalFormat("#.0");
     g.drawString( title, posX, posY );
     posY += 16;
-    g.drawString( "x = " + e.getX(), posX, posY );
+    g.drawString( "x = " + df.format( e.getX() ), posX, posY );
     posY += 16;
-    g.drawString( "y = " + e.getY(), posX, posY );
+    g.drawString( "y = " + df.format( e.getY() ), posX, posY );
     posY += 16;
 
     return posY;
@@ -47,8 +49,8 @@ public class View
 
     Entity player1 = Model.getInstance().getPlayer1();
     posY += this.paintInfoEntity( g, "Player 1", player1, posX, posY );
-    EntityTracker tracker1 = Model.getInstance().getTrackers().get( 0 );
-    g.drawString( "x=" + tracker1.getX() + ", y=" + tracker1.getY(), posX, posY );
+    Entity player2 = Model.getInstance().getPlayer2();
+    posY += this.paintInfoEntity( g, "Player 2", player2, posX, posY );
   }
 
   public void paint( Graphics g )

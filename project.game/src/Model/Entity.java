@@ -1,7 +1,7 @@
 package src.Model;
 
-import src.AI.Automaton;
-import src.AI.State;
+import src.AI.FSM;
+import src.AI.StateFsm;
 import src.Model.Collision.AABB;
 import src.Model.Collision.Circle;
 import src.Model.Collision.Collision;
@@ -13,9 +13,9 @@ import src.Config;
 
 public abstract class Entity implements Cloneable
 {
+  protected FSM           m_fsm;
+  protected StateFsm      m_state;
   protected EntityTracker m_tracker;
-  protected Automaton     m_automaton;
-  protected State         m_state;
   protected long          m_elapsedTime;
   protected AABB          m_hitbox;
   protected double        m_orientation;
@@ -25,10 +25,10 @@ public abstract class Entity implements Cloneable
   protected boolean       m_hasCollision;
   protected int           m_id;
 
-  public Entity( Automaton automaton )
+  public Entity( FSM fsm )
   {
-    m_automaton = automaton;
-    if( m_automaton != null ) m_state = automaton.getInitialState();
+    m_fsm = fsm;
+    if( m_fsm != null ) m_state = m_fsm.getInitialState();
     m_elapsedTime = 0;
     m_hitbox = new AABB( 0, 0, 0, 0 );
     m_visionField = new Circle( this.getHitbox().getMin(),
@@ -37,10 +37,10 @@ public abstract class Entity implements Cloneable
     m_id = -1;
   }
 
-  public Entity( Automaton automaton, int id, double width, double height, double velocity, boolean hasCollision )
+  public Entity( FSM fsm, int id, double width, double height, double velocity, boolean hasCollision )
   {
-    m_automaton = automaton;
-    if( m_automaton != null ) m_state = automaton.getInitialState();
+    m_fsm = fsm;
+    if( m_fsm != null ) m_state = fsm.getInitialState();
     m_elapsedTime = 0;
     m_hitbox = new AABB( 0, 0, 0, 0 );
     m_visionField = new Circle( this.getHitbox().getMin(),
@@ -216,9 +216,13 @@ public abstract class Entity implements Cloneable
     doMove( m_orientation );
   }
 
-  public State getState()
+  public StateFsm getState()
   {
     return m_state;
+  }
+  
+  public void setState(StateFsm s) {
+    m_state = s;
   }
 
   public Vector getPos()

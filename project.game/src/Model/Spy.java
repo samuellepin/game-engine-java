@@ -1,22 +1,22 @@
 package src.Model;
 
-import src.AI.Automaton;
 import src.Model.World.Map;
+import src.AI.FSM;
 
 public class Spy extends Entity
 {
-  public Spy( Automaton automaton )
+  public Spy( FSM fsm )
   {
-    super( automaton );
+    super( fsm );
     this.setPos( Map.getInstance().getRandomPos() );
     super.setDim( 25, 50 );
     super.setOrientation( 0 );
     super.setVelocity( 4 );
   }
   
-  public Spy( Automaton automaton, int id, double width, double height, double velocity, boolean hasCollision )
+  public Spy( FSM fsm, int id, double width, double height, double velocity, boolean hasCollision )
   {
-    super( automaton, id, width, height, velocity, hasCollision );
+    super( fsm, id, width, height, velocity, hasCollision );
     this.setPos( Map.getInstance().getRandomPos() );
   }
   

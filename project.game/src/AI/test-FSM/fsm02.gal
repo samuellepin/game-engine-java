@@ -1,0 +1,5 @@
+Poule(Pondre){
+  * (Pondre)
+  | Cell(N,@) ? Move(N,10) :(Pondre)
+}
+
