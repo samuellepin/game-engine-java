@@ -2,6 +2,8 @@ package src.AI.Action;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import src.AI.CATEGORY;
 import src.AI.Direction;
 
 public class ActionFactory
@@ -25,9 +27,9 @@ public class ActionFactory
     {
       Object o1 = parameters.get( 0 );
       Object o2 = parameters.get( 1 );
-      if( o1 instanceof String && o2 instanceof Integer )
+      if( o1 instanceof CATEGORY && o2 instanceof Integer )
       {
-        action = new Add( (String)o1, (Integer)o2 );
+        action = new Add( (CATEGORY)o1, (Integer)o2 );
       }
     }
     return add( action );
@@ -38,7 +40,7 @@ public class ActionFactory
     Egg action = new Egg();
     if( parameters.size() >= 1 && parameters.get( 0 ) instanceof Direction )
     {
-      action = new Egg( new Direction( (Direction.DIRECTION)parameters.get( 0 ) ) );
+      action = new Egg( (Direction)parameters.get( 0 ) );
     }
     return add( action );
   }
@@ -58,7 +60,7 @@ public class ActionFactory
     Hit action = new Hit();
     if( parameters.size() >= 1 && parameters.get( 0 ) instanceof Direction )
     {
-      action = new Hit( new Direction( (Direction.DIRECTION)parameters.get( 0 ) ) );
+      action = new Hit( (Direction)parameters.get( 0 ) );
     }
     return add( action );
   }
@@ -73,7 +75,7 @@ public class ActionFactory
       Object o2 = parameters.get( 1 );
       if( o1 instanceof Direction && o2 instanceof Integer )
       {
-        action = new Jump( new Direction( (Direction.DIRECTION)o1 ), (Integer)o2 );
+        action = new Jump( (Direction)o1, (Integer)o2 );
       }
     }
     return add( action );
@@ -89,7 +91,7 @@ public class ActionFactory
       Object o2 = parameters.get( 1 );
       if( o1 instanceof Direction && o2 instanceof Integer )
       {
-        action = new Move( new Direction( (Direction.DIRECTION)o1 ), (Integer)o2 );
+        action = new Move( (Direction)o1, (Integer)o2 );
       }
     }
     return add( action );
@@ -100,7 +102,7 @@ public class ActionFactory
     Pick action = new Pick();
     if( parameters.size() >= 1 && parameters.get( 0 ) instanceof Direction )
     {
-      action = new Pick( new Direction( (Direction.DIRECTION)parameters.get( 0 ) ) );
+      action = new Pick( (Direction)parameters.get( 0 ) );
     }
     return add( action );
   }
@@ -115,7 +117,7 @@ public class ActionFactory
       Object o2 = parameters.get( 1 );
       if( o1 instanceof Direction && o2 instanceof Integer )
       {
-        action = new Protect( new Direction( (Direction.DIRECTION)o1 ), (Integer)o2 );
+        action = new Protect( (Direction)o1, (Integer)o2 );
       }
     }
     return add( action );
@@ -147,7 +149,7 @@ public class ActionFactory
     Throw action = new Throw();
     if( parameters.size() >= 1 && parameters.get( 0 ) instanceof Direction )
     {
-      action = new Throw( new Direction( (Direction.DIRECTION)parameters.get( 0 ) ) );
+      action = new Throw( (Direction)parameters.get( 0 ) );
     }
     return add( action );
   }
@@ -157,7 +159,7 @@ public class ActionFactory
     Turn action = new Turn();
     if( parameters.size() >= 1 && parameters.get( 0 ) instanceof Direction )
     {
-      action = new Turn( new Direction( (Direction.DIRECTION)parameters.get( 0 ) ) );
+      action = new Turn( (Direction)parameters.get( 0 ) );
     }
     return add( action );
   }

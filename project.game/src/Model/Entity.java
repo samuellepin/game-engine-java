@@ -2,6 +2,7 @@ package src.Model;
 
 import java.util.ArrayList;
 import src.AI.Brain;
+import src.AI.CATEGORY;
 import src.AI.Direction;
 import src.AI.FSM;
 import src.Model.Collision.AABB;
@@ -80,9 +81,8 @@ public abstract class Entity
     }
   }
 
-  public void doAdd( String var, int n )
+  public void doAdd( CATEGORY var, int n )
   {
-
   }
 
   public void doWait()
@@ -259,10 +259,10 @@ public abstract class Entity
     throw new RuntimeException( "NYI" );
   }
 
-  public void doEgg()
+  public void doEgg( Direction dir )
   {
-    // TODO
-    throw new RuntimeException( "NYI" );
+    Model model = Model.getInstance();
+    
   }
 
   // Spécifique à notre physique

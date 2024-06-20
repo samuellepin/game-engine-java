@@ -58,7 +58,7 @@ public class FuncallFactory
     case "Wizz":
       return m_actionFact.setWizz();
 
-    // TODO Condition
+    // Condition
     case "True":
       return m_conditionFact.setTrue();
     case "MyDir":
