@@ -1,5 +1,9 @@
 package src.Model;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import src.AI.Brain;
 import src.AI.FSM;
 import src.Model.Collision.AABB;
@@ -8,15 +12,43 @@ import src.Model.Collision.Collision;
 
 public abstract class Entity
 {
-  protected Brain         m_brain;
-  protected EntityTracker m_tracker;
-  protected long          m_elapsedTime;
-  protected AABB          m_hitbox;
-  protected double        m_orientation;
-  protected double        m_velocity;
-  protected Circle        m_visionField;
-  protected boolean       m_isMoving;
-  protected boolean       m_hasCollision;
+  protected Brain             m_brain;
+  protected EntityTracker     m_tracker;
+  protected long              m_elapsedTime;
+  protected AABB              m_hitbox;
+  protected double            m_orientation;
+  protected double            m_velocity;
+  protected Circle            m_visionField;
+  protected boolean           m_isMoving;
+  protected boolean           m_hasCollision;
+  protected List< EntityVar > m_variables;
+
+  protected class EntityVar
+  {
+    private String m_name;
+    private int    m_value;
+
+    EntityVar( String name, int value )
+    {
+      m_name = name;
+      m_value = value;
+    }
+
+    public String getName()
+    {
+      return m_name;
+    }
+
+    public int getValue()
+    {
+      return m_value;
+    }
+
+    public void updateValue( int incr )
+    {
+      m_value += incr;
+    }
+  }
 
   public Entity( FSM automaton )
   {
@@ -25,6 +57,7 @@ public abstract class Entity
     m_hitbox = new AABB( 0, 0, 0, 0 );
     m_visionField = new Circle( this.getHitbox().getMin(), Config.VISION_FIELD_RADIUS );
     m_hasCollision = true;
+    m_variables = new ArrayList< EntityVar >();
   }
 
   public void setTracker( EntityTracker tracker )
@@ -75,7 +108,17 @@ public abstract class Entity
 
   public void doAdd( String var, int n )
   {
-    
+    Iterator< EntityVar > iter = m_variables.iterator();
+    while( iter.hasNext() )
+    {
+      EntityVar variable = iter.next();
+      if ( var.equals( variable.getName() ) )
+      {
+        variable.updateValue( n );
+        return;
+      }
+    }
+    m_variables.add( new EntityVar( var, n ) );
   }
 
   public void doWait()

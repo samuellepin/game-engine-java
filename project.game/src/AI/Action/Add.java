@@ -11,7 +11,6 @@ public class Add implements ActionFsm
 
   public Add()
   {
-    // TODO define the default values
     m_var = new String();
     m_n = 0;
   }
