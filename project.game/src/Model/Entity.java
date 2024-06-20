@@ -105,6 +105,11 @@ public abstract class Entity
     {
       m_timeToWait -= elapsed;
     }
+    if( m_timeToWait <= 0 )
+    {
+      m_isWaiting = false;
+      m_brain.step();
+    }
   }
 
   public void doMove( Direction dir )
@@ -286,6 +291,7 @@ public abstract class Entity
     Model  model = Model.getInstance();
     m_objectInHand = null;
     model.addEntities( e );
+    m_brain.step();
   }
 
   public void doStore()
@@ -293,6 +299,7 @@ public abstract class Entity
     Entity e = m_objectInHand;
     m_objectInHand = null;
     m_inventory.add( e );
+    m_brain.step();
 
   }
 
@@ -301,6 +308,7 @@ public abstract class Entity
     Entity e = m_inventory.remove( 0 );
     doStore();
     m_objectInHand = e;
+    m_brain.step();
   }
 
   public void doRest( long time, int pow )
