@@ -1,17 +1,14 @@
 package src.Model;
 
 import java.util.ArrayList;
-
+import src.AI.Brain;
 import src.AI.FSM;
-import src.AI.StateFsm;
 import src.Model.Collision.AABB;
 import src.Model.Collision.Circle;
 import src.Model.Collision.Collision;
 
 public abstract class Entity
 {
-  protected FSM                 m_automaton;
-  protected StateFsm            m_state;
   protected EntityTracker       m_tracker;
   protected long                m_elapsedTime;
   protected AABB                m_hitbox;
@@ -22,18 +19,17 @@ public abstract class Entity
   protected boolean             m_hasCollision;
   protected Entity              m_objectInHand;
   protected ArrayList< Entity > m_inventory;
+  protected Brain               m_brain;
 
   public Entity( FSM automaton )
   {
-    m_automaton = automaton;
-    if( m_automaton != null ) m_state = automaton.getInitialState();
+    m_brain = new Brain( this, automaton );
     m_elapsedTime = 0;
     m_hitbox = new AABB( 0, 0, 0, 0 );
     m_visionField = new Circle( this.getHitbox().getMin(), Config.VISION_FIELD_RADIUS );
     m_hasCollision = true;
   }
 
-  // pourquoi return this ?
   public void setTracker( EntityTracker tracker )
   {
     m_tracker = tracker;
@@ -63,6 +59,26 @@ public abstract class Entity
   {
     m_elapsedTime = elapsed;
     callListener();
+  }
+
+  private void callListener()
+  {
+    for ( EntityTracker tracker : Model.getInstance().getTrackers() )
+    {
+      if( !tracker.getEntities().contains( this ) && Collision.detect( m_hitbox, tracker ) )
+      {
+        tracker.getListener().entered( this );
+      }
+      else if( tracker.getEntities().contains( this ) && !Collision.detect( m_hitbox, tracker ) )
+      {
+        tracker.getListener().left( this );
+      }
+    }
+  }
+
+  public void doAdd( String var, int n )
+  {
+
   }
 
   public void doWait()
@@ -98,21 +114,6 @@ public abstract class Entity
     callListener();
   }
 
-  private void callListener()
-  {
-    for ( EntityTracker tracker : Model.getInstance().getTrackers() )
-    {
-      if( !tracker.getEntities().contains( this ) && Collision.detect( m_hitbox, tracker ) )
-      {
-        tracker.getListener().entered( this );
-      }
-      else if( tracker.getEntities().contains( this ) && !Collision.detect( m_hitbox, tracker ) )
-      {
-        tracker.getListener().left( this );
-      }
-    }
-  }
-
   public void doTurn( double orientation )
   {
     m_orientation = orientation;
@@ -144,8 +145,8 @@ public abstract class Entity
 
   public void doThrow( double orientation )
   {
-    Entity e = m_objectInHand;
-    Model model=Model.getInstance();
+    Entity e     = m_objectInHand;
+    Model  model = Model.getInstance();
     m_objectInHand = null;
     model.addEntities( e );
   }
@@ -160,9 +161,9 @@ public abstract class Entity
 
   public void doGet()
   {
-    Entity e=m_inventory.remove( 0 );
+    Entity e = m_inventory.remove( 0 );
     doStore();
-    m_objectInHand=e;
+    m_objectInHand = e;
   }
 
   public void doPower()
@@ -188,16 +189,6 @@ public abstract class Entity
   {
     m_orientation += Math.PI;
     doMove( m_orientation );
-  }
-
-  public StateFsm getState()
-  {
-    return m_state;
-  }
-
-  public void setState( StateFsm s )
-  {
-    m_state = s;
   }
 
   public Vector getPos()

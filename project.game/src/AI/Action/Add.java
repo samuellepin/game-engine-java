@@ -1,6 +1,7 @@
 package src.AI.Action;
 
 import src.Model.Entity;
+
 /*Incrémente la variable globale nommée var de n.*/
 public class Add implements ActionFsm
 {
@@ -24,8 +25,7 @@ public class Add implements ActionFsm
   @Override
   public void execute( Entity entity )
   {
-    // TODO Auto-generated method stub
-
+    entity.doAdd( m_var, m_n );
   }
 
 }
