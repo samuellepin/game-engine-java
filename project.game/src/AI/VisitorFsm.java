@@ -87,33 +87,33 @@ public class VisitorFsm implements IVisitor
     switch ( dir.toString() )
     {
     case "N":
-      return DIRECTION.North;
+      return new src.AI.Direction(src.AI.Direction.DIRECTION.North);
     case "S":
-      return DIRECTION.South;
+      return new src.AI.Direction(src.AI.Direction.DIRECTION.South);
     case "E":
-      return DIRECTION.East;
+      return new src.AI.Direction(src.AI.Direction.DIRECTION.East);
     case "W":
-      return DIRECTION.West;
+      return new src.AI.Direction(src.AI.Direction.DIRECTION.West);
     case "NE":
-      return DIRECTION.NE;
+      return new src.AI.Direction(src.AI.Direction.DIRECTION.NE);
     case "SE":
-      return DIRECTION.SE;
+      return new src.AI.Direction(src.AI.Direction.DIRECTION.SE);
     case "SW":
-      return DIRECTION.SW;
+      return new src.AI.Direction(src.AI.Direction.DIRECTION.SW);
     case "NW":
-      return DIRECTION.NW;
+      return new src.AI.Direction(src.AI.Direction.DIRECTION.NW);
     case "F":
-      return DIRECTION.Forward;
+      return new src.AI.Direction(src.AI.Direction.DIRECTION.Forward);
     case "B":
-      return DIRECTION.BackWard;
+      return new src.AI.Direction(src.AI.Direction.DIRECTION.BackWard);
     case "L":
-      return DIRECTION.Left;
+      return new src.AI.Direction(src.AI.Direction.DIRECTION.Left);
     case "R":
-      return DIRECTION.Right;
+      return new src.AI.Direction(src.AI.Direction.DIRECTION.Right);
     case "H":
-      return DIRECTION.Here;
+      return new src.AI.Direction(src.AI.Direction.DIRECTION.Here);
     case "_":
-      return DIRECTION.Underscore;
+      return new src.AI.Direction(src.AI.Direction.DIRECTION.Underscore);
     default:
       return null;
     }
