@@ -25,8 +25,10 @@ public class FsmCreator
       // return null;
     }
   }
-  /*
-   * public static void main(String[] args) { loadAutomata("src/AI/test-FSM/" +
-   * "fsm02.gal"); }
-   */
+
+  public static void main( String[] args )
+  {
+    loadAutomata( "src/AI/test-FSM/" + "fsm02.gal" );
+  }
+
 }
