@@ -10,17 +10,17 @@ import src.Model.Collision.Collision;
 
 public abstract class Entity
 {
-  protected Brain         m_brain;
-  protected EntityTracker m_tracker;
-  protected long          m_elapsedTime;
-  protected AABB          m_hitbox;
-  protected double        m_orientation;
-  protected double        m_velocity;
-  protected Circle        m_visionField;
-  protected boolean       m_isMoving;
-  protected double        m_moveDirection;
-  protected long          m_timeToMove;
-  protected boolean       m_hasCollision;
+  protected Brain               m_brain;
+  protected EntityTracker       m_tracker;
+  protected long                m_elapsedTime;
+  protected AABB                m_hitbox;
+  protected double              m_orientation;
+  protected double              m_velocity;
+  protected Circle              m_visionField;
+  protected boolean             m_isMoving;
+  protected double              m_moveDirection;
+  protected long                m_timeToMove;
+  protected boolean             m_hasCollision;
   protected Entity              m_objectInHand;
   protected ArrayList< Entity > m_inventory;
 
@@ -61,7 +61,7 @@ public abstract class Entity
   public void tick( long elapsed )
   {
     m_elapsedTime = elapsed;
-    tickMove(elapsed);
+    tickMove( elapsed );
     callListener();
   }
 
@@ -97,21 +97,21 @@ public abstract class Entity
     m_timeToMove = 20;
     m_isMoving = true;
   }
-  
+
   public void doMove( double dir )
   {
     m_moveDirection = dir;
     m_timeToMove = 20;
     m_isMoving = true;
   }
-  
+
   public void doMove( Direction dir, long time )
   {
     m_moveDirection = dir.toAngle( m_orientation );
     m_timeToMove = time;
     m_isMoving = true;
   }
-  
+
   public void doMove( double dir, long time )
   {
     m_moveDirection = dir;
@@ -151,8 +151,9 @@ public abstract class Entity
       }
 
       callListener();
-      
-      if (m_timeToMove <= 0) {
+
+      if( m_timeToMove <= 0 )
+      {
         m_isMoving = false;
         m_brain.step();
       }
@@ -202,8 +203,25 @@ public abstract class Entity
 
   public void doPick( double orientation )
   {
-    // TODO
-    throw new RuntimeException( "NYI" );
+    ArrayList<Entity> entities = Model.getInstance().getEntities();
+    for ( Entity e : entities )
+    {
+      Vector dist = Vector.sub( e.getPos(), this.getPos() );
+      
+      boolean closeEnough = m_visionField.getRadius() >= dist.getMagnitude();
+      boolean correctAngle = orientation - ( Math.PI / 4 ) <= dist.getAngle();
+      correctAngle = correctAngle && dist.getAngle() <= orientation + ( Math.PI / 4 );
+      
+      if( closeEnough && correctAngle )
+      {
+        if (m_objectInHand != null) {
+          m_inventory.add( m_objectInHand );
+        }
+        entities.remove( e );
+        m_objectInHand = e;
+      }
+    }
+    m_brain.step();
   }
 
   public void doThrow( double orientation )
