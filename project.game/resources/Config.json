@@ -1,7 +1,7 @@
 {
 	"parameters" :
 	{
-		"seed": 1,
+		"seed": 1451,
 		"visionFieldRadius": "100.0",
 		"player1" : 1234, 
 		"player2" : 5678,
@@ -43,7 +43,7 @@
 			"height" : "40.0",
 			"hasCollision" : true,
 			"velocity" : "4.0",
-			"fsm" : "spy.gal"
+			"fsm" : "Player1"
 		},
 		{
 			"id" : 5678,
@@ -52,7 +52,7 @@
 			"height" : "40.0",
 			"hasCollision" : true,
 			"velocity" : "0.1",
-			"fsm" : "guard.gal"
+			"fsm" : "Player2"
 		},
 		{
 			"id" : 9012,
@@ -61,26 +61,9 @@
 			"height" : "20.0",
 			"hasCollision" : false,
 			"velocity" : "0.0",
-			"fsm" : "document.gal"
+			"fsm" : "DoNothing"
 		}
 	],
-	"controllers" :
-	{
-		"player1" : 
-		{
-			"right" : "RIGHT",
-			"left" : "LEFT",
-			"up" : "UP",
-			"down" : "DOWN"
-		},
-		"player2" : 
-		{
-			"right" : "D",
-			"left" : "Q",
-			"up" : "Z",
-			"down" : "S"
-		}
-	},
 	"enenmies" :
 	[
 		{

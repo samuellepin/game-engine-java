@@ -92,4 +92,9 @@ public class FSM
     }
     return null;
   }
+  
+ public String getName()
+ {
+   return m_name;
+ }
 }

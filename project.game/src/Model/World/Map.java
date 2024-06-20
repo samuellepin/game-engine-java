@@ -4,31 +4,34 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import src.Config;
+import src.AI.FsmFactory;
 import src.Model.Vector;
 import src.Model.Wall;
 
 public class Map
 {
   private ArrayList< Position > m_tilesAlreadyUsed;
-  
-  private Tile[][]           m_tiles;
-  private Biome[]            m_biome_tab;                                                                 // pour le
-                                                                                                          // random
-                                                                                                          // entre les
-                                                                                                          // différents
-                                                                                                          // biomes
-  private ArrayList< Biome > m_biomes;                                                                    // pour
-                                                                                                          // afficher
-                                                                                                          // les biomes
-                                                                                                          // pas
-                                                                                                          // forcément
-                                                                                                          // utile
-  public static final int    COLS_NUM             = Config.getInstance().getWorld().getColsNum();
-  public static final int    ROWS_NUM             = Config.getInstance().getWorld().getRowsNum();
-  public int                 m_spaceBetweenBiomes = Config.getInstance().getWorld().getBiome().getSpace();
 
-  private static Map         INSTANCE             = new Map();
-  private ArrayList< Wall >  m_walls;
+  private Tile[][]              m_tiles;
+  private Biome[]               m_biome_tab;                                                                 // pour le
+                                                                                                             // random
+                                                                                                             // entre
+                                                                                                             // les
+                                                                                                             // différents
+                                                                                                             // biomes
+  private ArrayList< Biome >    m_biomes;                                                                    // pour
+                                                                                                             // afficher
+                                                                                                             // les
+                                                                                                             // biomes
+                                                                                                             // pas
+                                                                                                             // forcément
+                                                                                                             // utile
+  public static final int       COLS_NUM             = Config.getInstance().getWorld().getColsNum();
+  public static final int       ROWS_NUM             = Config.getInstance().getWorld().getRowsNum();
+  public int                    m_spaceBetweenBiomes = Config.getInstance().getWorld().getBiome().getSpace();
+
+  private static Map            INSTANCE             = new Map();
+  private ArrayList< Wall >     m_walls;
 //  private ArrayList< AABB > m_hitbox;
 
   public static Map getInstance()
@@ -70,7 +73,7 @@ public class Map
     // System.out.println( this.toString() );
 
     m_walls = new ArrayList<>();
-    
+
     if( !Config.getInstance().getParameters().isWallsEnabled() ) return;
 
     for ( int y = 0; y < ROWS_NUM; y++ )
@@ -79,7 +82,7 @@ public class Map
       {
         if( this.getTile( x, y ).getType() == TILE_TYPE.WALL )
         {
-          Wall wall = new Wall( null );
+          Wall wall = new Wall( FsmFactory.getInstance().getFSM( "Wall" ) );
           wall.setPos( x * Tile.WIDTH, y * Tile.HEIGHT );
           wall.setDim( Tile.WIDTH, Tile.HEIGHT );
           m_walls.add( wall );
@@ -193,8 +196,7 @@ public class Map
 
   public Vector getPos( int x, int y )
   {
-    return new Vector( (double) ( x * Tile.WIDTH + 5 ),
-        (double) ( y * Tile.HEIGHT + 5 ));
+    return new Vector( (double) ( x * Tile.WIDTH + 5 ), (double) ( y * Tile.HEIGHT + 5 ) );
   }
 
   class Position
@@ -215,10 +217,9 @@ public class Map
 
   public Vector getRandomPos()
   {
-    int      x = Config.getRandom().nextInt( Map.COLS_NUM );
-    int      y = Config.getRandom().nextInt( Map.ROWS_NUM );
-    if( this.getTile( x, y ).getType() != TILE_TYPE.FLOOR ) 
-      return getRandomPos();
+    int x = Config.getRandom().nextInt( Map.COLS_NUM );
+    int y = Config.getRandom().nextInt( Map.ROWS_NUM );
+    if( this.getTile( x, y ).getType() != TILE_TYPE.FLOOR ) return getRandomPos();
     Position p = new Position( x, y );
     for ( Position pos : m_tilesAlreadyUsed )
     {

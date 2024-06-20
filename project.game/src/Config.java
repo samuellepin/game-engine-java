@@ -2,6 +2,8 @@ package src;
 
 import java.util.Random;
 
+import src.AI.FSM;
+import src.AI.FsmFactory;
 import src.Model.Entity;
 
 import src.Model.Model;
@@ -25,16 +27,22 @@ public class Config
 
   private src.Model.Entity StringToEntity( Entity e )
   {
+    FSM fsm = FsmFactory.getInstance().getFSM( e.getFSM() );
+    int id = e.getId();
+    double width = e.getWidth();
+    double height = e.getHeight();
+    double velocity = e.getVelocity();
+    boolean hasCollision = e.hasCollision();
     switch ( e.getType() )
     {
     case "Spy":
-      return new src.Model.Spy( null, e.getId(), e.getWidth(), e.getHeight(), e.getVelocity(), e.hasCollision() );
+      return new src.Model.Spy( fsm, id, width, height, velocity, hasCollision );
     case "Guard":
-      return new src.Model.Guard( null, e.getId(), e.getWidth(), e.getHeight(), e.getVelocity(), e.hasCollision() );
+      return new src.Model.Guard( fsm, id, width, height, velocity, hasCollision );
     case "Wall":
-      return new src.Model.Wall( null );
+      return new src.Model.Wall( fsm );
     case "Document":
-      return new src.Model.Document( null, e.getId(), e.getWidth(), e.getHeight(), e.getVelocity(), e.hasCollision() );
+      return new src.Model.Document( fsm, id, width, height, velocity, hasCollision );
     }
     return null;
   }
@@ -294,46 +302,6 @@ public class Config
     }
   }
 
-  class Controllers
-  {
-    public PlayerControls player1;
-    public PlayerControls player2;
-  }
-
-  class PlayerControls
-  {
-    public String right;
-    public String left;
-    public String up;
-    public String down;
-    public String hide;
-
-    public String getRightKey()
-    {
-      return right;
-    }
-
-    public String getLeftKey()
-    {
-      return left;
-    }
-
-    public String getUpKey()
-    {
-      return up;
-    }
-
-    public String getDownKey()
-    {
-      return down;
-    }
-
-    public String getHideKey()
-    {
-      return hide;
-    }
-  }
-
   class Enemy
   {
     public int id;
@@ -382,7 +350,6 @@ public class Config
   public World            world;
   public View             view;
   public Entity[]         entities;
-  public Controllers      controllers;
   public Enemy[]          enenmies;
   public ItemsToPickToWin itemsToPickToWin;
 
@@ -404,11 +371,6 @@ public class Config
   public Entity[] getEntities()
   {
     return entities;
-  }
-
-  public Controllers getControllers()
-  {
-    return controllers;
   }
 
   public Enemy[] getEnenmies()
