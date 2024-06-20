@@ -28,4 +28,14 @@ public class Protect implements ActionFsm
     entity.doProtect( m_dir, m_time );
   }
 
+  @Override
+  public boolean equals( Object action )
+  {
+    if( action instanceof Protect )
+    {
+      Protect protect = (Protect)action;
+      if( protect.m_dir.equals( m_dir ) && protect.m_time == m_time ) return true;
+    }
+    return false;
+  }
 }

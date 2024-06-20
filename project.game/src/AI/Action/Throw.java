@@ -11,7 +11,6 @@ public class Throw implements ActionFsm
 
   public Throw()
   {
-    // TODO define default values
     m_dir = new Direction( Direction.DIRECTION.Forward );
   }
 
@@ -25,6 +24,17 @@ public class Throw implements ActionFsm
   {
     entity.doThrow( m_dir.toAngle( entity.getOrientation() ) );
 
+  }
+
+  @Override
+  public boolean equals( Object action )
+  {
+    if( action instanceof Throw )
+    {
+      Throw th = (Throw)action;
+      if( th.m_dir.equals( m_dir ) ) return true;
+    }
+    return false;
   }
 
 }

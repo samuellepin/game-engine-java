@@ -30,5 +30,16 @@ public class Jump implements ActionFsm
     entity.doJump( m_dir.toAngle( entity.getOrientation() ), m_dist );
 
   }
+  
+  @Override
+  public boolean equals( Object action )
+  {
+    if( action instanceof Jump )
+    {
+      Jump jump = (Jump)action;
+      if( jump.m_dir.equals( m_dir ) && jump.m_dist == m_dist ) return true;
+    }
+    return false;
+  }
 
 }

@@ -11,5 +11,12 @@ public class Explode implements ActionFsm
     // TODO Auto-generated method stub
 
   }
+  
+  @Override
+  public boolean equals( Object action )
+  {
+    if( action instanceof Explode ) return true;
+    return false;
+  }
 
 }

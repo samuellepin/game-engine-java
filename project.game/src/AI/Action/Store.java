@@ -1,6 +1,7 @@
 package src.AI.Action;
 
 import src.Model.Entity;
+
 /*Place l'objet tenu en main dans l'inventaire.*/
 public class Store implements ActionFsm
 {
@@ -10,6 +11,13 @@ public class Store implements ActionFsm
   {
     entity.doStore();
 
+  }
+
+  @Override
+  public boolean equals( Object action )
+  {
+    if( action instanceof Store ) return true;
+    return false;
   }
 
 }
