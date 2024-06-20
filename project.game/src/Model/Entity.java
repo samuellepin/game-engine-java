@@ -88,9 +88,23 @@ public abstract class Entity
     throw new RuntimeException( "NYI" );
   }
 
+  public void doMove( Direction dir )
+  {
+    m_moveDirection = dir.toAngle( m_orientation );
+    m_timeToMove = 20;
+    m_isMoving = true;
+  }
+  
   public void doMove( Direction dir, int time )
   {
     m_moveDirection = dir.toAngle( m_orientation );
+    m_timeToMove = time;
+    m_isMoving = true;
+  }
+  
+  public void doMove( double dir, int time )
+  {
+    m_moveDirection = dir;
     m_timeToMove = time;
     m_isMoving = true;
   }
