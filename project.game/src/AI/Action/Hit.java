@@ -1,14 +1,14 @@
 package src.AI.Action;
 
-import src.AI.DIRECTION;
+import src.AI.Direction;
 import src.Model.Entity;
 /*L'entité appelle getHit() sur chaque entité dans son champ de vision, dans la direction dir*/
 public class Hit implements ActionFsm
 {
 
-  private DIRECTION m_dir;
+  private Direction m_dir;
   
-  public Hit( DIRECTION dir )
+  public Hit( Direction dir )
   {
     m_dir = dir;
   }
@@ -16,7 +16,7 @@ public class Hit implements ActionFsm
   public Hit()
   {
     //TODO define default values
-    m_dir = DIRECTION.Forward;
+    m_dir = new Direction(Direction.DIRECTION.Forward);
   }
   
   @Override

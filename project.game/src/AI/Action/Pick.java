@@ -1,6 +1,6 @@
 package src.AI.Action;
 
-import src.AI.DIRECTION;
+import src.AI.Direction;
 import src.Model.Entity;
 
 /*Si un Pickable se situe dans son champ de vision, dans la direction dir,
@@ -9,15 +9,15 @@ import src.Model.Entity;
 public class Pick implements ActionFsm
 {
 
-  private DIRECTION m_dir;
+  private Direction m_dir;
 
   public Pick()
   {
     // TODO define default values
-    m_dir = DIRECTION.Forward;
+    m_dir = new Direction(Direction.DIRECTION.Forward);
   }
 
-  public Pick( DIRECTION dir )
+  public Pick( Direction dir )
   {
     m_dir = dir;
   }

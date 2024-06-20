@@ -1,20 +1,20 @@
 package src.AI.Action;
 
-import src.AI.DIRECTION;
+import src.AI.Direction;
 import src.Model.Entity;
 
 /*L'entité prend l'orientation dir*/
 public class Turn implements ActionFsm
 {
-  private DIRECTION m_dir;
+  private Direction m_dir;
 
   public Turn()
   {
     // TODO define default values
-    m_dir = DIRECTION.Right;
+    m_dir = new Direction(Direction.DIRECTION.Right);
   }
 
-  public Turn( DIRECTION dir )
+  public Turn( Direction dir )
   {
     m_dir = dir;
   }

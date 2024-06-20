@@ -1,23 +1,23 @@
 package src.AI.Action;
 
-import src.AI.DIRECTION;
+import src.AI.Direction;
 import src.Model.Entity;
 /*Ignore les getHit() qu'il reçoit des entités
  * dans la direction dir, pendant t mili-secondes.*/
 public class Protect implements ActionFsm
 {
   
-  private DIRECTION m_dir;
+  private Direction m_dir;
   private long m_time;
   
   public Protect()
   {
     // TODO define default values
-    m_dir = DIRECTION.Forward;
+    m_dir = new Direction(Direction.DIRECTION.Forward);
     m_time = 100;
   }
   
-  public Protect( DIRECTION dir, Integer time )
+  public Protect( Direction dir, Integer time )
   {
     m_dir = dir;
     m_time = time.longValue();
