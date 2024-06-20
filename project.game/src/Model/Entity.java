@@ -2,7 +2,7 @@ package src.Model;
 
 import java.util.ArrayList;
 import src.AI.Brain;
-import src.AI.CATEGORY;
+import src.AI.CategoryFsm;
 import src.AI.Direction;
 import src.AI.FSM;
 import src.Model.Collision.AABB;
@@ -26,6 +26,7 @@ public abstract class Entity
   protected boolean             m_hasCollision;
   protected Entity              m_objectInHand;
   protected ArrayList< Entity > m_inventory;
+  protected CategoryFsm         m_cat;
 
   public Entity( FSM automaton )
   {
@@ -85,8 +86,9 @@ public abstract class Entity
     }
   }
 
-  public void doAdd( CATEGORY var, int n )
+  public void doAdd( CategoryFsm var, int n )
   {
+
   }
 
   public void doWait( long time )
@@ -273,7 +275,8 @@ public abstract class Entity
     if( m_isResting )
     {
       m_timeToWait -= elapsed;
-      if (m_timeToWait <= 0) {
+      if( m_timeToWait <= 0 )
+      {
         m_isResting = false;
         m_brain.step();
       }

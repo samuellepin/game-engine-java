@@ -3,7 +3,7 @@ package src.AI.Condition;
 import java.util.ArrayList;
 import java.util.List;
 
-import src.AI.CATEGORY;
+import src.AI.CategoryFsm;
 import src.AI.Direction;
 import src.AI.KEY;
 
@@ -44,9 +44,9 @@ public class ConditionFactory
     {
       Object o1 = parameters.get( 0 );
       Object o2 = parameters.get( 1 );
-      if( o1 instanceof Direction && o2 instanceof CATEGORY )
+      if( o1 instanceof Direction && o2 instanceof CategoryFsm )
       {
-        condition = new Cell( (Direction)o1, (CATEGORY)o2 );
+        condition = new Cell( (Direction)o1, (CategoryFsm)o2 );
       }
     }
     return add( condition );
@@ -60,9 +60,9 @@ public class ConditionFactory
     {
       Object o1 = parameters.get( 0 );
       Object o2 = parameters.get( 1 );
-      if( o1 instanceof CATEGORY && o2 instanceof Direction )
+      if( o1 instanceof CategoryFsm && o2 instanceof Direction )
       {
-        condition = new Closest( (CATEGORY)o1, (Direction)o2 );
+        condition = new Closest( (CategoryFsm)o1, (Direction)o2 );
       }
     }
     return add( condition );
@@ -78,14 +78,14 @@ public class ConditionFactory
       if( parameters.size() >= 2 )
       {
         Object o2 = parameters.get( 1 );
-        if( o1 instanceof CATEGORY && o2 instanceof Integer )
+        if( o1 instanceof CategoryFsm && o2 instanceof Integer )
         {
-          return add( new Got( (CATEGORY)o1, (Integer)o2 ) );
+          return add( new Got( (CategoryFsm)o1, (Integer)o2 ) );
         }
       }
-      if( o1 instanceof CATEGORY )
+      if( o1 instanceof CategoryFsm )
       {
-        condition = new Got( (CATEGORY)o1 );
+        condition = new Got( (CategoryFsm)o1 );
       }
     }
     return add( condition );

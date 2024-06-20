@@ -3,7 +3,7 @@ package src.AI.Action;
 import java.util.ArrayList;
 import java.util.List;
 
-import src.AI.CATEGORY;
+import src.AI.CategoryFsm;
 import src.AI.Direction;
 
 public class ActionFactory
@@ -27,9 +27,9 @@ public class ActionFactory
     {
       Object o1 = parameters.get( 0 );
       Object o2 = parameters.get( 1 );
-      if( o1 instanceof CATEGORY && o2 instanceof Integer )
+      if( o1 instanceof CategoryFsm && o2 instanceof Integer )
       {
-        action = new Add( (CATEGORY)o1, (Integer)o2 );
+        action = new Add( (CategoryFsm)o1, (Integer)o2 );
       }
     }
     return add( action );

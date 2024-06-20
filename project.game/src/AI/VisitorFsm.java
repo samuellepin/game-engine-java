@@ -24,6 +24,7 @@ import gal.ast.Transition;
 import gal.ast.UnaryOp;
 import gal.ast.Underscore;
 import gal.ast.Value;
+import src.AI.CategoryFsm.CATEGORY;
 import src.AI.Action.*;
 import src.AI.Condition.*;
 
@@ -40,41 +41,41 @@ public class VisitorFsm implements IVisitor
     switch ( cat.toString() )
     {
     case "A":
-      return CATEGORY.Adversary;
+      return new CategoryFsm( CATEGORY.Adversary );
     case "C":
-      return CATEGORY.Clue;
+      return new CategoryFsm( CATEGORY.Clue );
     case "D":
-      return CATEGORY.Danger;
+      return new CategoryFsm( CATEGORY.Danger );
     case "G":
-      return CATEGORY.Gate;
+      return new CategoryFsm( CATEGORY.Gate );
     case "I":
-      return CATEGORY.Icon;
+      return new CategoryFsm( CATEGORY.Icon );
     case "J":
-      return CATEGORY.Jumpable;
+      return new CategoryFsm( CATEGORY.Jumpable );
     case "K":
-      return CATEGORY.Killable;
+      return new CategoryFsm( CATEGORY.Killable );
     case "M":
-      return CATEGORY.Moveable;
+      return new CategoryFsm( CATEGORY.Moveable );
     case "O":
-      return CATEGORY.Obstacle;
+      return new CategoryFsm( CATEGORY.Obstacle );
     case "P":
-      return CATEGORY.Pickable;
+      return new CategoryFsm( CATEGORY.Pickable );
     case "T":
-      return CATEGORY.Team;
+      return new CategoryFsm( CATEGORY.Team );
     case "U":
-      return CATEGORY.Util;
+      return new CategoryFsm( CATEGORY.Util );
     case "V":
-      return CATEGORY.Void;
+      return new CategoryFsm( CATEGORY.Void );
     case "@":
-      return CATEGORY.PlayerT;
+      return new CategoryFsm( CATEGORY.PlayerT );
     case "#":
-      return CATEGORY.PlayerA;
+      return new CategoryFsm( CATEGORY.PlayerA );
     case "Power":
-      return CATEGORY.Power;
+      return new CategoryFsm( CATEGORY.Power );
     case "Stuff":
-      return CATEGORY.Stuff;
+      return new CategoryFsm( CATEGORY.Stuff );
     case "_":
-      return CATEGORY.Underscore;
+      return new CategoryFsm( CATEGORY.Underscore );
     default:
       return null;
     }
