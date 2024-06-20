@@ -14,9 +14,8 @@ public class Jump implements ActionFsm
 
   public Jump()
   {
-    // TODO define default values
     m_dir = new Direction(Direction.DIRECTION.Forward);
-    m_dist = 0;
+    m_dist = 1;
   }
 
   public Jump( Direction dir, Integer dist )
