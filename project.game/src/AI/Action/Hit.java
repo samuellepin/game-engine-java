@@ -16,15 +16,13 @@ public class Hit implements ActionFsm
 
   public Hit()
   {
-    // TODO define default values
-    m_dir = new Direction( Direction.DIRECTION.Forward );
+    m_dir = new Direction(Direction.DIRECTION.Forward);
   }
 
   @Override
   public void execute( Entity entity )
   {
-    // TODO Auto-generated method stub
-
+    entity.doHit( m_dir.toAngle( entity.getOrientation() ) );
   }
 
   @Override

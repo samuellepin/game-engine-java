@@ -12,7 +12,6 @@ public class Protect implements ActionFsm
   
   public Protect()
   {
-    // TODO define default values
     m_dir = new Direction(Direction.DIRECTION.Forward);
     m_time = 100;
   }
@@ -26,8 +25,7 @@ public class Protect implements ActionFsm
   @Override
   public void execute( Entity entity )
   {
-    // TODO Auto-generated method stub
-
+    entity.doProtect( m_dir, m_time );
   }
 
   @Override

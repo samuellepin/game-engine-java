@@ -27,6 +27,8 @@ public abstract class Entity
   protected Entity              m_objectInHand;
   protected ArrayList< Entity > m_inventory;
   protected CategoryFsm         m_cat;
+  protected boolean             m_isProtected;
+  protected double              m_protectDirection;
 
   public Entity( FSM automaton )
   {
@@ -68,6 +70,7 @@ public abstract class Entity
     tickMove( elapsed );
     tickWait( elapsed );
     tickRest( elapsed );
+    tickProtect( elapsed );
     callListener();
   }
 
@@ -103,6 +106,11 @@ public abstract class Entity
     if( m_isWaiting )
     {
       m_timeToWait -= elapsed;
+    }
+    if( m_timeToWait <= 0 )
+    {
+      m_isWaiting = false;
+      m_brain.step();
     }
   }
 
@@ -206,14 +214,53 @@ public abstract class Entity
 
   public void doHit( double orientation )
   {
-    // TODO
-    throw new RuntimeException( "NYI" );
+    ArrayList< Entity > entities = Model.getInstance().getEntities();
+    for ( Entity e : entities )
+    {
+      Vector  dist         = Vector.sub( e.getPos(), this.getPos() );
+
+      boolean closeEnough  = m_visionField.getRadius() >= dist.getMagnitude();
+      boolean correctAngle = orientation - ( Math.PI / 4 ) <= dist.getAngle();
+      correctAngle = correctAngle && dist.getAngle() <= orientation + ( Math.PI / 4 );
+
+      if( closeEnough && correctAngle )
+      {
+        e.getHit();
+      }
+    }
+    m_brain.step();
   }
 
-  public void doProtect( double orientation )
+  public void doProtect( double orientation, long time )
   {
-    // TODO
-    throw new RuntimeException( "NYI" );
+    m_isProtected = true;
+    m_protectDirection = orientation;
+    m_timeToWait = time;
+  }
+
+  public void doProtect( Direction direction, long time )
+  {
+    m_isProtected = true;
+    m_protectDirection = direction.toAngle( m_orientation );
+    m_timeToWait = time;
+  }
+
+  private void tickProtect( long elapsed )
+  {
+    if( m_isProtected )
+    {
+      m_timeToWait -= elapsed;
+      if( m_timeToWait <= 0 )
+      {
+        m_isProtected = false;
+        m_brain.step();
+      }
+    }
+  }
+
+  public void getHit()
+  {
+    // À implémenter pour chaque entité
   }
 
   public void doPick( double orientation )
@@ -246,6 +293,7 @@ public abstract class Entity
     Model  model = Model.getInstance();
     m_objectInHand = null;
     model.addEntities( e );
+    m_brain.step();
   }
 
   public void doStore()
@@ -253,6 +301,7 @@ public abstract class Entity
     Entity e = m_objectInHand;
     m_objectInHand = null;
     m_inventory.add( e );
+    m_brain.step();
 
   }
 
@@ -261,6 +310,7 @@ public abstract class Entity
     Entity e = m_inventory.remove( 0 );
     doStore();
     m_objectInHand = e;
+    m_brain.step();
   }
 
   public void doRest( long time, int pow )
@@ -291,13 +341,18 @@ public abstract class Entity
 
   public void doExplode()
   {
-    // TODO
-    throw new RuntimeException( "NYI" );
+    Model  model = Model.getInstance();
+    model.removeEntities( this );
+    ArrayList< EntityTracker > trackers =model.getTrackers();
+    for(EntityTracker tracker:trackers) {
+      tracker.getListener().left( this );
+    }
+    m_brain.step();
   }
 
   public void doEgg( Direction dir )
   {
-    Model model = Model.getInstance();
+//    Model model = Model.getInstance();
 
   }
 

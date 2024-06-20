@@ -78,6 +78,11 @@ public class Model
     m_entities.add( entity );
   }
 
+  public void removeEntities( Entity entity )
+  {
+    m_entities.remove( entity );
+  }
+  
   public Entity getPlayer1()
   {
     return m_player1;
