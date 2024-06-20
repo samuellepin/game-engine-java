@@ -22,7 +22,7 @@ public class FsmFactory
   {
     for( FSM fsm : m_fsm )
     {
-      if( fsm.getName() == name )
+      if( fsm.getName().equals( name ) )
       {
         return fsm;
       }
