@@ -15,8 +15,9 @@ public class Direction
   {
     m_direction = d;
   }
-  
-  public DIRECTION getDirection() {
+
+  public DIRECTION getDirection()
+  {
     return m_direction;
   }
 
@@ -45,14 +46,25 @@ public class Direction
     case Forward:
       return currentAngle;
     case BackWard:
-      return Vector.normalizeAngle(currentAngle + Math.PI);
+      return Vector.normalizeAngle( currentAngle + Math.PI );
     case Left:
-      return Vector.normalizeAngle(currentAngle + Math.PI * 0.5);
+      return Vector.normalizeAngle( currentAngle + Math.PI * 0.5 );
     case Right:
-      return Vector.normalizeAngle(currentAngle - Math.PI * 0.5);
+      return Vector.normalizeAngle( currentAngle - Math.PI * 0.5 );
     case Underscore:
       return currentAngle;
     }
     return currentAngle;
+  }
+
+  @Override
+  public boolean equals( Object o )
+  {
+    if( o instanceof Direction )
+    {
+      Direction dir = (Direction)o;
+      if( dir.m_direction.equals( m_direction ) ) return true;
+    }
+    return false;
   }
 }
