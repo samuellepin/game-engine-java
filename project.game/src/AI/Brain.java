@@ -21,7 +21,7 @@ public class Brain
   }
 
   /* L'entité doit appeler cette fonction quand elle a fini son action actuelle */
-  private void step()
+  public void step()
   {
     if( m_actions.isEmpty() )
     {
