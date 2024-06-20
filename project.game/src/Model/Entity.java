@@ -19,8 +19,9 @@ public abstract class Entity
   protected double              m_velocity;
   protected Circle              m_visionField;
   protected boolean             m_isMoving;
+  protected boolean             m_isResting;
   protected double              m_moveDirection;
-  protected long                m_timeToMove;
+  protected long                m_timeToWait;
   protected boolean             m_hasCollision;
   protected Entity              m_objectInHand;
   protected ArrayList< Entity > m_inventory;
@@ -63,6 +64,7 @@ public abstract class Entity
   {
     m_elapsedTime = elapsed;
     tickMove( elapsed );
+    tickRest( elapsed );
     callListener();
   }
 
@@ -94,28 +96,28 @@ public abstract class Entity
   public void doMove( Direction dir )
   {
     m_moveDirection = dir.toAngle( m_orientation );
-    m_timeToMove = 20;
+    m_timeToWait = 20;
     m_isMoving = true;
   }
 
   public void doMove( double dir )
   {
     m_moveDirection = dir;
-    m_timeToMove = 20;
+    m_timeToWait = 20;
     m_isMoving = true;
   }
 
   public void doMove( Direction dir, long time )
   {
     m_moveDirection = dir.toAngle( m_orientation );
-    m_timeToMove = time;
+    m_timeToWait = time;
     m_isMoving = true;
   }
 
   public void doMove( double dir, long time )
   {
     m_moveDirection = dir;
-    m_timeToMove = time;
+    m_timeToWait = time;
     m_isMoving = true;
   }
 
@@ -125,11 +127,11 @@ public abstract class Entity
     if( m_isMoving )
     {
       double dt = elapsed / 1000;
-      if( m_timeToMove < elapsed )
+      if( m_timeToWait < elapsed )
       {
-        dt = m_timeToMove / 1000;
+        dt = m_timeToWait / 1000;
       }
-      m_timeToMove -= elapsed;
+      m_timeToWait -= elapsed;
 
       double d     = m_velocity * dt;
 
@@ -152,7 +154,7 @@ public abstract class Entity
 
       callListener();
 
-      if( m_timeToMove <= 0 )
+      if( m_timeToWait <= 0 )
       {
         m_isMoving = false;
         m_brain.step();
@@ -203,18 +205,19 @@ public abstract class Entity
 
   public void doPick( double orientation )
   {
-    ArrayList<Entity> entities = Model.getInstance().getEntities();
+    ArrayList< Entity > entities = Model.getInstance().getEntities();
     for ( Entity e : entities )
     {
-      Vector dist = Vector.sub( e.getPos(), this.getPos() );
-      
-      boolean closeEnough = m_visionField.getRadius() >= dist.getMagnitude();
+      Vector  dist         = Vector.sub( e.getPos(), this.getPos() );
+
+      boolean closeEnough  = m_visionField.getRadius() >= dist.getMagnitude();
       boolean correctAngle = orientation - ( Math.PI / 4 ) <= dist.getAngle();
       correctAngle = correctAngle && dist.getAngle() <= orientation + ( Math.PI / 4 );
-      
+
       if( closeEnough && correctAngle )
       {
-        if (m_objectInHand != null) {
+        if( m_objectInHand != null )
+        {
           m_inventory.add( m_objectInHand );
         }
         entities.remove( e );
@@ -247,10 +250,29 @@ public abstract class Entity
     m_objectInHand = e;
   }
 
-  public void doPower()
+  public void doRest( long time, int pow )
   {
-    // TODO
-    throw new RuntimeException( "NYI" );
+    m_isResting = true;
+    m_timeToWait = time;
+    addPow( pow );
+  }
+
+  private void tickRest( long elapsed )
+  {
+    if( m_isResting )
+    {
+      m_timeToWait -= elapsed;
+      if (m_timeToWait <= 0) {
+        m_isResting = false;
+        m_brain.step();
+      }
+    }
+  }
+
+  /* Ne fait rien par défaut, à override si l'entité en a besoin */
+  public void addPow( int pow )
+  {
+
   }
 
   public void doExplode()
@@ -262,7 +284,7 @@ public abstract class Entity
   public void doEgg( Direction dir )
   {
     Model model = Model.getInstance();
-    
+
   }
 
   // Spécifique à notre physique
