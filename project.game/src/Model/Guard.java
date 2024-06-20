@@ -1,5 +1,8 @@
 package src.Model;
 
+import java.awt.event.KeyEvent;
+
+import src.Controller;
 import src.AI.FSM;
 import src.Model.Collision.Circle;
 import src.Model.Collision.Collision;
