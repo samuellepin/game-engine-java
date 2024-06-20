@@ -1,6 +1,7 @@
 package src.Model;
 
 import src.AI.Brain;
+import src.AI.Direction;
 import src.AI.FSM;
 import src.Model.Collision.AABB;
 import src.Model.Collision.Circle;
@@ -16,6 +17,8 @@ public abstract class Entity
   protected double        m_velocity;
   protected Circle        m_visionField;
   protected boolean       m_isMoving;
+  protected double        m_moveDirection;
+  protected long          m_timeToMove;
   protected boolean       m_hasCollision;
 
   public Entity( FSM automaton )
@@ -55,6 +58,7 @@ public abstract class Entity
   public void tick( long elapsed )
   {
     m_elapsedTime = elapsed;
+    tickMove(elapsed);
     callListener();
   }
 
@@ -75,7 +79,7 @@ public abstract class Entity
 
   public void doAdd( String var, int n )
   {
-    
+
   }
 
   public void doWait()
@@ -84,31 +88,51 @@ public abstract class Entity
     throw new RuntimeException( "NYI" );
   }
 
-  public void doMove( double orientation )
+  public void doMove( Direction dir, int time )
   {
-    double d = m_velocity * (double)m_elapsedTime;
-    if( d >= 3 * m_velocity || d <= 0 )
+    m_moveDirection = dir.toAngle( m_orientation );
+    m_timeToMove = time;
+    m_isMoving = true;
+  }
+
+  /* Called every tick, moves the entity if the entity is supposed to move */
+  private void tickMove( long elapsed )
+  {
+    if( m_isMoving )
     {
-      d = 3 * m_velocity;
-    }
-    double prevX = this.getHitbox().getX();
-    double prevY = this.getHitbox().getY();
-    this.getHitbox().translate( d * Math.cos( m_orientation ), d * Math.sin( m_orientation ) );
-    for ( Entity e : Model.getInstance().getEntities() )
-    {
-      if( e != this && e.hasCollision() && Collision.detect( this.getHitbox(), e.getHitbox() ) )
+      double dt = elapsed / 1000;
+      if( m_timeToMove < elapsed )
       {
-        this.setPos( prevX, prevY );
+        dt = m_timeToMove / 1000;
+      }
+      m_timeToMove -= elapsed;
+
+      double d     = m_velocity * dt;
+
+      double prevX = this.getHitbox().getX();
+      double prevY = this.getHitbox().getY();
+      this.getHitbox().translate( d * Math.cos( m_moveDirection ), d * Math.sin( m_moveDirection ) );
+      for ( Entity e : Model.getInstance().getEntities() )
+      {
+        if( e != this && e.hasCollision() && Collision.detect( this.getHitbox(), e.getHitbox() ) )
+        {
+          this.setPos( prevX, prevY );
 //        e.repulse();
+        }
+      }
+
+      if( m_tracker != null )
+      {
+        m_tracker.getListener().moved();
+      }
+
+      callListener();
+      
+      if (m_timeToMove <= 0) {
+        m_isMoving = false;
+        m_brain.step();
       }
     }
-
-    if( m_tracker != null )
-    {
-      m_tracker.getListener().moved();
-    }
-
-    callListener();
   }
 
   public void doTurn( double orientation )
@@ -180,7 +204,7 @@ public abstract class Entity
   public void repulse()
   {
     m_orientation += Math.PI;
-    doMove( m_orientation );
+//    doMove( m_orientation );
   }
 
   public Vector getPos()
