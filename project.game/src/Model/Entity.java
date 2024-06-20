@@ -161,10 +161,28 @@ public abstract class Entity
     m_orientation = orientation;
   }
 
-  public void doJump( double orientation )
+  public void doJump( double orientation, double dist )
   {
-    // TODO
-    throw new RuntimeException( "NYI" );
+    double prevX = this.getHitbox().getX();
+    double prevY = this.getHitbox().getY();
+    this.getHitbox().translate( dist * Math.cos( orientation ), dist * Math.sin( orientation ) );
+    for ( Entity e : Model.getInstance().getEntities() )
+    {
+      if( e != this && e.hasCollision() && Collision.detect( this.getHitbox(), e.getHitbox() ) )
+      {
+        this.setPos( prevX, prevY );
+//      e.repulse();
+      }
+    }
+
+    if( m_tracker != null )
+    {
+      m_tracker.getListener().moved();
+    }
+
+    callListener();
+
+    m_brain.step();
   }
 
   public void doHit( double orientation )

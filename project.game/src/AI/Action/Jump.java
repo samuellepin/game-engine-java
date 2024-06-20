@@ -28,7 +28,7 @@ public class Jump implements ActionFsm
   @Override
   public void execute( Entity entity )
   {
-    // TODO Auto-generated method stub
+    entity.doJump( m_dir.toAngle( entity.getOrientation() ), m_dist );
 
   }
 
