@@ -85,8 +85,8 @@
 	[
 		{
 			"id" : 5678,
-			"min" : 2,
-			"max" : 3
+			"min" : 6,
+			"max" : 9
 		}
 	],
 	"itemsToPickToWin" : 

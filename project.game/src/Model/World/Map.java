@@ -9,6 +9,8 @@ import src.Model.Wall;
 
 public class Map
 {
+  private ArrayList< Position > m_tilesAlreadyUsed;
+  
   private Tile[][]           m_tiles;
   private Biome[]            m_biome_tab;                                                                 // pour le
                                                                                                           // random
@@ -37,6 +39,7 @@ public class Map
   /// < Backtracker algorithm
   private Map()
   {
+    m_tilesAlreadyUsed = new ArrayList<>();
     m_tiles = new Tile[ ROWS_NUM ][ COLS_NUM ];
     for ( int i = 0; i < ROWS_NUM; i++ )
     {
@@ -210,8 +213,6 @@ public class Map
     }
   }
 
-  private static final ArrayList< Position > m_tilesAlreadyUsed = new ArrayList<>();
-
   public Vector getRandomPos()
   {
     int      x = Config.getRandom().nextInt( Map.COLS_NUM );
@@ -226,6 +227,7 @@ public class Map
         return getRandomPos();
       }
     }
+    m_tilesAlreadyUsed.add( p );
     return this.getPos( x, y );
   }
 

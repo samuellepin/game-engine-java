@@ -47,6 +47,8 @@ public class Game
     m_model = Model.getInstance();
 
     m_view = View.getInstance();
+    
+    Map map = Map.getInstance();
 
     m_listener = new CanvasListener( this );
 

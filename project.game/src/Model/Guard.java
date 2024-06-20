@@ -40,13 +40,13 @@ public class Guard extends Spy
   public void tick( long elapsed )
   {
     super.tick( elapsed );
-    AABB h1 = Model.getInstance().getPlayer1().getHitbox();
-//    Circle c1 = Model.getInstance().getPlayer1().getVisionField();
+//    AABB h1 = Model.getInstance().getPlayer1().getHitbox();
+    Circle c1 = Model.getInstance().getPlayer1().getVisionField();
     Circle c2 = super.getVisionField();
     System.out.println( "Tick " + this.toString() );
-    if( Collision.detect( h1, c2 ) )
+    if( Collision.detect( c1, c2 ) )
     {
-      System.out.println( "Collision : " + h1.toString() + " - " + c2.toString() );
+//      System.out.println( "Collision : " + c1.toString() + " - " + c2.toString() );
       follow( Model.getInstance().getPlayer1() );
     }
   }
