@@ -95,6 +95,13 @@ public abstract class Entity
     m_isMoving = true;
   }
   
+  public void doMove( double dir )
+  {
+    m_moveDirection = dir;
+    m_timeToMove = 20;
+    m_isMoving = true;
+  }
+  
   public void doMove( Direction dir, int time )
   {
     m_moveDirection = dir.toAngle( m_orientation );
