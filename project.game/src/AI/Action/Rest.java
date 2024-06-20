@@ -11,7 +11,6 @@ public class Rest implements ActionFsm
 
   public Rest()
   {
-    // TODO define default values
     m_time = 100;
     m_pow = 5;
   }
@@ -25,8 +24,7 @@ public class Rest implements ActionFsm
   @Override
   public void execute( Entity entity )
   {
-    // TODO Auto-generated method stub
-
+    entity.doRest( m_time, m_pow );
   }
 
 }

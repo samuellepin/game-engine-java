@@ -25,6 +25,8 @@ public abstract class Entity
   protected boolean             m_hasCollision;
   protected Entity              m_objectInHand;
   protected ArrayList< Entity > m_inventory;
+  protected boolean             m_isProtected;
+  protected double              m_protectDirection;
 
   public Entity( FSM automaton )
   {
@@ -65,6 +67,7 @@ public abstract class Entity
     m_elapsedTime = elapsed;
     tickMove( elapsed );
     tickRest( elapsed );
+    tickProtect( elapsed );
     callListener();
   }
 
@@ -193,14 +196,53 @@ public abstract class Entity
 
   public void doHit( double orientation )
   {
-    // TODO
-    throw new RuntimeException( "NYI" );
+    ArrayList< Entity > entities = Model.getInstance().getEntities();
+    for ( Entity e : entities )
+    {
+      Vector  dist         = Vector.sub( e.getPos(), this.getPos() );
+
+      boolean closeEnough  = m_visionField.getRadius() >= dist.getMagnitude();
+      boolean correctAngle = orientation - ( Math.PI / 4 ) <= dist.getAngle();
+      correctAngle = correctAngle && dist.getAngle() <= orientation + ( Math.PI / 4 );
+
+      if( closeEnough && correctAngle )
+      {
+        e.getHit();
+      }
+    }
+    m_brain.step();
   }
 
-  public void doProtect( double orientation )
+  public void doProtect( double orientation, long time )
   {
-    // TODO
-    throw new RuntimeException( "NYI" );
+    m_isProtected = true;
+    m_protectDirection = orientation;
+    m_timeToWait = time;
+  }
+
+  public void doProtect( Direction direction, long time )
+  {
+    m_isProtected = true;
+    m_protectDirection = direction.toAngle( m_orientation );
+    m_timeToWait = time;
+  }
+
+  private void tickProtect( long elapsed )
+  {
+    if( m_isProtected )
+    {
+      m_timeToWait -= elapsed;
+      if( m_timeToWait <= 0 )
+      {
+        m_isProtected = false;
+        m_brain.step();
+      }
+    }
+  }
+
+  public void getHit()
+  {
+    // À implémenter pour chaque entité
   }
 
   public void doPick( double orientation )
@@ -262,7 +304,8 @@ public abstract class Entity
     if( m_isResting )
     {
       m_timeToWait -= elapsed;
-      if (m_timeToWait <= 0) {
+      if( m_timeToWait <= 0 )
+      {
         m_isResting = false;
         m_brain.step();
       }
