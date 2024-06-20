@@ -1,5 +1,6 @@
 package src.Model;
 
+import java.util.ArrayList;
 import src.AI.Brain;
 import src.AI.Direction;
 import src.AI.FSM;
@@ -20,6 +21,8 @@ public abstract class Entity
   protected double        m_moveDirection;
   protected long          m_timeToMove;
   protected boolean       m_hasCollision;
+  protected Entity              m_objectInHand;
+  protected ArrayList< Entity > m_inventory;
 
   public Entity( FSM automaton )
   {
@@ -205,20 +208,25 @@ public abstract class Entity
 
   public void doThrow( double orientation )
   {
-    // TODO
-    throw new RuntimeException( "NYI" );
+    Entity e     = m_objectInHand;
+    Model  model = Model.getInstance();
+    m_objectInHand = null;
+    model.addEntities( e );
   }
 
   public void doStore()
   {
-    // TODO
-    throw new RuntimeException( "NYI" );
+    Entity e = m_objectInHand;
+    m_objectInHand = null;
+    m_inventory.add( e );
+
   }
 
   public void doGet()
   {
-    // TODO
-    throw new RuntimeException( "NYI" );
+    Entity e = m_inventory.remove( 0 );
+    doStore();
+    m_objectInHand = e;
   }
 
   public void doPower()
