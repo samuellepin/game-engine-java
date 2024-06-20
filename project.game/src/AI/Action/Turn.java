@@ -10,7 +10,6 @@ public class Turn implements ActionFsm
 
   public Turn()
   {
-    // TODO define default values
     m_dir = new Direction( Direction.DIRECTION.Right );
   }
 

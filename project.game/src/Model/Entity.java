@@ -19,6 +19,7 @@ public abstract class Entity
   protected double              m_velocity;
   protected Circle              m_visionField;
   protected boolean             m_isMoving;
+  protected boolean             m_isWaiting;
   protected double              m_moveDirection;
   protected long                m_timeToMove;
   protected boolean             m_hasCollision;
@@ -63,6 +64,7 @@ public abstract class Entity
   {
     m_elapsedTime = elapsed;
     tickMove( elapsed );
+    tickWait( elapsed );
     callListener();
   }
 
@@ -85,9 +87,19 @@ public abstract class Entity
   {
   }
 
-  public void doWait(long time)
+  public void doWait( long time )
   {
-    
+    m_isWaiting = true;
+    m_timeToWait = time;
+  }
+
+  /* Called every tick, wait if the entity is supposed to wait */
+  private void tickWait( long elapsed )
+  {
+    if( m_isWaiting )
+    {
+      m_timeToMove -= elapsed;
+    }
   }
 
   public void doMove( Direction dir )
@@ -202,18 +214,19 @@ public abstract class Entity
 
   public void doPick( double orientation )
   {
-    ArrayList<Entity> entities = Model.getInstance().getEntities();
+    ArrayList< Entity > entities = Model.getInstance().getEntities();
     for ( Entity e : entities )
     {
-      Vector dist = Vector.sub( e.getPos(), this.getPos() );
-      
-      boolean closeEnough = m_visionField.getRadius() >= dist.getMagnitude();
+      Vector  dist         = Vector.sub( e.getPos(), this.getPos() );
+
+      boolean closeEnough  = m_visionField.getRadius() >= dist.getMagnitude();
       boolean correctAngle = orientation - ( Math.PI / 4 ) <= dist.getAngle();
       correctAngle = correctAngle && dist.getAngle() <= orientation + ( Math.PI / 4 );
-      
+
       if( closeEnough && correctAngle )
       {
-        if (m_objectInHand != null) {
+        if( m_objectInHand != null )
+        {
           m_inventory.add( m_objectInHand );
         }
         entities.remove( e );
@@ -261,7 +274,7 @@ public abstract class Entity
   public void doEgg( Direction dir )
   {
     Model model = Model.getInstance();
-    
+
   }
 
   // Spécifique à notre physique
