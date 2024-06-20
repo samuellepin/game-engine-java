@@ -59,6 +59,7 @@ public abstract class Entity implements Cloneable
     e.setTracker( null );
     e.m_hitbox = m_hitbox.clone();
     e.m_visionField = m_visionField.clone();
+    e.m_visionField.setTopLeftCorner( e.m_hitbox.getPos() );
     return e;
   }
 
@@ -108,7 +109,9 @@ public abstract class Entity implements Cloneable
     }
     double prevX = this.getHitbox().getX();
     double prevY = this.getHitbox().getY();
-    this.getHitbox().translate( d * Math.cos( m_orientation ), d * Math.sin( m_orientation ) );
+    double dx = d * Math.cos( m_orientation );
+    double dy = d * Math.sin( m_orientation );
+    this.getHitbox().translate( dx, dy );
     for ( Entity e : Model.getInstance().getEntities() )
     {
       if( e != this && e.hasCollision() && Collision.detect( this.getHitbox(), e.getHitbox() ) )

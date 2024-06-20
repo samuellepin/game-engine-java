@@ -9,6 +9,7 @@ import src.Model.EntityTracker;
 import src.Model.Model;
 import src.Model.Vector;
 import src.Model.Collision.AABB;
+import src.Model.Collision.Circle;
 import src.Model.World.*;
 
 public class Viewport
@@ -67,24 +68,41 @@ public class Viewport
   {
     this.paintTiles( g );
 
-    for ( Entity e : Model.getInstance().getEntities() ) ///< m_tracker.getEntities() 
+    for ( Entity e : Model.getInstance().getEntities() ) /// < m_tracker.getEntities()
     {
       Avatar avatar = AvatarFactory.make( e );
 
       if( avatar != null )
       {
-        int x      = metersToPixels( e.getX() - m_tracker.getX() );
-        int y      = metersToPixels( e.getY() - m_tracker.getY() );
-        int width  = metersToPixels( e.getWidth() );
-        int height = metersToPixels( e.getHeight() );
+        int x, y, width, height;
+
+        if( Config.getInstance().getView().shouldPaintVisionField() )
+        {
+          Circle vision = e.getVisionField();
+          x = metersToPixels(
+              vision.getTopLeftCorner().getX() - vision.getRadius() + e.getWidth() / 2 - m_tracker.getX() );
+          y = metersToPixels(
+              vision.getTopLeftCorner().getY() - vision.getRadius() + e.getHeight() / 2 - m_tracker.getY() );
+          width = metersToPixels( vision.getWidth() );
+          height = metersToPixels( vision.getHeight() );
+          avatar.paintVisionField( g, x, y, width, height );
+        }
+
+        x = metersToPixels( e.getX() - m_tracker.getX() );
+        y = metersToPixels( e.getY() - m_tracker.getY() );
+        width = metersToPixels( e.getWidth() );
+        height = metersToPixels( e.getHeight() );
         avatar.paint( g, x, y, width, height );
-        
-        AABB hitbox = e.getHitbox();
-        x = metersToPixels( hitbox.getX() - m_tracker.getX() );
-        y = metersToPixels( hitbox.getY() - m_tracker.getY() );
-        width = metersToPixels( hitbox.getWidth() );
-        height = metersToPixels( hitbox.getHeight() );
-        avatar.paintHitbox( g, x, y, width, height );
+
+        if( Config.getInstance().getView().shouldPaintHitbox() )
+        {
+          AABB hitbox = e.getHitbox();
+          x = metersToPixels( hitbox.getX() - m_tracker.getX() );
+          y = metersToPixels( hitbox.getY() - m_tracker.getY() );
+          width = metersToPixels( hitbox.getWidth() );
+          height = metersToPixels( hitbox.getHeight() );
+          avatar.paintHitbox( g, x, y, width, height );
+        }
       }
     }
 

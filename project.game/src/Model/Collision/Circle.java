@@ -12,7 +12,7 @@ public class Circle implements Hitbox, Cloneable
   public Circle clone() throws CloneNotSupportedException
   {
     Circle cloned = (Circle)super.clone();
-    cloned.m_topLeftCorner = m_topLeftCorner.clone();
+//    cloned.m_topLeftCorner = m_topLeftCorner.clone();
     return cloned;
   }
   
@@ -52,5 +52,25 @@ public class Circle implements Hitbox, Cloneable
   public String toString()
   {
     return "(x=" + this.getCenter().getX() + ", y=" + this.getCenter().getY() + ", r=" + this.getRadius() + ")";
+  }
+  
+  public double getWidth()
+  {
+    return 2 * m_radius;
+  }
+  
+  public double getHeight()
+  {
+    return 2 * m_radius;
+  }
+
+  public void translate( double dx, double dy )
+  {
+    m_topLeftCorner.translate( dx, dy );
+  }
+  
+  public void setTopLeftCorner( Vector pos )
+  {
+    this.m_topLeftCorner = pos;
   }
 }

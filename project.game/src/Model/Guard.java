@@ -7,12 +7,12 @@ import src.Model.World.Map;
 
 public class Guard extends Spy
 {
-  public Guard( Automaton automaton )
-  {
-    super( automaton );
-    this.setPos( Map.getInstance().getRandomPos() );
-    super.setVelocity( 0.1 );
-  }
+//  public Guard( Automaton automaton )
+//  {
+//    super( automaton );
+//    this.setPos( Map.getInstance().getRandomPos() );
+//    super.setVelocity( 0.1 );
+//  }
 
   public Guard( Automaton automaton, int id, double width, double height, double velocity, boolean hasCollision )
   {

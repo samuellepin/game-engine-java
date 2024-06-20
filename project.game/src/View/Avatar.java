@@ -4,7 +4,9 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import src.Config;
+import src.Model.Document;
 import src.Model.Entity;
+import src.Model.Wall;
 
 public abstract class Avatar
 {
@@ -22,10 +24,6 @@ public abstract class Avatar
 
   public void paintHitbox( Graphics g, int x, int y, int width, int height )
   {
-    if( !Config.getInstance().getView().shouldPaintHitbox() )
-    {
-      return;
-    }
     if( width < 0 )
     {
       width *= -1;
@@ -35,19 +33,11 @@ public abstract class Avatar
     g.drawRect( x, y, width, height );
   }
 
-  public void paintVisionField( Graphics g, int x, int y )
+  public void paintVisionField( Graphics g, int x, int y, int width, int height )
   {
-    if( !Config.getInstance().getView().shouldPaintVisionField() )
-    {
-      return;
-    }
-    Config cfg = Config.getInstance();
-    double zoom = cfg.getView().getZoom();
-    int r = (int) ( cfg.getParameters().getVisionFieldRadius() * zoom  );
+    if( m_entity instanceof Wall || m_entity instanceof Document ) return;
     g.setColor( VISION_FIELD_COLOR );
-    x += m_entity.getWidth() * zoom / 2;
-    y += m_entity.getHeight() * zoom / 2;
-    g.fillOval( x - r, y - r, 2 * r, 2 * r );
+    g.fillOval( x, y, width, height );
   }
 
   public Entity getEntity()
