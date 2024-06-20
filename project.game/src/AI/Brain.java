@@ -25,7 +25,7 @@ public class Brain
   {
     if( m_actions.isEmpty() )
     {
-      TransitionFsm t = m_fsm.nextState( m_entity );
+      TransitionFsm t = m_fsm.nextState( m_entity, m_state );
       m_state = t.getDestination();
       m_actions.add( t.getAction() );
     }
