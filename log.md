@@ -164,6 +164,15 @@ Pour demain :
     - Vérifier si le brain fonctionne
     - Finir le moteur pour de vrai
 
+## Jour 13 (20 juin):
+
+- But de la matinée et de la journée : avoir une V0 fonctionnel pour que pendant le weekend on fasse les deux jeux et rajouter des features 
+
+- David : amélioration du champ de vison en un champ de vison de cercle en arc 
+- Sam : test des differents automates 
+- Rémi et Greg : merge des différents travaux 
+- Romain : création des differntes class pour les objets 
+
 **Commande parser**
 
 Votre fichier automate : nom_AI.gal
@@ -174,28 +183,28 @@ Votre fichier automate : nom_AI.gal
 
 **Planning quotidien :**
 
-- [ ] View => Greg et Rémi
+- [x] View => Greg et Rémi
     - [x] Afficher Viewport du modéle avec monde qui bouge ( A tester )
-    - [ ] Charger tout les avatars 
+    - [x] Charger tout les avatars 
     - => Besoin du model 
 - [ ] AI (Automaton) => Sam 
-    - [ ] Faire un Visitor 
+    - [x] Faire un Visitor 
     - [x] comprendre commnent le parser appel les différent méthode : 13/06
-    - [ ] Créer les classes qui implémente action (move ,...)
-    - [x] Lier le parser et notre projet 
-    - [ ] Gestion FSM (traduction ast en FSM)
-- [ ] Model => David 
+    - [x] Créer les classes qui implémente action (move ,...)
+    - [ ] Lier le parser et notre projet 
+    - [x] Gestion FSM (traduction ast en FSM)
+- [x] Model => David 
     - [x] Fonctions qui détectes les collisons
     - [x] Géneration des biomes => Romain 
     - [x] Integration des méthodes de collision : 13/06 
         - [x] Hitbox aux entités : 13/06
     - [x] Implémentation champ vision
-    - [ ] Gestion des ticks
+    - [x] Gestion des ticks
         - Besoin des automates pour tester
     - [x] biomes : 13/06
     - [x] réunir carte biome et couloir 
-- [ ] Controler 
-    - [ ] Interpréter les touches pour L'AI
+- [x] Controler 
+    - [x] Interpréter les touches pour L'AI
 
 
 **Planning global :**
