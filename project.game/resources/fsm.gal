@@ -78,11 +78,17 @@ Guard(Patrol)
   | !Closest(#, _) ?         : (Patrol)
 }
 
-SecurityCamera(Rotate)
+SecurityCamera(Right)
 {
-  * (Rotate) :
-  | Closest(#, F) ? Wizz    : (Rotate)
-  | True          ? Turn(R) : (Rotate)
+  * (Right) :
+  | Closest(#, F) ? Wizz    : (Right)
+  | Closest(O, F) ?         : (Left)
+  | True          ? Turn(R) : (Right)
+
+  * (Left) :
+  | Closest(#, F) ? Wizz    : (Left)
+  | Closest(O, F) ?         : (Right)
+  | True          ? Turn(R) : (Left)
 }
 
 Wall(DoNothing)

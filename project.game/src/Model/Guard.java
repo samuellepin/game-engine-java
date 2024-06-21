@@ -10,6 +10,9 @@ import src.Model.World.Map;
 
 public class Guard extends Spy
 {
+  private Alarm m_ownAlarm;
+  private Alarm m_otherAlarm;
+  private boolean m_isAlarmed;
 //  public Guard( Automaton automaton )
 //  {
 //    super( automaton );

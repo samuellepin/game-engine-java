@@ -8,6 +8,8 @@ import src.AI.FSM;
 public class Camera extends Entity
 {
   private double ratio;
+  private Alarm m_ownAlarm;
+  private Alarm m_otherAlarm;
   
   public Camera( FSM fsm, int id, double width, double height, double velocity, boolean hasCollision,
       CategoryFsm.CATEGORY type, List< CategoryFsm.CATEGORY > options )
