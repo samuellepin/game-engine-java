@@ -7,7 +7,6 @@ import src.AI.Brain;
 import src.AI.CategoryFsm;
 import src.AI.Direction;
 import src.AI.FSM;
-import src.AI.StateFsm;
 import src.Model.Collision.AABB;
 import src.Model.Collision.Circle;
 import src.Model.Collision.Collision;
@@ -18,27 +17,27 @@ import src.Config;
 
 public abstract class Entity implements Cloneable
 {
-  protected EntityTracker m_tracker;
-  protected long          m_elapsedTime;
-  protected AABB          m_hitbox;
-  protected double        m_orientation;
-  protected double        m_velocity;
-  protected Circle        m_visionField;
-  protected boolean       m_isMoving;
-  protected boolean       m_hasCollision;
-  protected int           m_id;
-  protected CategoryFsm   m_cat;
-  protected boolean m_isWaiting;
-  protected long m_timeToWait;
-  protected Brain m_brain;
-  protected double m_moveDirection;
-  protected boolean m_isProtected;
-  protected double m_protectDirection;
-  protected Entity m_objectInHand;
+  protected EntityTracker  m_tracker;
+  protected long           m_elapsedTime;
+  protected AABB           m_hitbox;
+  protected double         m_orientation;
+  protected double         m_velocity;
+  protected Circle         m_visionField;
+  protected boolean        m_isMoving;
+  protected boolean        m_hasCollision;
+  protected int            m_id;
+  protected CategoryFsm    m_cat;
+  protected boolean        m_isWaiting;
+  protected long           m_timeToWait;
+  protected Brain          m_brain;
+  protected double         m_moveDirection;
+  protected boolean        m_isProtected;
+  protected double         m_protectDirection;
+  protected Entity         m_objectInHand;
   protected List< Entity > m_inventory;
-  protected boolean m_isResting;
+  protected boolean        m_isResting;
 
-  public Entity( FSM fsm, CategoryFsm.CATEGORY type, List < CategoryFsm.CATEGORY > options )
+  public Entity( FSM fsm, CategoryFsm.CATEGORY type, List< CategoryFsm.CATEGORY > options )
   {
     m_brain = new Brain( this, fsm );
     m_elapsedTime = 0;
@@ -50,7 +49,8 @@ public abstract class Entity implements Cloneable
     m_id = -1;
   }
 
-  public Entity( FSM fsm, int id, double width, double height, double velocity, boolean hasCollision, CategoryFsm.CATEGORY type, List < CategoryFsm.CATEGORY > options )
+  public Entity( FSM fsm, int id, double width, double height, double velocity, boolean hasCollision,
+      CategoryFsm.CATEGORY type, List< CategoryFsm.CATEGORY > options )
   {
     m_brain = new Brain( this, fsm );
     m_elapsedTime = 0;
@@ -391,6 +391,18 @@ public abstract class Entity implements Cloneable
     m_brain.step();
   }
 
+  /* to override */
+  public void doPop( List< Object > parameters )
+  {
+    m_brain.step();
+  }
+
+  /* to override */
+  public void doWizz( List< Object > parameters )
+  {
+    m_brain.step();
+  }
+
   // Spécifique à notre physique
   public void repulse()
   {
@@ -482,8 +494,8 @@ public abstract class Entity implements Cloneable
   public String toString()
   {
     DecimalFormat df = new DecimalFormat( "#.0" );
-    return  "[" + this.getId() + "]" + "(x=" + df.format( getX() ) + ", y=" + df.format( getY() ) + ", w=" + df.format( getWidth() )
-        + ", h=" + df.format( getHeight() ) + ")";
+    return "[" + this.getId() + "]" + "(x=" + df.format( getX() ) + ", y=" + df.format( getY() ) + ", w="
+        + df.format( getWidth() ) + ", h=" + df.format( getHeight() ) + ")";
   }
 
   public int getId()
