@@ -28,15 +28,15 @@ public abstract class Entity implements Cloneable
   protected boolean       m_hasCollision;
   protected int           m_id;
   protected CategoryFsm   m_cat;
-  private boolean m_isWaiting;
-  private long m_timeToWait;
-  private Brain m_brain;
-  private double m_moveDirection;
-  private boolean m_isProtected;
-  private double m_protectDirection;
-  private Entity m_objectInHand;
-  private List< Entity > m_inventory;
-  private boolean m_isResting;
+  protected boolean m_isWaiting;
+  protected long m_timeToWait;
+  protected Brain m_brain;
+  protected double m_moveDirection;
+  protected boolean m_isProtected;
+  protected double m_protectDirection;
+  protected Entity m_objectInHand;
+  protected List< Entity > m_inventory;
+  protected boolean m_isResting;
 
   public Entity( FSM fsm, CategoryFsm.CATEGORY type, List < CategoryFsm.CATEGORY > options )
   {
@@ -128,7 +128,7 @@ public abstract class Entity implements Cloneable
 
   public void doAdd( CategoryFsm var, int n )
   {
-
+    m_brain.step();
   }
 
   public void doWait( long time )
@@ -219,6 +219,7 @@ public abstract class Entity implements Cloneable
   public void doTurn( double orientation )
   {
     m_orientation = orientation;
+    m_brain.step();
   }
 
   public void doJump( double orientation, double dist )
@@ -374,10 +375,11 @@ public abstract class Entity implements Cloneable
 
   public void doExplode()
   {
-    Model  model = Model.getInstance();
+    Model model = Model.getInstance();
     model.removeEntities( this );
-    ArrayList< EntityTracker > trackers =model.getTrackers();
-    for(EntityTracker tracker:trackers) {
+    ArrayList< EntityTracker > trackers = model.getTrackers();
+    for ( EntityTracker tracker : trackers )
+    {
       tracker.getListener().left( this );
     }
     m_brain.step();
@@ -386,7 +388,7 @@ public abstract class Entity implements Cloneable
   public void doEgg( Direction dir )
   {
 //    Model model = Model.getInstance();
-
+    m_brain.step();
   }
 
   // Spécifique à notre physique
