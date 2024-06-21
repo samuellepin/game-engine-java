@@ -24,6 +24,7 @@ public abstract class Entity implements Cloneable
   protected boolean       m_isMoving;
   protected boolean       m_hasCollision;
   protected int           m_id;
+  
 
   public Entity( FSM fsm )
   {

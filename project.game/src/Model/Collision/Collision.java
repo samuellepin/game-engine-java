@@ -4,26 +4,26 @@ import src.Model.Vector;
 
 public class Collision
 {
-  public static boolean detect( Hitbox h1, Hitbox h2 )
-  {
-    if( h1 instanceof AABB && h2 instanceof AABB )
-    {
-      return detect( (AABB)h1, (AABB)h2 );
-    }
-    if( h1 instanceof Circle && h2 instanceof Circle )
-    {
-      return detect( (Circle)h1, (Circle)h2 );
-    }
-    if( h1 instanceof Circle && h2 instanceof AABB )
-    {
-      return detect( (AABB)h2, (Circle)h1 );
-    }
-    if( h1 instanceof AABB && h2 instanceof Circle )
-    {
-      return detect( (AABB)h1, (Circle)h2 );
-    }
-    return false;
-  }
+//  public static boolean detect( Hitbox h1, Hitbox h2 )
+//  {
+//    if( h1 instanceof AABB && h2 instanceof AABB )
+//    {
+//      return detect( (AABB)h1, (AABB)h2 );
+//    }
+//    if( h1 instanceof Circle && h2 instanceof Circle )
+//    {
+//      return detect( (Circle)h1, (Circle)h2 );
+//    }
+//    if( h1 instanceof Circle && h2 instanceof AABB )
+//    {
+//      return detect( (AABB)h2, (Circle)h1 );
+//    }
+//    if( h1 instanceof AABB && h2 instanceof Circle )
+//    {
+//      return detect( (AABB)h1, (Circle)h2 );
+//    }
+//    return false;
+//  }
 
   public static boolean detect( AABB a, AABB b )
   {
@@ -133,6 +133,66 @@ public class Collision
   {
     double r = c.getRadius();
     return squaredDistanceBetweenAABBandPoint( h, c.getCenter() ) <= r * r;
+  }
+
+  public static Vector closestPointToAABB( AABB aabb, Vector point )
+  {
+    double x = Math.max( aabb.getMin().getX(), Math.min( aabb.getMax().getX(), point.getX() ) );
+    double y = Math.max( aabb.getMin().getY(), Math.min( aabb.getMax().getY(), point.getY() ) );
+    return new Vector( x, y );
+  }
+
+  public static boolean detect( AABB aabb, Arc arc )
+  {
+    arc.normalizeAngles();
+    Vector C  = arc.getCenter();
+    Vector P  = closestPointToAABB( aabb, C );
+    Vector CP = Vector.sub( P, C );
+
+    double r  = arc.getRadius();
+    if( CP.getSquaredMagnitude() > r * r )
+    {
+      return false;
+    }
+
+    Vector pmin     = aabb.getMin();
+    Vector pmax     = aabb.getMax();
+    Vector points[] = { new Vector( pmin.getX(), pmin.getY() ), new Vector( pmax.getX(), pmin.getY() ),
+        new Vector( pmax.getX(), pmax.getY() ), new Vector( pmin.getX(), pmax.getY() ) };
+
+    double minAngle = 0;
+    double maxAngle = 0;
+    for ( int i = 0; i < 4; i++ )
+    {
+      Vector Q     = points[ i ];
+      Vector CQ    = Vector.sub( Q, C );
+      double angle = CQ.getAngle();
+
+      if( i == 0 )
+      {
+        minAngle = angle;
+        maxAngle = angle;
+        continue;
+      }
+      if( angle < minAngle )
+      {
+        minAngle = angle;
+      }
+      if( angle > maxAngle )
+      {
+        maxAngle = angle;
+      }
+    }
+
+    double startAngle = Vector.normalizeAngle( arc.getStartAngle() );
+    double endAngle   = Vector.normalizeAngle( arc.getEndAngle() );
+
+    if( startAngle <= minAngle && minAngle <= endAngle  ) 
+    {
+      return true;
+    }
+
+    return false;
   }
 
 }
