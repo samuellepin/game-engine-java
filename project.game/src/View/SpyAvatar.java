@@ -23,17 +23,16 @@ public class SpyAvatar extends Avatar
   {
     BufferedImage[] running = m_factory.getRunningSpySprite();
     BufferedImage[] idle = m_factory.getIdleSpySprite();
-//    super.paintVisionField( g, x, y );
     
     // Correction pour le sprint - évite que l'image ne soit écrasée
     if( m_entity.isMoving() )
     {
       double w = (double)width;
-      w *= (double) (double)running[ 0 ].getWidth() / running[ 0 ].getWidth();
+      w *= (double) (double)running[ 0 ].getWidth() / (double)idle[ 0 ].getWidth();
       width = (int)w;
-//      double h =(double)height;
-//      h *= (double)AvatarFactory.m_idleSpyImg[ 0 ].getHeight() / (double)AvatarFactory.m_runningSpyImg[ 0 ].getHeight();
-//      height = (int)h;
+      double h =(double)height;
+      h *= (double)idle[ 0 ].getHeight() / (double)running[ 0 ].getHeight();
+      height = (int)h;
     }
 
     // renverse le sprite pour tourner le personnage vers la gauche
@@ -55,8 +54,6 @@ public class SpyAvatar extends Avatar
     }
 
     g.drawImage( img, x, y, width, height, null );
-
-//    super.paintHitbox( g, x, y, width, height );
 
     if( m_entity.isMoving() )
     {
