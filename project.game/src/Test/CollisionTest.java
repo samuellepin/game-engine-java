@@ -50,7 +50,7 @@ public class CollisionTest
   private CollisionTest() throws Exception
   {
     m_aabb = new AABB( 270, 150, 300, 180 );
-    m_arc = new Arc( 200, 200, 150, 0, Math.PI / 8 );
+    m_arc = new Arc( 200, 200, 150, Math.PI/4, Math.PI / 6 );
 
     m_listener = new CanvasListener( this );
 
@@ -68,7 +68,6 @@ public class CollisionTest
   void tick( long elapsed )
   {
     m_collision = Collision.detect( m_aabb, m_arc );
-    m_closetPoint = Collision.closestPointToAABB( m_aabb, m_arc.getCenter() );
 
     Controller ctr = Controller.getInstance();
     double     d   = 0.1 * elapsed;
@@ -93,7 +92,7 @@ public class CollisionTest
       m_arc.rotate( 0.01 );
     }
   }
-
+  
   void paint( Graphics g )
   {
     g.setColor( Color.DARK_GRAY );
@@ -116,18 +115,6 @@ public class CollisionTest
       g.setColor( Color.white );
       g.drawString( "NO COLLISION", 20, 20 );
     }
-
-    g.setColor( Color.white );
-    g.drawString( m_closetPoint.toString(), 20, 40 );
-    double        min = m_arc.getStartAngle();
-    double        max = m_arc.getArcAngle() + min;
-    DecimalFormat df  = new DecimalFormat( "#.0" );
-    g.drawString(
-        "min = " + df.format( Vector.normalizeAngle( min ) ) + ", max = " + df.format( Vector.normalizeAngle( max ) ),
-        20, 60 );
-
-    g.setColor( Color.red );
-    g.fillOval( (int)m_closetPoint.getX() - 2, (int)m_closetPoint.getY() - 2, 4, 4 );
   }
 
 }

@@ -4,27 +4,6 @@ import src.Model.Vector;
 
 public class Collision
 {
-//  public static boolean detect( Hitbox h1, Hitbox h2 )
-//  {
-//    if( h1 instanceof AABB && h2 instanceof AABB )
-//    {
-//      return detect( (AABB)h1, (AABB)h2 );
-//    }
-//    if( h1 instanceof Circle && h2 instanceof Circle )
-//    {
-//      return detect( (Circle)h1, (Circle)h2 );
-//    }
-//    if( h1 instanceof Circle && h2 instanceof AABB )
-//    {
-//      return detect( (AABB)h2, (Circle)h1 );
-//    }
-//    if( h1 instanceof AABB && h2 instanceof Circle )
-//    {
-//      return detect( (AABB)h1, (Circle)h2 );
-//    }
-//    return false;
-//  }
-
   public static boolean detect( AABB a, AABB b )
   {
     if( a == null || b == null ) return false;
@@ -135,30 +114,26 @@ public class Collision
     return squaredDistanceBetweenAABBandPoint( h, c.getCenter() ) <= r * r;
   }
 
-  public static Vector closestPointToAABB( AABB aabb, Vector point )
-  {
-    double x = Math.max( aabb.getMin().getX(), Math.min( aabb.getMax().getX(), point.getX() ) );
-    double y = Math.max( aabb.getMin().getY(), Math.min( aabb.getMax().getY(), point.getY() ) );
-    return new Vector( x, y );
-  }
-
-  private static Vector clamp( Vector val, Vector min, Vector max )
-  {
-    return Vector.max( min, Vector.min( val, max ) );
-  }
+//  public static Vector closestPointToAABB( AABB aabb, Vector point )
+//  {
+//    double x = Math.max( aabb.getMin().getX(), Math.min( aabb.getMax().getX(), point.getX() ) );
+//    double y = Math.max( aabb.getMin().getY(), Math.min( aabb.getMax().getY(), point.getY() ) );
+//    return new Vector( x, y );
+//  }
+//
+//  private static Vector clamp( Vector val, Vector min, Vector max )
+//  {
+//    return Vector.max( min, Vector.min( val, max ) );
+//  }
 
   private static boolean isPointInArc( Vector point, Arc arc )
   {
-    arc.normalizeAngles();
-    Vector OP    = point;
-    Vector OC    = arc.getCenter();
-    Vector CP    = Vector.sub( OP, OC );
-    double angle = CP.getAngle();
-//    angle = angle >= 0 ? angle : angle + 2 * Math.PI;
-    double thetaStart = arc.getAzimuth() - arc.getApertureAngle();
-    double thetaEnd   = arc.getAzimuth() + arc.getApertureAngle();
-    thetaStart = Vector.normalizeAngle( thetaStart );
-    thetaEnd = Vector.normalizeAngle( thetaEnd );
+    Vector OP         = point;
+    Vector OC         = arc.getCenter();
+    Vector CP         = Vector.sub( OP, OC );
+    double angle      = -CP.getAngle();
+    double thetaStart = Vector.normalizeAngle( arc.getStartAngle() );
+    double thetaEnd   = Vector.normalizeAngle( arc.getEndAngle() );
     if( thetaStart <= thetaEnd )
     {
       return thetaStart <= angle && angle <= thetaEnd;
@@ -168,12 +143,8 @@ public class Collision
 
   public static boolean detect( AABB aabb, Arc arc )
   {
-    Vector OC = arc.getCenter();
-    Vector OP = closestPointToAABB( aabb, OC );
-    Vector CP = Vector.sub( OP, OC );
-
-    double r  = arc.getRadius();
-    if( CP.getSquaredMagnitude() >= r * r )
+    double r = arc.getRadius();
+    if( squaredDistanceBetweenAABBandPoint( aabb, arc.getCenter() ) >= r * r )
     {
       return false;
     }

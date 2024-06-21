@@ -95,11 +95,5 @@ public class Arc
   public double getArcAngle()
   {
     return 2 * m_apertureAngle;
-  }
-  
-  public void normalizeAngles()
-  {
-    m_azimuth = Vector.normalizeAngle( m_azimuth );
-    m_apertureAngle = Vector.normalizeAngle( m_apertureAngle );
-  }
+  }  
 }
