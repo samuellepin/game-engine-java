@@ -189,6 +189,7 @@ public abstract class Entity
   public void doTurn( double orientation )
   {
     m_orientation = orientation;
+    m_brain.step();
   }
 
   public void doJump( double orientation, double dist )
@@ -344,10 +345,11 @@ public abstract class Entity
 
   public void doExplode()
   {
-    Model  model = Model.getInstance();
+    Model model = Model.getInstance();
     model.removeEntities( this );
-    ArrayList< EntityTracker > trackers =model.getTrackers();
-    for(EntityTracker tracker:trackers) {
+    ArrayList< EntityTracker > trackers = model.getTrackers();
+    for ( EntityTracker tracker : trackers )
+    {
       tracker.getListener().left( this );
     }
     m_brain.step();
