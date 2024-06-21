@@ -173,6 +173,16 @@ Pour demain :
 - Rémi et Greg : merge des différents travaux 
 - Romain : création des differntes class pour les objets 
 
+
+TO DO: ( dans l'ordre de priorité)
+- Faire les méthodes des conditions 
+- Faire le système de tir et de point de vie 
+- Faire la classe de la box et réflechir comment le joueur va interagir avec 
+- Faire la classe du robot et pareil refechir à comment le joueur interagir avec 
+- Faire l'alarme , comment chaque guard et camera se préviennent entre elles (voir Romain)
+- Faire méthode pour échanger les FSM 
+- Faire les classes du 2 ème joueur  
+
 **Commande parser**
 
 Votre fichier automate : nom_AI.gal
