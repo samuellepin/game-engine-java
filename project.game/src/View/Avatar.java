@@ -11,6 +11,7 @@ import src.Model.Wall;
 public abstract class Avatar
 {
   protected Entity           m_entity;
+  protected AvatarFactory    m_factory;
 
   private static final Color HITBOX_COLOR       = Color.yellow;
   private static final Color VISION_FIELD_COLOR = new Color( 200, 0, 255, 100 );
@@ -18,6 +19,7 @@ public abstract class Avatar
   public Avatar( Entity e )
   {
     this.setEntity( e );
+    m_factory = AvatarFactory.getInstance();
   }
 
   public abstract void paint( Graphics g, int x, int y, int width, int height );

@@ -19,7 +19,7 @@ public class View
 
   private View()
   {
-    AvatarFactory.Initialize();
+    AvatarFactory.getInstance();
 
     m_model = Model.getInstance();
     m_viewports = new Viewport[ 2 ];

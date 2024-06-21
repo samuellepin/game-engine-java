@@ -21,13 +21,15 @@ public class SpyAvatar extends Avatar
   @Override
   public void paint( Graphics g, int x, int y, int width, int height )
   {
+    BufferedImage[] running = m_factory.getRunningSpySprite();
+    BufferedImage[] idle = m_factory.getIdleSpySprite();
 //    super.paintVisionField( g, x, y );
     
     // Correction pour le sprint - évite que l'image ne soit écrasée
     if( m_entity.isMoving() )
     {
       double w = (double)width;
-      w *= (double) (double)AvatarFactory.m_runningSpyImg[ 0 ].getWidth() / AvatarFactory.m_idleSpyImg[ 0 ].getWidth();
+      w *= (double) (double)running[ 0 ].getWidth() / running[ 0 ].getWidth();
       width = (int)w;
 //      double h =(double)height;
 //      h *= (double)AvatarFactory.m_idleSpyImg[ 0 ].getHeight() / (double)AvatarFactory.m_runningSpyImg[ 0 ].getHeight();
@@ -45,11 +47,11 @@ public class SpyAvatar extends Avatar
     BufferedImage img;
     if( m_entity.isMoving() )
     {
-      img = AvatarFactory.m_runningSpyImg[ m_movingImgIdx ];
+      img = running[ m_movingImgIdx ];
     }
     else
     {
-      img = AvatarFactory.m_idleSpyImg[ m_idleImgIdx ];
+      img = idle[ m_idleImgIdx ];
     }
 
     g.drawImage( img, x, y, width, height, null );
@@ -61,7 +63,7 @@ public class SpyAvatar extends Avatar
       m_movingAnimTime += m_entity.getElapsedTime();
       if( m_movingAnimTime > ANIMATION_TIME )
       {
-        m_movingImgIdx = ( m_movingImgIdx + 1 ) % AvatarFactory.m_idleSpyImg.length;
+        m_movingImgIdx = ( m_movingImgIdx + 1 ) % running.length;
         m_movingAnimTime -= ANIMATION_TIME;
       }
       return;
@@ -70,7 +72,7 @@ public class SpyAvatar extends Avatar
     m_idleAnimTime += m_entity.getElapsedTime();
     if( m_idleAnimTime > ANIMATION_TIME )
     {
-      m_idleImgIdx = ( m_idleImgIdx + 1 ) % AvatarFactory.m_idleSpyImg.length;
+      m_idleImgIdx = ( m_idleImgIdx + 1 ) % idle.length;
       m_idleAnimTime -= ANIMATION_TIME;
     }
 

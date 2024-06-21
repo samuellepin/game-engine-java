@@ -2,6 +2,7 @@ package src.View;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 
 import src.Config;
 import src.Model.Entity;
@@ -47,6 +48,7 @@ public class Viewport
 
   private void paintTiles( Graphics g )
   {
+    BufferedImage sprite = AvatarFactory.getInstance().getFloorSprite();
     Vector mini = m_tracker.getMin();
     Vector maxi = m_tracker.getMax();
     if( maxi.getX() > Map.COLS_NUM * Tile.WIDTH ) maxi.setX( Map.COLS_NUM * Tile.WIDTH );
@@ -58,7 +60,7 @@ public class Viewport
       for ( int j = -metersToPixels( ( mini.getY() % Tile.HEIGHT ) + Tile.HEIGHT ); j < m_height
           - metersToPixels( ( maxi.getY() % Tile.HEIGHT ) - Tile.WIDTH ); j += metersToPixels( Tile.HEIGHT ) )
       {
-        g.drawImage( AvatarFactory.m_floorImg, i, j, metersToPixels( Tile.WIDTH ), metersToPixels( Tile.HEIGHT ),
+        g.drawImage( sprite, i, j, metersToPixels( Tile.WIDTH ), metersToPixels( Tile.HEIGHT ),
             null );
       }
     }
@@ -70,7 +72,16 @@ public class Viewport
 
     for ( Entity e : Model.getInstance().getEntities() ) /// < m_tracker.getEntities()
     {
-      Avatar avatar = AvatarFactory.make( e );
+      Avatar avatar = null;
+      try
+      {
+        avatar = AvatarFactory.getInstance().make( e );
+      }
+      catch ( Exception e1 )
+      {
+        // TODO Auto-generated catch block
+        e1.printStackTrace();
+      }
 
       if( avatar != null )
       {
