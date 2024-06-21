@@ -1,6 +1,8 @@
 package src.Model;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import src.AI.Brain;
 import src.AI.CategoryFsm;
 import src.AI.Direction;
@@ -30,13 +32,14 @@ public abstract class Entity
   protected boolean             m_isProtected;
   protected double              m_protectDirection;
 
-  public Entity( FSM automaton )
+  public Entity( FSM automaton, CategoryFsm.CATEGORY type, List < CategoryFsm.CATEGORY > options )
   {
     m_brain = new Brain( this, automaton );
     m_elapsedTime = 0;
     m_hitbox = new AABB( 0, 0, 0, 0 );
     m_visionField = new Circle( this.getHitbox().getMin(), Config.VISION_FIELD_RADIUS );
     m_hasCollision = true;
+    m_cat = new CategoryFsm( type, options );
   }
 
   public void setTracker( EntityTracker tracker )

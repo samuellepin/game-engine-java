@@ -1,14 +1,18 @@
 package src.Model;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import src.AI.CategoryFsm;
 import src.AI.FSM;
 import src.Model.Collision.Circle;
 import src.Model.Collision.Collision;
 
 public class Guard extends Spy
 {
-  public Guard( FSM automaton )
+  public Guard( FSM automaton, CategoryFsm.CATEGORY type, List< CategoryFsm.CATEGORY > options )
   {
-    super( automaton );
+    super( automaton, type, options );
     super.setVelocity( 0.1 );
   }
 

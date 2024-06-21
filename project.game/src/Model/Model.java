@@ -2,6 +2,7 @@ package src.Model;
 
 import java.util.ArrayList;
 
+import src.AI.CategoryFsm;
 import src.Model.Collision.Collision;
 import src.Model.World.Map;
 
@@ -35,17 +36,17 @@ public class Model
       m_entities.add( e );
     }
 
-    Document doc = new Document( null );
+    Document doc = new Document( null, CategoryFsm.CATEGORY.Void, new ArrayList< CategoryFsm.CATEGORY >() );
     doc.setPos( m_map.getPos( 3, 3 ) );
     m_entities.add( doc );
     m_document = doc;
 
-    Spy spy = new Spy( null );
+    Spy spy = new Spy( null, CategoryFsm.CATEGORY.Void, new ArrayList< CategoryFsm.CATEGORY >() );
     spy.setPos( m_map.getPos( 5, 5 ) );
     this.setPlayer1( spy );
     m_entities.add( spy );
 
-    Guard guard = new Guard( null );
+    Guard guard = new Guard( null, CategoryFsm.CATEGORY.Void, new ArrayList< CategoryFsm.CATEGORY >() );
     guard.setPos( m_map.getPos( 6, 6 ) );
     this.setPlayer2( guard );
     m_entities.add( guard );
@@ -82,7 +83,7 @@ public class Model
   {
     m_entities.remove( entity );
   }
-  
+
   public Entity getPlayer1()
   {
     return m_player1;
