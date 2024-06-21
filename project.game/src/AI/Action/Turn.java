@@ -7,21 +7,24 @@ import src.Model.Entity;
 public class Turn implements ActionFsm
 {
   private Direction m_dir;
+  private long      m_timeToTurn;
 
   public Turn()
   {
+    m_timeToTurn = 0;
     m_dir = new Direction( Direction.DIRECTION.Right );
   }
 
-  public Turn( Direction dir )
+  public Turn( Direction dir, long time )
   {
     m_dir = dir;
+    m_timeToTurn = time;
   }
 
   @Override
   public void execute( Entity entity )
   {
-    entity.doTurn( m_dir.toAngle( entity.getOrientation() ) );
+    entity.doTurn( m_dir.toAngle( entity.getOrientation() ), m_timeToTurn );
 
   }
 

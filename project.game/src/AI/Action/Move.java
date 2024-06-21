@@ -16,10 +16,10 @@ public class Move implements ActionFsm
     m_time = 100;
   }
 
-  public Move( Direction dir, Integer time )
+  public Move( Direction dir, long time )
   {
     m_dir = dir;
-    m_time = time.longValue();
+    m_time = time;
   }
 
   @Override

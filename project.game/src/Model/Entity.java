@@ -21,6 +21,7 @@ public abstract class Entity
   protected boolean             m_isMoving;
   protected boolean             m_isWaiting;
   protected boolean             m_isResting;
+  protected boolean             m_isTurning;
   protected double              m_moveDirection;
   protected long                m_timeToWait;
   protected boolean             m_hasCollision;
@@ -70,6 +71,7 @@ public abstract class Entity
     tickWait( elapsed );
     tickRest( elapsed );
     tickProtect( elapsed );
+    tickTurn( elapsed );
     callListener();
   }
 
@@ -181,9 +183,27 @@ public abstract class Entity
     }
   }
 
-  public void doTurn( double orientation )
+  public void doTurn( double orientation, long time )
   {
-    m_orientation = orientation;
+    m_moveDirection = orientation;
+    m_timeToWait = time;
+    m_isTurning = true;
+  }
+
+  private void tickTurn( long elapsed )
+  {
+    if( m_isTurning )
+    {
+      double ratio = elapsed / m_timeToWait;
+      if(ratio>1) ratio=1;
+      m_orientation += m_moveDirection * ratio;
+      m_timeToWait -= elapsed;
+      if( m_timeToWait <= 0 )
+      {
+        m_isMoving = false;
+        m_brain.step();
+      }
+    }
   }
 
   public void doJump( double orientation, double dist )
@@ -339,10 +359,11 @@ public abstract class Entity
 
   public void doExplode()
   {
-    Model  model = Model.getInstance();
+    Model model = Model.getInstance();
     model.removeEntities( this );
-    ArrayList< EntityTracker > trackers =model.getTrackers();
-    for(EntityTracker tracker:trackers) {
+    ArrayList< EntityTracker > trackers = model.getTrackers();
+    for ( EntityTracker tracker : trackers )
+    {
       tracker.getListener().left( this );
     }
     m_brain.step();
