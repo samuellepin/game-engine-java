@@ -25,10 +25,11 @@ public class FsmCreator
       // return null;
     }
   }
-
+  
+  /* Main for test the parsing et creating the FSM and automaton 
   public static void main( String[] args )
   {
     loadAutomata( "src/AI/test-FSM/" + "fsm02.gal" );
   }
-
+  */
 }
