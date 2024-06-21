@@ -1,29 +1,40 @@
 package src.AI.Action;
 
-import src.AI.DIRECTION;
+import src.AI.Direction;
 import src.Model.Entity;
+
 /*Lache l'objet qu'il a en main, dans la direction dir.*/
 public class Throw implements ActionFsm
 {
 
-  private DIRECTION m_dir;
-  
+  private Direction m_dir;
+
   public Throw()
   {
-    // TODO define default values
-    m_dir = DIRECTION.Forward;
+    m_dir = new Direction( Direction.DIRECTION.Forward );
   }
-  
-  public Throw( DIRECTION dir )
+
+  public Throw( Direction dir )
   {
     m_dir = dir;
   }
-  
+
   @Override
   public void execute( Entity entity )
   {
-    // TODO Auto-generated method stub
+    entity.doThrow( m_dir.toAngle( entity.getOrientation() ) );
 
+  }
+
+  @Override
+  public boolean equals( Object action )
+  {
+    if( action instanceof Throw )
+    {
+      Throw th = (Throw)action;
+      if( th.m_dir.equals( m_dir ) ) return true;
+    }
+    return false;
   }
 
 }

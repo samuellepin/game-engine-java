@@ -10,7 +10,6 @@ public class Model
 {
   private static final Model         INSTANCE = new Model();
 
-  private Map                        m_map;                 /// < Background with no collisions : Floor
   private ArrayList< Entity >        m_entities;            /// < Players, Walls, Items, etc.
   private ArrayList< EntityTracker > m_trackers;
   private boolean                    m_isGameOver;
@@ -30,7 +29,6 @@ public class Model
     m_entities = new ArrayList< Entity >();
     m_trackers = new ArrayList< EntityTracker >();
 
-    m_map = Map.getInstance();
     for ( Entity e : Map.getInstance().getWalls() )
     {
       m_entities.add( e );
@@ -57,6 +55,16 @@ public class Model
   public ArrayList< Entity > getEntities()
   {
     return m_entities;
+  }
+
+  public void addEntities( Entity entity )
+  {
+    m_entities.add( entity );
+  }
+
+  public void removeEntities( Entity entity )
+  {
+    m_entities.remove( entity );
   }
 
   public Entity getPlayer1()

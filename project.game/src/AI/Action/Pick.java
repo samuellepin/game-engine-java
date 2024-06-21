@@ -1,6 +1,6 @@
 package src.AI.Action;
 
-import src.AI.DIRECTION;
+import src.AI.Direction;
 import src.Model.Entity;
 
 /*Si un Pickable se situe dans son champ de vision, dans la direction dir,
@@ -9,15 +9,14 @@ import src.Model.Entity;
 public class Pick implements ActionFsm
 {
 
-  private DIRECTION m_dir;
+  private Direction m_dir;
 
   public Pick()
   {
-    // TODO define default values
-    m_dir = DIRECTION.Forward;
+    m_dir = new Direction( Direction.DIRECTION.Forward );
   }
 
-  public Pick( DIRECTION dir )
+  public Pick( Direction dir )
   {
     m_dir = dir;
   }
@@ -25,8 +24,18 @@ public class Pick implements ActionFsm
   @Override
   public void execute( Entity entity )
   {
-    // TODO Auto-generated method stub
+    entity.doPick( m_dir.toAngle( entity.getOrientation() ) );
+  }
 
+  @Override
+  public boolean equals( Object action )
+  {
+    if( action instanceof Pick )
+    {
+      Pick pick = (Pick)action;
+      if( pick.m_dir.equals( m_dir ) ) return true;
+    }
+    return false;
   }
 
 }

@@ -12,4 +12,11 @@ public class Pop implements ActionFsm
 
   }
 
+  @Override
+  public boolean equals( Object action )
+  {
+    if( action instanceof Pop ) return true;
+    return false;
+  }
+
 }

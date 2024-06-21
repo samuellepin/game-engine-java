@@ -21,11 +21,11 @@ public class Brain
   }
 
   /* L'entité doit appeler cette fonction quand elle a fini son action actuelle */
-  private void step()
+  public void step()
   {
     if( m_actions.isEmpty() )
     {
-      TransitionFsm t = m_fsm.nextState( m_entity );
+      TransitionFsm t = m_fsm.nextState( m_entity, m_state );
       m_state = t.getDestination();
       m_actions.add( t.getAction() );
     }

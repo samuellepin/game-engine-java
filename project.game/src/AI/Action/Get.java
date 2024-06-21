@@ -9,8 +9,14 @@ public class Get implements ActionFsm
   @Override
   public void execute( Entity entity )
   {
-    // TODO Auto-generated method stub
-
+    entity.doGet();
+  }
+  
+  @Override
+  public boolean equals( Object action )
+  {
+    if( action instanceof Get ) return true;
+    return false;
   }
 
 }

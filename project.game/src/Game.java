@@ -6,7 +6,6 @@ import java.awt.Graphics;
 import javax.swing.JFrame;
 
 import info3.game.graphics.GameCanvas;
-import src.Model.Entity;
 import src.Model.Model;
 import src.Model.World.Map;
 import src.View.View;

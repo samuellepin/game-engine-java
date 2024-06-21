@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import src.Config;
+import src.AI.CategoryFsm;
 import src.AI.FsmFactory;
 import src.Model.Vector;
 import src.Model.Wall;
@@ -82,7 +83,7 @@ public class Map
       {
         if( this.getTile( x, y ).getType() == TILE_TYPE.WALL )
         {
-          Wall wall = new Wall( FsmFactory.getInstance().getFSM( "Wall" ) );
+          Wall wall = new Wall( FsmFactory.getInstance().getFSM( "Wall" ), CategoryFsm.CATEGORY.Obstacle, new ArrayList< CategoryFsm.CATEGORY >() );
           wall.setPos( x * Tile.WIDTH, y * Tile.HEIGHT );
           wall.setDim( Tile.WIDTH, Tile.HEIGHT );
           m_walls.add( wall );

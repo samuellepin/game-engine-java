@@ -1,9 +1,13 @@
 package src;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
+import src.AI.CategoryFsm;
 import src.AI.FSM;
 import src.AI.FsmFactory;
+import src.AI.CategoryFsm.CATEGORY;
 import src.Model.Entity;
 
 import src.Model.Model;
@@ -27,22 +31,24 @@ public class Config
 
   private src.Model.Entity StringToEntity( Entity e )
   {
-    FSM fsm = FsmFactory.getInstance().getFSM( e.getFSM() );
-    int id = e.getId();
-    double width = e.getWidth();
-    double height = e.getHeight();
-    double velocity = e.getVelocity();
-    boolean hasCollision = e.hasCollision();
+    FSM                          fsm          = FsmFactory.getInstance().getFSM( e.getFSM() );
+    int                          id           = e.getId();
+    double                       width        = e.getWidth();
+    double                       height       = e.getHeight();
+    double                       velocity     = e.getVelocity();
+    boolean                      hasCollision = e.hasCollision();
+    CategoryFsm.CATEGORY         type         = e.getTypeCat();
+    List< CategoryFsm.CATEGORY > options      = e.getOptions();
     switch ( e.getType() )
     {
     case "Spy":
-      return new src.Model.Spy( fsm, id, width, height, velocity, hasCollision );
+      return new src.Model.Spy( fsm, id, width, height, velocity, hasCollision, type, options );
     case "Guard":
-      return new src.Model.Guard( fsm, id, width, height, velocity, hasCollision );
+      return new src.Model.Guard( fsm, id, width, height, velocity, hasCollision, type, options );
     case "Wall":
-      return new src.Model.Wall( fsm );
+      return new src.Model.Wall( fsm, type, options );
     case "Document":
-      return new src.Model.Document( fsm, id, width, height, velocity, hasCollision );
+      return new src.Model.Document( fsm, id, width, height, velocity, hasCollision, type, options );
     }
     return null;
   }
@@ -57,14 +63,14 @@ public class Config
       newEntity.setId( e.getId() );
       model.addEntity( newEntity );
     }
-    
+
     // put the viewports on the right entities
     model.setPlayer1( this.getParameters().getPlayer1() );
     model.setPlayer2( this.getParameters().getPlayer2() );
     model.setItemToWin( this.getParameters().getItemToWin() );
-    
+
     // make copy of the enenmies
-    for( int i = 0; i < this.enenmies.length; i++ )
+    for ( int i = 0; i < this.enenmies.length; i++ )
     {
       Enemy enemy = this.enenmies[ i ];
       for ( src.Model.Entity e : model.getEntities() )
@@ -76,7 +82,7 @@ public class Config
         }
       }
     }
-    
+
   }
 
   public class Parameters
@@ -142,7 +148,7 @@ public class Config
     {
       return enableBSP;
     }
-    
+
     public boolean isWallsEnabled()
     {
       return enableWalls;
@@ -258,13 +264,15 @@ public class Config
 
   class Entity
   {
-    public int     id;
-    public String  type;
-    public String  width;
-    public String  height;
-    public boolean hasCollision;
-    public String  velocity;
-    public String  fsm;
+    public int      id;
+    public String   type;
+    public String   width;
+    public String   height;
+    public boolean  hasCollision;
+    public String   velocity;
+    public String   fsm;
+    public String   typeCat;
+    public String[] options;
 
     public int getId()
     {
@@ -299,6 +307,61 @@ public class Config
     public String getFSM()
     {
       return fsm;
+    }
+
+    public CategoryFsm.CATEGORY getTypeCat()
+    {
+      if( typeCat == null ) return CategoryFsm.CATEGORY.Void;
+      switch ( typeCat )
+      {
+      case "Adversary":
+        return CategoryFsm.CATEGORY.Adversary;
+      case "Clur":
+        return CategoryFsm.CATEGORY.Clue;
+      case "Danger":
+        return CategoryFsm.CATEGORY.Danger;
+      case "Gate":
+        return CategoryFsm.CATEGORY.Gate;
+      case "Icon":
+        return CategoryFsm.CATEGORY.Icon;
+      case "Obstacle":
+        return CategoryFsm.CATEGORY.Obstacle;
+      case "Team":
+        return CategoryFsm.CATEGORY.Team;
+      case "Util":
+        return CategoryFsm.CATEGORY.Util;
+      case "Void":
+        return CategoryFsm.CATEGORY.Void;
+      case "PlayerT":
+        return CategoryFsm.CATEGORY.PlayerT;
+      case "PlayerA":
+        return CategoryFsm.CATEGORY.PlayerA;
+      case "Stuff":
+        return CategoryFsm.CATEGORY.Stuff;
+      default:
+        return CategoryFsm.CATEGORY.Void;
+      }
+    }
+
+    public List< CategoryFsm.CATEGORY > getOptions()
+    {
+      List< CategoryFsm.CATEGORY > opt = new ArrayList< CategoryFsm.CATEGORY >();
+      if( options == null ) return opt;
+      for ( int i = 0; i < options.length; i++ )
+      {
+        switch ( options[ i ] )
+        {
+        case "Jumpable":
+          opt.add( CategoryFsm.CATEGORY.Jumpable );
+        case "Killable":
+          opt.add( CategoryFsm.CATEGORY.Killable );
+        case "Moveable":
+          opt.add( CategoryFsm.CATEGORY.Moveable );
+        case "Pickable":
+          opt.add( CategoryFsm.CATEGORY.Pickable );
+        }
+      }
+      return opt;
     }
   }
 

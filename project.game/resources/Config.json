@@ -42,8 +42,10 @@
 			"width" : "20.0",
 			"height" : "40.0",
 			"hasCollision" : true,
-			"velocity" : "4.0",
-			"fsm" : "Player1"
+			"velocity" : "0.3",
+			"fsm" : "Player1",
+			"category" : "PlayerT",
+			"options" : ["Killable","Jumpable"]
 		},
 		{
 			"id" : 5678,

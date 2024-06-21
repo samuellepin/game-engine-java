@@ -10,7 +10,6 @@ public class Wait implements ActionFsm
 
   public Wait()
   {
-    // TODO define default values
     m_time = 100;
   }
 
@@ -22,8 +21,19 @@ public class Wait implements ActionFsm
   @Override
   public void execute( Entity entity )
   {
-    // TODO Auto-generated method stub
+    entity.doWait(m_time);
 
+  }
+
+  @Override
+  public boolean equals( Object action )
+  {
+    if( action instanceof Wait )
+    {
+      Wait w = (Wait)action;
+      if( w.m_time == m_time ) return true;
+    }
+    return false;
   }
 
 }

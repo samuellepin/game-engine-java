@@ -81,11 +81,11 @@ public class FSM
    * 
    * @return true if the entity has changed state, false otherwise
    */
-  public TransitionFsm nextState( Entity e )
+  public TransitionFsm nextState( Entity e, StateFsm currentState )
   {
     for ( StateFsm state : m_states )
     {
-      if( state.isEqual( e.getState() ) )
+      if( state.isEqual( currentState ) )
       {
         return state.evaluate( e );
       }

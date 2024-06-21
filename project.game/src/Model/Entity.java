@@ -1,11 +1,15 @@
 package src.Model;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import src.AI.Brain;
+import src.AI.CategoryFsm;
+import src.AI.Direction;
 import src.AI.FSM;
-import src.AI.StateFsm;
 import src.Model.Collision.AABB;
 import src.Model.Collision.Circle;
 import src.Model.Collision.Collision;
-import src.Model.World.Map;
 
 import java.text.DecimalFormat;
 
@@ -13,35 +17,42 @@ import src.Config;
 
 public abstract class Entity implements Cloneable
 {
-  protected FSM           m_fsm;
-  protected StateFsm      m_state;
-  protected EntityTracker m_tracker;
-  protected long          m_elapsedTime;
-  protected AABB          m_hitbox;
-  protected double        m_orientation;
-  protected double        m_velocity;
-  protected Circle        m_visionField;
-  protected boolean       m_isMoving;
-  protected boolean       m_hasCollision;
-  protected int           m_id;
-  
+  protected EntityTracker  m_tracker;
+  protected long           m_elapsedTime;
+  protected AABB           m_hitbox;
+  protected double         m_orientation;
+  protected double         m_velocity;
+  protected Circle         m_visionField;
+  protected boolean        m_isMoving;
+  protected boolean        m_hasCollision;
+  protected int            m_id;
+  protected CategoryFsm    m_cat;
+  protected boolean        m_isWaiting;
+  protected long           m_timeToWait;
+  protected Brain          m_brain;
+  protected double         m_moveDirection;
+  protected boolean        m_isProtected;
+  protected double         m_protectDirection;
+  protected Entity         m_objectInHand;
+  protected List< Entity > m_inventory;
+  protected boolean        m_isResting;
 
-  public Entity( FSM fsm )
+  public Entity( FSM fsm, CategoryFsm.CATEGORY type, List< CategoryFsm.CATEGORY > options )
   {
-    m_fsm = fsm;
-    if( m_fsm != null ) m_state = m_fsm.getInitialState();
+    m_brain = new Brain( this, fsm );
     m_elapsedTime = 0;
     m_hitbox = new AABB( 0, 0, 0, 0 );
     m_visionField = new Circle( this.getHitbox().getMin(),
         Config.getInstance().getParameters().getVisionFieldRadius() );
     m_hasCollision = true;
+    m_cat = new CategoryFsm( type, options );
     m_id = -1;
   }
 
-  public Entity( FSM fsm, int id, double width, double height, double velocity, boolean hasCollision )
+  public Entity( FSM fsm, int id, double width, double height, double velocity, boolean hasCollision,
+      CategoryFsm.CATEGORY type, List< CategoryFsm.CATEGORY > options )
   {
-    m_fsm = fsm;
-    if( m_fsm != null ) m_state = fsm.getInitialState();
+    m_brain = new Brain( this, fsm );
     m_elapsedTime = 0;
     m_hitbox = new AABB( 0, 0, 0, 0 );
     m_visionField = new Circle( this.getHitbox().getMin(),
@@ -51,6 +62,7 @@ public abstract class Entity implements Cloneable
     this.setDim( width, height );
     this.setVelocity( velocity );
     this.setHasCollision( hasCollision );
+    m_cat = new CategoryFsm( type, options );
   }
 
   @Override
@@ -92,41 +104,10 @@ public abstract class Entity implements Cloneable
   public void tick( long elapsed )
   {
     m_elapsedTime = elapsed;
-    callListener();
-  }
-
-  public void doWait()
-  {
-    // TODO
-    throw new RuntimeException( "NYI" );
-  }
-
-  public void doMove( double orientation )
-  {
-    double d = m_velocity * (double)m_elapsedTime;
-    if( d >= 3 * m_velocity || d <= 0 )
-    {
-      d = 3 * m_velocity;
-    }
-    double prevX = this.getHitbox().getX();
-    double prevY = this.getHitbox().getY();
-    double dx = d * Math.cos( m_orientation );
-    double dy = d * Math.sin( m_orientation );
-    this.getHitbox().translate( dx, dy );
-    for ( Entity e : Model.getInstance().getEntities() )
-    {
-      if( e != this && e.hasCollision() && Collision.detect( this.getHitbox(), e.getHitbox() ) )
-      {
-        this.setPos( prevX, prevY );
-//        e.repulse();
-      }
-    }
-
-    if( m_tracker != null )
-    {
-      m_tracker.getListener().moved();
-    }
-
+    tickMove( elapsed );
+    tickWait( elapsed );
+    tickRest( elapsed );
+    tickProtect( elapsed );
     callListener();
   }
 
@@ -145,85 +126,288 @@ public abstract class Entity implements Cloneable
     }
   }
 
+  public void doAdd( CategoryFsm var, int n )
+  {
+    m_brain.step();
+  }
+
+  public void doWait( long time )
+  {
+    m_isWaiting = true;
+    m_timeToWait = time;
+  }
+
+  /* Called every tick, wait if the entity is supposed to wait */
+  private void tickWait( long elapsed )
+  {
+    if( m_isWaiting )
+    {
+      m_timeToWait -= elapsed;
+    }
+    if( m_timeToWait <= 0 )
+    {
+      m_isWaiting = false;
+      m_brain.step();
+    }
+  }
+
+  public void doMove( Direction dir )
+  {
+    m_moveDirection = dir.toAngle( m_orientation );
+    m_timeToWait = 20;
+    m_isMoving = true;
+  }
+
+  public void doMove( double dir )
+  {
+    m_moveDirection = dir;
+    m_timeToWait = 20;
+    m_isMoving = true;
+  }
+
+  public void doMove( Direction dir, long time )
+  {
+    m_moveDirection = dir.toAngle( m_orientation );
+    m_timeToWait = time;
+    m_isMoving = true;
+  }
+
+  public void doMove( double dir, long time )
+  {
+    m_moveDirection = dir;
+    m_timeToWait = time;
+    m_isMoving = true;
+  }
+
+  /* Called every tick, moves the entity if the entity is supposed to move */
+  private void tickMove( long elapsed )
+  {
+    if( m_isMoving )
+    {
+      double dt = elapsed;
+      m_timeToWait -= elapsed;
+
+      double d     = m_velocity * dt;
+
+      double prevX = this.getHitbox().getX();
+      double prevY = this.getHitbox().getY();
+      this.getHitbox().translate( d * Math.cos( m_moveDirection ), d * Math.sin( m_moveDirection ) );
+      for ( Entity e : Model.getInstance().getEntities() )
+      {
+        if( e != this && e.hasCollision() && Collision.detect( this.getHitbox(), e.getHitbox() ) )
+        {
+          this.setPos( prevX, prevY );
+//        e.repulse();
+        }
+      }
+
+      if( m_tracker != null )
+      {
+        m_tracker.getListener().moved();
+      }
+
+      callListener();
+
+      if( m_timeToWait <= 0 )
+      {
+        m_isMoving = false;
+        m_brain.step();
+      }
+    }
+  }
+
   public void doTurn( double orientation )
   {
     m_orientation = orientation;
+    m_brain.step();
   }
 
-  public void doJump( double orientation )
+  public void doJump( double orientation, double dist )
   {
-    // TODO
-    throw new RuntimeException( "NYI" );
+    double prevX = this.getHitbox().getX();
+    double prevY = this.getHitbox().getY();
+    this.getHitbox().translate( dist * Math.cos( orientation ), dist * Math.sin( orientation ) );
+    for ( Entity e : Model.getInstance().getEntities() )
+    {
+      if( e != this && e.hasCollision() && Collision.detect( this.getHitbox(), e.getHitbox() ) )
+      {
+        this.setPos( prevX, prevY );
+//      e.repulse();
+      }
+    }
+
+    if( m_tracker != null )
+    {
+      m_tracker.getListener().moved();
+    }
+
+    callListener();
+
+    m_brain.step();
   }
 
   public void doHit( double orientation )
   {
-    // TODO
-    throw new RuntimeException( "NYI" );
+    ArrayList< Entity > entities = Model.getInstance().getEntities();
+    for ( Entity e : entities )
+    {
+      Vector  dist         = Vector.sub( e.getPos(), this.getPos() );
+
+      boolean closeEnough  = m_visionField.getRadius() >= dist.getMagnitude();
+      boolean correctAngle = orientation - ( Math.PI / 4 ) <= dist.getAngle();
+      correctAngle = correctAngle && dist.getAngle() <= orientation + ( Math.PI / 4 );
+
+      if( closeEnough && correctAngle )
+      {
+        e.getHit();
+      }
+    }
+    m_brain.step();
   }
 
-  public void doProtect( double orientation )
+  public void doProtect( double orientation, long time )
   {
-    // TODO
-    throw new RuntimeException( "NYI" );
+    m_isProtected = true;
+    m_protectDirection = orientation;
+    m_timeToWait = time;
+  }
+
+  public void doProtect( Direction direction, long time )
+  {
+    m_isProtected = true;
+    m_protectDirection = direction.toAngle( m_orientation );
+    m_timeToWait = time;
+  }
+
+  private void tickProtect( long elapsed )
+  {
+    if( m_isProtected )
+    {
+      m_timeToWait -= elapsed;
+      if( m_timeToWait <= 0 )
+      {
+        m_isProtected = false;
+        m_brain.step();
+      }
+    }
+  }
+
+  public void getHit()
+  {
+    // À implémenter pour chaque entité
   }
 
   public void doPick( double orientation )
   {
-    // TODO
-    throw new RuntimeException( "NYI" );
+    ArrayList< Entity > entities = Model.getInstance().getEntities();
+    for ( Entity e : entities )
+    {
+      Vector  dist         = Vector.sub( e.getPos(), this.getPos() );
+
+      boolean closeEnough  = m_visionField.getRadius() >= dist.getMagnitude();
+      boolean correctAngle = orientation - ( Math.PI / 4 ) <= dist.getAngle();
+      correctAngle = correctAngle && dist.getAngle() <= orientation + ( Math.PI / 4 );
+
+      if( closeEnough && correctAngle )
+      {
+        if( m_objectInHand != null )
+        {
+          m_inventory.add( m_objectInHand );
+        }
+        entities.remove( e );
+        m_objectInHand = e;
+      }
+    }
+    m_brain.step();
   }
 
   public void doThrow( double orientation )
   {
-    // TODO
-    throw new RuntimeException( "NYI" );
+    Entity e     = m_objectInHand;
+    Model  model = Model.getInstance();
+    m_objectInHand = null;
+    model.addEntities( e );
+    m_brain.step();
   }
 
   public void doStore()
   {
-    // TODO
-    throw new RuntimeException( "NYI" );
+    Entity e = m_objectInHand;
+    m_objectInHand = null;
+    m_inventory.add( e );
+    m_brain.step();
+
   }
 
   public void doGet()
   {
-    // TODO
-    throw new RuntimeException( "NYI" );
+    Entity e = m_inventory.remove( 0 );
+    doStore();
+    m_objectInHand = e;
+    m_brain.step();
   }
 
-  public void doPower()
+  public void doRest( long time, int pow )
   {
-    // TODO
-    throw new RuntimeException( "NYI" );
+    m_isResting = true;
+    m_timeToWait = time;
+    addPow( pow );
+  }
+
+  private void tickRest( long elapsed )
+  {
+    if( m_isResting )
+    {
+      m_timeToWait -= elapsed;
+      if( m_timeToWait <= 0 )
+      {
+        m_isResting = false;
+        m_brain.step();
+      }
+    }
+  }
+
+  /* Ne fait rien par défaut, à override si l'entité en a besoin */
+  public void addPow( int pow )
+  {
+
   }
 
   public void doExplode()
   {
-    // TODO
-    throw new RuntimeException( "NYI" );
+    Model model = Model.getInstance();
+    model.removeEntities( this );
+    ArrayList< EntityTracker > trackers = model.getTrackers();
+    for ( EntityTracker tracker : trackers )
+    {
+      tracker.getListener().left( this );
+    }
+    m_brain.step();
   }
 
-  public void doEgg()
+  public void doEgg( Direction dir )
   {
-    // TODO
-    throw new RuntimeException( "NYI" );
+//    Model model = Model.getInstance();
+    m_brain.step();
+  }
+
+  /* to override */
+  public void doPop( List< Object > parameters )
+  {
+    m_brain.step();
+  }
+
+  /* to override */
+  public void doWizz( List< Object > parameters )
+  {
+    m_brain.step();
   }
 
   // Spécifique à notre physique
   public void repulse()
   {
     m_orientation += Math.PI;
-    doMove( m_orientation );
-  }
-
-  public StateFsm getState()
-  {
-    return m_state;
-  }
-  
-  public void setState(StateFsm s) {
-    m_state = s;
+//    doMove( m_orientation );
   }
 
   public Vector getPos()
@@ -310,8 +494,8 @@ public abstract class Entity implements Cloneable
   public String toString()
   {
     DecimalFormat df = new DecimalFormat( "#.0" );
-    return  "[" + this.getId() + "]" + "(x=" + df.format( getX() ) + ", y=" + df.format( getY() ) + ", w=" + df.format( getWidth() )
-        + ", h=" + df.format( getHeight() ) + ")";
+    return "[" + this.getId() + "]" + "(x=" + df.format( getX() ) + ", y=" + df.format( getY() ) + ", w="
+        + df.format( getWidth() ) + ", h=" + df.format( getHeight() ) + ")";
   }
 
   public int getId()

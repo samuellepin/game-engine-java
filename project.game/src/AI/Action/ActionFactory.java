@@ -3,7 +3,9 @@ package src.AI.Action;
 import java.util.ArrayList;
 import java.util.List;
 
-import src.AI.DIRECTION;
+import src.AI.CategoryFsm;
+import src.AI.Direction;
+import src.AI.Condition.Got;
 
 public class ActionFactory
 {
@@ -26,9 +28,9 @@ public class ActionFactory
     {
       Object o1 = parameters.get( 0 );
       Object o2 = parameters.get( 1 );
-      if( o1 instanceof String && o2 instanceof Integer )
+      if( o1 instanceof CategoryFsm && o2 instanceof Integer )
       {
-        action = new Add( (String)o1, (Integer)o2 );
+        action = new Add( (CategoryFsm)o1, (Integer)o2 );
       }
     }
     return add( action );
@@ -37,9 +39,9 @@ public class ActionFactory
   public ActionFsm setEgg( List< Object > parameters )
   {
     Egg action = new Egg();
-    if( parameters.size() >= 1 && parameters.get( 0 ) instanceof DIRECTION )
+    if( parameters.size() >= 1 && parameters.get( 0 ) instanceof Direction )
     {
-      action = new Egg( (DIRECTION)parameters.get( 0 ) );
+      action = new Egg( (Direction)parameters.get( 0 ) );
     }
     return add( action );
   }
@@ -57,9 +59,9 @@ public class ActionFactory
   public ActionFsm setHit( List< Object > parameters )
   {
     Hit action = new Hit();
-    if( parameters.size() >= 1 && parameters.get( 0 ) instanceof DIRECTION )
+    if( parameters.size() >= 1 && parameters.get( 0 ) instanceof Direction )
     {
-      action = new Hit( (DIRECTION)parameters.get( 0 ) );
+      action = new Hit( (Direction)parameters.get( 0 ) );
     }
     return add( action );
   }
@@ -72,9 +74,9 @@ public class ActionFactory
     {
       Object o1 = parameters.get( 0 );
       Object o2 = parameters.get( 1 );
-      if( o1 instanceof DIRECTION && o2 instanceof Integer )
+      if( o1 instanceof Direction && o2 instanceof Integer )
       {
-        action = new Jump( (DIRECTION)o1, (Integer)o2 );
+        action = new Jump( (Direction)o1, (Integer)o2 );
       }
     }
     return add( action );
@@ -84,13 +86,20 @@ public class ActionFactory
   {
     Move action = new Move();
 
-    if( parameters.size() >= 2 )
+    if( parameters.size() >= 1 )
     {
       Object o1 = parameters.get( 0 );
-      Object o2 = parameters.get( 1 );
-      if( o1 instanceof DIRECTION && o2 instanceof Integer )
+      if( parameters.size() >= 2 )
       {
-        action = new Move( (DIRECTION)o1, (Integer)o2 );
+        Object o2 = parameters.get( 1 );
+        if( o1 instanceof Direction && o2 instanceof Integer )
+        {
+          return add( new Move( (Direction)o1, (Integer)o2 ) );
+        }
+      }
+      if( o1 instanceof Direction )
+      {
+        action = new Move( (Direction)o1 );
       }
     }
     return add( action );
@@ -99,9 +108,9 @@ public class ActionFactory
   public ActionFsm setPick( List< Object > parameters )
   {
     Pick action = new Pick();
-    if( parameters.size() >= 1 && parameters.get( 0 ) instanceof DIRECTION )
+    if( parameters.size() >= 1 && parameters.get( 0 ) instanceof Direction )
     {
-      action = new Pick( (DIRECTION)parameters.get( 0 ) );
+      action = new Pick( (Direction)parameters.get( 0 ) );
     }
     return add( action );
   }
@@ -114,9 +123,9 @@ public class ActionFactory
     {
       Object o1 = parameters.get( 0 );
       Object o2 = parameters.get( 1 );
-      if( o1 instanceof DIRECTION && o2 instanceof Integer )
+      if( o1 instanceof Direction && o2 instanceof Integer )
       {
-        action = new Protect( (DIRECTION)o1, (Integer)o2 );
+        action = new Protect( (Direction)o1, (Integer)o2 );
       }
     }
     return add( action );
@@ -146,9 +155,9 @@ public class ActionFactory
   public ActionFsm setThrow( List< Object > parameters )
   {
     Throw action = new Throw();
-    if( parameters.size() >= 1 && parameters.get( 0 ) instanceof DIRECTION )
+    if( parameters.size() >= 1 && parameters.get( 0 ) instanceof Direction )
     {
-      action = new Throw( (DIRECTION)parameters.get( 0 ) );
+      action = new Throw( (Direction)parameters.get( 0 ) );
     }
     return add( action );
   }
@@ -156,9 +165,9 @@ public class ActionFactory
   public ActionFsm setTurn( List< Object > parameters )
   {
     Turn action = new Turn();
-    if( parameters.size() >= 1 && parameters.get( 0 ) instanceof DIRECTION )
+    if( parameters.size() >= 1 && parameters.get( 0 ) instanceof Direction )
     {
-      action = new Turn( (DIRECTION)parameters.get( 0 ) );
+      action = new Turn( (Direction)parameters.get( 0 ) );
     }
     return add( action );
   }
