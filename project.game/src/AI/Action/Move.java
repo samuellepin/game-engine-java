@@ -13,9 +13,15 @@ public class Move implements ActionFsm
   public Move()
   {
     m_dir = new Direction(Direction.DIRECTION.Forward);
-    m_time = 100;
+    m_time = 10;
   }
-
+  
+  public Move( Direction dir )
+  {
+    m_dir = dir;
+    m_time = 10;
+  }
+  
   public Move( Direction dir, Integer time )
   {
     m_dir = dir;

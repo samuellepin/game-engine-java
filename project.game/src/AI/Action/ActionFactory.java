@@ -5,6 +5,7 @@ import java.util.List;
 
 import src.AI.CategoryFsm;
 import src.AI.Direction;
+import src.AI.Condition.Got;
 
 public class ActionFactory
 {
@@ -85,13 +86,20 @@ public class ActionFactory
   {
     Move action = new Move();
 
-    if( parameters.size() >= 2 )
+    if( parameters.size() >= 1 )
     {
       Object o1 = parameters.get( 0 );
-      Object o2 = parameters.get( 1 );
-      if( o1 instanceof Direction && o2 instanceof Integer )
+      if( parameters.size() >= 2 )
       {
-        action = new Move( (Direction)o1, (Integer)o2 );
+        Object o2 = parameters.get( 1 );
+        if( o1 instanceof Direction && o2 instanceof Integer )
+        {
+          action = new Move( (Direction)o1, (Integer)o2 );
+        }
+      }
+      if( o1 instanceof Direction )
+      {
+        action = new Move( (Direction)o1 );
       }
     }
     return add( action );

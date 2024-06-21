@@ -184,10 +184,10 @@ public abstract class Entity implements Cloneable
   {
     if( m_isMoving )
     {
-      double dt = elapsed / 1000;
+      double dt = elapsed;
       if( m_timeToWait < elapsed )
       {
-        dt = m_timeToWait / 1000;
+        dt = m_timeToWait;
       }
       m_timeToWait -= elapsed;
 

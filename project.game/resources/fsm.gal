@@ -84,3 +84,9 @@ SecurityCamera(Rotate)
   | Closest(#, F) ? Wizz    : (Rotate)
   | True          ? Turn(R) : (Rotate)
 }
+
+Wall(DoNothing)
+{
+  * (DoNothing) :
+  | True          ? : (DoNothing)
+}

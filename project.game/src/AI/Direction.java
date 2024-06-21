@@ -28,21 +28,21 @@ public class Direction
     case Here:
       return 0;
     case North:
-      return Math.PI * 0.5;
-    case South:
       return -Math.PI * 0.5;
+    case South:
+      return Math.PI * 0.5;
     case East:
       return 0;
     case West:
       return Math.PI;
     case NE:
-      return Math.PI * 0.25;
-    case SE:
       return -Math.PI * 0.25;
+    case SE:
+      return Math.PI * 0.25;
     case SW:
-      return -Math.PI * 0.75;
-    case NW:
       return Math.PI * 0.75;
+    case NW:
+      return -Math.PI * 0.75;
     case Forward:
       return currentAngle;
     case BackWard:
