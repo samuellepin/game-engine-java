@@ -94,7 +94,7 @@ public class ActionFactory
         Object o2 = parameters.get( 1 );
         if( o1 instanceof Direction && o2 instanceof Integer )
         {
-          action = new Move( (Direction)o1, (Integer)o2 );
+          return add( new Move( (Direction)o1, (Integer)o2 ) );
         }
       }
       if( o1 instanceof Direction )
