@@ -7,39 +7,73 @@ import src.AI.Brain;
 import src.AI.CategoryFsm;
 import src.AI.Direction;
 import src.AI.FSM;
+import src.AI.StateFsm;
 import src.Model.Collision.AABB;
 import src.Model.Collision.Circle;
 import src.Model.Collision.Collision;
 
-public abstract class Entity
-{
-  protected Brain               m_brain;
-  protected EntityTracker       m_tracker;
-  protected long                m_elapsedTime;
-  protected AABB                m_hitbox;
-  protected double              m_orientation;
-  protected double              m_velocity;
-  protected Circle              m_visionField;
-  protected boolean             m_isMoving;
-  protected boolean             m_isWaiting;
-  protected boolean             m_isResting;
-  protected double              m_moveDirection;
-  protected long                m_timeToWait;
-  protected boolean             m_hasCollision;
-  protected Entity              m_objectInHand;
-  protected ArrayList< Entity > m_inventory;
-  protected CategoryFsm         m_cat;
-  protected boolean             m_isProtected;
-  protected double              m_protectDirection;
+import java.text.DecimalFormat;
 
-  public Entity( FSM automaton, CategoryFsm.CATEGORY type, List < CategoryFsm.CATEGORY > options )
+import src.Config;
+
+public abstract class Entity implements Cloneable
+{
+  protected EntityTracker m_tracker;
+  protected long          m_elapsedTime;
+  protected AABB          m_hitbox;
+  protected double        m_orientation;
+  protected double        m_velocity;
+  protected Circle        m_visionField;
+  protected boolean       m_isMoving;
+  protected boolean       m_hasCollision;
+  protected int           m_id;
+  protected CategoryFsm   m_cat;
+  private boolean m_isWaiting;
+  private long m_timeToWait;
+  private Brain m_brain;
+  private double m_moveDirection;
+  private boolean m_isProtected;
+  private double m_protectDirection;
+  private Entity m_objectInHand;
+  private List< Entity > m_inventory;
+  private boolean m_isResting;
+
+  public Entity( FSM fsm, CategoryFsm.CATEGORY type, List < CategoryFsm.CATEGORY > options )
   {
-    m_brain = new Brain( this, automaton );
+    m_brain = new Brain( this, fsm );
     m_elapsedTime = 0;
     m_hitbox = new AABB( 0, 0, 0, 0 );
-    m_visionField = new Circle( this.getHitbox().getMin(), Config.VISION_FIELD_RADIUS );
+    m_visionField = new Circle( this.getHitbox().getMin(),
+        Config.getInstance().getParameters().getVisionFieldRadius() );
     m_hasCollision = true;
     m_cat = new CategoryFsm( type, options );
+    m_id = -1;
+  }
+
+  public Entity( FSM fsm, int id, double width, double height, double velocity, boolean hasCollision, CategoryFsm.CATEGORY type, List < CategoryFsm.CATEGORY > options )
+  {
+    m_brain = new Brain( this, fsm );
+    m_elapsedTime = 0;
+    m_hitbox = new AABB( 0, 0, 0, 0 );
+    m_visionField = new Circle( this.getHitbox().getMin(),
+        Config.getInstance().getParameters().getVisionFieldRadius() );
+
+    this.setId( id );
+    this.setDim( width, height );
+    this.setVelocity( velocity );
+    this.setHasCollision( hasCollision );
+    m_cat = new CategoryFsm( type, options );
+  }
+
+  @Override
+  public Entity clone() throws CloneNotSupportedException
+  {
+    Entity e = (Entity)super.clone();
+    e.setTracker( null );
+    e.m_hitbox = m_hitbox.clone();
+    e.m_visionField = m_visionField.clone();
+    e.m_visionField.setTopLeftCorner( e.m_hitbox.getPos() );
+    return e;
   }
 
   public void setTracker( EntityTracker tracker )
@@ -449,7 +483,18 @@ public abstract class Entity
   @Override
   public String toString()
   {
-    return "(x=" + this.getX() + ", y=" + this.getY() + ", width=" + this.getWidth() + ", height=" + this.getHeight()
-        + ")";
+    DecimalFormat df = new DecimalFormat( "#.0" );
+    return  "[" + this.getId() + "]" + "(x=" + df.format( getX() ) + ", y=" + df.format( getY() ) + ", w=" + df.format( getWidth() )
+        + ", h=" + df.format( getHeight() ) + ")";
+  }
+
+  public int getId()
+  {
+    return m_id;
+  }
+
+  public void setId( int id )
+  {
+    m_id = id;
   }
 }

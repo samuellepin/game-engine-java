@@ -3,21 +3,36 @@ package src.Model.World;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import src.Model.Config;
+import src.Config;
+import src.AI.CategoryFsm;
+import src.AI.FsmFactory;
 import src.Model.Vector;
 import src.Model.Wall;
 
 public class Map
 {
-  private Tile[][]           m_tiles;
-  private Biome[]            m_biome_tab;                     // pour le random entre les différents biomes
-  private ArrayList< Biome > m_biomes;                        // pour afficher les biomes pas forcément utile
-  public static final int    COLS_NUM             = 51;
-  public static final int    ROWS_NUM             = 51;
-  public int                 m_spaceBetweenBiomes = 3;
+  private ArrayList< Position > m_tilesAlreadyUsed;
 
-  private static Map         INSTANCE             = new Map();
-  private ArrayList< Wall >  m_walls;
+  private Tile[][]              m_tiles;
+  private Biome[]               m_biome_tab;                                                                 // pour le
+                                                                                                             // random
+                                                                                                             // entre
+                                                                                                             // les
+                                                                                                             // différents
+                                                                                                             // biomes
+  private ArrayList< Biome >    m_biomes;                                                                    // pour
+                                                                                                             // afficher
+                                                                                                             // les
+                                                                                                             // biomes
+                                                                                                             // pas
+                                                                                                             // forcément
+                                                                                                             // utile
+  public static final int       COLS_NUM             = Config.getInstance().getWorld().getColsNum();
+  public static final int       ROWS_NUM             = Config.getInstance().getWorld().getRowsNum();
+  public int                    m_spaceBetweenBiomes = Config.getInstance().getWorld().getBiome().getSpace();
+
+  private static Map            INSTANCE             = new Map();
+  private ArrayList< Wall >     m_walls;
 //  private ArrayList< AABB > m_hitbox;
 
   public static Map getInstance()
@@ -28,6 +43,7 @@ public class Map
   /// < Backtracker algorithm
   private Map()
   {
+    m_tilesAlreadyUsed = new ArrayList<>();
     m_tiles = new Tile[ ROWS_NUM ][ COLS_NUM ];
     for ( int i = 0; i < ROWS_NUM; i++ )
     {
@@ -59,13 +75,15 @@ public class Map
 
     m_walls = new ArrayList<>();
 
+    if( !Config.getInstance().getParameters().isWallsEnabled() ) return;
+
     for ( int y = 0; y < ROWS_NUM; y++ )
     {
       for ( int x = 0; x < COLS_NUM; x++ )
       {
         if( this.getTile( x, y ).getType() == TILE_TYPE.WALL )
         {
-          Wall wall = new Wall( null );
+          Wall wall = new Wall( FsmFactory.getInstance().getFSM( "Wall" ), CategoryFsm.CATEGORY.Obstacle, new ArrayList< CategoryFsm.CATEGORY >() );
           wall.setPos( x * Tile.WIDTH, y * Tile.HEIGHT );
           wall.setDim( Tile.WIDTH, Tile.HEIGHT );
           m_walls.add( wall );
@@ -94,7 +112,7 @@ public class Map
     directions.add( new Vector( -2, 0 ) );
     directions.add( new Vector( 2, 0 ) );
     directions.add( new Vector( 0, 2 ) );
-    Collections.shuffle( directions, Config.RANDOM );
+    Collections.shuffle( directions, Config.getRandom() );
 
     for ( int i = 0; i < 4; i++ )
     {
@@ -158,10 +176,10 @@ public class Map
   {
     for ( int i = 0; i < num; i++ )
     {
-      int width  = Config.RANDOM.nextInt() % 2 + 1;
-      int height = Config.RANDOM.nextInt() % 2 + 1;
-      int startI = Config.RANDOM.nextInt() % ( COLS_NUM - 2 ) + 1;
-      int startY = Config.RANDOM.nextInt() % ( ROWS_NUM - 2 ) + 1;
+      int width  = Config.getRandom().nextInt() % 2 + 1;
+      int height = Config.getRandom().nextInt() % 2 + 1;
+      int startI = Config.getRandom().nextInt() % ( COLS_NUM - 2 ) + 1;
+      int startY = Config.getRandom().nextInt() % ( ROWS_NUM - 2 ) + 1;
       for ( int j = -1; j < width; j++ )
       {
         for ( int z = -1; z < height; z++ )
@@ -179,8 +197,40 @@ public class Map
 
   public Vector getPos( int x, int y )
   {
-    return new Vector( (double) ( x * Tile.WIDTH ) + (double)Tile.WIDTH / 2,
-        (double) ( y * Tile.HEIGHT ) + (double)Tile.HEIGHT / 2 );
+    return new Vector( (double) ( x * Tile.WIDTH + 5 ), (double) ( y * Tile.HEIGHT + 5 ) );
+  }
+
+  class Position
+  {
+    public int x, y;
+
+    public boolean equals( Position pos )
+    {
+      return x == pos.x && y == pos.y;
+    }
+
+    public Position( int x, int y )
+    {
+      this.x = x;
+      this.y = y;
+    }
+  }
+
+  public Vector getRandomPos()
+  {
+    int x = Config.getRandom().nextInt( Map.COLS_NUM );
+    int y = Config.getRandom().nextInt( Map.ROWS_NUM );
+    if( this.getTile( x, y ).getType() != TILE_TYPE.FLOOR ) return getRandomPos();
+    Position p = new Position( x, y );
+    for ( Position pos : m_tilesAlreadyUsed )
+    {
+      if( pos.equals( p ) )
+      {
+        return getRandomPos();
+      }
+    }
+    m_tilesAlreadyUsed.add( p );
+    return this.getPos( x, y );
   }
 
 // Inutile - les murs sont dans la liste des entités
@@ -241,10 +291,10 @@ public class Map
     int   i = 0;
     while( i < 500 )
     {
-      biomeX = Config.RANDOM.nextInt( COLS_NUM - 2 - m_spaceBetweenBiomes ) + m_spaceBetweenBiomes;// random entre
+      biomeX = Config.getRandom().nextInt( COLS_NUM - 2 - m_spaceBetweenBiomes ) + m_spaceBetweenBiomes;// random entre
       // spaceBetweenBiomes et
       // COLS_NUM-2
-      biomeY = Config.RANDOM.nextInt( ROWS_NUM - 2 - m_spaceBetweenBiomes ) + m_spaceBetweenBiomes;// random entre
+      biomeY = Config.getRandom().nextInt( ROWS_NUM - 2 - m_spaceBetweenBiomes ) + m_spaceBetweenBiomes;// random entre
       // spaceBetweenBiomes et
       // ROWS_NUM-2
       if( biomeX % 2 == 0 )

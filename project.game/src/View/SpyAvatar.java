@@ -21,7 +21,7 @@ public class SpyAvatar extends Avatar
   @Override
   public void paint( Graphics g, int x, int y, int width, int height )
   {
-    super.paintVisionField( g, x, y );
+//    super.paintVisionField( g, x, y );
     
     // Correction pour le sprint - évite que l'image ne soit écrasée
     if( m_entity.isMoving() )
@@ -54,7 +54,7 @@ public class SpyAvatar extends Avatar
 
     g.drawImage( img, x, y, width, height, null );
 
-    super.paintHitbox( g, x, y, width, height );
+//    super.paintHitbox( g, x, y, width, height );
 
     if( m_entity.isMoving() )
     {

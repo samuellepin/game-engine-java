@@ -7,9 +7,15 @@ import src.AI.FSM;
 
 public class Wall extends Entity
 {
-  public Wall( FSM automaton, CategoryFsm.CATEGORY type, List< CategoryFsm.CATEGORY > options )
+  public Wall( FSM fsm, CategoryFsm.CATEGORY type, List< CategoryFsm.CATEGORY > options )
   {
-    super( automaton, type, options );
+    super( fsm, type, options );
   }
 
+  @Override
+  public String toString()
+  {
+    return "Wall - " + super.toString();
+  }
+  
 }

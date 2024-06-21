@@ -3,8 +3,10 @@ package src.View;
 import java.awt.Color;
 import java.awt.Graphics;
 
-import src.Model.Config;
+import src.Config;
+import src.Model.Document;
 import src.Model.Entity;
+import src.Model.Wall;
 
 public abstract class Avatar
 {
@@ -31,13 +33,11 @@ public abstract class Avatar
     g.drawRect( x, y, width, height );
   }
 
-  public void paintVisionField( Graphics g, int x, int y )
+  public void paintVisionField( Graphics g, int x, int y, int width, int height )
   {
-    int r = (int) ( Config.VISION_FIELD_RADIUS * Config.RATIO );
+    if( m_entity instanceof Wall || m_entity instanceof Document ) return;
     g.setColor( VISION_FIELD_COLOR );
-    x += m_entity.getWidth() * Config.RATIO  / 2;
-    y += m_entity.getHeight() * Config.RATIO / 2;
-    g.fillOval( x - r, y - r, 2 * r, 2 * r );
+    g.fillOval( x, y, width, height );
   }
 
   public Entity getEntity()
@@ -50,7 +50,7 @@ public abstract class Avatar
     m_entity = e;
   }
   
-  static final long ANIMATION_TIME = 50;
+  static final long ANIMATION_TIME = 50; // marche plus à cause de factory
   
   protected void updateAnimation( int img_num )
   {

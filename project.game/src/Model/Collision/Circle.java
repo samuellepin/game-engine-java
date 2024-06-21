@@ -1,12 +1,21 @@
 package src.Model.Collision;
 
+import src.Model.Entity;
 import src.Model.Vector;
 
-public class Circle implements Hitbox
+public class Circle implements Hitbox, Cloneable
 {
   private Vector m_topLeftCorner;
   private double m_radius;
 
+  @Override
+  public Circle clone() throws CloneNotSupportedException
+  {
+    Circle cloned = (Circle)super.clone();
+//    cloned.m_topLeftCorner = m_topLeftCorner.clone();
+    return cloned;
+  }
+  
   public Circle( Vector topLeftCorner, double radius )
   {
     m_topLeftCorner = topLeftCorner;
@@ -43,5 +52,25 @@ public class Circle implements Hitbox
   public String toString()
   {
     return "(x=" + this.getCenter().getX() + ", y=" + this.getCenter().getY() + ", r=" + this.getRadius() + ")";
+  }
+  
+  public double getWidth()
+  {
+    return 2 * m_radius;
+  }
+  
+  public double getHeight()
+  {
+    return 2 * m_radius;
+  }
+
+  public void translate( double dx, double dy )
+  {
+    m_topLeftCorner.translate( dx, dy );
+  }
+  
+  public void setTopLeftCorner( Vector pos )
+  {
+    this.m_topLeftCorner = pos;
   }
 }
