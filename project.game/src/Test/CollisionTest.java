@@ -50,7 +50,7 @@ public class CollisionTest
   private CollisionTest() throws Exception
   {
     m_aabb = new AABB( 270, 150, 300, 180 );
-    m_arc = new Arc( 200, 200, 150, 0, Math.PI / 32 );
+    m_arc = new Arc( 200, 200, 150, 0, Math.PI / 8 );
 
     m_listener = new CanvasListener( this );
 

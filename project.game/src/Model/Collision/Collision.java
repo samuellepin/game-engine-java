@@ -142,15 +142,38 @@ public class Collision
     return new Vector( x, y );
   }
 
-  public static boolean detect( AABB aabb, Arc arc )
+  private static Vector clamp( Vector val, Vector min, Vector max )
+  {
+    return Vector.max( min, Vector.min( val, max ) );
+  }
+
+  private static boolean isPointInArc( Vector point, Arc arc )
   {
     arc.normalizeAngles();
-    Vector C  = arc.getCenter();
-    Vector P  = closestPointToAABB( aabb, C );
-    Vector CP = Vector.sub( P, C );
+    Vector OP    = point;
+    Vector OC    = arc.getCenter();
+    Vector CP    = Vector.sub( OP, OC );
+    double angle = CP.getAngle();
+//    angle = angle >= 0 ? angle : angle + 2 * Math.PI;
+    double thetaStart = arc.getAzimuth() - arc.getApertureAngle();
+    double thetaEnd   = arc.getAzimuth() + arc.getApertureAngle();
+    thetaStart = Vector.normalizeAngle( thetaStart );
+    thetaEnd = Vector.normalizeAngle( thetaEnd );
+    if( thetaStart <= thetaEnd )
+    {
+      return thetaStart <= angle && angle <= thetaEnd;
+    }
+    return thetaStart <= angle || angle <= thetaEnd;
+  }
+
+  public static boolean detect( AABB aabb, Arc arc )
+  {
+    Vector OC = arc.getCenter();
+    Vector OP = closestPointToAABB( aabb, OC );
+    Vector CP = Vector.sub( OP, OC );
 
     double r  = arc.getRadius();
-    if( CP.getSquaredMagnitude() > r * r )
+    if( CP.getSquaredMagnitude() >= r * r )
     {
       return false;
     }
@@ -160,39 +183,14 @@ public class Collision
     Vector points[] = { new Vector( pmin.getX(), pmin.getY() ), new Vector( pmax.getX(), pmin.getY() ),
         new Vector( pmax.getX(), pmax.getY() ), new Vector( pmin.getX(), pmax.getY() ) };
 
-    double minAngle = 0;
-    double maxAngle = 0;
-    for ( int i = 0; i < 4; i++ )
+    for ( Vector point : points )
     {
-      Vector Q     = points[ i ];
-      Vector CQ    = Vector.sub( Q, C );
-      double angle = CQ.getAngle();
-
-      if( i == 0 )
+      if( Collision.isPointInArc( point, arc ) )
       {
-        minAngle = angle;
-        maxAngle = angle;
-        continue;
+        return true;
       }
-      if( angle < minAngle )
-      {
-        minAngle = angle;
-      }
-      if( angle > maxAngle )
-      {
-        maxAngle = angle;
-      }
-    }
-
-    double startAngle = Vector.normalizeAngle( arc.getStartAngle() );
-    double endAngle   = Vector.normalizeAngle( arc.getEndAngle() );
-
-    if( startAngle <= minAngle && minAngle <= endAngle  ) 
-    {
-      return true;
     }
 
     return false;
   }
-
 }
