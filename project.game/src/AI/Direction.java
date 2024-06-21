@@ -43,18 +43,15 @@ public class Direction
       return Math.PI * 0.75;
     case NW:
       return -Math.PI * 0.75;
-    case Forward:
-      return currentAngle;
     case BackWard:
       return Vector.normalizeAngle( currentAngle + Math.PI );
     case Left:
       return Vector.normalizeAngle( currentAngle + Math.PI * 0.5 );
     case Right:
       return Vector.normalizeAngle( currentAngle - Math.PI * 0.5 );
-    case Underscore:
+    default:
       return currentAngle;
     }
-    return currentAngle;
   }
 
   @Override
