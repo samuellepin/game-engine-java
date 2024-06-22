@@ -94,6 +94,12 @@ public class Config
     public int     itemToWin;
     public boolean enableBSP;
     public boolean enableWalls;
+    public String  backgroundMusic;
+    
+    public String getBackgroundMusic()
+    {
+      return backgroundMusic;
+    }
 
     public src.Model.Entity getItemToWin()
     {
