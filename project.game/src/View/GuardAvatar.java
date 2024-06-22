@@ -38,8 +38,8 @@ public class GuardAvatar extends Avatar
 
     if( between( angle, -PI_4, PI_4 ) )
     {
-      img = m_left.getImage();
-      m_left.update();
+      img = m_right.getImage();
+      m_right.update();
     }
     else if( between( angle, PI_4, 3 * PI_4 ) )
     {
