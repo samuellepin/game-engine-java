@@ -1,9 +1,12 @@
 package src.View;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.geom.Ellipse2D;
 import java.text.DecimalFormat;
 
 import src.Model.Entity;
@@ -90,11 +93,33 @@ public class View
       if( vp != null )
       {
         Graphics graphics = g.create( (int)vp.getX(), (int)vp.getY(), (int)vp.getWidth(), (int)vp.getHeight() );
+        
         vp.paint( graphics );
+        
+        if( i == 1 )
+        {
+          // Dessiner le fond noir
+          g.setColor(Color.BLACK);
+          g.fillRect(0, 0, (int)vp.getWidth(), (int)vp.getHeight());
+          
+          // Créer un trou au centre
+          Graphics2D g2d = (Graphics2D) graphics.create();
+          g2d.setComposite( AlphaComposite.Xor );
+          
+          int radius = (int)Model.getInstance().getPlayer2().getVisionField().getRadius();
+          int x = (vp.getWidth() - radius * 2) / 2;
+          int y = (vp.getHeight() - radius * 2) / 2;
+          
+          g2d.fill(new Ellipse2D.Double(x, y, radius * 2, radius * 2));
+          
+          g2d.dispose();
+        }
+
         graphics.dispose();
       }
     }
 
+    
     this.paintInfo( g );
   }
 
