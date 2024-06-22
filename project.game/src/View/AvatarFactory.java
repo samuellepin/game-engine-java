@@ -54,7 +54,7 @@ public class AvatarFactory
     m_entities = new HashMap<>();
     try
     {
-      m_floorImg = AvatarFactory.loadImage( "resources/sprites/Tile_Brick.png" );
+      m_floorImg = AvatarFactory.loadImage( "resources/sprites/Tile/Brick.png" );
       m_idleSpyImg = AvatarFactory.loadSprite( "resources/sprites/Spy/SMS_Adv_Idle_Gun_1_strip4.png", 1, 4 );
       m_runningSpyImg = AvatarFactory.loadSprite( "resources/sprites/Spy/SMS_Adv_Idle_strip4.png", 1, 4 );
       m_docImg = AvatarFactory.loadImage( "resources/sprites/ConciseDocumentationOfLustre.png" );
