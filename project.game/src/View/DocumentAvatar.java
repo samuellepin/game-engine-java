@@ -5,7 +5,7 @@ import src.Model.Entity;
 
 public class DocumentAvatar extends Avatar
 {
-  public DocumentAvatar( Entity e )
+  public DocumentAvatar( Entity e)
   {
     super( e );
   }

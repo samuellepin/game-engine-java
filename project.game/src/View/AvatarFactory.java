@@ -8,8 +8,12 @@ import java.util.Map;
 
 import javax.imageio.ImageIO;
 
+import src.Config;
+import src.Config.Tile;
+import src.Model.Alien;
 import src.Model.Document;
 import src.Model.Entity;
+import src.Model.Guard;
 import src.Model.Spy;
 import src.Model.Wall;
 
@@ -22,28 +26,59 @@ public class AvatarFactory
     return INSTANCE;
   }
 
-  private BufferedImage[]             m_idleSpyImg;
-  private BufferedImage[]             m_runningSpyImg;
-  private BufferedImage               m_floorImg;
-  private BufferedImage               m_docImg;
+  private BufferedImage[]      m_idleSpyImg;
+  private BufferedImage[]      m_runningSpyImg;
+  private BufferedImage[]      m_movingAlienImg;
+  private BufferedImage        m_floorImg;
+  private BufferedImage        m_docImg;
+  private BufferedImage[]      m_obstacles;
+  private BufferedImage[]      m_guardLeftImg;
+  private BufferedImage[]      m_guardRightImg;
+  private BufferedImage[]      m_guardUpImg;
+  private BufferedImage[]      m_guardDownImg;
 
   public Map< Entity, Avatar > m_entities;
-  
+
+  public BufferedImage[] getGuardLeft()
+  {
+    return m_guardLeftImg;
+  }
+
+  public BufferedImage[] getGuardRight()
+  {
+    return m_guardRightImg;
+  }
+
+  public BufferedImage[] getGuardUp()
+  {
+    return m_guardUpImg;
+  }
+
+  public BufferedImage[] getGuardDown()
+  {
+    return m_guardDownImg;
+  }
+
   public BufferedImage[] getIdleSpySprite()
   {
     return m_idleSpyImg;
   }
-  
+
   public BufferedImage[] getRunningSpySprite()
   {
     return m_runningSpyImg;
   }
-  
+
+  public BufferedImage[] getObstaclesSprite()
+  {
+    return m_obstacles;
+  }
+
   public BufferedImage getFloorSprite()
   {
     return m_floorImg;
   }
-  
+
   public BufferedImage getDocumentSprite()
   {
     return m_docImg;
@@ -52,12 +87,24 @@ public class AvatarFactory
   private AvatarFactory()
   {
     m_entities = new HashMap<>();
+    Tile tile = Config.getInstance().getWorld().getTile();
     try
     {
-      m_floorImg = AvatarFactory.loadImage( "resources/sprites/Tile/Brick.png" );
+      m_floorImg = AvatarFactory.loadImage( tile.getSprite() );
       m_idleSpyImg = AvatarFactory.loadSprite( "resources/sprites/Spy/SMS_Adv_Idle_Gun_1_strip4.png", 1, 4 );
       m_runningSpyImg = AvatarFactory.loadSprite( "resources/sprites/Spy/SMS_Adv_Idle_strip4.png", 1, 4 );
       m_docImg = AvatarFactory.loadImage( "resources/sprites/ConciseDocumentationOfLustre.png" );
+      String[] obstacles = tile.getObstacles();
+      if( obstacles.length > 0 ) m_obstacles = new BufferedImage[ obstacles.length ];
+      for ( int i = 0; i < obstacles.length; i++ )
+      {
+        m_obstacles[ i ] = AvatarFactory.loadImage( obstacles[ i ] );
+      }
+      m_movingAlienImg = AvatarFactory.loadSprite( "resources/sprites/Alien/Alien.png", 1, 11 );
+      m_guardLeftImg = AvatarFactory.loadSprite( "resources/sprites/Guard/Guard_Left.png", 1, 4 );
+      m_guardRightImg = AvatarFactory.loadSprite( "resources/sprites/Guard/Guard_Right.png", 1, 4 );
+      m_guardUpImg = AvatarFactory.loadSprite( "resources/sprites/Guard/Guard_Up.png", 1, 4 );
+      m_guardDownImg = AvatarFactory.loadSprite( "resources/sprites/Guard/Guard_Down.png", 1, 4 );
     }
     catch ( IOException e )
     {
@@ -73,21 +120,30 @@ public class AvatarFactory
     }
 
     Avatar avatar = null;
-    if( e instanceof Spy )
+    if( e instanceof Alien )
+    {
+      avatar = new AlienAvatar( (Alien)e );
+    }
+    else if( e instanceof Guard )
+    {
+      avatar = new GuardAvatar( (Guard)e );
+    }
+    else if( e instanceof Spy )
     {
       avatar = new SpyAvatar( (Spy)e );
     }
     else if( e instanceof Wall )
     {
-      avatar = new WallAvatar( (Wall)e );
+      int r = 1;
+      if( this.m_obstacles != null )
+      {
+        r = this.m_obstacles.length;
+      }
+      avatar = new WallAvatar( (Wall)e, Config.getRandom().nextInt( r ) );
     }
     else if( e instanceof Document )
     {
       avatar = new DocumentAvatar( (Document)e );
-    }
-    else if( e instanceof Wall )
-    {
-      avatar = new WallAvatar( (Wall)e );
     }
 
     m_entities.put( e, avatar );
@@ -124,5 +180,10 @@ public class AvatarFactory
       return images;
     }
     return null;
+  }
+
+  public BufferedImage[] getMovingAlienSprite()
+  {
+    return m_movingAlienImg;
   }
 }

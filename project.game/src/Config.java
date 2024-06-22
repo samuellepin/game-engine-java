@@ -15,7 +15,7 @@ import src.Model.Spy;
 
 public class Config
 {
-  private static final String FILENAME = "resources/Config-MG.json";
+  private static final String FILENAME = "resources/Config-Alien.json";
   private static final Config INSTANCE = Serializer.deserialize( FILENAME, Config.class );
   private static final Random RANDOM   = new Random( Config.getInstance().getParameters().getSeed() );
 
@@ -49,6 +49,8 @@ public class Config
       return new src.Model.Wall( fsm, type, options );
     case "Document":
       return new src.Model.Document( fsm, id, width, height, velocity, hasCollision, type, options );
+    case "Alien":
+      return new src.Model.Alien( fsm, id, width, height, velocity, hasCollision, type, options );
     }
     return null;
   }
@@ -175,10 +177,16 @@ public class Config
 
   public class World
   {
-    public int   rowsNum;
-    public int   colsNum;
-    public Tile  tile;
-    public Biome biome;
+    public int    rowsNum;
+    public int    colsNum;
+    public Tile   tile;
+    public Biome  biome;
+    public String obstructionDensity;
+
+    public double getObstructionDensity()
+    {
+      return Double.parseDouble( obstructionDensity.replace( "%", "" ) ) / 100.0;
+    }
 
     public int getRowsNum()
     {
@@ -203,8 +211,10 @@ public class Config
 
   public class Tile
   {
-    public String width;
-    public String height;
+    public String   width;
+    public String   height;
+    public String   sprite;
+    public String[] obstacles;
 
     public double getWidth()
     {
@@ -214,6 +224,16 @@ public class Config
     public double getHeight()
     {
       return Double.parseDouble( height );
+    }
+
+    public String getSprite()
+    {
+      return sprite;
+    }
+
+    public String[] getObstacles()
+    {
+      return obstacles;
     }
   }
 

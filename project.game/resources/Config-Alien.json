@@ -1,13 +1,13 @@
 {
 	"parameters" :
 	{
-		"seed": 1451,
+		"seed": 129,
 		"visionFieldRadius": "100.0",
 		"player1" : 1234, 
 		"player2" : 5678,
 		"itemToWin" : 9012,
 		"enableBSP" : false,
-		"enableWalls" : false,
+		"enableWalls" : true,
 		"backgroundMusic" : "resources/sounds/alien-main-theme.ogg",
 		"gameOverBGM" : "resources/sounds/metal-gear-game-over.ogg",
 		"volume" : "0.9"
@@ -19,31 +19,43 @@
 		"tile" : 
 		{
 			"width" : "100.0",
-			"height" : "100.0"
+			"height" : "100.0",
+			"sprite" : "resources/sprites/Tile/Grass_01.png",
+			"obstacles" : [ 
+			"resources/sprites/Tree/Tree_1.png", 
+			"resources/sprites/Tree/Tree_2.png", 
+			"resources/sprites/Tree/Tree_3.png", 
+			"resources/sprites/Tree/Tree_4.png", 
+			"resources/sprites/Tree/Tree_5.png", 
+			"resources/sprites/Tree/Tree_6.png",
+			"resources/sprites/Tree/Tree_7.png",
+			"resources/sprites/Tree/Tree_8.png",
+			"resources/sprites/Tree/Tree_9.png" ]
 		},
 		"biome" : 
 		{
 			"width" : 3,
 			"height" : 3,
 			"space" : 3
-		}
+		},
+		"obstructionDensity" : "30%"
 	},
 	"view" : 
 	{
-		"paintHitbox" : true,
-		"paintVisionField" : true,
+		"paintHitbox" : false,
+		"paintVisionField" : false,
 		"zoom" : "1.0",
 		"screenWidth" : 500,
 		"screenHeight" : 500,
-		"title" : "Metal Gear"
+		"title" : "Alien"
 	},
 	"entities" : 
 	[
 		{
 			"id" : 1234,
-			"type" : "Spy",
-			"width" : "20.0",
-			"height" : "40.0",
+			"type" : "Alien",
+			"width" : "60.0",
+			"height" : "60.0",
 			"hasCollision" : true,
 			"velocity" : "0.3",
 			"fsm" : "Player1",
