@@ -6,6 +6,8 @@ import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
+import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
 import java.text.DecimalFormat;
 
@@ -73,7 +75,7 @@ public class View
     g.setColor( Color.red );
     g.drawString( text, posX, posY + height - fm.getDescent() );
     int offset = 10;
-    g.drawRect( posX-offset, posY, width+2*offset, height );
+    g.drawRect( posX - offset, posY, width + 2 * offset, height );
   }
 
   public void paint( Graphics g )
@@ -92,34 +94,34 @@ public class View
       Viewport vp = m_viewports[ i ];
       if( vp != null )
       {
-        Graphics graphics = g.create( (int)vp.getX(), (int)vp.getY(), (int)vp.getWidth(), (int)vp.getHeight() );
-        
+        Graphics2D graphics = (Graphics2D)g.create( (int)vp.getX(), (int)vp.getY(), (int)vp.getWidth(),
+            (int)vp.getHeight() );
+
         vp.paint( graphics );
         
-        if( i == 1 )
+        if( i == 0 )
         {
-          // Dessiner le fond noir
-          g.setColor(Color.BLACK);
-          g.fillRect(0, 0, (int)vp.getWidth(), (int)vp.getHeight());
-          
-          // Créer un trou au centre
-          Graphics2D g2d = (Graphics2D) graphics.create();
-          g2d.setComposite( AlphaComposite.Xor );
-          
-          int radius = (int)Model.getInstance().getPlayer2().getVisionField().getRadius();
-          int x = (vp.getWidth() - radius * 2) / 2;
-          int y = (vp.getHeight() - radius * 2) / 2;
-          
-          g2d.fill(new Ellipse2D.Double(x, y, radius * 2, radius * 2));
-          
+          Graphics2D       g2d    = (Graphics2D)g.create();
+          int              radius = (int)Model.getInstance().getPlayer2().getVisionField().getRadius();
+          int              x      = (int)vp.getWidth() / 2;
+          int              y      = (int)vp.getHeight() / 2;
+          Ellipse2D.Double circle = new Ellipse2D.Double( x - radius, y - radius, radius * 2, radius * 2 );
+          g2d.setClip( circle );
+          vp.paint( g2d );
+          g2d.setClip( null );
+          Area outside = new Area( new Rectangle( 0, 0, (int)vp.getWidth(), (int)vp.getHeight() ) );
+          outside.subtract( new Area( circle ) );
+          g2d.setClip( outside );
+          g2d.setColor( Color.BLACK );
+          g2d.fillRect( 0, 0, (int)vp.getWidth(), (int)vp.getHeight() );
           g2d.dispose();
         }
 
         graphics.dispose();
+
       }
     }
 
-    
     this.paintInfo( g );
   }
 
