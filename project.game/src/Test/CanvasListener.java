@@ -5,15 +5,19 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
 import info3.game.graphics.GameCanvasListener;
+import src.Controller;
 
 public class CanvasListener implements GameCanvasListener
 {
-  CollisionTest m_game;
+  private CollisionTest m_game;
+  private Controller m_controller;
 
   CanvasListener( CollisionTest game )
   {
     m_game = game;
+    m_controller = Controller.getInstance();
   }
+
 
   @Override
   public void mouseClicked( MouseEvent e )
@@ -23,31 +27,37 @@ public class CanvasListener implements GameCanvasListener
   @Override
   public void mousePressed( MouseEvent e )
   {
+    m_controller.updateMouseButtonPressed( e );
   }
 
   @Override
   public void mouseReleased( MouseEvent e )
   {
+    m_controller.updateMouseButtonReleased( e );
   }
 
   @Override
   public void mouseEntered( MouseEvent e )
   {
+    m_controller.updateMousePos( e );
   }
 
   @Override
   public void mouseExited( MouseEvent e )
   {
+    m_controller.updateMousePos( e );
   }
 
   @Override
   public void mouseDragged( MouseEvent e )
   {
+    m_controller.updateMousePos( e );
   }
 
   @Override
   public void mouseMoved( MouseEvent e )
   {
+    m_controller.updateMousePos( e );
   }
 
   @Override
@@ -58,45 +68,19 @@ public class CanvasListener implements GameCanvasListener
   @Override
   public void keyPressed( KeyEvent e )
   {
-    int code = e.getKeyCode();
-    switch ( code )
-    {
-    case KeyEvent.VK_LEFT:
-      m_game.translateCircle( -2, 0 );
-      break;
-    case KeyEvent.VK_UP:
-      m_game.translateCircle( 0, -2 );
-      break;
-    case KeyEvent.VK_RIGHT:
-      m_game.translateCircle( 2, 0 );
-      break;
-    case KeyEvent.VK_DOWN:
-      m_game.translateCircle( 0, 2 );
-      break;
-
-    case KeyEvent.VK_Q:
-      m_game.translateAABB( -2, 0 );
-      break;
-    case KeyEvent.VK_Z:
-      m_game.translateAABB( 0, -2 );
-      break;
-    case KeyEvent.VK_D:
-      m_game.translateAABB( 2, 0 );
-      break;
-    case KeyEvent.VK_S:
-      m_game.translateAABB( 0, 2 );
-      break;
-    }
+    m_controller.updateKeyPressed( e );
   }
 
   @Override
   public void keyReleased( KeyEvent e )
   {
+    m_controller.updateKeyReleased( e );
   }
 
   @Override
   public void tick( long elapsed )
   {
+    m_controller.update();
     m_game.tick( elapsed );
   }
 
@@ -125,5 +109,4 @@ public class CanvasListener implements GameCanvasListener
   public void expired()
   {
   }
-
 }
