@@ -402,6 +402,21 @@ public abstract class Entity implements Cloneable
   {
     m_brain.step();
   }
+  
+  public boolean getTrue()
+  {
+    return true;
+  }
+  
+  public boolean getMyDir( Direction dir )
+  {
+    return m_orientation == dir.toAngle( 0 );
+  }
+  
+  public boolean getCell( Direction dir, CategoryFsm cat )
+  {
+    Collision.detect( m_hitbox, null );
+  }
 
   // Spécifique à notre physique
   public void repulse()
