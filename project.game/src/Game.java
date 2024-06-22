@@ -77,16 +77,22 @@ public class Game
 
   public void loadMusic( String filename )
   {
+    float volume = Config.getInstance().getParameters().getVolume();
     try
     {
       RandomAccessFile      file = new RandomAccessFile( filename, "r" );
       RandomFileInputStream fis  = new RandomFileInputStream( file );
-      m_canvas.playMusic( fis, 0, 0.5f );
+      m_canvas.playMusic( fis, 0, volume );
     }
     catch ( Throwable th )
     {
       th.printStackTrace( System.err );
       System.exit( -1 );
     }
+  }
+  
+  public void stopMusic( String filename )
+  {
+    m_canvas.stopMusic( filename );
   }
 }

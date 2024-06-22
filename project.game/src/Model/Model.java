@@ -3,6 +3,7 @@ package src.Model;
 import java.util.ArrayList;
 
 import src.Config;
+import src.Game;
 import src.Model.Collision.Collision;
 import src.Model.World.Map;
 
@@ -43,8 +44,16 @@ public class Model
     }
     if( Collision.detect( m_player1.getHitbox(), m_itemToWin.getHitbox() ) )
     {
-      m_isGameOver = true;
+      setGameOver();
     }
+  }
+  
+  public void setGameOver()
+  {
+    m_isGameOver = true;
+    Game game = Game.getInstance();
+    game.stopMusic( Config.getInstance().getParameters().getBackgroundMusic() );
+//    game.loadMusic( Config.getInstance().getParameters().getGameOverBGM() );
   }
 
   public boolean isGameOver()

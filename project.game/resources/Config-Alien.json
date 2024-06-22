@@ -8,7 +8,9 @@
 		"itemToWin" : 9012,
 		"enableBSP" : false,
 		"enableWalls" : false,
-		"backgroundMusic" : "resources/sounds/metal-gear-main-theme.ogg"
+		"backgroundMusic" : "resources/sounds/alien-main-theme.ogg",
+		"gameOverBGM" : "resources/sounds/metal-gear-game-over.ogg",
+		"volume" : "0.9"
 	},
 	"world" : 
 	{

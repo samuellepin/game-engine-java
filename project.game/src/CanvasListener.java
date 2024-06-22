@@ -104,7 +104,6 @@ public class CanvasListener implements GameCanvasListener
   @Override
   public void endOfPlay( String name )
   {
-    m_game.loadMusic( Config.getInstance().getParameters().getBackgroundMusic() );
   }
 
   @Override

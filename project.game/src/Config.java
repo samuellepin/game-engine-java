@@ -15,8 +15,8 @@ import src.Model.Spy;
 
 public class Config
 {
-  private static final Config INSTANCE = Serializer.deserialize( "resources/Config.json", Config.class );
-
+  private static final String FILENAME = "resources/Config-MG.json";
+  private static final Config INSTANCE = Serializer.deserialize( FILENAME, Config.class );
   private static final Random RANDOM   = new Random( Config.getInstance().getParameters().getSeed() );
 
   public static Random getRandom()
@@ -95,7 +95,19 @@ public class Config
     public boolean enableBSP;
     public boolean enableWalls;
     public String  backgroundMusic;
-    
+    public String  gameOverBGM;
+    public String  volume;
+
+    public String getGameOverBGM()
+    {
+      return gameOverBGM;
+    }
+
+    public float getVolume()
+    {
+      return Float.parseFloat( volume );
+    }
+
     public String getBackgroundMusic()
     {
       return backgroundMusic;
