@@ -7,7 +7,7 @@
 		"player2" : 5678,
 		"itemToWin" : 9012,
 		"enableBSP" : false,
-		"enableWalls" : true,
+		"enableWalls" : false,
 		"backgroundMusic" : "resources/sounds/metal-gear-main-theme.ogg"
 	},
 	"world" : 

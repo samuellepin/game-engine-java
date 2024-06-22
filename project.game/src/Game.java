@@ -7,7 +7,6 @@ import java.io.RandomAccessFile;
 
 import javax.swing.JFrame;
 
-import info3.game.Sound;
 import info3.game.graphics.GameCanvas;
 import info3.game.sound.RandomFileInputStream;
 import src.Model.Model;

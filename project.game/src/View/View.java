@@ -2,6 +2,7 @@ package src.View;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.text.DecimalFormat;
 
@@ -30,7 +31,7 @@ public class View
 
   public int paintInfoEntity( Graphics g, String title, Entity e, int posX, int posY )
   {
-    DecimalFormat df = new DecimalFormat("#.0");
+    DecimalFormat df = new DecimalFormat( "#.0" );
     g.drawString( title, posX, posY );
     posY += 16;
     g.drawString( "x = " + df.format( e.getX() ), posX, posY );
@@ -53,16 +54,30 @@ public class View
     posY += this.paintInfoEntity( g, "Player 2", player2, posX, posY );
   }
 
+  public void paintGameOver( Graphics g )
+  {
+    Font font = new Font( "Serif", Font.BOLD, 48 );
+    g.setFont( font );
+    FontMetrics fm     = g.getFontMetrics();
+    String      text   = "GAME OVER";
+    int         width  = fm.stringWidth( text );
+    int         height = fm.getAscent() + fm.getDescent() + fm.getLeading();
+    int         posX   = ( Game.SCREEN_WIDTH - width ) / 2;
+    int         posY   = ( Game.SCREEN_HEIGHT - height ) / 2;
+
+    g.setColor( Color.black );
+    g.fillRect( 0, 0, Game.SCREEN_WIDTH, Game.SCREEN_HEIGHT );
+    g.setColor( Color.red );
+    g.drawString( text, posX, posY + height - fm.getDescent() );
+    int offset = 10;
+    g.drawRect( posX-offset, posY, width+2*offset, height );
+  }
+
   public void paint( Graphics g )
   {
     if( Model.getInstance().isGameOver() )
     {
-      g.setColor( Color.black );
-      g.fillRect( 0, 0, Game.SCREEN_WIDTH, Game.SCREEN_HEIGHT );
-      g.setColor( Color.red );
-      g.setFont( new Font( null, 0, 0 ) );
-      g.setFont( new Font( "Serif", Font.BOLD, 32 ) );
-      g.drawString( "Game Over", Game.SCREEN_WIDTH / 2 - 85, Game.SCREEN_HEIGHT / 2 );
+      this.paintGameOver( g );
       return;
     }
 
