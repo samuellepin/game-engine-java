@@ -299,7 +299,8 @@ public abstract class Entity implements Cloneable
 
   public void doPick( double orientation )
   {
-    ArrayList< Entity > entities = Model.getInstance().getEntities();
+    //ArrayList< Entity > entities = Model.getInstance().getEntities();
+    ArrayList< Entity > entities=m_tracker.getEntities();
     for ( Entity e : entities )
     {
       Vector  dist         = Vector.sub( e.getPos(), this.getPos() );

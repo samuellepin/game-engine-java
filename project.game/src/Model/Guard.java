@@ -10,8 +10,8 @@ import src.Model.World.Map;
 
 public class Guard extends Spy
 {
-  private Alarm m_ownAlarm;
-  private Alarm m_otherAlarm;
+  private Alarm   m_ownAlarm;
+  private Alarm   m_otherAlarm;
   private boolean m_isAlarmed;
 //  public Guard( Automaton automaton )
 //  {
@@ -20,10 +20,12 @@ public class Guard extends Spy
 //    super.setVelocity( 0.1 );
 //  }
 
-  public Guard( FSM fsm, int id, double width, double height, double velocity, boolean hasCollision , CategoryFsm.CATEGORY type, List< CategoryFsm.CATEGORY > options)
+  public Guard( FSM fsm, int id, double width, double height, double velocity, boolean hasCollision,
+      CategoryFsm.CATEGORY type, List< CategoryFsm.CATEGORY > options )
   {
     super( fsm, id, width, height, velocity, hasCollision, type, options );
     this.setPos( Map.getInstance().getRandomPos() );
+    m_ownAlarm = new Alarm( this );
   }
 
   @Override
@@ -54,5 +56,24 @@ public class Guard extends Spy
 //      System.out.println( "Collision : " + c1.toString() + " - " + c2.toString() );
       follow( Model.getInstance().getPlayer1() );
     }
+    if( m_ownAlarm.isActive() )// actif si le garde à déclanché son alarme
+    {
+      if( !m_ownAlarm.timer( elapsed ) )// pour actualiser le timer
+      {
+        m_isAlarmed = false;// peut-etre faux si les deux alarmes sont actives
+      }
+    }
+  }
+
+  public void alarm()// déclanché par closest de l'automate
+  {
+    m_isAlarmed = true;
+    m_ownAlarm.alert();
+  }
+
+  public void setAlarm( Alarm alarm )// déclanché par alarm si un autre garde détecte le joueur
+  {
+    m_otherAlarm = alarm;
+    m_isAlarmed = true;
   }
 }
