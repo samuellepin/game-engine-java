@@ -13,6 +13,7 @@ import src.Config.Tile;
 import src.Model.Alien;
 import src.Model.Document;
 import src.Model.Entity;
+import src.Model.Generator;
 import src.Model.Guard;
 import src.Model.Spy;
 import src.Model.Wall;
@@ -30,14 +31,26 @@ public class AvatarFactory
   private BufferedImage[]      m_runningSpyImg;
   private BufferedImage[]      m_movingAlienImg;
   private BufferedImage        m_floorImg;
-  private BufferedImage        m_docImg;
+  private BufferedImage[]      m_docImg;
   private BufferedImage[]      m_obstacles;
   private BufferedImage[]      m_guardLeftImg;
   private BufferedImage[]      m_guardRightImg;
   private BufferedImage[]      m_guardUpImg;
   private BufferedImage[]      m_guardDownImg;
+  private BufferedImage[]      m_generatorIdleImg;
+  private BufferedImage[]      m_generatorEnabledImg;
 
   public Map< Entity, Avatar > m_entities;
+  
+  public BufferedImage[] getGeneratorIdle()
+  {
+    return m_generatorIdleImg;
+  }
+  
+  public BufferedImage[] getGeneratorEnabled()
+  {
+    return m_generatorEnabledImg;
+  }
 
   public BufferedImage[] getGuardLeft()
   {
@@ -79,7 +92,7 @@ public class AvatarFactory
     return m_floorImg;
   }
 
-  public BufferedImage getDocumentSprite()
+  public BufferedImage[] getDocumentSprite()
   {
     return m_docImg;
   }
@@ -93,7 +106,7 @@ public class AvatarFactory
       m_floorImg = AvatarFactory.loadImage( tile.getSprite() );
       m_idleSpyImg = AvatarFactory.loadSprite( "resources/sprites/Spy/SMS_Adv_Idle_Gun_1_strip4.png", 1, 4 );
       m_runningSpyImg = AvatarFactory.loadSprite( "resources/sprites/Spy/SMS_Adv_Idle_strip4.png", 1, 4 );
-      m_docImg = AvatarFactory.loadImage( "resources/sprites/ConciseDocumentationOfLustre.png" );
+      m_docImg = AvatarFactory.loadSprite( "resources/sprites/ConciseDocumentationOfLustre.png", 1, 1 );
       String[] obstacles = tile.getObstacles();
       if( obstacles.length > 0 ) m_obstacles = new BufferedImage[ obstacles.length ];
       for ( int i = 0; i < obstacles.length; i++ )
@@ -105,6 +118,9 @@ public class AvatarFactory
       m_guardRightImg = AvatarFactory.loadSprite( "resources/sprites/Guard/Guard_Right.png", 1, 4 );
       m_guardUpImg = AvatarFactory.loadSprite( "resources/sprites/Guard/Guard_Up.png", 1, 4 );
       m_guardDownImg = AvatarFactory.loadSprite( "resources/sprites/Guard/Guard_Down.png", 1, 4 );
+      
+      this.m_generatorEnabledImg = AvatarFactory.loadSprite( "resources/sprites/Generator/Generator_Enabled.png", 1, 3 );
+      this.m_generatorIdleImg = AvatarFactory.loadSprite( "resources/sprites/Generator/Generator_Idle.png", 1, 3 );    
     }
     catch ( IOException e )
     {
@@ -127,6 +143,10 @@ public class AvatarFactory
     else if( e instanceof Guard )
     {
       avatar = new GuardAvatar( (Guard)e );
+    }
+    else if( e instanceof Generator )
+    {
+      avatar = new GeneratorAvatar( (Generator)e );
     }
     else if( e instanceof Spy )
     {

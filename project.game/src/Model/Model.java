@@ -44,10 +44,17 @@ public class Model
     }
     if( Collision.detect( m_player1.getHitbox(), m_itemToWin.getHitbox() ) )
     {
-      setGameOver();
+      if( m_itemToWin instanceof Generator )
+      {
+        ( (Generator)m_itemToWin ).enable();
+      }
+      else
+      {
+        setGameOver();
+      }
     }
   }
-  
+
   public void setGameOver()
   {
     m_isGameOver = true;

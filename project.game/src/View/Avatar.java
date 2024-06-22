@@ -10,6 +10,9 @@ import src.Model.Wall;
 
 public abstract class Avatar
 {
+
+  static final long          ANIMATION_TIME     = 50;
+
   protected Entity           m_entity;
   protected AvatarFactory    m_factory;
 
@@ -51,11 +54,4 @@ public abstract class Avatar
   {
     m_entity = e;
   }
-  
-  static final long ANIMATION_TIME = 50; // marche plus à cause de factory
-  
-  protected void updateAnimation( int img_num )
-  {
-  }
-  
 }

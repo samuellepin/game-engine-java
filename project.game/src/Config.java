@@ -51,6 +51,8 @@ public class Config
       return new src.Model.Document( fsm, id, width, height, velocity, hasCollision, type, options );
     case "Alien":
       return new src.Model.Alien( fsm, id, width, height, velocity, hasCollision, type, options );
+    case "Generator":
+      return new src.Model.Generator( fsm, id, width, height, velocity, hasCollision, type, options );
     }
     return null;
   }

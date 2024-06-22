@@ -10,12 +10,18 @@ import src.Model.Vector;
 
 public class GuardAvatar extends Avatar
 {
-  private int m_movingImgIdx;
-  private int m_movingAnimTime;
+  private Animation m_left;
+  private Animation m_right;
+  private Animation m_up;
+  private Animation m_down;
 
   public GuardAvatar( Entity e )
   {
     super( e );
+    m_left = new Animation( e, m_factory.getGuardLeft(), ANIMATION_TIME );
+    m_right = new Animation( e, m_factory.getGuardRight(), ANIMATION_TIME );
+    m_up = new Animation( e, m_factory.getGuardUp(), ANIMATION_TIME );
+    m_down = new Animation( e, m_factory.getGuardDown(), ANIMATION_TIME );
   }
 
   private boolean between( double val, double min, double max )
@@ -26,36 +32,33 @@ public class GuardAvatar extends Avatar
   @Override
   public void paint( Graphics g, int x, int y, int width, int height )
   {
-    BufferedImage[] moving = null;
+    double        angle = Vector.normalizeAngle( m_entity.getOrientation() );
+    final double  PI_4  = Math.PI / 4;
+    BufferedImage img   = null;
 
-    double          angle  = Vector.normalizeAngle( m_entity.getOrientation() );
-    double          pi4    = Math.PI / 4;
-
-    if( between( angle, -pi4, pi4 ) )
+    if( between( angle, -PI_4, PI_4 ) )
     {
-      moving = m_factory.getGuardRight();
+      img = m_left.getImage();
+      m_left.update();
     }
-    else if( between( angle, pi4, 3 * pi4 ) )
+    else if( between( angle, PI_4, 3 * PI_4 ) )
     {
-      moving = m_factory.getGuardDown();
+      img = m_down.getImage();
+      m_down.update();
     }
-    else if( between( angle, -3 * pi4, -pi4 ) )
+    else if( between( angle, -3 * PI_4, -PI_4 ) )
     {
-      moving = m_factory.getGuardUp();
+      img = m_up.getImage();
+      m_up.update();
     }
     else
     {
-      moving = m_factory.getGuardLeft();
+      img = m_left.getImage();
+      m_left.update();
     }
 
-    g.drawImage( moving[ m_movingImgIdx ], x, y, width, height, null );
+    g.drawImage( img, x, y, width, height, null );
 
-    m_movingAnimTime += m_entity.getElapsedTime();
-    if( m_movingAnimTime > ANIMATION_TIME )
-    {
-      m_movingImgIdx = ( m_movingImgIdx + 1 ) % moving.length;
-      m_movingAnimTime -= ANIMATION_TIME;
-    }
   }
 
 }
