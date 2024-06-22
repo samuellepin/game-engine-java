@@ -2,6 +2,7 @@ package src.Model.World;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
 
 import src.Config;
 import src.AI.CategoryFsm;
@@ -76,6 +77,9 @@ public class Map
     m_walls = new ArrayList<>();
 
     if( !Config.getInstance().getParameters().isWallsEnabled() ) return;
+    
+    double density = Config.getInstance().getWorld().getObstructionDensity();
+    Random rand = Config.getRandom();
 
     for ( int y = 0; y < ROWS_NUM; y++ )
     {
@@ -83,10 +87,15 @@ public class Map
       {
         if( this.getTile( x, y ).getType() == TILE_TYPE.WALL )
         {
-          Wall wall = new Wall( FsmFactory.getInstance().getFSM( "Wall" ), CategoryFsm.CATEGORY.Obstacle, new ArrayList< CategoryFsm.CATEGORY >() );
+          Wall wall = new Wall( FsmFactory.getInstance().getFSM( "Wall" ), CategoryFsm.CATEGORY.Obstacle,
+              new ArrayList< CategoryFsm.CATEGORY >() );
           wall.setPos( x * Tile.WIDTH, y * Tile.HEIGHT );
           wall.setDim( Tile.WIDTH, Tile.HEIGHT );
-          m_walls.add( wall );
+          if( x == 0 || x == COLS_NUM-1 || y == 0 || y == ROWS_NUM-1
+              || density >= rand.nextDouble() )
+          {
+            m_walls.add( wall ); 
+          }
         }
       }
     }

@@ -93,6 +93,7 @@ public class CanvasListener implements GameCanvasListener
   @Override
   public void windowOpened()
   {
+    m_game.loadMusic( Config.getInstance().getParameters().getBackgroundMusic() );
   }
 
   @Override

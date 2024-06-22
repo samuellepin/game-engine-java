@@ -8,7 +8,7 @@ import src.Model.Collision.Circle;
 import src.Model.Collision.Collision;
 import src.Model.World.Map;
 
-public class Guard extends Spy
+public class Guard extends Entity
 {
 //  public Guard( Automaton automaton )
 //  {

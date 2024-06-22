@@ -3,9 +3,12 @@ package src;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
+import java.io.RandomAccessFile;
+
 import javax.swing.JFrame;
 
 import info3.game.graphics.GameCanvas;
+import info3.game.sound.RandomFileInputStream;
 import src.Model.Model;
 import src.Model.World.Map;
 import src.View.View;
@@ -42,11 +45,11 @@ public class Game
   private Game() throws Exception
   {
     Config.getInstance().initialize();
-    
+
     m_model = Model.getInstance();
 
     m_view = View.getInstance();
-    
+
     Map map = Map.getInstance();
 
     m_listener = new CanvasListener( this );
@@ -62,13 +65,34 @@ public class Game
     m_frame.setVisible( true );
   }
 
-  void tick( long elapsed )
+  public void tick( long elapsed )
   {
     m_model.tick( elapsed );
   }
 
-  void paint( Graphics g )
+  public void paint( Graphics g )
   {
     m_view.paint( g );
+  }
+
+  public void loadMusic( String filename )
+  {
+    float volume = Config.getInstance().getParameters().getVolume();
+    try
+    {
+      RandomAccessFile      file = new RandomAccessFile( filename, "r" );
+      RandomFileInputStream fis  = new RandomFileInputStream( file );
+      m_canvas.playMusic( fis, 0, volume );
+    }
+    catch ( Throwable th )
+    {
+      th.printStackTrace( System.err );
+      System.exit( -1 );
+    }
+  }
+  
+  public void stopMusic( String filename )
+  {
+    m_canvas.stopMusic( filename );
   }
 }
