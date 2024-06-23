@@ -418,13 +418,12 @@ public abstract class Entity implements Cloneable
         entityMin = e;
       }
     }
-    if( entityMin.m_cat == cat )
+    if( entityMin.m_cat.equals( cat ) )
     {
       boolean correctAngle = dir - ( Math.PI / 4 ) <= dist.getAngle();
       correctAngle = correctAngle && dist.getAngle() <= dir + ( Math.PI / 4 );
       if( correctAngle )
       {
-        System.out.println( "true" );
         return true;
       }
     }
