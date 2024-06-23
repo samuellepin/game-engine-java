@@ -64,13 +64,13 @@ Guard(Patrol)
 {  
   * (Patrol):
   | Closest(#, F) ? Move(F)                                               : (Engage)
-  | Closest(#, B) ? Turn(B)                                               : (Patrol)
-  | Closest(#, L) ? Turn(L)                                               : (Patrol)
-  | Closest(#, R) ? Turn(R)                                               : (Patrol)
+  | Closest(#, B) ? Turn(B)                                               : (Engage)
+  | Closest(#, L) ? Turn(L)                                               : (Engage)
+  | Closest(#, R) ? Turn(R)                                               : (Engage)
   | True          ? 40% Move(F) / 20% Turn(L) / 20% Turn(R) / 20% Turn(B) : (Patrol)
   
   * (Engage):
-  | Cell(F, #)         ? Hit(F)  : (Patrol)
+  | Cell(F, #)         ? Hit(F)  : (Engage)
   | Cell(L, #)         ? Turn(L) : (Engage)
   | Cell(R, #)         ? Turn(R) : (Engage)
   | Cell(B, #)         ? Turn(B) : (Engage)

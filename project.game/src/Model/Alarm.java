@@ -23,8 +23,7 @@ public class Alarm
 
   public void alert()
   {
-    ArrayList< Entity > entities = Model.getInstance().getTrackers().get( 0 ).getEntities();
-    entities.addAll( Model.getInstance().getTrackers().get( 1 ).getEntities() );
+    ArrayList< Entity > entities = Model.getInstance().getEntities();
     m_isActive = true;
     m_timer = 10000;
     for ( Entity e : entities )

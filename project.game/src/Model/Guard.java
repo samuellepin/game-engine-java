@@ -1,6 +1,7 @@
 package src.Model;
 
 import java.util.List;
+import src.AI.Direction;
 
 import src.AI.CategoryFsm;
 import src.AI.FSM;
@@ -13,6 +14,7 @@ public class Guard extends Spy
   private Alarm   m_ownAlarm;
   private Alarm   m_otherAlarm;
   private boolean m_isAlarmed;
+  private Direction m_dirOpponent;
 //  public Guard( Automaton automaton )
 //  {
 //    super( automaton );
