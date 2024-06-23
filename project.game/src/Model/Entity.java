@@ -397,12 +397,12 @@ public abstract class Entity implements Cloneable
     m_brain.step();
   }
 
-  public boolean got()
+  public boolean getGot()
   {
     return false;
   }
 
-  public boolean closest( CategoryFsm cat, double dir )
+  public boolean getClosest( CategoryFsm cat, double dir )
   {
     ArrayList< Entity > entities  = new ArrayList< Entity >( Model.getInstance().getEntities() );
     Vector              dist      = null;
@@ -411,7 +411,7 @@ public abstract class Entity implements Cloneable
     for ( Entity e : entities )
     {
       double distNorm = Vector.sub( e.getPos(), this.getPos() ).norm();
-      if( distNorm < distMin )
+      if( distNorm < distMin && !e.equals( this ) )
       {
         dist = Vector.sub( e.getPos(), this.getPos() );
         distMin = distNorm;
@@ -424,6 +424,7 @@ public abstract class Entity implements Cloneable
       correctAngle = correctAngle && dist.getAngle() <= dir + ( Math.PI / 4 );
       if( correctAngle )
       {
+        System.out.println( "true" );
         return true;
       }
     }

@@ -76,7 +76,7 @@ public class Guard extends Spy
   }
 
   @Override
-  public boolean got()
+  public boolean getGot()
   {
     return m_isAlarmed;
   }

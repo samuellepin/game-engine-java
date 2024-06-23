@@ -26,7 +26,7 @@ public class Closest implements ConditionFsm
   @Override
   public boolean evaluate( Entity entity )
   {
-    return entity.closest( m_cat, m_dir.toAngle( entity.getOrientation() ) );
+    return entity.getClosest( m_cat, m_dir.toAngle( entity.getOrientation() ) );
   }
 
   @Override

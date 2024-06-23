@@ -32,7 +32,7 @@ public class Got implements ConditionFsm
   @Override
   public boolean evaluate( Entity entity )
   {
-    return entity.got();
+    return entity.getGot();
   }
 
   @Override

@@ -63,13 +63,14 @@ Player2(Normal)
 Guard(Patrol)
 {  
   * (Patrol):
-  | Got ?                                                                 : (Engage)
-  | Closest(#, F) ? Move(F);Wizz                                          : (Engage)
-  | Closest(#, B) ? Turn(B);Wizz                                          : (Engage)
-  | Closest(#, L) ? Turn(L);Wizz                                          : (Engage)
-  | Closest(#, R) ? Turn(R);Wizz                                          : (Engage)
-  | Closest(O, F) ? Turn(R)                                               : (Patrol)
-  | True          ? 40% Move(F) / 20% Turn(L) / 20% Turn(R) / 20% Turn(B) : (Patrol)
+  | Got ?                                                              : (Engage)
+  | Cell(F, #) ? Move(F);Wizz                                          : (Engage)
+  | Cell(B, #) ? Turn(B);Wizz                                          : (Engage)
+  | Cell(L, #) ? Turn(L);Wizz                                          : (Engage)
+  | Cell(R, #) ? Turn(R);Wizz                                          : (Engage)
+  | Cell(F,O)  ? Turn(R)                                               : (Patrol)
+  | Closest(O,F) ? Turn(L)                                             : (Engage)
+  | True       ? 40% Move(F) / 20% Turn(L) / 20% Turn(R) / 20% Turn(B) : (Patrol)
   
   * (Engage):
   | Cell(F, #)         ? Hit(F)  : (Engage)
@@ -77,7 +78,7 @@ Guard(Patrol)
   | Cell(R, #)         ? Turn(R) : (Engage)
   | Cell(B, #)         ? Turn(B) : (Engage)
   | Cell(F, V)         ? Move(F) : (Engage)
-  | !Closest(#, _) ?         : (Patrol)
+  | !Closest(#, _)     ?         : (Patrol)
 }
 
 SecurityCamera(Right)
