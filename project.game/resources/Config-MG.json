@@ -38,7 +38,8 @@
 		"zoom" : "1.0",
 		"screenWidth" : 500,
 		"screenHeight" : 500,
-		"title" : "Metal Gear"
+		"title" : "Metal Gear",
+		"enableReducedVisionField" : false
 	},
 	"entities" : 
 	[

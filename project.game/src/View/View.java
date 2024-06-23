@@ -14,6 +14,7 @@ import java.text.DecimalFormat;
 import src.Model.Entity;
 import src.Model.EntityTracker;
 import src.Model.Model;
+import src.Config;
 import src.Game;
 
 public class View
@@ -99,22 +100,20 @@ public class View
 
         vp.paint( graphics );
         
-        if( i == 0 )
+        if( i == 1 && Config.getInstance().getView().isReducedVisionFieldEnabled() )
         {
-          Graphics2D       g2d    = (Graphics2D)g.create();
           int              radius = (int)Model.getInstance().getPlayer2().getVisionField().getRadius();
           int              x      = (int)vp.getWidth() / 2;
           int              y      = (int)vp.getHeight() / 2;
           Ellipse2D.Double circle = new Ellipse2D.Double( x - radius, y - radius, radius * 2, radius * 2 );
-          g2d.setClip( circle );
-          vp.paint( g2d );
-          g2d.setClip( null );
+          graphics.setClip( circle );
+          vp.paint( graphics );
+          graphics.setClip( null );
           Area outside = new Area( new Rectangle( 0, 0, (int)vp.getWidth(), (int)vp.getHeight() ) );
           outside.subtract( new Area( circle ) );
-          g2d.setClip( outside );
-          g2d.setColor( Color.BLACK );
-          g2d.fillRect( 0, 0, (int)vp.getWidth(), (int)vp.getHeight() );
-          g2d.dispose();
+          graphics.setClip( outside );
+          graphics.setColor( Color.BLACK );
+          graphics.fillRect( 0, 0, (int)vp.getWidth(), (int)vp.getHeight() );
         }
 
         graphics.dispose();

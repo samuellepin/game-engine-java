@@ -267,9 +267,15 @@ public class Config
     public int     screenWidth;
     public int     screenHeight;
     public String  title;
+    public boolean enableReducedVisionField;
 
     public boolean paintHitbox;
     public boolean paintVisionField;
+    
+    public boolean isReducedVisionFieldEnabled()
+    {
+      return enableReducedVisionField;
+    }
 
     public double getZoom()
     {
