@@ -1,7 +1,7 @@
 {
 	"parameters" :
 	{
-		"seed": 129,
+		"seed": 130,
 		"visionFieldRadius": "100.0",
 		"player1" : 1234, 
 		"player2" : 5678,
@@ -69,7 +69,8 @@
 			"height" : "40.0",
 			"hasCollision" : true,
 			"velocity" : "0.1",
-			"fsm" : "Player2"
+			"fsm" : "Guard",
+			"category" : "Adversary"
 		},
 		{
 			"id" : 9012,
@@ -78,7 +79,8 @@
 			"height" : "64.0",
 			"hasCollision" : false,
 			"velocity" : "0.0",
-			"fsm" : "DoNothing"
+			"fsm" : "DoNothing",
+			"category" : "Stuff"
 		}
 	],
 	"enenmies" :

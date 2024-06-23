@@ -29,27 +29,20 @@ public class Guard extends Entity
     return "Guard - " + super.toString();
   }
 
-  void follow( Entity entity )
-  {
-    Vector OP = entity.getPos();
-    Vector OE = this.getPos();
-    Vector EP = Vector.sub( OP, OE );
-    super.setOrientation( EP.getAngle() );
-    doMove( m_orientation );
-  }
-
-  @Override
-  public void tick( long elapsed )
-  {
-    super.tick( elapsed );
-//    AABB h1 = Model.getInstance().getPlayer1().getHitbox();
-    Circle c1 = Model.getInstance().getPlayer1().getVisionField();
-    Circle c2 = super.getVisionField();
-//    System.out.println( "Tick " + this.toString() );
-//    if( Collision.detect( c1, c2 ) )
-//    {
-////      System.out.println( "Collision : " + c1.toString() + " - " + c2.toString() );
-//      follow( Model.getInstance().getPlayer1() );
-//    }
-  }
+//  void follow( Entity entity )
+//  {
+//    Vector OP = entity.getPos();
+//    Vector OE = this.getPos();
+//    Vector EP = Vector.sub( OP, OE );
+//    super.setOrientation( EP.getAngle() );
+//    doMove( m_orientation );
+//  }
+//
+//  @Override
+//  public void tick( long elapsed )
+//  {
+//    super.tick( elapsed );
+//    Circle c1 = Model.getInstance().getPlayer1().getVisionField();
+//    Circle c2 = super.getVisionField();
+//  }
 }

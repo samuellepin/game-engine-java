@@ -458,8 +458,8 @@ public abstract class Entity implements Cloneable
     
     for( Entity e: Model.getInstance().getEntities())
     {
-      if (m_cat.equals( e.m_cat ))
-        return Collision.detect( m_hitbox, a );
+      if (cat.getType() == e.getType())
+        return Collision.detect( e.getHitbox(), a );
     }
     return false;
   }
@@ -567,5 +567,10 @@ public abstract class Entity implements Cloneable
   public void setId( int id )
   {
     m_id = id;
+  }
+  
+  public CategoryFsm.CATEGORY getType()
+  {
+    return m_cat.getType();
   }
 }

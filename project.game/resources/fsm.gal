@@ -63,30 +63,30 @@ Player2(Normal)
 Guard(Patrol)
 {  
   * (Patrol):
-  | Cell(F,#) ? Move(F)                                               : (Engage)
-  | Cell(B,#) ? Turn(B)                                               : (Patrol)
-  | Cell(L,#) ? Turn(L)                                               : (Patrol)
-  | Cell(R,#) ? Turn(R)                                               : (Patrol)
-  | True          ? 40% Move(F) / 20% Turn(L) / 20% Turn(R) / 20% Turn(B) : (Patrol)
-  
+  | Cell(F,@) ? Move(F) : (Engage)
+  | Cell(B,@) ? Turn(B) : (Patrol)
+  | Cell(L,@) ? Turn(L) : (Patrol)
+  | Cell(R,@) ? Turn(R) : (Patrol)
+  | True ? 40% Move(F) / 20% Turn(L) / 20% Turn(R) / 20% Turn(B) : (Patrol)
+
   * (Engage):
-  | Cell(F, #)         ? Hit(F)  : (Patrol)
-  | Cell(L, #)         ? Turn(L) : (Engage)
-  | Cell(R, #)         ? Turn(R) : (Engage)
-  | Cell(B, #)         ? Turn(B) : (Engage)
-  | Cell(F, V)         ? Move(F) : (Engage)
-  | !Closest(#, _) ?         : (Patrol)
+  | Cell(F, @) ? Hit(F)  : (Patrol)
+  | Cell(L, @) ? Turn(L) : (Engage)
+  | Cell(R, @) ? Turn(R) : (Engage)
+  | Cell(B, @) ? Turn(B) : (Engage)
+  | Cell(F, V) ? Move(F) : (Engage)
+  | !Closest(@, _) ? : (Patrol)
 }
 
 SecurityCamera(Rotate)
 {
   * (Rotate) :
-  | Closest(#, F) ? Wizz    : (Rotate)
-  | True          ? Turn(R) : (Rotate)
+  | Closest(@, F) ? Wizz : (Rotate)
+  | True ? Turn(R) : (Rotate)
 }
 
 Wall(DoNothing)
 {
   * (DoNothing) :
-  | True          ? : (DoNothing)
+  | True ? : (DoNothing)
 }

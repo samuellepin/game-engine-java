@@ -12,7 +12,6 @@ public class Cell implements ConditionFsm
 
   public Cell()
   {
-    // TODO define default values
     m_dir = new Direction( Direction.DIRECTION.Forward );
     m_cat = new CategoryFsm( CategoryFsm.CATEGORY.Adversary );
   }

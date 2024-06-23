@@ -60,7 +60,8 @@
 			"height" : "45.0",
 			"hasCollision" : true,
 			"velocity" : "0.1",
-			"fsm" : "Player2"
+			"fsm" : "Guard",
+			"category" : "Adversary"
 		},
 		{
 			"id" : 9012,
@@ -69,7 +70,8 @@
 			"height" : "20.0",
 			"hasCollision" : false,
 			"velocity" : "0.0",
-			"fsm" : "DoNothing"
+			"fsm" : "DoNothing",
+			"category" : "Stuff"
 		}
 	],
 	"enenmies" :
