@@ -4,11 +4,13 @@ import src.Model.Vector;
 
 public class Direction
 {
+  public static final double DIRECTION_ANGLE = Math.PI * 0.25;
+  
   private DIRECTION m_direction;
 
   public enum DIRECTION
   {
-    Here, North, South, East, West, NE, SE, SW, NW, Forward, BackWard, Left, Right, Underscore;
+    Here, North, South, East, West, NE, SE, SW, NW, Forward, Backward, Left, Right, Underscore;
   }
 
   public Direction( DIRECTION d )
@@ -43,7 +45,7 @@ public class Direction
       return Math.PI * 0.75;
     case NW:
       return -Math.PI * 0.75;
-    case BackWard:
+    case Backward:
       return Vector.normalizeAngle( currentAngle + Math.PI );
     case Left:
       return Vector.normalizeAngle( currentAngle + Math.PI * 0.5 );
@@ -52,6 +54,25 @@ public class Direction
     default:
       return currentAngle;
     }
+  }
+
+  /**
+   * @param angle
+   * @return the absolute direction quarter in which the angle is approximatively.
+   */
+  public static DIRECTION toDirection( double angle )
+  {
+    double angleMod = angle % Math.PI; // angleMod is negative if angle too
+    if( angleMod >= -Math.PI * 0.125 && angleMod < 0 || angleMod >= 0 && angleMod < Math.PI * 0.125 )
+      return DIRECTION.East;
+    if( angleMod >= Math.PI * 0.125 && angleMod < Math.PI * 0.375 ) return DIRECTION.NE;
+    if( angleMod >= Math.PI * 0.375 && angleMod < Math.PI * 0.625 ) return DIRECTION.North;
+    if( angleMod >= Math.PI * 0.625 && angleMod < Math.PI * 0.875 ) return DIRECTION.NW;
+    if( angleMod >= Math.PI * 0.875 && angleMod < Math.PI || angleMod < -Math.PI * 0.875 && angleMod >= -Math.PI )
+      return DIRECTION.West;
+    if( angleMod < -Math.PI * 0.625 && angleMod >= -Math.PI * 0.875 ) return DIRECTION.SW;
+    if( angleMod < -Math.PI * 0.375 && angleMod >= -Math.PI * 0.625 ) return DIRECTION.South;
+    return DIRECTION.SE;
   }
 
   @Override

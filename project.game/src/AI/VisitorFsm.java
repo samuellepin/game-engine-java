@@ -88,33 +88,33 @@ public class VisitorFsm implements IVisitor
     switch ( dir.toString() )
     {
     case "N":
-      return new src.AI.Direction(src.AI.Direction.DIRECTION.North);
+      return new src.AI.Direction( src.AI.Direction.DIRECTION.North );
     case "S":
-      return new src.AI.Direction(src.AI.Direction.DIRECTION.South);
+      return new src.AI.Direction( src.AI.Direction.DIRECTION.South );
     case "E":
-      return new src.AI.Direction(src.AI.Direction.DIRECTION.East);
+      return new src.AI.Direction( src.AI.Direction.DIRECTION.East );
     case "W":
-      return new src.AI.Direction(src.AI.Direction.DIRECTION.West);
+      return new src.AI.Direction( src.AI.Direction.DIRECTION.West );
     case "NE":
-      return new src.AI.Direction(src.AI.Direction.DIRECTION.NE);
+      return new src.AI.Direction( src.AI.Direction.DIRECTION.NE );
     case "SE":
-      return new src.AI.Direction(src.AI.Direction.DIRECTION.SE);
+      return new src.AI.Direction( src.AI.Direction.DIRECTION.SE );
     case "SW":
-      return new src.AI.Direction(src.AI.Direction.DIRECTION.SW);
+      return new src.AI.Direction( src.AI.Direction.DIRECTION.SW );
     case "NW":
-      return new src.AI.Direction(src.AI.Direction.DIRECTION.NW);
+      return new src.AI.Direction( src.AI.Direction.DIRECTION.NW );
     case "F":
-      return new src.AI.Direction(src.AI.Direction.DIRECTION.Forward);
+      return new src.AI.Direction( src.AI.Direction.DIRECTION.Forward );
     case "B":
-      return new src.AI.Direction(src.AI.Direction.DIRECTION.BackWard);
+      return new src.AI.Direction( src.AI.Direction.DIRECTION.Backward );
     case "L":
-      return new src.AI.Direction(src.AI.Direction.DIRECTION.Left);
+      return new src.AI.Direction( src.AI.Direction.DIRECTION.Left );
     case "R":
-      return new src.AI.Direction(src.AI.Direction.DIRECTION.Right);
+      return new src.AI.Direction( src.AI.Direction.DIRECTION.Right );
     case "H":
-      return new src.AI.Direction(src.AI.Direction.DIRECTION.Here);
+      return new src.AI.Direction( src.AI.Direction.DIRECTION.Here );
     case "_":
-      return new src.AI.Direction(src.AI.Direction.DIRECTION.Underscore);
+      return new src.AI.Direction( src.AI.Direction.DIRECTION.Underscore );
     default:
       return null;
     }

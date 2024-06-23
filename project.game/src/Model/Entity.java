@@ -8,8 +8,10 @@ import src.AI.CategoryFsm;
 import src.AI.Direction;
 import src.AI.FSM;
 import src.Model.Collision.AABB;
+import src.Model.Collision.Arc;
 import src.Model.Collision.Circle;
 import src.Model.Collision.Collision;
+import src.Model.World.Tile;
 
 import java.text.DecimalFormat;
 
@@ -415,7 +417,51 @@ public abstract class Entity implements Cloneable
   
   public boolean getCell( Direction dir, CategoryFsm cat )
   {
-    Collision.detect( m_hitbox, null );
+    Direction absDir;
+    switch( dir.getDirection() )
+    {
+    case Forward:
+      absDir = new Direction( Direction.toDirection( m_orientation ) );
+      break;
+    case Backward:
+      absDir = new Direction( Direction.toDirection( Vector.normalizeAngle( m_orientation + Math.PI ) ) );
+      break;
+    case Left:
+      absDir = new Direction( Direction.toDirection( Vector.normalizeAngle( m_orientation + Math.PI * 0.5) ) );
+      break;
+    case Right:
+      absDir = new Direction( Direction.toDirection( Vector.normalizeAngle( m_orientation - Math.PI * 0.5) ) );
+      break;
+    default:
+      absDir = new Direction( dir.getDirection() );
+      break;
+    }
+    double radius;
+    switch( absDir.getDirection() )
+    {
+    case North:
+    case South:
+      radius = Tile.HEIGHT;
+      break;
+    case NE:
+    case NW:
+    case SE:
+    case SW:
+      radius = (Tile.HEIGHT + Tile.WIDTH) /2;
+      break;
+    default:
+      radius = Tile.WIDTH;
+        break;
+    }
+    Vector pos = m_hitbox.getBarycenter();
+    Arc a = new Arc( pos.getX(), pos.getY(), radius, absDir.toAngle( 0 ), Direction.DIRECTION_ANGLE );
+    
+    for( Entity e: Model.getInstance().getEntities())
+    {
+      if (m_cat.equals( e.m_cat ))
+        return Collision.detect( m_hitbox, a );
+    }
+    return false;
   }
 
   // Spécifique à notre physique

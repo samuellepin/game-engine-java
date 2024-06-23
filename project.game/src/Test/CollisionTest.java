@@ -91,6 +91,14 @@ public class CollisionTest
     {
       m_arc.rotate( 0.01 );
     }
+    if ( ctr.isKeyDown( KeyEvent.VK_SHIFT ) && m_arc.getApertureAngle() < Math.PI )
+    {
+      m_arc.open( 0.01 );
+    }
+    if ( ctr.isKeyDown( KeyEvent.VK_CONTROL ) && m_arc.getApertureAngle() > 0 )
+    {
+      m_arc.open( -0.01 );
+    }
   }
   
   void paint( Graphics g )
