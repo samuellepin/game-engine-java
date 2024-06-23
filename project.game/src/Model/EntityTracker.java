@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import src.Model.Collision.AABB;
 import src.Config;
+import src.Game;
 
 /**
  * This class tracks an entity for the view. It shows all the entities in the
@@ -53,6 +54,11 @@ public class EntityTracker extends AABB
     centerOnTarget();
     m_entities = new ArrayList< Entity >();
     m_listener = new TrackerListener();
+  }
+  
+  public void resize()
+  {
+    super.setDim( Game.SCREEN_WIDTH/2, Game.SCREEN_HEIGHT );
   }
 
   private void centerOnTarget()

@@ -11,6 +11,7 @@ import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
 import java.text.DecimalFormat;
 
+import info3.game.graphics.GameCanvas;
 import src.Model.Entity;
 import src.Model.EntityTracker;
 import src.Model.Model;
@@ -33,6 +34,29 @@ public class View
     int halfWidth = Game.SCREEN_WIDTH / 2;
     m_viewports[ 0 ] = new Viewport( m_model.getPlayer1(), 0, 0, halfWidth, Game.SCREEN_HEIGHT );
     m_viewports[ 1 ] = new Viewport( m_model.getPlayer2(), halfWidth, 0, halfWidth, Game.SCREEN_HEIGHT );
+  }
+
+  public void paintFPS( Graphics g )
+  {
+    Game game = Game.getInstance();
+    if( game == null ) return;
+    
+    GameCanvas canvas = game.getCanvas();
+    if( canvas == null ) return;
+
+    int  FPS  = canvas.getFPS();
+
+    Font font = new Font( "Arial", Font.BOLD, 16 );
+    g.setFont( font );
+    FontMetrics fm     = g.getFontMetrics();
+    String      text   = FPS + " FPS";
+    int         width  = fm.stringWidth( text );
+    int         height = fm.getAscent() + fm.getDescent() + fm.getLeading();
+    int         posX   = Game.SCREEN_WIDTH - width - 5;
+    int         posY   = height;
+
+    g.setColor( Color.red );
+    g.drawString( text, posX, posY );
   }
 
   public int paintInfoEntity( Graphics g, String title, Entity e, int posX, int posY )
@@ -58,6 +82,8 @@ public class View
     posY += this.paintInfoEntity( g, "Player 1", player1, posX, posY );
     Entity player2 = Model.getInstance().getPlayer2();
     posY += this.paintInfoEntity( g, "Player 2", player2, posX, posY );
+    
+    this.paintFPS( g );
   }
 
   public void paintGameOver( Graphics g )
@@ -78,9 +104,28 @@ public class View
     int offset = 10;
     g.drawRect( posX - offset, posY, width + 2 * offset, height );
   }
+  
+  public void updateScreenDimension()
+  {
+    Game game = Game.getInstance();
+    if( game == null ) return;
+    
+    GameCanvas canvas = game.getCanvas();
+    if( canvas == null ) return;
+
+    Game.SCREEN_WIDTH = canvas.getWidth();
+    Game.SCREEN_HEIGHT = canvas.getHeight();
+
+    this.m_viewports[ 0 ].update( 0, 0, Game.SCREEN_WIDTH/2, Game.SCREEN_HEIGHT );
+    this.m_viewports[ 0 ].getTracker().resize();
+    this.m_viewports[ 1 ].update( Game.SCREEN_WIDTH/2, 0, Game.SCREEN_WIDTH/2, Game.SCREEN_HEIGHT );
+    this.m_viewports[ 1 ].getTracker().resize();
+  }
 
   public void paint( Graphics g )
   {
+//    this.updateScreenDimension();
+    
     if( Model.getInstance().isGameOver() )
     {
       this.paintGameOver( g );
@@ -99,7 +144,7 @@ public class View
             (int)vp.getHeight() );
 
         vp.paint( graphics );
-        
+
         if( i == 1 && Config.getInstance().getView().isReducedVisionFieldEnabled() )
         {
           int              radius = (int)Model.getInstance().getPlayer2().getVisionField().getRadius();
