@@ -82,4 +82,9 @@ public class EntityTracker extends AABB
   {
     return m_listener;
   }
+  
+  public Entity getTarget()
+  {
+    return m_target;
+  }
 }

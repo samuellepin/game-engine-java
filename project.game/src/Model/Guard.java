@@ -17,7 +17,8 @@ public class Guard extends Entity
 //    super.setVelocity( 0.1 );
 //  }
 
-  public Guard( FSM fsm, int id, double width, double height, double velocity, boolean hasCollision , CategoryFsm.CATEGORY type, List< CategoryFsm.CATEGORY > options)
+  public Guard( FSM fsm, int id, double width, double height, double velocity, boolean hasCollision,
+      CategoryFsm.CATEGORY type, List< CategoryFsm.CATEGORY > options )
   {
     super( fsm, id, width, height, velocity, hasCollision, type, options );
     this.setPos( Map.getInstance().getRandomPos() );
@@ -38,6 +39,19 @@ public class Guard extends Entity
     doMove( m_orientation );
   }
 
+  private long countdown;
+
+  void shot( long dt )
+  {
+    countdown += dt;
+    if( countdown > 1000 )
+    {
+      System.out.println("Shot!");
+      Model.getInstance().addShot( new Shot( this.getPos(), this.getOrientation() ) );
+      countdown = 0;
+    }
+  }
+
   @Override
   public void tick( long elapsed )
   {
@@ -50,6 +64,7 @@ public class Guard extends Entity
     {
 //      System.out.println( "Collision : " + c1.toString() + " - " + c2.toString() );
       follow( Model.getInstance().getPlayer1() );
+      shot( elapsed );
     }
   }
 }

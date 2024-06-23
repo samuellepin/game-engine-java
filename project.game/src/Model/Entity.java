@@ -65,6 +65,8 @@ public abstract class Entity implements Cloneable
     this.setVelocity( velocity );
     this.setHasCollision( hasCollision );
     m_cat = new CategoryFsm( type, options );
+    
+    m_hp = 100;
   }
 
   @Override
@@ -508,5 +510,20 @@ public abstract class Entity implements Cloneable
   public void setId( int id )
   {
     m_id = id;
+  }
+  
+  public void subHP( int damage )
+  {
+    m_hp -= damage;
+  }
+  
+  public boolean isDead()
+  {
+    return m_hp == 0;
+  }
+  
+  public int getHP()
+  {
+    return m_hp;
   }
 }

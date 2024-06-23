@@ -166,7 +166,7 @@ public class View
       }
     }
 
-    this.paintInfo( g );
+//    this.paintInfo( g );
   }
 
   public static View getInstance()
