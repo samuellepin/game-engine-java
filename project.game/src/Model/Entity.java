@@ -300,7 +300,7 @@ public abstract class Entity implements Cloneable
 
   public void doPick( double orientation )
   {
-    ArrayList< Entity > entities = new ArrayList< Entity > (Model.getInstance().getEntities());
+    ArrayList< Entity > entities = new ArrayList< Entity >( Model.getInstance().getEntities() );
     for ( Entity e : entities )
     {
       Vector  dist         = Vector.sub( e.getPos(), this.getPos() );
@@ -390,6 +390,44 @@ public abstract class Entity implements Cloneable
   {
 //    Model model = Model.getInstance();
     m_brain.step();
+  }
+
+  public void doWizz()
+  {
+    m_brain.step();
+  }
+
+  public boolean got()
+  {
+    return false;
+  }
+
+  public boolean closest( CategoryFsm cat, double dir )
+  {
+    ArrayList< Entity > entities  = new ArrayList< Entity >( Model.getInstance().getEntities() );
+    Vector              dist      = null;
+    double              distMin   = Double.MAX_VALUE;
+    Entity              entityMin = null;
+    for ( Entity e : entities )
+    {
+      double distNorm = Vector.sub( e.getPos(), this.getPos() ).norm();
+      if( distNorm < distMin )
+      {
+        dist = Vector.sub( e.getPos(), this.getPos() );
+        distMin = distNorm;
+        entityMin = e;
+      }
+    }
+    if( entityMin.m_cat == cat )
+    {
+      boolean correctAngle = dir - ( Math.PI / 4 ) <= dist.getAngle();
+      correctAngle = correctAngle && dist.getAngle() <= dir + ( Math.PI / 4 );
+      if( correctAngle )
+      {
+        return true;
+      }
+    }
+    return false;
   }
 
   // Spécifique à notre physique

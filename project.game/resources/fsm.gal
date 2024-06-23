@@ -56,17 +56,19 @@ Player2(Normal)
   | Key(s) ? Move(S) : (Metamorph)
   | Key(d) ? Move(E) : (Metamorph)
   | Key(q) ? Move(W) : (Metamorph)
-  | Key(x)  ?         : (Normal)
-  | True    ? Wait()  : (Metamorph)
+  | Key(x) ?         : (Normal)
+  | True   ? Wait()  : (Metamorph)
 }
 
 Guard(Patrol)
 {  
   * (Patrol):
-  | Closest(#, F) ? Move(F)                                               : (Engage)
-  | Closest(#, B) ? Turn(B)                                               : (Engage)
-  | Closest(#, L) ? Turn(L)                                               : (Engage)
-  | Closest(#, R) ? Turn(R)                                               : (Engage)
+  | Got ?                                                                 : (Engage)
+  | Closest(#, F) ? Move(F);Wizz                                          : (Engage)
+  | Closest(#, B) ? Turn(B);Wizz                                          : (Engage)
+  | Closest(#, L) ? Turn(L);Wizz                                          : (Engage)
+  | Closest(#, R) ? Turn(R);Wizz                                          : (Engage)
+  | Closest(O, F) ? Turn(R)                                               : (Patrol)
   | True          ? 40% Move(F) / 20% Turn(L) / 20% Turn(R) / 20% Turn(B) : (Patrol)
   
   * (Engage):

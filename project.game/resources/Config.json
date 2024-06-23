@@ -54,7 +54,7 @@
 			"height" : "40.0",
 			"hasCollision" : true,
 			"velocity" : "0.1",
-			"fsm" : "Player2"
+			"fsm" : "Guard"
 		},
 		{
 			"id" : 9012,

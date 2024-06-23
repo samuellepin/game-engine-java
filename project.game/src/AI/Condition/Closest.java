@@ -7,8 +7,8 @@ import src.Model.Entity;
 public class Closest implements ConditionFsm
 {
 
-  private CategoryFsm  m_cat;
-  private Direction m_dir;
+  private CategoryFsm m_cat;
+  private Direction   m_dir;
 
   public Closest()
   {
@@ -26,8 +26,7 @@ public class Closest implements ConditionFsm
   @Override
   public boolean evaluate( Entity entity )
   {
-    // TODO Auto-generated method stub
-    return false;
+    return entity.closest( m_cat, m_dir.toAngle( entity.getOrientation() ) );
   }
 
   @Override

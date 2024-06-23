@@ -11,9 +11,9 @@ import src.Model.World.Map;
 
 public class Guard extends Spy
 {
-  private Alarm   m_ownAlarm;
-  private Alarm   m_otherAlarm;
-  private boolean m_isAlarmed;
+  private Alarm     m_ownAlarm;
+  private Alarm     m_otherAlarm;
+  private boolean   m_isAlarmed;
   private Direction m_dirOpponent;
 //  public Guard( Automaton automaton )
 //  {
@@ -56,7 +56,7 @@ public class Guard extends Spy
     if( Collision.detect( c1, c2 ) )
     {
 //      System.out.println( "Collision : " + c1.toString() + " - " + c2.toString() );
-      follow( Model.getInstance().getPlayer1() );
+      // follow( Model.getInstance().getPlayer1() );
     }
     if( m_ownAlarm.isActive() )// actif si le garde à déclanché son alarme
     {
@@ -67,10 +67,18 @@ public class Guard extends Spy
     }
   }
 
-  public void alarm()// déclanché par closest de l'automate
+  @Override
+  public void doWizz()// déclanché après closest de l'automate
   {
     m_isAlarmed = true;
     m_ownAlarm.alert();
+    m_brain.step();
+  }
+
+  @Override
+  public boolean got()
+  {
+    return m_isAlarmed;
   }
 
   public void setAlarm( Alarm alarm )// déclanché par alarm si un autre garde détecte le joueur
