@@ -164,4 +164,13 @@ public class Collision
 
     return false;
   }
+  
+  public static boolean detect( AABB aabb, Vector point )
+  {
+    return point.getX() >= aabb.getMin().getX() 
+        && point.getX() <= aabb.getMax().getX()
+        && point.getY() >= aabb.getMin().getY() 
+        && point.getY() <= aabb.getMax().getY();
+  }
+
 }

@@ -36,6 +36,7 @@ public abstract class Entity implements Cloneable
   protected Entity         m_objectInHand;
   protected List< Entity > m_inventory;
   protected boolean        m_isResting;
+  protected int            m_hp;
 
   public Entity( FSM fsm, CategoryFsm.CATEGORY type, List< CategoryFsm.CATEGORY > options )
   {
@@ -47,6 +48,7 @@ public abstract class Entity implements Cloneable
     m_hasCollision = true;
     m_cat = new CategoryFsm( type, options );
     m_id = -1;
+    m_hp = 100;
   }
 
   public Entity( FSM fsm, int id, double width, double height, double velocity, boolean hasCollision,

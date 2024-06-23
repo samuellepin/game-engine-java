@@ -15,7 +15,7 @@ import src.Model.Spy;
 
 public class Config
 {
-  private static final String FILENAME = "resources/Config-Alien.json";
+  private static final String FILENAME = "resources/Config-M.json";
   private static final Config INSTANCE = Serializer.deserialize( FILENAME, Config.class );
   private static final Random RANDOM   = new Random( Config.getInstance().getParameters().getSeed() );
 
