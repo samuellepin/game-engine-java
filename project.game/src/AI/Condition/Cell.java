@@ -26,8 +26,7 @@ public class Cell implements ConditionFsm
   @Override
   public boolean evaluate( Entity entity )
   {
-    // TODO Auto-generated method stub
-    return false;
+    return entity.getCell( m_dir, m_cat );
   }
 
   @Override

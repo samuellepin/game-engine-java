@@ -63,10 +63,10 @@ Player2(Normal)
 Guard(Patrol)
 {  
   * (Patrol):
-  | Closest(#, F) ? Move(F)                                               : (Engage)
-  | Closest(#, B) ? Turn(B)                                               : (Patrol)
-  | Closest(#, L) ? Turn(L)                                               : (Patrol)
-  | Closest(#, R) ? Turn(R)                                               : (Patrol)
+  | Cell(F,#) ? Move(F)                                               : (Engage)
+  | Cell(B,#) ? Turn(B)                                               : (Patrol)
+  | Cell(L,#) ? Turn(L)                                               : (Patrol)
+  | Cell(R,#) ? Turn(R)                                               : (Patrol)
   | True          ? 40% Move(F) / 20% Turn(L) / 20% Turn(R) / 20% Turn(B) : (Patrol)
   
   * (Engage):
