@@ -59,9 +59,21 @@ public class ActionFactory
   public ActionFsm setHit( List< Object > parameters )
   {
     Hit action = new Hit();
-    if( parameters.size() >= 1 && parameters.get( 0 ) instanceof Direction )
+    if( parameters.size() >= 1 )
     {
-      action = new Hit( (Direction)parameters.get( 0 ) );
+      Object o1 = parameters.get( 0 );
+      if( parameters.size() >= 2 )
+      {
+        Object o2 = parameters.get( 1 );
+        if( o1 instanceof Direction && o2 instanceof Integer )
+        {
+          return add( new Hit( (Direction)o1, (Integer)o2 ) );
+        }
+      }
+      if( o1 instanceof Direction )
+      {
+        action = new Hit( (Direction)o1 );
+      }
     }
     return add( action );
   }

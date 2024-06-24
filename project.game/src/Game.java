@@ -57,7 +57,7 @@ public class Game
     m_canvas = new GameCanvas( m_listener );
     m_canvas.setSize( new Dimension( SCREEN_WIDTH, SCREEN_HEIGHT ) );
 
-    m_frame = m_canvas.createFrame( new Dimension( SCREEN_WIDTH, SCREEN_HEIGHT ) );
+    m_frame = m_canvas.createFrame( new Dimension( SCREEN_WIDTH+30, SCREEN_HEIGHT+60 ) );
     m_frame.setTitle( Config.getInstance().getView().getTitle() );
     m_frame.setLayout( new FlowLayout() );
     m_frame.add( m_canvas );

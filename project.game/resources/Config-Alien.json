@@ -3,6 +3,7 @@
 	{
 		"seed": 129,
 		"visionFieldRadius": "100.0",
+		"visionFieldApertureAngle": "45°",
 		"player1" : 1234, 
 		"player2" : 5678,
 		"itemToWin" : 9012,

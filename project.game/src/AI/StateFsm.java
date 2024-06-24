@@ -6,10 +6,10 @@ import src.Model.Entity;
 
 public class StateFsm
 {
-  private String                  m_name;
+  private String                     m_name;
   private ArrayList< TransitionFsm > m_transitions;
 
-  public StateFsm(String name )
+  public StateFsm( String name )
   {
     m_name = name;
     m_transitions = new ArrayList< TransitionFsm >();
@@ -38,12 +38,15 @@ public class StateFsm
 
   public boolean isEqual( StateFsm state )
   {
-    return this.getName() == state.getName() ;
+    return this.getName() == state.getName();
   }
-  
-  public TransitionFsm evaluate(Entity e) {
-    for(TransitionFsm t : m_transitions) {
-      if(t.evaluate( e )) {
+
+  public TransitionFsm evaluate( Entity e )
+  {
+    for ( TransitionFsm t : m_transitions )
+    {
+      if( t.evaluate( e ) )
+      {
         return t;
       }
     }

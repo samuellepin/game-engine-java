@@ -23,11 +23,9 @@ public class Alien extends Entity
     return !m_updateView;
   }
 
-  public Alien( FSM fsm, int id, double width, double height, double velocity, boolean hasCollision,
-      CategoryFsm.CATEGORY type, List< CategoryFsm.CATEGORY > options, int hp )
+  public Alien()
   {
-    super( fsm, id, width, height, velocity, hasCollision, type, options, hp );
-    this.setPos( Map.getInstance().getRandomPos() );
+    super();
   }
 
   @Override
@@ -42,7 +40,7 @@ public class Alien extends Entity
     super.tick( dt );
     if( Controller.getInstance().isKeyDown( KeyEvent.VK_SPACE ) && !this.isMetamorphosed() )
     {
-      m_metamorph = new Rabbit( this.getFSM() );
+      m_metamorph = new Rabbit();
       this.setUpdateView( true );
     }
   }
@@ -55,5 +53,10 @@ public class Alien extends Entity
   public Entity getMetamorph()
   {
     return m_metamorph;
+  }
+  
+  @Override 
+  public void getHit(int damage) {
+    this.subHP( damage );
   }
 }

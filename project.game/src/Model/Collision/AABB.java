@@ -6,12 +6,14 @@ public class AABB implements Hitbox, Cloneable
 {
   private Vector m_min;
   private Vector m_max;
+  private Vector m_barycenter;
   
   public AABB clone() throws CloneNotSupportedException
   {
     AABB cloned = (AABB)super.clone();
     cloned.m_min = cloned.m_min.clone();
     cloned.m_max = cloned.m_max.clone();
+    cloned.m_barycenter = cloned.m_barycenter.clone();
     return cloned;
   }
 
@@ -19,12 +21,16 @@ public class AABB implements Hitbox, Cloneable
   {
     m_min = pmin;
     m_max = pmax;
+    m_barycenter = new Vector(0,0);
+    this.updateBarycenter();
   }
 
   public AABB( double minX, double minY, double maxX, double maxY )
   {
     m_min = new Vector( minX, minY );
     m_max = new Vector( maxX, maxY );
+    m_barycenter = new Vector(0,0);
+    this.updateBarycenter();
   }
 
   public Vector getMin()
@@ -56,6 +62,7 @@ public class AABB implements Hitbox, Cloneable
   public void setDim( double width, double height )
   {
     m_max.setPos( m_min.getX() + width, m_min.getY() + height );
+    this.updateBarycenter();
   }
 
   public Vector getPos()
@@ -79,12 +86,14 @@ public class AABB implements Hitbox, Cloneable
     double height = this.getHeight();
     m_min.setPos( pos.getX(), pos.getY() );
     m_max.setPos( pos.getX() + width, pos.getY() + height );
+    this.updateBarycenter();
   }
 
   public void translate( double x, double y )
   {
     m_min.translate( x, y );
     m_max.translate( x, y );
+    this.updateBarycenter();
   }
 
   public void setPos( double x, double y )
@@ -94,10 +103,15 @@ public class AABB implements Hitbox, Cloneable
     m_min.setPos( x, y );
     m_max.setPos( x + width, y + height );
   }
+  
+  public void updateBarycenter()
+  {
+    m_barycenter.setPos( ( m_min.getX() + m_max.getX() ) / 2, ( m_min.getY() + m_max.getY() ) / 2 );
+  }
 
   public Vector getBarycenter()
   {
-    return new Vector( ( m_min.getX() + m_max.getX() ) / 2, ( m_min.getY() + m_max.getY() ) / 2 );
+    return m_barycenter;
   }
 
   private static double min( double a, double b )
