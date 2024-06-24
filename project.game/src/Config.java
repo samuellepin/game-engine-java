@@ -99,7 +99,7 @@ public class Config
     entity.setHasCollision( e.hasCollision() );
     entity.setCategory( e.getTypeCat() );
     entity.setPos( Map.getInstance().getRandomPos() );
-//    entity.setOptions( e.getOptions() );
+    // entity.setOptions( e.getOptions() );
 
     return entity;
   }
@@ -118,7 +118,8 @@ public class Config
     // put the viewports on the right entities
     model.setPlayer1( this.getParameters().getPlayer1() );
     model.setPlayer2( this.getParameters().getPlayer2() );
-    model.setItemToWin( this.getParameters().getItemToWin() );
+    model.setExit( this.getParameters().getExit() );
+    this.updateKeyItems();
 
     // make copy of the enenmies
     for ( int i = 0; i < this.enenmies.length; i++ )
@@ -143,6 +144,7 @@ public class Config
     public String  visionFieldApertureAngle;
     public int     player1;
     public int     player2;
+    public int     exit;
     public int     itemToWin;
     public boolean enableBSP;
     public boolean enableWalls;
@@ -212,6 +214,19 @@ public class Config
       for ( src.Model.Entity e : model.getEntities() )
       {
         if( e.getId() == player2 )
+        {
+          return e;
+        }
+      }
+      return null;
+    }
+
+    public src.Model.Entity getExit()
+    {
+      Model model = Model.getInstance();
+      for ( src.Model.Entity e : model.getEntities() )
+      {
+        if( e.getId() == exit )
         {
           return e;
         }
@@ -514,12 +529,12 @@ public class Config
     }
   }
 
-  public Parameters       parameters;
-  public World            world;
-  public View             view;
-  public Entity[]         entities;
-  public Enemy[]          enenmies;
-  public ItemsToPickToWin itemsToPickToWin;
+  public Parameters parameters;
+  public World      world;
+  public View       view;
+  public Entity[]   entities;
+  public Enemy[]    enenmies;
+  public int[]      keyItems;
 
   public Parameters getParameters()
   {
@@ -546,8 +561,18 @@ public class Config
     return enenmies;
   }
 
-  public ItemsToPickToWin getItemsToPickToWin()
+  public void updateKeyItems()
   {
-    return itemsToPickToWin;
+    Model model = Model.getInstance();
+    for ( src.Model.Entity e : model.getEntities() )
+    {
+      for( int id : keyItems )
+      {
+        if( id == e.getId() )
+        {
+          model.addKeyItems( e );
+        }
+      }
+    }
   }
 }

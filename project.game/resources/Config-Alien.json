@@ -6,6 +6,7 @@
 		"visionFieldApertureAngle": "45°",
 		"player1" : 1234, 
 		"player2" : 5678,
+		"exit" : 3000,
 		"itemToWin" : 9012,
 		"enableBSP" : false,
 		"enableWalls" : true,
@@ -79,8 +80,18 @@
 		{
 			"id" : 9012,
 			"type" : "Generator",
-			"width" : "64.0",
-			"height" : "64.0",
+			"width" : "32.0",
+			"height" : "32.0",
+			"hasCollision" : false,
+			"velocity" : "0.0",
+			"fsm" : "DoNothing",
+			"category" : "Stuff"
+		},
+		{
+			"id" : 9013,
+			"type" : "Generator",
+			"width" : "32.0",
+			"height" : "32.0",
 			"hasCollision" : false,
 			"velocity" : "0.0",
 			"fsm" : "DoNothing",
@@ -135,6 +146,16 @@
 			"velocity" : "1.0",
 			"fsm" : "Animal",
 			"category" : "Team"
+		},
+		{
+			"id" : 3000,
+			"type" : "UFO",
+			"width" : "50.0",
+			"height" : "50.0",
+			"hasCollision" : false,
+			"velocity" : "0.0",
+			"fsm" : "DoNothing",
+			"category" : "Team"
 		}
 	],
 	"enenmies" :
@@ -165,11 +186,6 @@
 			"max" : 6
 		}
 	],
-	"itemsToPickToWin" : 
-	{
-		"id" : 9012,
-		"min" : 1,
-		"max" : 1
-	}
+	"keyItems" : [ 9012, 9013 ]
 }
 

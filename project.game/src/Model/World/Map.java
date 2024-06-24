@@ -241,6 +241,7 @@ public class Map
     return this.getPos( x, y );
   }
 
+
 // Inutile - les murs sont dans la liste des entités
 //  public boolean detectCollision( Entity entity )
 //  {
