@@ -12,11 +12,15 @@ import src.Config;
 import src.Config.Tile;
 import src.Model.Alien;
 import src.Model.Document;
+import src.Model.Dove;
 import src.Model.Entity;
 import src.Model.Generator;
 import src.Model.Guard;
+import src.Model.Mouse;
 import src.Model.Rabbit;
+import src.Model.Raven;
 import src.Model.Spy;
+import src.Model.Squirrel;
 import src.Model.Wall;
 
 public class AvatarFactory
@@ -90,6 +94,22 @@ public class AvatarFactory
     else if( e instanceof Rabbit )
     {
       avatar = new RabbitAvatar( (Rabbit)e );
+    }
+    else if( e instanceof Dove )
+    {
+      avatar = new DoveAvatar( (Dove)e );
+    }
+    else if( e instanceof Raven )
+    {
+      avatar = new RavenAvatar( (Raven)e );
+    }
+    else if( e instanceof Mouse )
+    {
+      avatar = new MouseAvatar( (Mouse)e );
+    }
+    else if( e instanceof Squirrel )
+    {
+      avatar = new MouseAvatar( (Squirrel)e );
     }
     else if( e instanceof Wall )
     {

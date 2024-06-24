@@ -17,6 +17,6 @@ public class Rabbit extends Entity
   @Override
   public String toString()
   {
-    return "Alien - " + super.toString();
+    return "Rabbit - " + super.toString();
   }
 }

@@ -63,6 +63,18 @@ public class Config
     case "Rabbit":
       entity = new src.Model.Rabbit();
       break;
+    case "Dove":
+      entity = new src.Model.Dove();
+      break;
+    case "Raven":
+      entity = new src.Model.Raven();
+      break;
+    case "Mouse":
+      entity = new src.Model.Mouse();
+      break;
+    case "Squirrel":
+      entity = new src.Model.Squirrel();
+      break;
     }
     
     entity.setFSM( e.getFSM() );
