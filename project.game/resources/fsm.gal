@@ -63,15 +63,14 @@ Player2(Normal)
 Guard(Patrol)
 {  
   * (Patrol):
-  | Got ?                                 : (Engage)
-  | Cell(F, @) ? Move(F);Wizz             : (Engage)
-  | Cell(F,O)  ? 50% Turn(R)/ 50% Turn(L) : (Patrol)
-  | Closest(@, F) ?  Wizz                 : (Engage)
-  | True       ?                          : (Patrol)
+  | Got ?                                      : (Engage)
+  | Cell(F, @) ? Move(F);Wizz                  : (Engage)
+  | Cell(F,O)  ? 50% Turn(R)/ 50% Turn(L)      : (Patrol)
+  | True       ? 90% Move(F,100)/Turn(R)/ Turn(L)  : (Patrol)
   
   * (Engage):
   | !Got ?                                : (Patrol)
-  | Cell(F,O)  ? 50% Turn(R)/ 50% Turn(L) : (Patrol)
+  | Cell(F,O)  ? 50% Turn(R)/ 50% Turn(L) : (Engage)
   | True ? Move(_)                        : (Engage)
 }
 
