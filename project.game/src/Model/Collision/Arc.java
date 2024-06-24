@@ -14,6 +14,8 @@ public class Arc implements Cloneable
   {
     Arc cloned = (Arc)super.clone();
     cloned.m_center = m_center.clone();
+    cloned.m_azimuth=m_azimuth.clone();
+    cloned.m_apertureAngle=m_apertureAngle.clone();
     return cloned;
   }
 

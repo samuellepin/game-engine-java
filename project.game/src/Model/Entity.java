@@ -264,7 +264,7 @@ public abstract class Entity implements Cloneable
 //        e.repulse();
         }
       }
-      m_orientation.setValue( m_moveDirection.getValue() );;
+      m_orientation.setValue( m_moveDirection.getValue() );
 
       if( m_tracker != null )
       {
