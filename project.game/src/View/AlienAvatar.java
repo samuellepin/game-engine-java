@@ -46,7 +46,7 @@ public class AlienAvatar extends Avatar
   {
     updateAppearance();
     Alien alien = (Alien)m_entity;
-    if( alien.isMetamorphosed() )
+    if( alien.isNonOriginForm() )
     {
       m_metamorph.paint( g, x, y, width, height );
       return;

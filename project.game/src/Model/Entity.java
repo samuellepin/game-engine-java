@@ -41,6 +41,12 @@ public abstract class Entity implements Cloneable
   protected boolean        m_isResting;
   protected int            m_hp;
   protected int            m_maxHp;
+  protected Entity         m_originEntity;
+
+  public boolean isNonOriginForm()
+  {
+    return this.m_originEntity != null;
+  }
 
   public Entity()
   {
@@ -67,45 +73,13 @@ public abstract class Entity implements Cloneable
     m_isResting = false;
     m_hp = 0;
     m_maxHp = 0;
+    m_originEntity = null;
   }
 
-//  public Entity( FSM fsm, CategoryFsm.CATEGORY type, List< CategoryFsm.CATEGORY > options, int hp )
-//  {
-//    m_moveDirection = new Angle( 0 );
-//    m_orientation = new Angle( 0 );
-//    m_brain = new Brain( this, fsm );
-//    m_elapsedTime = 0;
-//    m_hitbox = new AABB( 0, 0, 0, 0 );
-//    double radius        = Config.getInstance().getParameters().getVisionFieldRadius();
-//    Angle  apertureAngle = Config.getInstance().getParameters().getVisionFieldApertureAngle();
-//    m_visionField = new Arc( this.m_hitbox.getBarycenter(), radius, m_orientation, apertureAngle );
-//    m_hasCollision = true;
-//    m_cat = new CategoryFsm( type, options );
-//    m_id = -1;
-//    m_maxHp = hp;
-//    m_hp = hp;
-//  }
-//
-//  public Entity( FSM fsm, int id, double width, double height, double velocity, boolean hasCollision,
-//      CategoryFsm.CATEGORY type, List< CategoryFsm.CATEGORY > options, int hp )
-//  {
-//    m_moveDirection = new Angle( 0 );
-//    m_orientation = new Angle( 0 );
-//    m_brain = new Brain( this, fsm );
-//    m_elapsedTime = 0;
-//    m_hitbox = new AABB( 0, 0, 0, 0 );
-//    double radius        = Config.getInstance().getParameters().getVisionFieldRadius();
-//    Angle  apertureAngle = Config.getInstance().getParameters().getVisionFieldApertureAngle();
-//    m_visionField = new Arc( this.m_hitbox.getBarycenter(), radius, m_orientation, apertureAngle );
-//    this.setId( id );
-//    this.setDim( width, height );
-//    this.setVelocity( velocity );
-//    this.setHasCollision( hasCollision );
-//    m_cat = new CategoryFsm( type, options );
-//
-//    m_maxHp = hp;
-//    m_hp = hp;
-//  }
+  public void setOriginEntity( Entity e )
+  {
+    m_originEntity = e;
+  }
 
   @Override
   public Entity clone() throws CloneNotSupportedException
@@ -115,36 +89,67 @@ public abstract class Entity implements Cloneable
     e.m_hitbox = m_hitbox.clone();
     e.m_visionField = m_visionField.clone();
     e.m_visionField.setCenter( e.m_hitbox.getBarycenter() );
+    e.m_orientation = m_orientation.clone();
+    e.m_protectDirection = m_protectDirection.clone();
+    e.m_moveDirection = m_moveDirection.clone();
     return e;
   }
 
   public void setTracker( EntityTracker tracker )
   {
+    if( this.m_originEntity != null )
+    {
+      this.m_originEntity.setTracker( tracker );
+      return;
+    }
     m_tracker = tracker;
   }
 
   public void setHasCollision( boolean hasCollision )
   {
+    if( this.m_originEntity != null )
+    {
+      this.m_originEntity.setHasCollision( hasCollision );
+      return;
+    }
     m_hasCollision = hasCollision;
   }
 
   public boolean hasCollision()
   {
+    if( this.m_originEntity != null )
+    {
+      return this.m_originEntity.hasCollision();
+    }
     return m_hasCollision;
   }
 
   public void setIsMoving( boolean isMoving )
   {
+    if( this.m_originEntity != null )
+    {
+      this.m_originEntity.setIsMoving( isMoving );
+      return;
+    }
     m_isMoving = isMoving;
   }
 
   public boolean isMoving()
   {
+    if( this.m_originEntity != null )
+    {
+      return this.m_originEntity.isMoving();
+    }
     return m_isMoving;
   }
 
   public void tick( long elapsed )
   {
+//    if( this.m_originEntity != null )
+//    {
+//      this.m_originEntity.tick( elapsed );
+//      return;
+//    }
     m_elapsedTime = elapsed;
     tickMove( elapsed );
     tickWait( elapsed );
@@ -170,11 +175,21 @@ public abstract class Entity implements Cloneable
 
   public void doAdd( CategoryFsm var, int n )
   {
+    if( this.m_originEntity != null )
+    {
+      this.m_originEntity.doAdd( var, n );
+      return;
+    }
     m_brain.step();
   }
 
   public void doWait( long time )
   {
+    if( this.m_originEntity != null )
+    {
+      this.m_originEntity.doWait( time );
+      return;
+    }
     m_isWaiting = true;
     m_timeToWait = time;
   }
@@ -289,7 +304,7 @@ public abstract class Entity implements Cloneable
     m_brain.step();
   }
 
-  public void doHit( double orientation , int damage )
+  public void doHit( double orientation, int damage )
   {
     ArrayList< Entity > entities = Model.getInstance().getEntities();
     for ( Entity e : entities )
@@ -302,7 +317,7 @@ public abstract class Entity implements Cloneable
 
       if( closeEnough && correctAngle )
       {
-        e.getHit(damage);
+        e.getHit( damage );
       }
     }
     m_brain.step();
@@ -335,7 +350,7 @@ public abstract class Entity implements Cloneable
     }
   }
 
-  public void getHit(int damage)
+  public void getHit( int damage )
   {
     // À implémenter pour chaque entité si nécessaire
   }
@@ -490,6 +505,10 @@ public abstract class Entity implements Cloneable
 
   public Angle getOrientation()
   {
+    if( this.m_originEntity != null )
+    {
+      return this.m_originEntity.getOrientation();
+    }
     return m_orientation;
   }
 
@@ -525,6 +544,10 @@ public abstract class Entity implements Cloneable
 
   public long getElapsedTime()
   {
+    if( this.m_originEntity != null )
+    {
+      return this.m_originEntity.getElapsedTime();
+    }
     return m_elapsedTime;
   }
 
@@ -580,7 +603,7 @@ public abstract class Entity implements Cloneable
   {
     m_brain.setFSM( fsm );
   }
-  
+
   public void setFSM( String name )
   {
     this.setFSM( FsmFactory.getInstance().getFSM( name ) );
@@ -591,12 +614,12 @@ public abstract class Entity implements Cloneable
     m_hp = maxHP;
     m_maxHp = maxHP;
   }
-  
+
   public void setCategory( CATEGORY cat )
   {
     m_cat.setType( cat );
   }
-  
+
   public Vector getBarycenter()
   {
     return m_hitbox.getBarycenter();

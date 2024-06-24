@@ -38,14 +38,15 @@ public class Alien extends Entity
   public void tick( long dt )
   {
     super.tick( dt );
-    if( Controller.getInstance().isKeyDown( KeyEvent.VK_SPACE ) && !this.isMetamorphosed() )
+    if( Controller.getInstance().isKeyDown( KeyEvent.VK_SPACE ) && !this.isNonOriginForm() )
     {
       m_metamorph = new Rabbit();
+      m_metamorph.setOriginEntity( this );
       this.setUpdateView( true );
     }
   }
 
-  public boolean isMetamorphosed()
+  public boolean isNonOriginForm()
   {
     return m_metamorph != null;
   }
