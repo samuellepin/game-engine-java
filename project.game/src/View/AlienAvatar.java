@@ -11,7 +11,7 @@ import src.Model.Vector;
 public class AlienAvatar extends Avatar
 {
   private Animation m_movingAnim;
-  private static Avatar    m_metamorph;
+  private Avatar    m_metamorph;
 
   public AlienAvatar( Entity e )
   {

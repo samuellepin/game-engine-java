@@ -10,14 +10,14 @@ import src.AI.FSM;
 
 public class Alien extends Entity
 {
-  private Entity m_metamorph;
+  private Entity  m_metamorph;
   private boolean m_updateView;
-  
-  public void setUpdateView(boolean flag)
+
+  public void setUpdateView( boolean flag )
   {
     m_updateView = flag;
   }
-  
+
   public boolean isViewUpdated()
   {
     return !m_updateView;
@@ -35,23 +35,23 @@ public class Alien extends Entity
   {
     return "Alien - " + super.toString();
   }
-  
+
   @Override
   public void tick( long dt )
   {
     super.tick( dt );
-    if( Controller.getInstance().isKeyDown( KeyEvent.VK_SPACE ) )
+    if( Controller.getInstance().isKeyDown( KeyEvent.VK_SPACE ) && !this.isMetamorphosed() )
     {
       m_metamorph = new Rabbit( this.getFSM() );
       this.setUpdateView( true );
     }
   }
-  
+
   public boolean isMetamorphosed()
   {
     return m_metamorph != null;
   }
-  
+
   public Entity getMetamorph()
   {
     return m_metamorph;

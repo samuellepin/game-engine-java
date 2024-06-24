@@ -82,17 +82,7 @@
 			"hasCollision" : false,
 			"velocity" : "0.0",
 			"fsm" : "DoNothing"
-		},
-		{
-			"id" : 999,
-			"type" : "Rabbit",
-			"width" : "24.0",
-			"height" : "24.0",
-			"hasCollision" : true,
-			"velocity" : "3.0",
-			"fsm" : "DoNothing",
-			"hp" : 50
-		}	
+		}
 	],
 	"enenmies" :
 	[

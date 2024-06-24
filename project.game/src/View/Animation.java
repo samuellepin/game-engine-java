@@ -32,9 +32,10 @@ public class Animation
       m_time -= m_maxTime;
     }
   }
-  
+
   public BufferedImage getImage()
   {
+//    if( !m_entity.isMoving() ) return m_img[ 0 ];
     return m_img[ m_index ];
   }
 }
