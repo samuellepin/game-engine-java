@@ -5,9 +5,11 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import src.Config;
+import src.Game;
 import src.Model.Entity;
 import src.Model.EntityTracker;
 import src.Model.Model;
+import src.Model.Shot;
 import src.Model.Vector;
 import src.Model.Collision.AABB;
 import src.Model.Collision.Circle;
@@ -49,8 +51,8 @@ public class Viewport
   private void paintTiles( Graphics g )
   {
     BufferedImage sprite = AvatarFactory.getInstance().getFloorSprite();
-    Vector mini = m_tracker.getMin();
-    Vector maxi = m_tracker.getMax();
+    Vector        mini   = m_tracker.getMin();
+    Vector        maxi   = m_tracker.getMax();
     if( maxi.getX() > Map.COLS_NUM * Tile.WIDTH ) maxi.setX( Map.COLS_NUM * Tile.WIDTH );
     if( maxi.getY() > Map.ROWS_NUM * Tile.HEIGHT ) maxi.setY( Map.ROWS_NUM * Tile.HEIGHT );
 
@@ -60,10 +62,55 @@ public class Viewport
       for ( int j = -metersToPixels( ( mini.getY() % Tile.HEIGHT ) + Tile.HEIGHT ); j < m_height
           - metersToPixels( ( maxi.getY() % Tile.HEIGHT ) - Tile.WIDTH ); j += metersToPixels( Tile.HEIGHT ) )
       {
-        g.drawImage( sprite, i, j, metersToPixels( Tile.WIDTH ), metersToPixels( Tile.HEIGHT ),
-            null );
+        g.drawImage( sprite, i, j, metersToPixels( Tile.WIDTH ), metersToPixels( Tile.HEIGHT ), null );
       }
     }
+  }
+
+  public void paintShots( Graphics g )
+  {
+    int x, y;
+    int r = 2;
+    for ( Shot shot : Model.getInstance().getShots() )
+    {
+      x = metersToPixels( shot.getX() - m_tracker.getX() );
+      y = metersToPixels( shot.getY() - m_tracker.getY() );
+      g.setColor( Color.yellow );
+      g.fillOval( x - r, y - r, 2 * r, 2 * r );
+    }
+  }
+
+  public void paintHP( Graphics g )
+  {
+    Entity e = m_tracker.getTarget();
+    g.setColor( Color.white );
+    int    width   = 200;
+    int    height  = 20;
+    int    padding = 15;
+    int    x       = padding;
+    int    y       = Game.SCREEN_HEIGHT - padding - height;
+    double rate    = (double)e.getHP() / (double)e.getMaxHP();
+
+    if( rate < 0.25 )
+    {
+      g.setColor( Color.red );
+    }
+    else if( rate < 0.50 )
+    {
+      g.setColor( Color.orange );
+    }
+    else
+    {
+      g.setColor( Color.green );
+    }
+    
+    g.fillRect( x, y, (int) ( (double)width * rate ), height );
+
+    padding = 3;
+    g.setColor( Color.white );
+    g.drawRect( x - padding, y - padding, width + 2 * padding - 1, height + 2 * padding - 1 );
+
+    g.drawString( e.getHP() + "/" + e.getMaxHP(), x + 5, y + 15 );
   }
 
   public void paint( Graphics g )
@@ -117,6 +164,11 @@ public class Viewport
       }
     }
 
+    this.paintShots( g );
+
+    this.paintHP( g );
+
+    // FRAME
     g.setColor( Color.black );
     g.drawRect( 0, 0, this.getWidth() - 1, this.getHeight() - 1 );
   }
@@ -139,5 +191,18 @@ public class Viewport
   public int getHeight()
   {
     return m_height;
+  }
+
+  public void update( int x, int y, int width, int height )
+  {
+    m_x = x;
+    m_y = y;
+    m_width = width;
+    m_height = height;
+  }
+
+  public EntityTracker getTracker()
+  {
+    return m_tracker;
   }
 }

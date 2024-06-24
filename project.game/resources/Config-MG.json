@@ -1,13 +1,16 @@
 {
 	"parameters" :
 	{
-		"seed": 123,
-		"visionFieldRadius": "100.0",
+		"seed": 1451,
+		"visionFieldRadius": "150.0",
 		"player1" : 1234, 
 		"player2" : 5678,
 		"itemToWin" : 9012,
 		"enableBSP" : false,
-		"enableWalls" : true
+		"enableWalls" : true,
+		"backgroundMusic" : "resources/sounds/metal-gear-main-theme.ogg",
+		"gameOverBGM" : "resources/sounds/metal-gear-game-over.ogg",
+		"volume" : "0.5"
 	},
 	"world" : 
 	{
@@ -16,14 +19,17 @@
 		"tile" : 
 		{
 			"width" : "100.0",
-			"height" : "100.0"
+			"height" : "100.0",
+			"sprite" : "resources/sprites/Tile/Brick.png",
+			"obstacles" : []
 		},
 		"biome" : 
 		{
 			"width" : 3,
 			"height" : 3,
 			"space" : 3
-		}
+		},
+		"obstructionDensity" : "100%"
 	},
 	"view" : 
 	{
@@ -32,7 +38,8 @@
 		"zoom" : "1.0",
 		"screenWidth" : 500,
 		"screenHeight" : 500,
-		"title" : "Metal Gear"
+		"title" : "Metal Gear",
+		"enableReducedVisionField" : false
 	},
 	"entities" : 
 	[
@@ -45,13 +52,14 @@
 			"velocity" : "0.3",
 			"fsm" : "Player1",
 			"category" : "PlayerT",
-			"options" : ["Killable","Jumpable"]
+			"options" : ["Killable","Jumpable"],
+			"hp" : 100
 		},
 		{
 			"id" : 5678,
 			"type" : "Guard",
-			"width" : "20.0",
-			"height" : "40.0",
+			"width" : "25.0",
+			"height" : "45.0",
 			"hasCollision" : true,
 			"velocity" : "0.1",
 			"fsm" : "Guard"

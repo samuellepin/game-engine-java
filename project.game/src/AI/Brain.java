@@ -20,6 +20,11 @@ public class Brain implements Cloneable
     m_state = m_fsm.getInitialState();
     m_actions = new ArrayList< ActionFsm >();
   }
+  
+  public FSM getFSM()
+  {
+    return m_fsm;
+  }
 
   public Brain clone(Entity entity) throws CloneNotSupportedException
   {

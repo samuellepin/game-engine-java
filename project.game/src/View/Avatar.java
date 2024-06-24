@@ -2,6 +2,8 @@ package src.View;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 import src.Config;
 import src.Model.Document;
@@ -10,6 +12,9 @@ import src.Model.Wall;
 
 public abstract class Avatar
 {
+
+  static final long          ANIMATION_TIME     = 50;
+
   protected Entity           m_entity;
   protected AvatarFactory    m_factory;
 
@@ -52,10 +57,25 @@ public abstract class Avatar
     m_entity = e;
   }
   
-  static final long ANIMATION_TIME = 50; // marche plus à cause de factory
-  
-  protected void updateAnimation( int img_num )
+  public BufferedImage[][] loadAnimation4( BufferedImage[][] img, String src, int num )
   {
+    if( img == null )
+    {
+      img = new BufferedImage[ 4 ][];
+      String ext = ".png";
+      try
+      {
+        img[ 0 ] = AvatarFactory.loadSprite( src + "Up" + ext, 1, num );
+        img[ 1 ] = AvatarFactory.loadSprite( src + "Right" + ext, 1, num );
+        img[ 2 ] = AvatarFactory.loadSprite( src + "Down" + ext, 1, num );
+        img[ 3 ] = AvatarFactory.loadSprite( src + "Left" + ext, 1, num );
+      }
+      catch ( IOException e1 )
+      {
+        // TODO Auto-generated catch block
+        e1.printStackTrace();
+      }
+    }
+    return img;
   }
-  
 }

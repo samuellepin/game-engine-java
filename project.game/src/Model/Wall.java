@@ -9,7 +9,7 @@ public class Wall extends Entity
 {
   public Wall( FSM fsm, CategoryFsm.CATEGORY type, List< CategoryFsm.CATEGORY > options )
   {
-    super( fsm, type, options );
+    super( fsm, type, options, 0 );
   }
 
   @Override

@@ -4,27 +4,6 @@ import src.Model.Vector;
 
 public class Collision
 {
-  public static boolean detect( Hitbox h1, Hitbox h2 )
-  {
-    if( h1 instanceof AABB && h2 instanceof AABB )
-    {
-      return detect( (AABB)h1, (AABB)h2 );
-    }
-    if( h1 instanceof Circle && h2 instanceof Circle )
-    {
-      return detect( (Circle)h1, (Circle)h2 );
-    }
-    if( h1 instanceof Circle && h2 instanceof AABB )
-    {
-      return detect( (AABB)h2, (Circle)h1 );
-    }
-    if( h1 instanceof AABB && h2 instanceof Circle )
-    {
-      return detect( (AABB)h1, (Circle)h2 );
-    }
-    return false;
-  }
-
   public static boolean detect( AABB a, AABB b )
   {
     if( a == null || b == null ) return false;
@@ -133,6 +112,65 @@ public class Collision
   {
     double r = c.getRadius();
     return squaredDistanceBetweenAABBandPoint( h, c.getCenter() ) <= r * r;
+  }
+
+//  public static Vector closestPointToAABB( AABB aabb, Vector point )
+//  {
+//    double x = Math.max( aabb.getMin().getX(), Math.min( aabb.getMax().getX(), point.getX() ) );
+//    double y = Math.max( aabb.getMin().getY(), Math.min( aabb.getMax().getY(), point.getY() ) );
+//    return new Vector( x, y );
+//  }
+//
+//  private static Vector clamp( Vector val, Vector min, Vector max )
+//  {
+//    return Vector.max( min, Vector.min( val, max ) );
+//  }
+
+  private static boolean isPointInArc( Vector point, Arc arc )
+  {
+    Vector OP         = point;
+    Vector OC         = arc.getCenter();
+    Vector CP         = Vector.sub( OP, OC );
+    double angle      = -CP.getAngle();
+    double thetaStart = Vector.normalizeAngle( arc.getStartAngle() );
+    double thetaEnd   = Vector.normalizeAngle( arc.getEndAngle() );
+    if( thetaStart <= thetaEnd )
+    {
+      return thetaStart <= angle && angle <= thetaEnd;
+    }
+    return thetaStart <= angle || angle <= thetaEnd;
+  }
+
+  public static boolean detect( AABB aabb, Arc arc )
+  {
+    double r = arc.getRadius();
+    if( squaredDistanceBetweenAABBandPoint( aabb, arc.getCenter() ) >= r * r )
+    {
+      return false;
+    }
+
+    Vector pmin     = aabb.getMin();
+    Vector pmax     = aabb.getMax();
+    Vector points[] = { new Vector( pmin.getX(), pmin.getY() ), new Vector( pmax.getX(), pmin.getY() ),
+        new Vector( pmax.getX(), pmax.getY() ), new Vector( pmin.getX(), pmax.getY() ) };
+
+    for ( Vector point : points )
+    {
+      if( Collision.isPointInArc( point, arc ) )
+      {
+        return true;
+      }
+    }
+
+    return false;
+  }
+  
+  public static boolean detect( AABB aabb, Vector point )
+  {
+    return point.getX() >= aabb.getMin().getX() 
+        && point.getX() <= aabb.getMax().getX()
+        && point.getY() >= aabb.getMin().getY() 
+        && point.getY() <= aabb.getMax().getY();
   }
 
 }

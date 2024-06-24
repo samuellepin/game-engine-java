@@ -15,8 +15,8 @@ import src.Model.Spy;
 
 public class Config
 {
-  private static final Config INSTANCE = Serializer.deserialize( "resources/Config.json", Config.class );
-
+  private static final String FILENAME = "resources/Config-MG.json";
+  private static final Config INSTANCE = Serializer.deserialize( FILENAME, Config.class );
   private static final Random RANDOM   = new Random( Config.getInstance().getParameters().getSeed() );
 
   public static Random getRandom()
@@ -36,19 +36,26 @@ public class Config
     double                       width        = e.getWidth();
     double                       height       = e.getHeight();
     double                       velocity     = e.getVelocity();
+    int                          hp           = e.getMaxHP();
     boolean                      hasCollision = e.hasCollision();
     CategoryFsm.CATEGORY         type         = e.getTypeCat();
     List< CategoryFsm.CATEGORY > options      = e.getOptions();
     switch ( e.getType() )
     {
     case "Spy":
-      return new src.Model.Spy( fsm, id, width, height, velocity, hasCollision, type, options );
+      return new src.Model.Spy( fsm, id, width, height, velocity, hasCollision, type, options, hp );
     case "Guard":
-      return new src.Model.Guard( fsm, id, width, height, velocity, hasCollision, type, options );
+      return new src.Model.Guard( fsm, id, width, height, velocity, hasCollision, type, options, hp );
     case "Wall":
       return new src.Model.Wall( fsm, type, options );
     case "Document":
-      return new src.Model.Document( fsm, id, width, height, velocity, hasCollision, type, options );
+      return new src.Model.Document( fsm, id, width, height, velocity, hasCollision, type, options, hp );
+    case "Alien":
+      return new src.Model.Alien( fsm, id, width, height, velocity, hasCollision, type, options, hp );
+    case "Generator":
+      return new src.Model.Generator( fsm, id, width, height, velocity, hasCollision, type, options, hp );
+    case "Rabbit":
+      return new src.Model.Rabbit( fsm, id, width, height, velocity, hasCollision, type, options, hp );
     }
     return null;
   }
@@ -94,6 +101,24 @@ public class Config
     public int     itemToWin;
     public boolean enableBSP;
     public boolean enableWalls;
+    public String  backgroundMusic;
+    public String  gameOverBGM;
+    public String  volume;
+
+    public String getGameOverBGM()
+    {
+      return gameOverBGM;
+    }
+
+    public float getVolume()
+    {
+      return Float.parseFloat( volume );
+    }
+
+    public String getBackgroundMusic()
+    {
+      return backgroundMusic;
+    }
 
     public src.Model.Entity getItemToWin()
     {
@@ -157,10 +182,16 @@ public class Config
 
   public class World
   {
-    public int   rowsNum;
-    public int   colsNum;
-    public Tile  tile;
-    public Biome biome;
+    public int    rowsNum;
+    public int    colsNum;
+    public Tile   tile;
+    public Biome  biome;
+    public String obstructionDensity;
+
+    public double getObstructionDensity()
+    {
+      return Double.parseDouble( obstructionDensity.replace( "%", "" ) ) / 100.0;
+    }
 
     public int getRowsNum()
     {
@@ -185,8 +216,10 @@ public class Config
 
   public class Tile
   {
-    public String width;
-    public String height;
+    public String   width;
+    public String   height;
+    public String   sprite;
+    public String[] obstacles;
 
     public double getWidth()
     {
@@ -196,6 +229,16 @@ public class Config
     public double getHeight()
     {
       return Double.parseDouble( height );
+    }
+
+    public String getSprite()
+    {
+      return sprite;
+    }
+
+    public String[] getObstacles()
+    {
+      return obstacles;
     }
   }
 
@@ -227,9 +270,15 @@ public class Config
     public int     screenWidth;
     public int     screenHeight;
     public String  title;
+    public boolean enableReducedVisionField;
 
     public boolean paintHitbox;
     public boolean paintVisionField;
+
+    public boolean isReducedVisionFieldEnabled()
+    {
+      return enableReducedVisionField;
+    }
 
     public double getZoom()
     {
@@ -273,6 +322,12 @@ public class Config
     public String   fsm;
     public String   typeCat;
     public String[] options;
+    public int      hp;
+
+    public int getMaxHP()
+    {
+      return hp;
+    }
 
     public int getId()
     {

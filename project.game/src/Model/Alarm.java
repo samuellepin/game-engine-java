@@ -31,7 +31,7 @@ public class Alarm
       if(true)
       if( e instanceof Guard )
       {
-        if( Collision.detect( m_alarmArea, e.getHitbox() ) )
+        if( Collision.detect( e.getHitbox(), m_alarmArea ) )
         {
           System.out.println(e.getX()+" "+e.getY());
           ( (Guard)e ).setAlarm( this );

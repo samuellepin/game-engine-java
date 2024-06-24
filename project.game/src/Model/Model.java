@@ -1,8 +1,10 @@
 package src.Model;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import src.Config;
+import src.Game;
 import src.Model.Collision.Collision;
 import src.Model.World.Map;
 
@@ -16,6 +18,7 @@ public class Model
   private Entity                     m_player1;
   private Entity                     m_player2;
   private Entity                     m_itemToWin;
+  private ArrayList< Shot >          m_shots;
 
   public static Model getInstance()
   {
@@ -28,6 +31,7 @@ public class Model
 
     m_entities = new ArrayList< Entity >();
     m_trackers = new ArrayList< EntityTracker >();
+    m_shots = new ArrayList< Shot >();
 
     for ( Entity e : Map.getInstance().getWalls() )
     {
@@ -41,10 +45,41 @@ public class Model
     {
       e.tick( elapsed );
     }
+
+    Iterator< Shot > iterator = m_shots.iterator();
+    while( iterator.hasNext() )
+    {
+      Shot shot = iterator.next();
+      shot.update( elapsed );
+      if( shot.hasTouched() )
+      {
+        iterator.remove();
+      }
+    }
+
     if( Collision.detect( m_player1.getHitbox(), m_itemToWin.getHitbox() ) )
     {
-      m_isGameOver = true;
+      if( m_itemToWin instanceof Generator )
+      {
+        ( (Generator)m_itemToWin ).enable();
+      }
+      else
+      {
+        setGameOver();
+      }
     }
+    if( m_player1.isDead() )
+    {
+      setGameOver();
+    }
+  }
+
+  public void setGameOver()
+  {
+    m_isGameOver = true;
+    Game game = Game.getInstance();
+    game.stopMusic( Config.getInstance().getParameters().getBackgroundMusic() );
+//    game.loadMusic( Config.getInstance().getParameters().getGameOverBGM() );
   }
 
   public boolean isGameOver()
@@ -133,5 +168,15 @@ public class Model
       e.setPos( Map.getInstance().getRandomPos() );
       this.addEntity( e );
     }
+  }
+
+  public void addShot( Shot shot )
+  {
+    m_shots.add( shot );
+  }
+
+  public ArrayList< Shot > getShots()
+  {
+    return m_shots;
   }
 }

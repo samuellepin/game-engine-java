@@ -1,0 +1,112 @@
+{
+	"parameters" :
+	{
+		"seed": 129,
+		"visionFieldRadius": "100.0",
+		"player1" : 1234, 
+		"player2" : 5678,
+		"itemToWin" : 9012,
+		"enableBSP" : false,
+		"enableWalls" : true,
+		"backgroundMusic" : "resources/sounds/alien-main-theme.ogg",
+		"gameOverBGM" : "resources/sounds/metal-gear-game-over.ogg",
+		"volume" : "0.9",
+		"reducedVisionField" : "0%"
+	},
+	"world" : 
+	{
+		"rowsNum" : 11,
+		"colsNum" : 11,
+		"tile" : 
+		{
+			"width" : "100.0",
+			"height" : "100.0",
+			"sprite" : "resources/sprites/Tile/Grass_01.png",
+			"obstacles" : [ 
+			"resources/sprites/Tree/Tree_1.png", 
+			"resources/sprites/Tree/Tree_2.png", 
+			"resources/sprites/Tree/Tree_3.png", 
+			"resources/sprites/Tree/Tree_4.png", 
+			"resources/sprites/Tree/Tree_5.png", 
+			"resources/sprites/Tree/Tree_6.png",
+			"resources/sprites/Tree/Tree_7.png",
+			"resources/sprites/Tree/Tree_8.png",
+			"resources/sprites/Tree/Tree_9.png" ]
+		},
+		"biome" : 
+		{
+			"width" : 3,
+			"height" : 3,
+			"space" : 3
+		},
+		"obstructionDensity" : "30%"
+	},
+	"view" : 
+	{
+		"paintHitbox" : true,
+		"paintVisionField" : false,
+		"zoom" : "1.0",
+		"screenWidth" : 500,
+		"screenHeight" : 500,
+		"title" : "Alien",
+		"enableReducedVisionField" : true
+	},
+	"entities" : 
+	[
+		{
+			"id" : 1234,
+			"type" : "Alien",
+			"width" : "60.0",
+			"height" : "60.0",
+			"hasCollision" : true,
+			"velocity" : "0.3",
+			"fsm" : "Player1",
+			"category" : "PlayerT",
+			"options" : ["Killable","Jumpable"],
+			"hp" : 200
+		},
+		{
+			"id" : 5678,
+			"type" : "Guard",
+			"width" : "20.0",
+			"height" : "40.0",
+			"hasCollision" : true,
+			"velocity" : "0.1",
+			"fsm" : "Player2"
+		},
+		{
+			"id" : 9012,
+			"type" : "Generator",
+			"width" : "64.0",
+			"height" : "64.0",
+			"hasCollision" : false,
+			"velocity" : "0.0",
+			"fsm" : "DoNothing"
+		},
+		{
+			"id" : 999,
+			"type" : "Rabbit",
+			"width" : "24.0",
+			"height" : "24.0",
+			"hasCollision" : true,
+			"velocity" : "3.0",
+			"fsm" : "DoNothing",
+			"hp" : 50
+		}	
+	],
+	"enenmies" :
+	[
+		{
+			"id" : 5678,
+			"min" : 6,
+			"max" : 9
+		}
+	],
+	"itemsToPickToWin" : 
+	{
+		"id" : 9012,
+		"min" : 1,
+		"max" : 1
+	}
+}
+

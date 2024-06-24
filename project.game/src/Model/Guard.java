@@ -9,7 +9,7 @@ import src.Model.Collision.Circle;
 import src.Model.Collision.Collision;
 import src.Model.World.Map;
 
-public class Guard extends Spy
+public class Guard extends Entity
 {
   private Alarm     m_ownAlarm;
   private Alarm     m_otherAlarm;
@@ -23,9 +23,9 @@ public class Guard extends Spy
 //  }
 
   public Guard( FSM fsm, int id, double width, double height, double velocity, boolean hasCollision,
-      CategoryFsm.CATEGORY type, List< CategoryFsm.CATEGORY > options )
+      CategoryFsm.CATEGORY type, List< CategoryFsm.CATEGORY > options, int hp )
   {
-    super( fsm, id, width, height, velocity, hasCollision, type, options );
+    super( fsm, id, width, height, velocity, hasCollision, type, options, hp );
     this.setPos( Map.getInstance().getRandomPos() );
     m_ownAlarm = new Alarm( this );
   }
@@ -45,6 +45,19 @@ public class Guard extends Spy
     doMove( m_orientation );
   }
 
+  private long countdown;
+
+  void shot( long dt )
+  {
+    countdown += dt;
+    if( countdown > 1000 )
+    {
+      System.out.println( "Shot!" );
+      Model.getInstance().addShot( new Shot( this.getPos(), this.getOrientation() ) );
+      countdown = 0;
+    }
+  }
+
   @Override
   public void tick( long elapsed )
   {
@@ -57,6 +70,8 @@ public class Guard extends Spy
     {
 //      System.out.println( "Collision : " + c1.toString() + " - " + c2.toString() );
       // follow( Model.getInstance().getPlayer1() );
+
+      shot( elapsed );
     }
     if( m_ownAlarm.isActive() )// actif si le garde à déclanché son alarme
     {
@@ -68,7 +83,7 @@ public class Guard extends Spy
   }
 
   @Override
-  public void doWizz()// déclanché après closest de l'automate
+  public void doWizz( List< Object > parameters )// déclanché après closest de l'automate
   {
     m_isAlarmed = true;
     m_ownAlarm.alert();
