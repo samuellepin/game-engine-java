@@ -56,18 +56,13 @@ public class Alien extends Entity
     super.tick( dt );
     if( Controller.getInstance().isKeyDown( KeyEvent.VK_SPACE ) )
     {
-      System.out.println("PRESSED");
       for ( Entity e : Model.getInstance().getEntities() )
       {
         if( this != e && Collision.detect( this.getHitbox(), e.getHitbox() ) )
         {
-          System.out.println("TRANSFORM " + e.toString());
           updateMetamorph( e );
         }
       }
-//      
-//      
-//      
     }
   }
 
