@@ -6,6 +6,7 @@ import java.util.Iterator;
 import src.Config;
 import src.Game;
 import src.Model.Collision.Collision;
+import src.Model.Entities.Generator;
 import src.Model.World.Map;
 
 public class Model

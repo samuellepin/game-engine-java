@@ -12,7 +12,7 @@ import src.Model.Angle;
 import src.Model.Entity;
 
 import src.Model.Model;
-import src.Model.Spy;
+import src.Model.Entities.Spy;
 import src.Model.World.Map;
 
 public class Config
@@ -43,52 +43,52 @@ public class Config
     switch ( e.getType() )
     {
     case "Alien":
-      entity = new src.Model.Alien();
+      entity = new src.Model.Entities.Alien();
       break;
     case "Box":
-      entity = new src.Model.Box();
+      entity = new src.Model.Entities.Box();
       break;
     case "Camera":
-      entity = new src.Model.Camera();
+      entity = new src.Model.Entities.Camera();
       break;
     case "Document":
-      entity = new src.Model.Document();
+      entity = new src.Model.Entities.Document();
       break;
     case "Dove":
-      entity = new src.Model.Dove();
+      entity = new src.Model.Entities.Dove();
       break;
     case "Generator":
-      entity = new src.Model.Generator();
+      entity = new src.Model.Entities.Generator();
       break;
     case "Guard":
-      entity = new src.Model.Guard();
+      entity = new src.Model.Entities.Guard();
       break;
     case "Mouse":
-      entity = new src.Model.Mouse();
+      entity = new src.Model.Entities.Mouse();
       break;
     case "Rabbit":
-      entity = new src.Model.Rabbit();
+      entity = new src.Model.Entities.Rabbit();
       break;
     case "Raven":
-      entity = new src.Model.Raven();
+      entity = new src.Model.Entities.Raven();
       break;
     case "Robot":
-      entity = new src.Model.Robot();
+      entity = new src.Model.Entities.Robot();
       break;
     case "Spy":
-      entity = new src.Model.Spy();
+      entity = new src.Model.Entities.Spy();
       break;
     case "Squirrel":
-      entity = new src.Model.Squirrel();
+      entity = new src.Model.Entities.Squirrel();
       break;
     case "Stairs":
-      entity = new src.Model.Stairs();
+      entity = new src.Model.Entities.Stairs();
       break;
     case "UFO":
-      entity = new src.Model.UFO();
+      entity = new src.Model.Entities.UFO();
       break;
     case "Wall":
-      entity = new src.Model.Wall();
+      entity = new src.Model.Entities.Wall();
       break;
     default:
       throw new IllegalArgumentException( "Unknown entity type: " + e.getType() );

@@ -8,7 +8,7 @@ import src.Config;
 import src.AI.CategoryFsm;
 import src.AI.FsmFactory;
 import src.Model.Vector;
-import src.Model.Wall;
+import src.Model.Entities.Wall;
 
 public class Map
 {

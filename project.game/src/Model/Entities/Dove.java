@@ -1,6 +1,8 @@
-package src.Model;
+package src.Model.Entities;
 
-public class Dove extends Entity
+import src.Model.Entity;
+
+public class Dove extends Animal
 {
   public Dove()
   {

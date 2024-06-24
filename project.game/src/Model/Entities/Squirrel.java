@@ -1,6 +1,8 @@
-package src.Model;
+package src.Model.Entities;
 
-public class Squirrel extends Entity
+import src.Model.Entity;
+
+public class Squirrel extends Animal
 {
   public Squirrel()
   {

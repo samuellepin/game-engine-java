@@ -53,7 +53,7 @@ public class View
     int         posX   = Game.SCREEN_WIDTH - width - 5;
     int         posY   = height;
 
-    g.setColor( Color.red );
+    g.setColor( Color.white );
     g.drawString( text, posX, posY );
   }
 

@@ -1,6 +1,8 @@
-package src.Model;
+package src.Model.Entities;
 
-public class Raven extends Entity
+import src.Model.Entity;
+
+public class Raven extends Animal
 {
   public Raven()
   {

@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import src.Model.Entity;
-import src.Model.Generator;
+import src.Model.Entities.Generator;
 import src.View.Animation;
 import src.View.Avatar;
 import src.View.AvatarFactory;

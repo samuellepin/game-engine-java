@@ -1,4 +1,4 @@
-package src.Model;
+package src.Model.Entities;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,6 +6,12 @@ import src.AI.Direction;
 
 import src.AI.CategoryFsm;
 import src.AI.FSM;
+import src.Model.Alarm;
+import src.Model.Angle;
+import src.Model.Entity;
+import src.Model.Model;
+import src.Model.Shot;
+import src.Model.Vector;
 import src.Model.Collision.Circle;
 import src.Model.Collision.Collision;
 import src.Model.World.Map;

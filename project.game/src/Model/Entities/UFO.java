@@ -1,4 +1,4 @@
-package src.Model;
+package src.Model.Entities;
 
 public class UFO extends Exit
 {

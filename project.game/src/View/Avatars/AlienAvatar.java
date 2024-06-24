@@ -4,8 +4,8 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-import src.Model.Alien;
 import src.Model.Entity;
+import src.Model.Entities.Alien;
 import src.View.Animation;
 import src.View.Avatar;
 import src.View.AvatarFactory;

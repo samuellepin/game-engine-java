@@ -1,9 +1,11 @@
-package src.Model;
+package src.Model.Entities;
 
 import java.util.List;
 
 import src.AI.CategoryFsm;
 import src.AI.FSM;
+import src.Model.Alarm;
+import src.Model.Entity;
 // security camera for MG
 public class Camera extends Entity
 {

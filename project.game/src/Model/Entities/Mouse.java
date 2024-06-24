@@ -1,6 +1,8 @@
-package src.Model;
+package src.Model.Entities;
 
-public class Mouse extends Entity
+import src.Model.Entity;
+
+public class Mouse extends Animal
 {
   public Mouse()
   {
