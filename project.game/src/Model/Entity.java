@@ -253,7 +253,7 @@ public abstract class Entity implements Cloneable
     m_brain.step();
   }
 
-  public void doHit( double orientation )
+  public void doHit( double orientation , int damage )
   {
     ArrayList< Entity > entities = Model.getInstance().getEntities();
     for ( Entity e : entities )
@@ -266,7 +266,7 @@ public abstract class Entity implements Cloneable
 
       if( closeEnough && correctAngle )
       {
-        e.getHit();
+        e.getHit(damage);
       }
     }
     m_brain.step();
@@ -299,9 +299,9 @@ public abstract class Entity implements Cloneable
     }
   }
 
-  public void getHit()
+  public void getHit(int damage)
   {
-    // À implémenter pour chaque entité
+    // À implémenter pour chaque entité si nécessaire
   }
 
   public void doPick( double orientation )
