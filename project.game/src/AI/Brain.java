@@ -12,12 +12,26 @@ public class Brain
   private StateFsm               m_state;
   private ArrayList< ActionFsm > m_actions;
 
+  public Brain( Entity e )
+  {
+    m_fsm = null;
+    m_entity = e;
+    m_state = null;
+    m_actions = new ArrayList< ActionFsm >();
+  }
+  
   public Brain( Entity e, FSM a )
   {
     m_entity = e;
     m_fsm = a;
     m_state = m_fsm.getInitialState();
     m_actions = new ArrayList< ActionFsm >();
+  }
+  
+  public void setFSM( FSM fsm )
+  {
+    m_fsm = fsm;
+    m_state = m_fsm.getInitialState();
   }
   
   public FSM getFSM()

@@ -87,8 +87,9 @@ public class Map
       {
         if( this.getTile( x, y ).getType() == TILE_TYPE.WALL )
         {
-          Wall wall = new Wall( FsmFactory.getInstance().getFSM( "Wall" ), CategoryFsm.CATEGORY.Obstacle,
-              new ArrayList< CategoryFsm.CATEGORY >() );
+          Wall wall = new Wall();
+          wall.setFSM( "Wall" );
+          wall.setCategory( CategoryFsm.CATEGORY.Obstacle );
           wall.setPos( x * Tile.WIDTH, y * Tile.HEIGHT );
           wall.setDim( Tile.WIDTH, Tile.HEIGHT );
           if( x == 0 || x == COLS_NUM-1 || y == 0 || y == ROWS_NUM-1
