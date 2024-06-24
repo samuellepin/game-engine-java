@@ -2,9 +2,7 @@ package src.Model.Entities;
 
 import java.util.List;
 
-import src.AI.CategoryFsm.CATEGORY;
 import src.Model.Entity;
-import src.AI.FSM;
 
 public class Robot extends Entity
 {

@@ -12,12 +12,12 @@ import src.View.AvatarFactory;
 public class DocumentAvatar extends Avatar
 {
   private static BufferedImage[] m_idleImg;
-  private Animation m_idle;
+  private Animation              m_idle;
 
   public DocumentAvatar( Entity e )
   {
     super( e );
-    
+
     if( m_idleImg == null )
     {
       try
@@ -29,7 +29,7 @@ public class DocumentAvatar extends Avatar
         e1.printStackTrace();
       }
     }
-    
+
     m_idle = new Animation( e, m_idleImg, 0 );
   }
 

@@ -21,10 +21,4 @@ public class Serializer
     }
     return null;
   }
-
-  public static void main( String[] args )
-  {
-    System.out.println( "TEST - SERIALIZER" );
-    System.out.println( "Seed = " + Config.getInstance().parameters.getSeed() );
-  }
 }

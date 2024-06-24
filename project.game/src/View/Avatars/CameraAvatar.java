@@ -9,7 +9,6 @@ import src.View.Avatar;
 
 public class CameraAvatar extends Avatar
 {
-
   public CameraAvatar( Entity e )
   {
     super( e );

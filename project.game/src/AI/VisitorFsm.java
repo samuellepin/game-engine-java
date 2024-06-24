@@ -5,8 +5,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.management.openmbean.KeyAlreadyExistsException;
-
 import gal.ast.AST;
 import gal.ast.Actions;
 import gal.ast.Automaton;

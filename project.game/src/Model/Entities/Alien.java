@@ -1,15 +1,11 @@
 package src.Model.Entities;
 
 import java.awt.event.KeyEvent;
-import java.util.List;
 
 import src.Controller;
-import src.AI.CategoryFsm;
 import src.Model.Entity;
 import src.Model.Model;
 import src.Model.Collision.Collision;
-import src.Model.World.Map;
-import src.AI.FSM;
 
 public class Alien extends Entity
 {

@@ -7,12 +7,9 @@ import java.util.Random;
 import src.AI.CategoryFsm;
 import src.AI.FSM;
 import src.AI.FsmFactory;
-import src.AI.CategoryFsm.CATEGORY;
 import src.Model.Angle;
-import src.Model.Entity;
 
 import src.Model.Model;
-import src.Model.Entities.Spy;
 import src.Model.World.Map;
 
 public class Config

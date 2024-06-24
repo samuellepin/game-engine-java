@@ -3,8 +3,8 @@ package src.Model;
 public class Angle implements Cloneable
 {
   public static final Angle ANGLE_ZERO = new Angle( 0 );
-  
-  private double m_value; // in radian
+
+  private double            m_value;                    // in radian
 
   public Angle clone() throws CloneNotSupportedException
   {

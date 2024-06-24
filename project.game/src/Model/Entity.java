@@ -464,10 +464,9 @@ public abstract class Entity implements Cloneable
 
   public boolean getClosest( CategoryFsm cat, double dir )
   {
-    ArrayList< Entity > entities  = new ArrayList< Entity >( Model.getInstance().getEntities() );
-    Vector              dist      = null;
-    double              distMin   = Double.MAX_VALUE;
-    Entity              entityMin = null;
+    ArrayList< Entity > entities = new ArrayList< Entity >( Model.getInstance().getEntities() );
+    Vector              dist     = null;
+    double              distMin  = Double.MAX_VALUE;
     for ( Entity e : entities )
     {
       if( e.m_cat.equals( cat ) )
@@ -477,7 +476,6 @@ public abstract class Entity implements Cloneable
         {
           dist = Vector.sub( e.getPos(), this.getPos() );
           distMin = distNorm;
-          entityMin = e;
         }
       }
     }

@@ -4,17 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import src.AI.Direction;
 
-import src.AI.CategoryFsm;
-import src.AI.FSM;
 import src.Model.Alarm;
-import src.Model.Angle;
 import src.Model.Entity;
 import src.Model.Model;
 import src.Model.Shot;
 import src.Model.Vector;
-import src.Model.Collision.Circle;
 import src.Model.Collision.Collision;
-import src.Model.World.Map;
 
 public class Guard extends Entity
 {
@@ -50,7 +45,7 @@ public class Guard extends Entity
     countdown += dt;
     if( countdown > 1000 )
     {
-      System.out.println( "Shot!" );
+//      System.out.println( "Shot!" );
       Shot shot = new Shot( this.getBarycenter(), this.getOrientation() );
       while( Collision.detect( m_hitbox, shot.getPos() ) )
       {
@@ -75,7 +70,7 @@ public class Guard extends Entity
 
       if( closeEnough && correctAngle )
       {
-        Shot s = new Shot( this.getPos(), new Angle( dist.getAngle(), false ) );
+//        Shot s = new Shot( this.getPos(), new Angle( dist.getAngle(), false ) );
       }
     }
     m_brain.step();

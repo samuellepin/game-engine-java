@@ -32,6 +32,8 @@ public class BoxAvatar extends Avatar
         e1.printStackTrace();
       }
     }
+    m_idle = new Animation( e, m_idleImg, ANIMATION_TIME );
+    m_moving = new Animation( e, m_movingImg, ANIMATION_TIME );
   }
 
   @Override

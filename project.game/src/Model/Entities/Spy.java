@@ -1,16 +1,11 @@
 package src.Model.Entities;
 
-import java.util.List;
-
-import src.AI.CategoryFsm;
 import src.Model.Entity;
-import src.Model.World.Map;
-import src.AI.FSM;
 
 public class Spy extends Entity
 {
-  private Entity  m_metamorph;
-  private boolean m_updateView;
+//  private Entity  m_metamorph;
+//  private boolean m_updateView;
   
   public Spy()
   {

@@ -50,7 +50,7 @@ public class Vector implements Cloneable
   @Override
   public String toString()
   {
-    DecimalFormat df = new DecimalFormat("#.0");
+    DecimalFormat df   = new DecimalFormat( "#.0" );
     StringBuilder strb = new StringBuilder();
     strb.append( "(" );
     strb.append( "x=" + df.format( this.getX() ) + ", " );
@@ -141,14 +141,14 @@ public class Vector implements Cloneable
   {
     return Math.sqrt( Math.pow( m_x, 2 ) + Math.pow( m_y, 2 ) );
   }
-  
+
   public static Vector min( Vector v1, Vector v2 )
   {
     double x = v1.getX() < v2.getX() ? v1.getX() : v2.getX();
     double y = v1.getY() < v2.getY() ? v1.getY() : v2.getY();
     return new Vector( x, y );
   }
-  
+
   public static Vector max( Vector v1, Vector v2 )
   {
     double x = v1.getX() > v2.getX() ? v1.getX() : v2.getX();

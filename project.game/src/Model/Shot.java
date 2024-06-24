@@ -13,7 +13,7 @@ public class Shot
   private double              m_distance;
   private Entity              m_entityTouched;
   private int                 m_damage;
-  
+
   public Vector getPos()
   {
     return m_pos;
@@ -52,12 +52,12 @@ public class Shot
       if( Collision.detect( e.getHitbox(), m_pos ) )
       {
         m_hasTouched = true;
-        e.getHit(m_damage);
+        e.getHit( m_damage );
         return;
       }
     }
   }
-  
+
   public void move( long dt )
   {
     double d   = m_velocity * (double)dt;

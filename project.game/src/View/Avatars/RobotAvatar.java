@@ -50,8 +50,13 @@ public class RobotAvatar extends Avatar
       width *= -1;
       x -= width;
     }
-    
-    if( m_entity.isMoving() )
+
+    if( m_entity.isDead() )
+    {
+      g.drawImage( m_dead.getImage(), x, y, width, height, null );
+      m_dead.update();
+    }
+    else if( m_entity.isMoving() )
     {
       g.drawImage( m_walk.getImage(), x, y, width, height, null );
       m_walk.update();

@@ -48,8 +48,7 @@ public class SpyAvatar extends Avatar
     {
       double w = (double)width;
       w *= (double)(double)running.getWidth() / (double)idle.getWidth();
-      width = (
-          int)w;
+      width = (int)w;
       double h = (double)height;
       h *= (double)running.getHeight() / (double)idle.getHeight();
       height = (int)h;
