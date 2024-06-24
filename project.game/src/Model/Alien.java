@@ -66,6 +66,11 @@ public class Alien extends Entity
     }
   }
 
+  public boolean isNonOriginForm()
+  {
+    return m_metamorph != null;
+  }
+
   public Entity getMetamorph()
   {
     return m_metamorph;
