@@ -404,40 +404,34 @@ public abstract class Entity implements Cloneable
   {
     m_brain.step();
   }
-  
+
   public boolean getTrue()
   {
     return true;
   }
-  
+
   public boolean getMyDir( Direction dir )
   {
     return m_orientation == dir.toAngle( 0 );
   }
-  
+
   public boolean getCell( Direction dir, CategoryFsm cat )
   {
     Direction absDir;
-    switch( dir.getDirection() )
+    switch ( dir.getDirection() )
     {
     case Forward:
-      absDir = new Direction( Direction.toDirection( m_orientation ) );
-      break;
     case Backward:
-      absDir = new Direction( Direction.toDirection( Vector.normalizeAngle( m_orientation + Math.PI ) ) );
-      break;
     case Left:
-      absDir = new Direction( Direction.toDirection( Vector.normalizeAngle( m_orientation + Math.PI * 0.5) ) );
-      break;
     case Right:
-      absDir = new Direction( Direction.toDirection( Vector.normalizeAngle( m_orientation - Math.PI * 0.5) ) );
+      absDir = new Direction( Direction.toDirection( dir.toAngle( m_orientation ) ) );
       break;
     default:
       absDir = new Direction( dir.getDirection() );
       break;
     }
     double radius;
-    switch( absDir.getDirection() )
+    switch ( absDir.getDirection() )
     {
     case North:
     case South:
@@ -447,19 +441,18 @@ public abstract class Entity implements Cloneable
     case NW:
     case SE:
     case SW:
-      radius = (Tile.HEIGHT + Tile.WIDTH) /2;
+      radius = ( Tile.HEIGHT + Tile.WIDTH ) / 2;
       break;
     default:
       radius = Tile.WIDTH;
-        break;
+      break;
     }
     Vector pos = m_hitbox.getBarycenter();
-    Arc a = new Arc( pos.getX(), pos.getY(), radius, absDir.toAngle( 0 ), Direction.DIRECTION_ANGLE );
-    
-    for( Entity e: Model.getInstance().getEntities())
+    Arc    a   = new Arc( pos.getX(), pos.getY(), radius, absDir.toAngle( 0 ), Direction.DIRECTION_ANGLE );
+
+    for ( Entity e : Model.getInstance().getEntities() )
     {
-      if (cat.getType() == e.getType())
-        return Collision.detect( e.getHitbox(), a );
+      if( cat.getType() == e.getType() ) return Collision.detect( e.getHitbox(), a );
     }
     return false;
   }
@@ -568,7 +561,7 @@ public abstract class Entity implements Cloneable
   {
     m_id = id;
   }
-  
+
   public CategoryFsm.CATEGORY getType()
   {
     return m_cat.getType();
