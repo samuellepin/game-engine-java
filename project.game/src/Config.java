@@ -8,6 +8,7 @@ import src.AI.CategoryFsm;
 import src.AI.FSM;
 import src.AI.FsmFactory;
 import src.AI.CategoryFsm.CATEGORY;
+import src.Model.Angle;
 import src.Model.Entity;
 
 import src.Model.Model;
@@ -19,6 +20,11 @@ public class Config
   private static final Config INSTANCE = Serializer.deserialize( FILENAME, Config.class );
   private static final Random RANDOM   = new Random( Config.getInstance().getParameters().getSeed() );
 
+  public static Angle stringToAngle( String value )
+  {
+    return new Angle( Double.parseDouble( value.replace( "°", "" ) ), true );
+  }
+  
   public static Random getRandom()
   {
     return RANDOM;
@@ -96,6 +102,7 @@ public class Config
   {
     public int     seed;
     public String  visionFieldRadius;
+    public String  visionFieldApertureAngle;
     public int     player1;
     public int     player2;
     public int     itemToWin;
@@ -141,6 +148,11 @@ public class Config
     public double getVisionFieldRadius()
     {
       return Double.parseDouble( visionFieldRadius );
+    }
+
+    public Angle getVisionFieldApertureAngle()
+    {
+      return Config.stringToAngle( visionFieldApertureAngle );
     }
 
     public src.Model.Entity getPlayer1()

@@ -8,6 +8,7 @@ import src.AI.CategoryFsm;
 import src.AI.Direction;
 import src.AI.FSM;
 import src.Model.Collision.AABB;
+import src.Model.Collision.Arc;
 import src.Model.Collision.Circle;
 import src.Model.Collision.Collision;
 
@@ -20,9 +21,9 @@ public abstract class Entity implements Cloneable
   protected EntityTracker  m_tracker;
   protected long           m_elapsedTime;
   protected AABB           m_hitbox;
-  protected double         m_orientation;
+  protected Angle          m_orientation;
   protected double         m_velocity;
-  protected Circle         m_visionField;
+  protected Arc            m_visionField;
   protected boolean        m_isMoving;
   protected boolean        m_hasCollision;
   protected int            m_id;
@@ -41,11 +42,13 @@ public abstract class Entity implements Cloneable
 
   public Entity( FSM fsm, CategoryFsm.CATEGORY type, List< CategoryFsm.CATEGORY > options, int hp )
   {
+    m_orientation = new Angle( 0 );
     m_brain = new Brain( this, fsm );
     m_elapsedTime = 0;
     m_hitbox = new AABB( 0, 0, 0, 0 );
-    m_visionField = new Circle( this.getHitbox().getMin(),
-        Config.getInstance().getParameters().getVisionFieldRadius() );
+    double radius        = Config.getInstance().getParameters().getVisionFieldRadius();
+    Angle  apertureAngle = Config.getInstance().getParameters().getVisionFieldApertureAngle();
+    m_visionField = new Arc( this.m_hitbox.getBarycenter(), radius, m_orientation, apertureAngle );
     m_hasCollision = true;
     m_cat = new CategoryFsm( type, options );
     m_id = -1;
@@ -56,12 +59,13 @@ public abstract class Entity implements Cloneable
   public Entity( FSM fsm, int id, double width, double height, double velocity, boolean hasCollision,
       CategoryFsm.CATEGORY type, List< CategoryFsm.CATEGORY > options, int hp )
   {
+    m_orientation = new Angle( 0 );
     m_brain = new Brain( this, fsm );
     m_elapsedTime = 0;
     m_hitbox = new AABB( 0, 0, 0, 0 );
-    m_visionField = new Circle( this.getHitbox().getMin(),
-        Config.getInstance().getParameters().getVisionFieldRadius() );
-
+    double radius        = Config.getInstance().getParameters().getVisionFieldRadius();
+    Angle  apertureAngle = Config.getInstance().getParameters().getVisionFieldApertureAngle();
+    m_visionField = new Arc( this.m_hitbox.getBarycenter(), radius, m_orientation, apertureAngle );
     this.setId( id );
     this.setDim( width, height );
     this.setVelocity( velocity );
@@ -79,7 +83,7 @@ public abstract class Entity implements Cloneable
     e.setTracker( null );
     e.m_hitbox = m_hitbox.clone();
     e.m_visionField = m_visionField.clone();
-    e.m_visionField.setTopLeftCorner( e.m_hitbox.getPos() );
+    e.m_visionField.setCenter( e.m_hitbox.getBarycenter() );
     return e;
   }
 
@@ -225,7 +229,7 @@ public abstract class Entity implements Cloneable
 
   public void doTurn( double orientation )
   {
-    m_orientation = orientation;
+    m_orientation.setValue( orientation );
     m_brain.step();
   }
 
@@ -413,7 +417,7 @@ public abstract class Entity implements Cloneable
   // Spécifique à notre physique
   public void repulse()
   {
-    m_orientation += Math.PI;
+    m_orientation.add( Math.PI );
 //    doMove( m_orientation );
   }
 
@@ -452,12 +456,12 @@ public abstract class Entity implements Cloneable
     return m_hitbox.getHeight();
   }
 
-  public double getOrientation()
+  public Angle getOrientation()
   {
     return m_orientation;
   }
 
-  public void setOrientation( double orientation )
+  public void setOrientation( Angle orientation )
   {
     m_orientation = orientation;
   }
@@ -482,7 +486,7 @@ public abstract class Entity implements Cloneable
     return m_hitbox;
   }
 
-  public Circle getVisionField()
+  public Arc getVisionField()
   {
     return m_visionField;
   }
@@ -494,7 +498,7 @@ public abstract class Entity implements Cloneable
 
   public void turn( double orientation )
   {
-    m_orientation = orientation;
+    m_orientation.setValue( orientation );
   }
 
   @Override
@@ -529,7 +533,7 @@ public abstract class Entity implements Cloneable
   {
     return m_hp;
   }
-  
+
   public int getMaxHP()
   {
     return m_maxHp;

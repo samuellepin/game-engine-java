@@ -30,7 +30,7 @@ public class Animation4
 
   public void paint( Graphics g, int x, int y, int width, int height )
   {
-    double        angle = Vector.normalizeAngle( m_entity.getOrientation() );
+    double        angle = m_entity.getOrientation().normalize();
     final double  PI_4  = Math.PI / 4;
     BufferedImage img   = null;
 

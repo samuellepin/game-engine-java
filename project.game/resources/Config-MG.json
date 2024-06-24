@@ -2,7 +2,8 @@
 	"parameters" :
 	{
 		"seed": 1451,
-		"visionFieldRadius": "150.0",
+		"visionFieldRadius" : "150.0",
+		"visionFieldApertureAngle": "45°",
 		"player1" : 1234, 
 		"player2" : 5678,
 		"itemToWin" : 9012,

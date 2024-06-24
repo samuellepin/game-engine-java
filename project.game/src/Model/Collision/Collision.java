@@ -131,7 +131,7 @@ public class Collision
     Vector OP         = point;
     Vector OC         = arc.getCenter();
     Vector CP         = Vector.sub( OP, OC );
-    double angle      = -CP.getAngle();
+    double angle      = /*-*/ CP.getAngle();
     double thetaStart = Vector.normalizeAngle( arc.getStartAngle() );
     double thetaEnd   = Vector.normalizeAngle( arc.getEndAngle() );
     if( thetaStart <= thetaEnd )
@@ -149,7 +149,7 @@ public class Collision
       return false;
     }
 
-    if( arc.getApertureAngle() == Math.PI )
+    if( arc.getApertureAngle().getValue() == Math.PI )
     {
       return true;
     }

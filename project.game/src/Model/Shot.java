@@ -7,14 +7,14 @@ public class Shot
   private static final double LIMIT_DISTANCE = 500;
 
   private Vector              m_pos;
-  private double              m_dir;
+  private Angle               m_dir;
   private double              m_velocity;
   private boolean             m_hasTouched;
   private double              m_distance;
   private Entity              m_entityTouched;
   private int                 m_damage;
 
-  public Shot( Vector pos, double direction )
+  public Shot( Vector pos, Angle dir )
   {
     try
     {
@@ -25,7 +25,15 @@ public class Shot
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
-    m_dir = direction;
+    try
+    {
+      m_dir = dir.clone();
+    }
+    catch ( CloneNotSupportedException e )
+    {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
     m_velocity = 0.3f;
     m_hasTouched = false;
     m_distance = 0;
@@ -36,8 +44,9 @@ public class Shot
   public void update( long dt )
   {
     if( this.hasTouched() ) return;
-    double d = m_velocity * (double)dt;
-    m_pos.translate( d * Math.cos( m_dir ), d * Math.sin( m_dir ) );
+    double d   = m_velocity * (double)dt;
+    double dir = m_dir.getValue();
+    m_pos.translate( d * Math.cos( dir ), d * Math.sin( dir ) );
     m_distance += d;
     if( m_distance >= LIMIT_DISTANCE )
     {

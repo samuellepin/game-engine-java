@@ -10,6 +10,7 @@ import java.text.DecimalFormat;
 import javax.swing.JFrame;
 import info3.game.graphics.GameCanvas;
 import src.Controller;
+import src.Model.Angle;
 import src.Model.Vector;
 import src.Model.Collision.AABB;
 import src.Model.Collision.Arc;
@@ -50,7 +51,7 @@ public class CollisionTest
   private CollisionTest() throws Exception
   {
     m_aabb = new AABB( 270, 150, 300, 180 );
-    m_arc = new Arc( 200, 200, 150, Math.PI/4, Math.PI );
+    m_arc = new Arc( new Vector(200, 200), 150, new Angle(Math.PI/4), new Angle(Math.PI/8) );
 
     m_listener = new CanvasListener( this );
 
@@ -103,7 +104,7 @@ public class CollisionTest
 
     g.setColor( new Color( 255, 0, 255, 140 ) );
     g.fillArc( (int)m_arc.getX(), (int)m_arc.getY(), (int)m_arc.getWidth(), (int)m_arc.getHeight(),
-        (int)Arc.radianToDegree( m_arc.getStartAngle() ), (int)Arc.radianToDegree( m_arc.getArcAngle() ) );
+        -(int)Arc.radianToDegree( m_arc.getStartAngle() ), -(int)Arc.radianToDegree( m_arc.getArcAngle() ) );
 
     if( m_collision )
     {
