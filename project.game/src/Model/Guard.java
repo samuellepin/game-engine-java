@@ -24,8 +24,8 @@ public class Guard extends Entity
 
   void follow( Entity entity )
   {
-    Vector OP = entity.getPos();
-    Vector OE = this.getPos();
+    Vector OP = entity.getBarycenter();
+    Vector OE = this.getBarycenter();
     Vector EP = Vector.sub( OP, OE );
     super.getOrientation().setValue( EP.getAngle() );
     doMove( m_orientation.getValue() );
@@ -39,7 +39,12 @@ public class Guard extends Entity
     if( countdown > 1000 )
     {
       System.out.println( "Shot!" );
-      Model.getInstance().addShot( new Shot( this.getPos(), this.getOrientation() ) );
+      Shot shot = new Shot( this.getBarycenter(), this.getOrientation() );
+      while( Collision.detect( m_hitbox, shot.getPos() ) )
+      {
+        shot.move( dt );
+      }
+      Model.getInstance().addShot( shot );
       countdown = 0;
     }
   }

@@ -596,4 +596,9 @@ public abstract class Entity implements Cloneable
   {
     m_cat.setType( cat );
   }
+  
+  public Vector getBarycenter()
+  {
+    return m_hitbox.getBarycenter();
+  }
 }
