@@ -15,6 +15,7 @@ import src.Model.Document;
 import src.Model.Entity;
 import src.Model.Generator;
 import src.Model.Guard;
+import src.Model.Rabbit;
 import src.Model.Spy;
 import src.Model.Wall;
 
@@ -39,8 +40,14 @@ public class AvatarFactory
   private BufferedImage[]      m_guardDownImg;
   private BufferedImage[]      m_generatorIdleImg;
   private BufferedImage[]      m_generatorEnabledImg;
+  private BufferedImage[]      m_rabbitRightImg;
 
   public Map< Entity, Avatar > m_entities;
+  
+  public BufferedImage[] getRabbitRight()
+  {
+    return m_rabbitRightImg;
+  }
   
   public BufferedImage[] getGeneratorIdle()
   {
@@ -121,6 +128,8 @@ public class AvatarFactory
       
       this.m_generatorEnabledImg = AvatarFactory.loadSprite( "resources/sprites/Generator/Generator_Enabled.png", 1, 3 );
       this.m_generatorIdleImg = AvatarFactory.loadSprite( "resources/sprites/Generator/Generator_Idle.png", 1, 3 );    
+
+      this.m_rabbitRightImg = AvatarFactory.loadSprite( "resources/sprites/Generator/Rabbit_Right.png", 1, 4 );
     }
     catch ( IOException e )
     {
@@ -151,6 +160,10 @@ public class AvatarFactory
     else if( e instanceof Spy )
     {
       avatar = new SpyAvatar( (Spy)e );
+    }
+    else if ( e instanceof Rabbit )
+    {
+      avatar = new RabbitAvatar( (Rabbit)e );
     }
     else if( e instanceof Wall )
     {

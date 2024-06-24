@@ -9,9 +9,9 @@ public class Robot extends Entity
 {
 
   public Robot( FSM fsm, int id, double width, double height, double velocity, boolean hasCollision, CATEGORY type,
-      List< CATEGORY > options )
+      List< CATEGORY > options, int hp )
   {
-    super( fsm, id, width, height, velocity, hasCollision, type, options );
+    super( fsm, id, width, height, velocity, hasCollision, type, options, hp );
   }
   
   @Override

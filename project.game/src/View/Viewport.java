@@ -84,16 +84,33 @@ public class Viewport
   {
     Entity e = m_tracker.getTarget();
     g.setColor( Color.white );
-    int width   = 200;
-    int height  = 20;
-    int padding = 15;
-    int x       = padding;
-    int y       = Game.SCREEN_HEIGHT - padding - height;
-    g.setColor( Color.green );
-    g.fillRect( x, y, 2 * e.getHP(), height );
+    int    width   = 200;
+    int    height  = 20;
+    int    padding = 15;
+    int    x       = padding;
+    int    y       = Game.SCREEN_HEIGHT - padding - height;
+    double rate    = (double)e.getHP() / (double)e.getMaxHP();
+
+    if( rate < 0.25 )
+    {
+      g.setColor( Color.red );
+    }
+    else if( rate < 0.50 )
+    {
+      g.setColor( Color.orange );
+    }
+    else
+    {
+      g.setColor( Color.green );
+    }
+    
+    g.fillRect( x, y, (int) ( (double)width * rate ), height );
+
     padding = 3;
     g.setColor( Color.white );
-    g.drawRect( x - padding, y - padding, width + 2 * padding -1, height + 2 * padding -1 );
+    g.drawRect( x - padding, y - padding, width + 2 * padding - 1, height + 2 * padding - 1 );
+
+    g.drawString( e.getHP() + "/" + e.getMaxHP(), x + 5, y + 15 );
   }
 
   public void paint( Graphics g )

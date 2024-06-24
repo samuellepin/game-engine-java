@@ -1,6 +1,7 @@
 package src.Model;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import src.Config;
 import src.Game;
@@ -30,7 +31,7 @@ public class Model
 
     m_entities = new ArrayList< Entity >();
     m_trackers = new ArrayList< EntityTracker >();
-    m_shots = new ArrayList<Shot>();
+    m_shots = new ArrayList< Shot >();
 
     for ( Entity e : Map.getInstance().getWalls() )
     {
@@ -44,14 +45,18 @@ public class Model
     {
       e.tick( elapsed );
     }
-    for( Shot shot : m_shots )
+
+    Iterator< Shot > iterator = m_shots.iterator();
+    while( iterator.hasNext() )
     {
+      Shot shot = iterator.next();
       shot.update( elapsed );
       if( shot.hasTouched() )
       {
-        m_shots.remove( shot );
+        iterator.remove();
       }
     }
+
     if( Collision.detect( m_player1.getHitbox(), m_itemToWin.getHitbox() ) )
     {
       if( m_itemToWin instanceof Generator )
@@ -156,13 +161,13 @@ public class Model
       this.addEntity( e );
     }
   }
-  
-  public void addShot(Shot shot)
+
+  public void addShot( Shot shot )
   {
     m_shots.add( shot );
   }
-  
-  public ArrayList<Shot> getShots()
+
+  public ArrayList< Shot > getShots()
   {
     return m_shots;
   }

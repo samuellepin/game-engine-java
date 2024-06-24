@@ -2,6 +2,8 @@ package src.View;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 import src.Config;
 import src.Model.Document;
@@ -53,5 +55,27 @@ public abstract class Avatar
   protected void setEntity( Entity e )
   {
     m_entity = e;
+  }
+  
+  public BufferedImage[][] loadAnimation4( BufferedImage[][] img, String src, int num )
+  {
+    if( img == null )
+    {
+      img = new BufferedImage[ 4 ][];
+      String ext = ".png";
+      try
+      {
+        img[ 0 ] = AvatarFactory.loadSprite( src + "Up" + ext, 1, num );
+        img[ 1 ] = AvatarFactory.loadSprite( src + "Right" + ext, 1, num );
+        img[ 2 ] = AvatarFactory.loadSprite( src + "Down" + ext, 1, num );
+        img[ 3 ] = AvatarFactory.loadSprite( src + "Left" + ext, 1, num );
+      }
+      catch ( IOException e1 )
+      {
+        // TODO Auto-generated catch block
+        e1.printStackTrace();
+      }
+    }
+    return img;
   }
 }

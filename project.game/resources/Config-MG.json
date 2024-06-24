@@ -52,7 +52,8 @@
 			"velocity" : "0.3",
 			"fsm" : "Player1",
 			"category" : "PlayerT",
-			"options" : ["Killable","Jumpable"]
+			"options" : ["Killable","Jumpable"],
+			"hp" : 100
 		},
 		{
 			"id" : 5678,

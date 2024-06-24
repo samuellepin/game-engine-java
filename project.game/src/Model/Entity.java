@@ -37,8 +37,9 @@ public abstract class Entity implements Cloneable
   protected List< Entity > m_inventory;
   protected boolean        m_isResting;
   protected int            m_hp;
+  protected int            m_maxHp;
 
-  public Entity( FSM fsm, CategoryFsm.CATEGORY type, List< CategoryFsm.CATEGORY > options )
+  public Entity( FSM fsm, CategoryFsm.CATEGORY type, List< CategoryFsm.CATEGORY > options, int hp )
   {
     m_brain = new Brain( this, fsm );
     m_elapsedTime = 0;
@@ -48,11 +49,12 @@ public abstract class Entity implements Cloneable
     m_hasCollision = true;
     m_cat = new CategoryFsm( type, options );
     m_id = -1;
-    m_hp = 100;
+    m_maxHp = hp;
+    m_hp = hp;
   }
 
   public Entity( FSM fsm, int id, double width, double height, double velocity, boolean hasCollision,
-      CategoryFsm.CATEGORY type, List< CategoryFsm.CATEGORY > options )
+      CategoryFsm.CATEGORY type, List< CategoryFsm.CATEGORY > options, int hp )
   {
     m_brain = new Brain( this, fsm );
     m_elapsedTime = 0;
@@ -65,8 +67,9 @@ public abstract class Entity implements Cloneable
     this.setVelocity( velocity );
     this.setHasCollision( hasCollision );
     m_cat = new CategoryFsm( type, options );
-    
-    m_hp = 100;
+
+    m_maxHp = hp;
+    m_hp = hp;
   }
 
   @Override
@@ -511,19 +514,29 @@ public abstract class Entity implements Cloneable
   {
     m_id = id;
   }
-  
+
   public void subHP( int damage )
   {
     m_hp -= damage;
   }
-  
+
   public boolean isDead()
   {
     return m_hp == 0;
   }
-  
+
   public int getHP()
   {
     return m_hp;
+  }
+  
+  public int getMaxHP()
+  {
+    return m_maxHp;
+  }
+
+  public FSM getFSM()
+  {
+    return m_brain.getFSM();
   }
 }

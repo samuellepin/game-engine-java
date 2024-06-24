@@ -36,23 +36,26 @@ public class Config
     double                       width        = e.getWidth();
     double                       height       = e.getHeight();
     double                       velocity     = e.getVelocity();
+    int                          hp           = e.getMaxHP();
     boolean                      hasCollision = e.hasCollision();
     CategoryFsm.CATEGORY         type         = e.getTypeCat();
     List< CategoryFsm.CATEGORY > options      = e.getOptions();
     switch ( e.getType() )
     {
     case "Spy":
-      return new src.Model.Spy( fsm, id, width, height, velocity, hasCollision, type, options );
+      return new src.Model.Spy( fsm, id, width, height, velocity, hasCollision, type, options, hp );
     case "Guard":
-      return new src.Model.Guard( fsm, id, width, height, velocity, hasCollision, type, options );
+      return new src.Model.Guard( fsm, id, width, height, velocity, hasCollision, type, options, hp );
     case "Wall":
       return new src.Model.Wall( fsm, type, options );
     case "Document":
-      return new src.Model.Document( fsm, id, width, height, velocity, hasCollision, type, options );
+      return new src.Model.Document( fsm, id, width, height, velocity, hasCollision, type, options, hp );
     case "Alien":
-      return new src.Model.Alien( fsm, id, width, height, velocity, hasCollision, type, options );
+      return new src.Model.Alien( fsm, id, width, height, velocity, hasCollision, type, options, hp );
     case "Generator":
-      return new src.Model.Generator( fsm, id, width, height, velocity, hasCollision, type, options );
+      return new src.Model.Generator( fsm, id, width, height, velocity, hasCollision, type, options, hp );
+    case "Rabbit":
+      return new src.Model.Rabbit( fsm, id, width, height, velocity, hasCollision, type, options, hp );
     }
     return null;
   }
@@ -271,7 +274,7 @@ public class Config
 
     public boolean paintHitbox;
     public boolean paintVisionField;
-    
+
     public boolean isReducedVisionFieldEnabled()
     {
       return enableReducedVisionField;
@@ -319,6 +322,12 @@ public class Config
     public String   fsm;
     public String   typeCat;
     public String[] options;
+    public int      hp;
+
+    public int getMaxHP()
+    {
+      return hp;
+    }
 
     public int getId()
     {

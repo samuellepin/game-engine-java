@@ -19,6 +19,11 @@ public class Brain
     m_state = m_fsm.getInitialState();
     m_actions = new ArrayList< ActionFsm >();
   }
+  
+  public FSM getFSM()
+  {
+    return m_fsm;
+  }
 
   /* L'entité doit appeler cette fonction quand elle a fini son action actuelle */
   public void step()
