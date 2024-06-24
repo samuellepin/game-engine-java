@@ -16,7 +16,7 @@ public class Alarm
 
   public Alarm( Entity entity )
   {
-    m_radius = 500;
+    m_radius = 200;
     m_pos = entity.getPos();
     m_alarmArea = new Circle( m_pos, m_radius );
     m_isActive = false;
@@ -31,7 +31,7 @@ public class Alarm
   {
     ArrayList< Entity > entities = Model.getInstance().getEntities();
     m_isActive = true;
-    m_timer = 10000;
+    m_timer = 1000;
     Entity player1 = Model.getInstance().getPlayer1();
     Entity player2 = Model.getInstance().getPlayer2();
     if( Collision.detect( player1.getHitbox(), m_alarmArea ) )
