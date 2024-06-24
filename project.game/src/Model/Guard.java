@@ -1,5 +1,6 @@
 package src.Model;
 
+import java.util.ArrayList;
 import java.util.List;
 import src.AI.Direction;
 
@@ -40,8 +41,8 @@ public class Guard extends Entity
     Vector OP = entity.getPos();
     Vector OE = this.getPos();
     Vector EP = Vector.sub( OP, OE );
-    super.setOrientation( EP.getAngle() );
-    doMove( m_orientation );
+    super.getOrientation().setValue( EP.getAngle() );
+    doMove( m_orientation.getValue() );
   }
 
   private long countdown;
@@ -58,14 +59,32 @@ public class Guard extends Entity
   }
 
   @Override
+  public void doHit( double orientation, int damage )
+  {
+    ArrayList< Entity > entities = Model.getInstance().getEntities();
+    for ( Entity e : entities )
+    {
+      Vector  dist         = Vector.sub( e.getPos(), this.getPos() );
+
+      boolean closeEnough  = m_visionField.getRadius() >= dist.getMagnitude();
+      boolean correctAngle = orientation - ( Math.PI / 4 ) <= dist.getAngle();
+      correctAngle = correctAngle && dist.getAngle() <= orientation + ( Math.PI / 4 );
+
+      if( closeEnough && correctAngle )
+      {
+        Shot s = new Shot( this.getPos(), new Angle( dist.getAngle(), false ) );
+      }
+    }
+    m_brain.step();
+  }
+
+  @Override
   public void tick( long elapsed )
   {
     super.tick( elapsed );
 //    AABB h1 = Model.getInstance().getPlayer1().getHitbox();
-    Circle c1 = Model.getInstance().getPlayer1().getVisionField();
-    Circle c2 = super.getVisionField();
 //    System.out.println( "Tick " + this.toString() );
-    if( Collision.detect( c1, c2 ) )
+    if( Collision.detect( Model.getInstance().getPlayer1().getHitbox(), this.getVisionField() ) )
     {
 //      System.out.println( "Collision : " + c1.toString() + " - " + c2.toString() );
       // follow( Model.getInstance().getPlayer1() );
@@ -86,10 +105,11 @@ public class Guard extends Entity
   {
     if( dir.getDirection() == Direction.DIRECTION.Underscore )
     {
-      Vector dist=Vector.sub( m_otherAlarm.getOpponentPos(), getPos() );
-      m_moveDirection=dist.getAngle();
+      Vector dist = Vector.sub( m_otherAlarm.getOpponentPos(), getPos() );
+      m_moveDirection = dist.getAngle();
     }
-    else {
+    else
+    {
       m_moveDirection = dir.toAngle( m_orientation );
     }
     m_timeToWait = 20;

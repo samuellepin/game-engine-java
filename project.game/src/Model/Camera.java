@@ -23,7 +23,7 @@ public class Camera extends Entity
   @Override
   public void doTurn( double orientation )
   {
-    m_orientation += ( orientation - m_orientation ) * ratio;
+    m_orientation.add( ( orientation - m_orientation.getValue() ) * ratio );
     m_brain.step();
   }
 }
