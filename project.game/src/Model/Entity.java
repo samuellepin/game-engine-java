@@ -90,6 +90,7 @@ public abstract class Entity implements Cloneable
     e.m_visionField = m_visionField.clone();
     e.m_visionField.setCenter( e.m_hitbox.getBarycenter() );
     e.m_orientation = m_orientation.clone();
+    e.m_visionField.setAzimuth( e.m_orientation );
     e.m_protectDirection = m_protectDirection.clone();
     e.m_moveDirection = m_moveDirection.clone();
     return e;
@@ -481,7 +482,8 @@ public abstract class Entity implements Cloneable
       }
     }
 
-    if(dist!=null) {
+    if( dist != null )
+    {
       boolean correctAngle = dir - ( Math.PI / 4 ) <= dist.getAngle();
       correctAngle = correctAngle && dist.getAngle() <= dir + ( Math.PI / 4 );
       if( correctAngle )

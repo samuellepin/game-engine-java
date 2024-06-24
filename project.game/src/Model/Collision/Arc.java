@@ -18,6 +18,11 @@ public class Arc implements Cloneable
     cloned.m_apertureAngle=m_apertureAngle.clone();
     return cloned;
   }
+  
+  public void setAzimuth( Angle azimuth )
+  {
+    m_azimuth = azimuth;
+  }
 
   public Arc( Vector pos, double radius, Angle azimuth, Angle apertureAngle )
   {
