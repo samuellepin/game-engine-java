@@ -1,5 +1,6 @@
 package src.AI;
 
+import src.Model.Angle;
 import src.Model.Vector;
 
 public class Direction
@@ -21,8 +22,9 @@ public class Direction
     return m_direction;
   }
 
-  public double toAngle( double currentAngle )
+  public double toAngle( Angle angle )
   {
+    double currentAngle = angle.getValue();
     switch ( m_direction )
     {
     case Here:
