@@ -11,6 +11,8 @@ import javax.imageio.ImageIO;
 import src.Config;
 import src.Config.Tile;
 import src.Model.Alien;
+import src.Model.Box;
+import src.Model.Camera;
 import src.Model.Document;
 import src.Model.Dove;
 import src.Model.Entity;
@@ -19,6 +21,7 @@ import src.Model.Guard;
 import src.Model.Mouse;
 import src.Model.Rabbit;
 import src.Model.Raven;
+import src.Model.Robot;
 import src.Model.Spy;
 import src.Model.Squirrel;
 import src.Model.Wall;
@@ -75,42 +78,19 @@ public class AvatarFactory
     }
 
     Avatar avatar = null;
-    if( e instanceof Alien )
-    {
-      avatar = new AlienAvatar( (Alien)e );
-    }
-    else if( e instanceof Guard )
-    {
-      avatar = new GuardAvatar( (Guard)e );
-    }
-    else if( e instanceof Generator )
-    {
-      avatar = new GeneratorAvatar( (Generator)e );
-    }
-    else if( e instanceof Spy )
-    {
-      avatar = new SpyAvatar( (Spy)e );
-    }
-    else if( e instanceof Rabbit )
-    {
-      avatar = new RabbitAvatar( (Rabbit)e );
-    }
-    else if( e instanceof Dove )
-    {
-      avatar = new DoveAvatar( (Dove)e );
-    }
-    else if( e instanceof Raven )
-    {
-      avatar = new RavenAvatar( (Raven)e );
-    }
-    else if( e instanceof Mouse )
-    {
-      avatar = new MouseAvatar( (Mouse)e );
-    }
-    else if( e instanceof Squirrel )
-    {
-      avatar = new MouseAvatar( (Squirrel)e );
-    }
+    if( e instanceof Alien ) avatar = new AlienAvatar( e );
+    else if( e instanceof Box ) avatar = new BoxAvatar( e );
+    else if( e instanceof Camera ) avatar = new CameraAvatar( e );
+    else if( e instanceof Document ) avatar = new DocumentAvatar( e );
+    else if( e instanceof Dove ) avatar = new DoveAvatar( e );
+    else if( e instanceof Generator ) avatar = new GeneratorAvatar( e );
+    else if( e instanceof Guard ) avatar = new GuardAvatar( e );
+    else if( e instanceof Mouse ) avatar = new MouseAvatar( e );
+    else if( e instanceof Rabbit ) avatar = new RabbitAvatar( e );
+    else if( e instanceof Raven ) avatar = new RavenAvatar( e );
+    else if( e instanceof Robot ) avatar = new RobotAvatar( e );
+    else if( e instanceof Spy ) avatar = new SpyAvatar( e );
+    else if( e instanceof Squirrel ) avatar = new MouseAvatar( e );
     else if( e instanceof Wall )
     {
       int r = 1;
@@ -119,10 +99,6 @@ public class AvatarFactory
         r = this.m_obstacles.length;
       }
       avatar = new WallAvatar( (Wall)e, Config.getRandom().nextInt( r ) );
-    }
-    else if( e instanceof Document )
-    {
-      avatar = new DocumentAvatar( (Document)e );
     }
 
     m_entities.put( e, avatar );
