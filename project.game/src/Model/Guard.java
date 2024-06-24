@@ -11,10 +11,9 @@ import src.Model.World.Map;
 
 public class Guard extends Entity
 {
-  private Alarm     m_ownAlarm;
-  private Alarm     m_otherAlarm;
-  private boolean   m_isAlarmed;
-  private Direction m_dirOpponent;
+  private Alarm   m_ownAlarm;
+  private Alarm   m_otherAlarm;
+  private boolean m_isAlarmed;
 //  public Guard( Automaton automaton )
 //  {
 //    super( automaton );
@@ -83,10 +82,26 @@ public class Guard extends Entity
   }
 
   @Override
+  public void doMove( Direction dir )
+  {
+    if( dir.getDirection() == Direction.DIRECTION.Underscore )
+    {
+      Vector dist=Vector.sub( m_otherAlarm.getOpponentPos(), getPos() );
+      m_moveDirection=dist.getAngle();
+    }
+    else {
+      m_moveDirection = dir.toAngle( m_orientation );
+    }
+    m_timeToWait = 20;
+    m_isMoving = true;
+  }
+
+  @Override
   public void doWizz( List< Object > parameters )// déclanché après closest de l'automate
   {
     m_isAlarmed = true;
     m_ownAlarm.alert();
+    m_otherAlarm = m_ownAlarm;
     m_brain.step();
   }
 

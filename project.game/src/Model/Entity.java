@@ -429,11 +429,13 @@ public abstract class Entity implements Cloneable
       }
     }
 
-    boolean correctAngle = dir - ( Math.PI / 4 ) <= dist.getAngle();
-    correctAngle = correctAngle && dist.getAngle() <= dir + ( Math.PI / 4 );
-    if( correctAngle )
-    {
-      return true;
+    if(dist!=null) {
+      boolean correctAngle = dir - ( Math.PI / 4 ) <= dist.getAngle();
+      correctAngle = correctAngle && dist.getAngle() <= dir + ( Math.PI / 4 );
+      if( correctAngle )
+      {
+        return true;
+      }
     }
     return false;
   }

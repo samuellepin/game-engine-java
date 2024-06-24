@@ -158,7 +158,7 @@ public class Model
       }
       try
       {
-        e.correctBrain(e);
+        e.correctBrain( e );
       }
       catch ( CloneNotSupportedException except )
       {
