@@ -1,6 +1,5 @@
 package src.View;
 
-import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -13,7 +12,6 @@ import java.text.DecimalFormat;
 
 import info3.game.graphics.GameCanvas;
 import src.Model.Entity;
-import src.Model.EntityTracker;
 import src.Model.Model;
 import src.Config;
 import src.Game;

@@ -1,22 +1,35 @@
 package src.View;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 import src.Model.Alien;
 import src.Model.Entity;
-import src.Model.Vector;
 
 public class AlienAvatar extends Avatar
 {
-  private Animation m_movingAnim;
-  private Avatar    m_metamorph;
+
+  private static BufferedImage[] m_movingImg;
+
+  private Animation              m_movingAnim;
+  private Avatar                 m_metamorph;
 
   public AlienAvatar( Entity e )
   {
     super( e );
-    m_movingAnim = new Animation( e, m_factory.getMovingAlienSprite(), ANIMATION_TIME / 2 );
+    if( m_movingImg == null )
+    {
+      try
+      {
+        m_movingImg = AvatarFactory.loadSprite( "resources/sprites/Alien/Alien.png", 1, 11 );
+      }
+      catch ( IOException e1 )
+      {
+        e1.printStackTrace();
+      }
+    }
+    m_movingAnim = new Animation( e, m_movingImg, ANIMATION_TIME / 2 );
 
   }
 
@@ -24,8 +37,7 @@ public class AlienAvatar extends Avatar
   {
     Alien alien = (Alien)m_entity;
     if( alien.isViewUpdated() ) return;
-    if( m_metamorph == null )
-    m_metamorph = AvatarFactory.getInstance().make( alien.getMetamorph() );
+    if( m_metamorph == null ) m_metamorph = AvatarFactory.getInstance().make( alien.getMetamorph() );
     alien.setUpdateView( false );
   }
 
