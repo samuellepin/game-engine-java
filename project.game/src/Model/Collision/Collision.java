@@ -149,6 +149,11 @@ public class Collision
       return false;
     }
 
+    if( arc.getApertureAngle() == Math.PI )
+    {
+      return true;
+    }
+
     Vector pmin     = aabb.getMin();
     Vector pmax     = aabb.getMax();
     Vector points[] = { new Vector( pmin.getX(), pmin.getY() ), new Vector( pmax.getX(), pmin.getY() ),
@@ -164,13 +169,11 @@ public class Collision
 
     return false;
   }
-  
+
   public static boolean detect( AABB aabb, Vector point )
   {
-    return point.getX() >= aabb.getMin().getX() 
-        && point.getX() <= aabb.getMax().getX()
-        && point.getY() >= aabb.getMin().getY() 
-        && point.getY() <= aabb.getMax().getY();
+    return point.getX() >= aabb.getMin().getX() && point.getX() <= aabb.getMax().getX()
+        && point.getY() >= aabb.getMin().getY() && point.getY() <= aabb.getMax().getY();
   }
 
 }
