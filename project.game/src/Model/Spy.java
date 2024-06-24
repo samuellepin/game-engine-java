@@ -8,6 +8,9 @@ import src.AI.FSM;
 
 public class Spy extends Entity
 {
+  private Entity  m_metamorph;
+  private boolean m_updateView;
+  
   public Spy()
   {
     super();
