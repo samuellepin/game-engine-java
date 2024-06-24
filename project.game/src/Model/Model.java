@@ -121,6 +121,14 @@ public class Model
       {
         except.printStackTrace();
       }
+      try
+      {
+        e.correctBrain(e);
+      }
+      catch ( CloneNotSupportedException except )
+      {
+        except.printStackTrace();
+      }
       e.setId( e.getId() + i + 1 );
       e.setPos( Map.getInstance().getRandomPos() );
       this.addEntity( e );

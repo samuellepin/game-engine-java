@@ -77,6 +77,12 @@ public abstract class Entity implements Cloneable
     return e;
   }
 
+  public Entity correctBrain( Entity entity ) throws CloneNotSupportedException
+  {
+    entity.m_brain = m_brain.clone( entity );
+    return entity;
+  }
+
   public void setTracker( EntityTracker tracker )
   {
     m_tracker = tracker;

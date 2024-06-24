@@ -7,7 +7,7 @@ import src.AI.Action.ActionFsm;
 import src.AI.Condition.ConditionFsm;
 import src.Model.Entity;
 
-public class FSM
+public class FSM implements Cloneable
 {
   private ArrayList< StateFsm > m_states;
   private StateFsm              m_init_state;
@@ -30,6 +30,15 @@ public class FSM
     m_states = st;
     m_name = name;
     m_init_state = init;
+  }
+  
+  public FSM clone() throws CloneNotSupportedException
+  {
+    FSM cloned = (FSM)super.clone();
+    cloned.m_init_state = m_init_state.clone();
+    cloned.m_name=m_name;
+    cloned.m_states=(ArrayList< StateFsm >)m_states.clone();
+    return cloned;
   }
 
   /*

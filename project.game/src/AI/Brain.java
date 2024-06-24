@@ -4,8 +4,9 @@ import java.util.ArrayList;
 
 import src.AI.Action.ActionFsm;
 import src.Model.Entity;
+import src.Model.Collision.AABB;
 
-public class Brain
+public class Brain implements Cloneable
 {
   private FSM                    m_fsm;
   private Entity                 m_entity;
@@ -18,6 +19,15 @@ public class Brain
     m_fsm = a;
     m_state = m_fsm.getInitialState();
     m_actions = new ArrayList< ActionFsm >();
+  }
+
+  public Brain clone(Entity entity) throws CloneNotSupportedException
+  {
+    Brain cloned = (Brain)super.clone();
+    cloned.m_actions = (ArrayList< ActionFsm >)m_actions.clone();
+    cloned.m_state=m_state.clone();
+    cloned.m_entity=entity;
+    return cloned;
   }
 
   /* L'entité doit appeler cette fonction quand elle a fini son action actuelle */
