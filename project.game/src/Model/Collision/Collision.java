@@ -143,13 +143,15 @@ public class Collision
 
   public static boolean detect( AABB aabb, Arc arc )
   {
+    if( arc.getApertureAngle().getValue() <= 0 ) return true;
+    
     double r = arc.getRadius();
     if( squaredDistanceBetweenAABBandPoint( aabb, arc.getCenter() ) >= r * r )
     {
       return false;
     }
 
-    if( arc.getApertureAngle().getValue() == Math.PI )
+    if( arc.getApertureAngle().getValue() >= Math.PI )
     {
       return true;
     }

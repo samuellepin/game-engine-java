@@ -13,10 +13,11 @@ import src.Model.Entity;
 
 import src.Model.Model;
 import src.Model.Spy;
+import src.Model.World.Map;
 
 public class Config
 {
-  private static final String FILENAME = "resources/Config-MG.json";
+  private static final String FILENAME = "resources/Config-Alien.json";
   private static final Config INSTANCE = Serializer.deserialize( FILENAME, Config.class );
   private static final Random RANDOM   = new Random( Config.getInstance().getParameters().getSeed() );
 
@@ -36,34 +37,45 @@ public class Config
   }
 
   private src.Model.Entity StringToEntity( Entity e )
-  {
-    FSM                          fsm          = FsmFactory.getInstance().getFSM( e.getFSM() );
-    int                          id           = e.getId();
-    double                       width        = e.getWidth();
-    double                       height       = e.getHeight();
-    double                       velocity     = e.getVelocity();
-    int                          hp           = e.getMaxHP();
-    boolean                      hasCollision = e.hasCollision();
-    CategoryFsm.CATEGORY         type         = e.getTypeCat();
-    List< CategoryFsm.CATEGORY > options      = e.getOptions();
+  { 
+    src.Model.Entity entity = null;
+    
     switch ( e.getType() )
     {
     case "Spy":
-      return new src.Model.Spy( fsm, id, width, height, velocity, hasCollision, type, options, hp );
+      entity = new src.Model.Spy();
+      break;
     case "Guard":
-      return new src.Model.Guard( fsm, id, width, height, velocity, hasCollision, type, options, hp );
+      entity = new src.Model.Guard();
+      break;
     case "Wall":
-      return new src.Model.Wall( fsm, type, options );
+      entity = new src.Model.Wall();
+      break;
     case "Document":
-      return new src.Model.Document( fsm, id, width, height, velocity, hasCollision, type, options, hp );
+      entity = new src.Model.Document();
+      break;
     case "Alien":
-      return new src.Model.Alien( fsm, id, width, height, velocity, hasCollision, type, options, hp );
+      entity = new src.Model.Alien();
+      break;
     case "Generator":
-      return new src.Model.Generator( fsm, id, width, height, velocity, hasCollision, type, options, hp );
+      entity = new src.Model.Generator();
+      break;
     case "Rabbit":
-      return new src.Model.Rabbit( fsm, id, width, height, velocity, hasCollision, type, options, hp );
+      entity = new src.Model.Rabbit();
+      break;
     }
-    return null;
+    
+    entity.setFSM( e.getFSM() );
+    entity.setId( e.getId() );
+    entity.setDim( e.getWidth(), e.getHeight() );
+    entity.setVelocity( e.getVelocity() );
+    entity.setMaxHP( e.getMaxHP() );
+    entity.setHasCollision( e.hasCollision() );
+    entity.setCategory( e.getTypeCat() );
+    entity.setPos( Map.getInstance().getRandomPos() );
+//    entity.setOptions( e.getOptions() );
+
+    return entity;
   }
 
   public void initialize()
@@ -371,9 +383,9 @@ public class Config
       return Double.parseDouble( velocity );
     }
 
-    public String getFSM()
+    public FSM getFSM()
     {
-      return fsm;
+      return FsmFactory.getInstance().getFSM( fsm );
     }
 
     public CategoryFsm.CATEGORY getTypeCat()

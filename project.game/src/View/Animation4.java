@@ -4,7 +4,6 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import src.Model.Entity;
-import src.Model.Vector;
 
 public class Animation4
 {

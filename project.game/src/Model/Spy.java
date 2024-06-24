@@ -8,12 +8,9 @@ import src.AI.FSM;
 
 public class Spy extends Entity
 {
-
-  public Spy( FSM fsm, int id, double width, double height, double velocity, boolean hasCollision,
-      CategoryFsm.CATEGORY type, List< CategoryFsm.CATEGORY > options, int hp )
+  public Spy()
   {
-    super( fsm, id, width, height, velocity, hasCollision, type, options, hp );
-    this.setPos( Map.getInstance().getRandomPos() );
+    super();
   }
 
   @Override

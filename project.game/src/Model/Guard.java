@@ -15,18 +15,10 @@ public class Guard extends Entity
   private Alarm   m_ownAlarm;
   private Alarm   m_otherAlarm;
   private boolean m_isAlarmed;
-//  public Guard( Automaton automaton )
-//  {
-//    super( automaton );
-//    this.setPos( Map.getInstance().getRandomPos() );
-//    super.setVelocity( 0.1 );
-//  }
 
-  public Guard( FSM fsm, int id, double width, double height, double velocity, boolean hasCollision,
-      CategoryFsm.CATEGORY type, List< CategoryFsm.CATEGORY > options, int hp )
+  public Guard()
   {
-    super( fsm, id, width, height, velocity, hasCollision, type, options, hp );
-    this.setPos( Map.getInstance().getRandomPos() );
+    super();
     m_ownAlarm = new Alarm( this );
   }
 
@@ -38,8 +30,8 @@ public class Guard extends Entity
 
   void follow( Entity entity )
   {
-    Vector OP = entity.getPos();
-    Vector OE = this.getPos();
+    Vector OP = entity.getBarycenter();
+    Vector OE = this.getBarycenter();
     Vector EP = Vector.sub( OP, OE );
     super.getOrientation().setValue( EP.getAngle() );
     doMove( m_orientation.getValue() );
@@ -53,7 +45,12 @@ public class Guard extends Entity
     if( countdown > 1000 )
     {
       System.out.println( "Shot!" );
-      Model.getInstance().addShot( new Shot( this.getPos(), this.getOrientation() ) );
+      Shot shot = new Shot( this.getBarycenter(), this.getOrientation() );
+      while( Collision.detect( m_hitbox, shot.getPos() ) )
+      {
+        shot.move( dt );
+      }
+      Model.getInstance().addShot( shot );
       countdown = 0;
     }
   }
@@ -106,11 +103,11 @@ public class Guard extends Entity
     if( dir.getDirection() == Direction.DIRECTION.Underscore )
     {
       Vector dist = Vector.sub( m_otherAlarm.getOpponentPos(), getPos() );
-      m_moveDirection = dist.getAngle();
+      m_moveDirection.setValue( dist.getAngle() );
     }
     else
     {
-      m_moveDirection = dir.toAngle( m_orientation );
+      m_moveDirection.setValue( dir.toAngle( m_orientation ) );
     }
     m_timeToWait = 20;
     m_isMoving = true;

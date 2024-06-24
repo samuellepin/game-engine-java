@@ -5,7 +5,6 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-import src.Config;
 import src.Model.Angle;
 import src.Model.Document;
 import src.Model.Entity;
