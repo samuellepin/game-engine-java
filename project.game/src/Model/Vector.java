@@ -1,5 +1,6 @@
 package src.Model;
 
+import java.lang.Math;
 import java.text.DecimalFormat;
 
 public class Vector implements Cloneable
@@ -8,7 +9,7 @@ public class Vector implements Cloneable
   public static final Vector e_y = new Vector( 0, 1 );
 
   private double             m_x, m_y;
-  
+
   public Vector clone() throws CloneNotSupportedException
   {
     return (Vector)super.clone();
@@ -134,6 +135,11 @@ public class Vector implements Cloneable
       angle += 2 * Math.PI;
     }
     return angle;
+  }
+
+  public double norm()
+  {
+    return Math.sqrt( Math.pow( m_x, 2 ) + Math.pow( m_y, 2 ) );
   }
   
   public static Vector min( Vector v1, Vector v2 )

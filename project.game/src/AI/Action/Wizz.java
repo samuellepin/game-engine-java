@@ -1,15 +1,27 @@
 package src.AI.Action;
 
+import java.util.List;
+
 import src.Model.Entity;
 
 public class Wizz implements ActionFsm
 {
+  List< Object > m_parameters;
+
+  public Wizz()
+  {
+    m_parameters = null;
+  }
+
+  public Wizz( List< Object > parameters )
+  {
+    m_parameters = parameters;
+  }
 
   @Override
   public void execute( Entity entity )
   {
-    // TODO Auto-generated method stub
-
+    entity.doWizz( m_parameters );
   }
 
   @Override

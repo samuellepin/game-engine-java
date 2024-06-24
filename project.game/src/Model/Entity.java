@@ -90,9 +90,16 @@ public abstract class Entity implements Cloneable
     e.m_visionField = m_visionField.clone();
     e.m_visionField.setCenter( e.m_hitbox.getBarycenter() );
     e.m_orientation = m_orientation.clone();
+    e.m_visionField.setAzimuth( e.m_orientation );
     e.m_protectDirection = m_protectDirection.clone();
     e.m_moveDirection = m_moveDirection.clone();
     return e;
+  }
+
+  public Entity correctBrain( Entity entity ) throws CloneNotSupportedException
+  {
+    entity.m_brain = m_brain.clone( entity );
+    return entity;
   }
 
   public void setTracker( EntityTracker tracker )
@@ -258,6 +265,7 @@ public abstract class Entity implements Cloneable
 //        e.repulse();
         }
       }
+      m_orientation.setValue( m_moveDirection.getValue() );
 
       if( m_tracker != null )
       {
@@ -357,7 +365,7 @@ public abstract class Entity implements Cloneable
 
   public void doPick( double orientation )
   {
-    ArrayList< Entity > entities = Model.getInstance().getEntities();
+    ArrayList< Entity > entities = new ArrayList< Entity >( Model.getInstance().getEntities() );
     for ( Entity e : entities )
     {
       Vector  dist         = Vector.sub( e.getPos(), this.getPos() );
@@ -447,6 +455,43 @@ public abstract class Entity implements Cloneable
   {
 //    Model model = Model.getInstance();
     m_brain.step();
+  }
+
+  public boolean getGot()
+  {
+    return false;
+  }
+
+  public boolean getClosest( CategoryFsm cat, double dir )
+  {
+    ArrayList< Entity > entities  = new ArrayList< Entity >( Model.getInstance().getEntities() );
+    Vector              dist      = null;
+    double              distMin   = Double.MAX_VALUE;
+    Entity              entityMin = null;
+    for ( Entity e : entities )
+    {
+      if( e.m_cat.equals( cat ) )
+      {
+        double distNorm = Vector.sub( e.getPos(), this.getPos() ).norm();
+        if( distNorm < distMin && !e.equals( this ) )
+        {
+          dist = Vector.sub( e.getPos(), this.getPos() );
+          distMin = distNorm;
+          entityMin = e;
+        }
+      }
+    }
+
+    if( dist != null )
+    {
+      boolean correctAngle = dir - ( Math.PI / 4 ) <= dist.getAngle();
+      correctAngle = correctAngle && dist.getAngle() <= dir + ( Math.PI / 4 );
+      if( correctAngle )
+      {
+        return true;
+      }
+    }
+    return false;
   }
 
   /* to override */

@@ -56,33 +56,36 @@ Player2(Normal)
   | Key(s) ? Move(S) : (Metamorph)
   | Key(d) ? Move(E) : (Metamorph)
   | Key(q) ? Move(W) : (Metamorph)
-  | Key(x)  ?         : (Normal)
-  | True    ? Wait()  : (Metamorph)
+  | Key(x) ?         : (Normal)
+  | True   ? Wait()  : (Metamorph)
 }
 
 Guard(Patrol)
 {  
   * (Patrol):
-  | Cell(F,@) ? Move(F) : (Engage)
-  | Cell(B,@) ? Turn(B) : (Patrol)
-  | Cell(L,@) ? Turn(L) : (Patrol)
-  | Cell(R,@) ? Turn(R) : (Patrol)
-  | True ? 40% Move(F) / 20% Turn(L) / 20% Turn(R) / 20% Turn(B) : (Patrol)
-
+  | Got ?                                      : (Engage)
+  | Cell(F, @) ? Move(F);Wizz                  : (Engage)
+  | Cell(F,O)  ? 50% Turn(R)/ 50% Turn(L)      : (Patrol)
+  | True       ? 90% Move(F,100)/Turn(R)/ Turn(L)  : (Patrol)
+  
   * (Engage):
-  | Cell(F, @) ? Hit(F)  : (Patrol)
-  | Cell(L, @) ? Turn(L) : (Engage)
-  | Cell(R, @) ? Turn(R) : (Engage)
-  | Cell(B, @) ? Turn(B) : (Engage)
-  | Cell(F, V) ? Move(F) : (Engage)
-  | !Closest(@, _) ? : (Patrol)
+  | !Got ?                                : (Patrol)
+  | Cell(F, @) ? Move(F);Wizz             : (Engage)
+  | Cell(F,O)  ? 50% Turn(R)/ 50% Turn(L) : (Engage)
+  | True ? Move(_)                        : (Engage)
 }
 
-SecurityCamera(Rotate)
+SecurityCamera(Right)
 {
-  * (Rotate) :
-  | Closest(@, F) ? Wizz : (Rotate)
-  | True ? Turn(R) : (Rotate)
+  * (Right) :
+  | Closest(#, F) ? Wizz    : (Right)
+  | Closest(O, F) ?         : (Left)
+  | True          ? Turn(R) : (Right)
+
+  * (Left) :
+  | Closest(#, F) ? Wizz    : (Left)
+  | Closest(O, F) ?         : (Right)
+  | True          ? Turn(R) : (Left)
 }
 
 Wall(DoNothing)

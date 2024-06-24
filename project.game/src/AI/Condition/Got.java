@@ -32,8 +32,7 @@ public class Got implements ConditionFsm
   @Override
   public boolean evaluate( Entity entity )
   {
-    // TODO Auto-generated method stub
-    return false;
+    return entity.getGot();
   }
 
   @Override
