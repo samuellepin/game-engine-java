@@ -15,7 +15,7 @@ public class Guard extends Entity
   {
     super();
   }
-  
+
   @Override
   public String toString()
   {
@@ -45,7 +45,7 @@ public class Guard extends Entity
   }
 
   @Override
-  public void doHit( double orientation , int damage)
+  public void doHit( double orientation, int damage )
   {
     ArrayList< Entity > entities = Model.getInstance().getEntities();
     for ( Entity e : entities )
@@ -58,12 +58,11 @@ public class Guard extends Entity
 
       if( closeEnough && correctAngle )
       {
-        Shot s = new Shot( this.getPos(), dist.getAngle() );
+        Shot s = new Shot( this.getPos(), new Angle( dist.getAngle() ) );
       }
     }
     m_brain.step();
   }
-  
 
   @Override
   public void tick( long elapsed )
@@ -71,8 +70,7 @@ public class Guard extends Entity
     super.tick( elapsed );
 //    AABB h1 = Model.getInstance().getPlayer1().getHitbox();
 //    System.out.println( "Tick " + this.toString() );
-    if( Collision.detect( Model.getInstance().getPlayer1().getHitbox(),
-        this.getVisionField() ) )
+    if( Collision.detect( Model.getInstance().getPlayer1().getHitbox(), this.getVisionField() ) )
     {
 //      System.out.println( "Collision : " + c1.toString() + " - " + c2.toString() );
       follow( Model.getInstance().getPlayer1() );
