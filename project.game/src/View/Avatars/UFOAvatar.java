@@ -1,33 +1,35 @@
-package src.View;
+package src.View.Avatars;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import src.Model.Entity;
+import src.View.Animation;
+import src.View.Avatar;
+import src.View.AvatarFactory;
 
-public class DocumentAvatar extends Avatar
+public class UFOAvatar extends Avatar
 {
   private static BufferedImage[] m_idleImg;
-  private Animation m_idle;
+  private Animation              m_idle;
 
-  public DocumentAvatar( Entity e )
+  public UFOAvatar( Entity e )
   {
     super( e );
-    
     if( m_idleImg == null )
     {
       try
       {
-        m_idleImg = AvatarFactory.loadSprite( "resources/sprites/ConciseDocumentationOfLustre.png", 1, 1 );
+        m_idleImg = AvatarFactory.loadSprite( "resources/sprites/UFO_Idle.png", 1, 4 );
       }
       catch ( IOException e1 )
       {
         e1.printStackTrace();
       }
     }
-    
-    m_idle = new Animation( e, m_idleImg, 0 );
+
+    m_idle = new Animation( e, m_idleImg, ANIMATION_TIME );
   }
 
   @Override

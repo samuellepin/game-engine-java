@@ -1,10 +1,13 @@
-package src.View;
+package src.View.Avatars;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import src.Model.Entity;
+import src.View.Animation;
+import src.View.Avatar;
+import src.View.AvatarFactory;
 
 public class SpyAvatar extends Avatar
 {
@@ -45,7 +48,8 @@ public class SpyAvatar extends Avatar
     {
       double w = (double)width;
       w *= (double)(double)running.getWidth() / (double)idle.getWidth();
-      width = (int)w;
+      width = (
+          int)w;
       double h = (double)height;
       h *= (double)running.getHeight() / (double)idle.getHeight();
       height = (int)h;

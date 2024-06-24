@@ -13,7 +13,7 @@ import src.Model.Wall;
 public abstract class Avatar
 {
 
-  static final long          ANIMATION_TIME     = 50;
+  protected static final long          ANIMATION_TIME     = 50;
 
   protected Entity           m_entity;
   protected AvatarFactory    m_factory;

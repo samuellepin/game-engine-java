@@ -1,10 +1,11 @@
-package src.View;
+package src.View.Avatars;
 
 import java.awt.Color;
 import java.awt.Graphics;
 
 import src.Model.Entity;
 import src.Model.Vector;
+import src.View.Avatar;
 
 public class CameraAvatar extends Avatar
 {

@@ -1,24 +1,27 @@
-package src.View;
+package src.View.Avatars;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import src.Model.Entity;
+import src.View.Animation;
+import src.View.Avatar;
+import src.View.AvatarFactory;
 
-public class UFOAvatar extends Avatar
+public class StairsAvatar extends Avatar
 {
   private static BufferedImage[] m_idleImg;
   private Animation              m_idle;
 
-  public UFOAvatar( Entity e )
+  public StairsAvatar( Entity e )
   {
     super( e );
     if( m_idleImg == null )
     {
       try
       {
-        m_idleImg = AvatarFactory.loadSprite( "resources/sprites/UFO_Idle.png", 1, 4 );
+        m_idleImg = AvatarFactory.loadSprite( "resources/sprites/Stairs_Idle.png", 1, 1 );
       }
       catch ( IOException e1 )
       {

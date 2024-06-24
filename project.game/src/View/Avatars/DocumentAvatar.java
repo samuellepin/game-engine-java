@@ -1,32 +1,36 @@
-package src.View;
+package src.View.Avatars;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import src.Model.Entity;
+import src.View.Animation;
+import src.View.Avatar;
+import src.View.AvatarFactory;
 
-public class StairsAvatar extends Avatar
+public class DocumentAvatar extends Avatar
 {
   private static BufferedImage[] m_idleImg;
-  private Animation              m_idle;
+  private Animation m_idle;
 
-  public StairsAvatar( Entity e )
+  public DocumentAvatar( Entity e )
   {
     super( e );
+    
     if( m_idleImg == null )
     {
       try
       {
-        m_idleImg = AvatarFactory.loadSprite( "resources/sprites/Stairs_Idle.png", 1, 1 );
+        m_idleImg = AvatarFactory.loadSprite( "resources/sprites/ConciseDocumentationOfLustre.png", 1, 1 );
       }
       catch ( IOException e1 )
       {
         e1.printStackTrace();
       }
     }
-
-    m_idle = new Animation( e, m_idleImg, ANIMATION_TIME );
+    
+    m_idle = new Animation( e, m_idleImg, 0 );
   }
 
   @Override

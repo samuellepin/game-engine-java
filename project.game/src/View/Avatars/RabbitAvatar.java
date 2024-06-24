@@ -1,9 +1,11 @@
-package src.View;
+package src.View.Avatars;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import src.Model.Entity;
+import src.View.Animation4;
+import src.View.Avatar;
 
 public class RabbitAvatar extends Avatar
 {

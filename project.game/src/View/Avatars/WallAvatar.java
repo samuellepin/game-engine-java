@@ -1,10 +1,12 @@
-package src.View;
+package src.View.Avatars;
 
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import src.Model.Entity;
+import src.View.Avatar;
+import src.View.AvatarFactory;
 
 public class WallAvatar extends Avatar
 {

@@ -1,10 +1,13 @@
-package src.View;
+package src.View.Avatars;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import src.Model.Entity;
+import src.View.Animation;
+import src.View.Avatar;
+import src.View.AvatarFactory;
 
 public class BoxAvatar extends Avatar
 {

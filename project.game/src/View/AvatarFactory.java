@@ -27,6 +27,21 @@ import src.Model.Squirrel;
 import src.Model.Stairs;
 import src.Model.UFO;
 import src.Model.Wall;
+import src.View.Avatars.AlienAvatar;
+import src.View.Avatars.BoxAvatar;
+import src.View.Avatars.CameraAvatar;
+import src.View.Avatars.DocumentAvatar;
+import src.View.Avatars.DoveAvatar;
+import src.View.Avatars.GeneratorAvatar;
+import src.View.Avatars.GuardAvatar;
+import src.View.Avatars.MouseAvatar;
+import src.View.Avatars.RabbitAvatar;
+import src.View.Avatars.RavenAvatar;
+import src.View.Avatars.RobotAvatar;
+import src.View.Avatars.SpyAvatar;
+import src.View.Avatars.StairsAvatar;
+import src.View.Avatars.UFOAvatar;
+import src.View.Avatars.WallAvatar;
 
 public class AvatarFactory
 {
