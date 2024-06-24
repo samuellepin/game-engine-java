@@ -90,3 +90,9 @@ Wall(DoNothing)
   * (DoNothing) :
   | True ? : (DoNothing)
 }
+
+Animal(DoNothing)
+{
+  * (DoNothing) :
+  | True          ? : (DoNothing)
+}

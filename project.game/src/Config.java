@@ -17,7 +17,7 @@ import src.Model.World.Map;
 
 public class Config
 {
-  private static final String FILENAME = "resources/Config-MG.json";
+  private static final String FILENAME = "resources/Config-Alien.json";
   private static final Config INSTANCE = Serializer.deserialize( FILENAME, Config.class );
   private static final Random RANDOM   = new Random( Config.getInstance().getParameters().getSeed() );
 
@@ -62,6 +62,18 @@ public class Config
       break;
     case "Rabbit":
       entity = new src.Model.Rabbit();
+      break;
+    case "Dove":
+      entity = new src.Model.Dove();
+      break;
+    case "Raven":
+      entity = new src.Model.Raven();
+      break;
+    case "Mouse":
+      entity = new src.Model.Mouse();
+      break;
+    case "Squirrel":
+      entity = new src.Model.Squirrel();
       break;
     }
     

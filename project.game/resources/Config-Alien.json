@@ -45,8 +45,8 @@
 	"view" : 
 	{
 		"paintHitbox" : true,
-		"paintVisionField" : false,
-		"zoom" : "1.0",
+		"paintVisionField" : true,
+		"zoom" : "1.7",
 		"screenWidth" : 500,
 		"screenHeight" : 500,
 		"title" : "Alien",
@@ -57,8 +57,8 @@
 		{
 			"id" : 1234,
 			"type" : "Alien",
-			"width" : "60.0",
-			"height" : "60.0",
+			"width" : "25.0",
+			"height" : "25.0",
 			"hasCollision" : true,
 			"velocity" : "0.3",
 			"fsm" : "Player1",
@@ -87,23 +87,82 @@
 			"category" : "Stuff"
 		},
 		{
-			"id" : 999,
+			"id" : 2000,
 			"type" : "Rabbit",
-			"width" : "24.0",
-			"height" : "24.0",
-			"hasCollision" : true,
-			"velocity" : "3.0",
-			"fsm" : "DoNothing",
-			"hp" : 50,
+			"width" : "25.0",
+			"height" : "25.0",
+			"hasCollision" : false,
+			"velocity" : "1.0",
+			"fsm" : "Animal",
 			"category" : "Team"
-		}	
+		},
+		{
+			"id" : 2100,
+			"type" : "Dove",
+			"width" : "25.0",
+			"height" : "25.0",
+			"hasCollision" : false,
+			"velocity" : "1.0",
+			"fsm" : "Animal",
+			"category" : "Team"
+		},
+		{
+			"id" : 2200,
+			"type" : "Mouse",
+			"width" : "25.0",
+			"height" : "25.0",
+			"hasCollision" : false,
+			"velocity" : "1.0",
+			"fsm" : "Animal",
+			"category" : "Team"
+		},
+		{
+			"id" : 2300,
+			"type" : "Squirrel",
+			"width" : "25.0",
+			"height" : "25.0",
+			"hasCollision" : false,
+			"velocity" : "1.0",
+			"fsm" : "Animal",
+			"category" : "Team"
+		},
+		{
+			"id" : 2400,
+			"type" : "Raven",
+			"width" : "25.0",
+			"height" : "25.0",
+			"hasCollision" : false,
+			"velocity" : "1.0",
+			"fsm" : "Animal",
+			"category" : "Team"
+		}
 	],
 	"enenmies" :
 	[
 		{
-			"id" : 5678,
-			"min" : 6,
-			"max" : 9
+			"id" : 2000,
+			"min" : 3,
+			"max" : 6
+		},
+		{
+			"id" : 2100,
+			"min" : 3,
+			"max" : 6
+		},
+		{
+			"id" : 2200,
+			"min" : 3,
+			"max" : 6
+		},
+		{
+			"id" : 2300,
+			"min" : 3,
+			"max" : 6
+		},
+		{
+			"id" : 2400,
+			"min" : 3,
+			"max" : 6
 		}
 	],
 	"itemsToPickToWin" : 

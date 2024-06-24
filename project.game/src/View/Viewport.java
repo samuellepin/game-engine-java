@@ -13,7 +13,6 @@ import src.Model.Shot;
 import src.Model.Vector;
 import src.Model.Collision.AABB;
 import src.Model.Collision.Arc;
-import src.Model.Collision.Circle;
 import src.Model.World.*;
 
 public class Viewport

@@ -1,6 +1,5 @@
 package src.View;
 
-import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -13,7 +12,6 @@ import java.text.DecimalFormat;
 
 import info3.game.graphics.GameCanvas;
 import src.Model.Entity;
-import src.Model.EntityTracker;
 import src.Model.Model;
 import src.Config;
 import src.Game;
@@ -40,7 +38,7 @@ public class View
   {
     Game game = Game.getInstance();
     if( game == null ) return;
-    
+
     GameCanvas canvas = game.getCanvas();
     if( canvas == null ) return;
 
@@ -59,30 +57,11 @@ public class View
     g.drawString( text, posX, posY );
   }
 
-  public int paintInfoEntity( Graphics g, String title, Entity e, int posX, int posY )
-  {
-    DecimalFormat df = new DecimalFormat( "#.0" );
-    g.drawString( title, posX, posY );
-    posY += 16;
-    g.drawString( "x = " + df.format( e.getX() ), posX, posY );
-    posY += 16;
-    g.drawString( "y = " + df.format( e.getY() ), posX, posY );
-    posY += 16;
-
-    return posY;
-  }
-
   public void paintInfo( Graphics g )
   {
     g.setColor( Color.white );
-    int    posX    = 5;
-    int    posY    = 20;
-
-    Entity player1 = Model.getInstance().getPlayer1();
-    posY += this.paintInfoEntity( g, "Player 1", player1, posX, posY );
-    Entity player2 = Model.getInstance().getPlayer2();
-    posY += this.paintInfoEntity( g, "Player 2", player2, posX, posY );
-    
+    g.drawString( Model.getInstance().getPlayer1().toString(), 5, 20 );
+    g.drawString( Model.getInstance().getPlayer2().toString(), 5, 40 );
     this.paintFPS( g );
   }
 
@@ -104,28 +83,28 @@ public class View
     int offset = 10;
     g.drawRect( posX - offset, posY, width + 2 * offset, height );
   }
-  
+
   public void updateScreenDimension()
   {
     Game game = Game.getInstance();
     if( game == null ) return;
-    
+
     GameCanvas canvas = game.getCanvas();
     if( canvas == null ) return;
 
     Game.SCREEN_WIDTH = canvas.getWidth();
     Game.SCREEN_HEIGHT = canvas.getHeight();
 
-    this.m_viewports[ 0 ].update( 0, 0, Game.SCREEN_WIDTH/2, Game.SCREEN_HEIGHT );
+    this.m_viewports[ 0 ].update( 0, 0, Game.SCREEN_WIDTH / 2, Game.SCREEN_HEIGHT );
     this.m_viewports[ 0 ].getTracker().resize();
-    this.m_viewports[ 1 ].update( Game.SCREEN_WIDTH/2, 0, Game.SCREEN_WIDTH/2, Game.SCREEN_HEIGHT );
+    this.m_viewports[ 1 ].update( Game.SCREEN_WIDTH / 2, 0, Game.SCREEN_WIDTH / 2, Game.SCREEN_HEIGHT );
     this.m_viewports[ 1 ].getTracker().resize();
   }
 
   public void paint( Graphics g )
   {
 //    this.updateScreenDimension();
-    
+
     if( Model.getInstance().isGameOver() )
     {
       this.paintGameOver( g );
@@ -166,7 +145,7 @@ public class View
       }
     }
 
-//    this.paintInfo( g );
+    this.paintInfo( g );
   }
 
   public static View getInstance()
