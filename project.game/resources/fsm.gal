@@ -69,9 +69,12 @@ Guard(Patrol)
   | Cell(L, @) ? Turn(L);Wizz                                          : (Engage)
   | Cell(R, @) ? Turn(R);Wizz                                          : (Engage)
   | Cell(F,O)  ? Turn(R)                                               : (Patrol)
+  | Closest(O, F) ?  Wizz       : (Engage)
   | True       ? 40% Move(F) / 20% Turn(L) / 20% Turn(R) / 20% Turn(B) : (Patrol)
   
   * (Engage):
+  |True? Turn(L):(Patrol)
+  | !Got ?                       : (Patrol)
   | Cell(F, @)         ? Hit(F)  : (Engage)
   | Cell(L, @)         ? Turn(L) : (Engage)
   | Cell(R, @)         ? Turn(R) : (Engage)

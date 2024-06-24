@@ -15,7 +15,7 @@ public class Alarm
 
   public Alarm( Entity entity )
   {
-    m_radius = 200;
+    m_radius = 500;
     m_pos = entity.getPos();
     m_alarmArea = new Circle( m_pos, m_radius );
     m_isActive = false;
@@ -28,11 +28,12 @@ public class Alarm
     m_timer = 10000;
     for ( Entity e : entities )
     {
+      if(true)
       if( e instanceof Guard )
       {
         if( Collision.detect( m_alarmArea, e.getHitbox() ) )
         {
-          System.out.println(e.getX());
+          System.out.println(e.getX()+" "+e.getY());
           ( (Guard)e ).setAlarm( this );
         }
       }

@@ -416,22 +416,23 @@ public abstract class Entity implements Cloneable
     Entity              entityMin = null;
     for ( Entity e : entities )
     {
-      double distNorm = Vector.sub( e.getPos(), this.getPos() ).norm();
-      if( distNorm < distMin && !e.equals( this ) )
+      if( e.m_cat.equals( cat ) )
       {
-        dist = Vector.sub( e.getPos(), this.getPos() );
-        distMin = distNorm;
-        entityMin = e;
+        double distNorm = Vector.sub( e.getPos(), this.getPos() ).norm();
+        if( distNorm < distMin && !e.equals( this ) )
+        {
+          dist = Vector.sub( e.getPos(), this.getPos() );
+          distMin = distNorm;
+          entityMin = e;
+        }
       }
     }
-    if( entityMin.m_cat.equals( cat ) )
+
+    boolean correctAngle = dir - ( Math.PI / 4 ) <= dist.getAngle();
+    correctAngle = correctAngle && dist.getAngle() <= dir + ( Math.PI / 4 );
+    if( correctAngle )
     {
-      boolean correctAngle = dir - ( Math.PI / 4 ) <= dist.getAngle();
-      correctAngle = correctAngle && dist.getAngle() <= dir + ( Math.PI / 4 );
-      if( correctAngle )
-      {
-        return true;
-      }
+      return true;
     }
     return false;
   }

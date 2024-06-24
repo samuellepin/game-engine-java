@@ -70,8 +70,8 @@
 	[
 		{
 			"id" : 5678,
-			"min" : 8,
-			"max" : 10
+			"min" : 20,
+			"max" : 30
 		}
 	],
 	"itemsToPickToWin" : 
