@@ -46,7 +46,7 @@
 	{
 		"paintHitbox" : true,
 		"paintVisionField" : true,
-		"zoom" : "1.0",
+		"zoom" : "1.7",
 		"screenWidth" : 500,
 		"screenHeight" : 500,
 		"title" : "Alien",
@@ -57,8 +57,8 @@
 		{
 			"id" : 1234,
 			"type" : "Alien",
-			"width" : "60.0",
-			"height" : "60.0",
+			"width" : "25.0",
+			"height" : "25.0",
 			"hasCollision" : true,
 			"velocity" : "0.3",
 			"fsm" : "Player1",

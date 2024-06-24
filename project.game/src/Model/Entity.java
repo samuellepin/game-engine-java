@@ -495,11 +495,19 @@ public abstract class Entity implements Cloneable
 
   public double getWidth()
   {
+    if( this.m_originEntity != null )
+    {
+      return this.m_originEntity.getWidth();
+    }
     return m_hitbox.getWidth();
   }
 
   public double getHeight()
   {
+    if( this.m_originEntity != null )
+    {
+      return this.m_originEntity.getHeight();
+    }
     return m_hitbox.getHeight();
   }
 

@@ -37,7 +37,7 @@ public class AlienAvatar extends Avatar
   {
     Alien alien = (Alien)m_entity;
     if( alien.isViewUpdated() ) return;
-    if( m_metamorph == null ) m_metamorph = AvatarFactory.getInstance().make( alien.getMetamorph() );
+    m_metamorph = AvatarFactory.getInstance().make( alien.getMetamorph() );
     alien.setUpdateView( false );
   }
 
