@@ -36,7 +36,7 @@ public class SpyAvatar extends Avatar
     }
 
     // renverse le sprite pour tourner le personnage vers la gauche
-    double angle = Vector.normalizeAngle( m_entity.getOrientation() );
+    double angle = m_entity.getOrientation().normalize();
     if( angle > Math.PI / 2 || angle < -Math.PI / 2 )
     {
       width *= -1;

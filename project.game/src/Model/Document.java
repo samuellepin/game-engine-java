@@ -10,10 +10,9 @@ import src.Model.World.Map;
 public class Document extends Entity
 {
   
-  public Document( FSM fsm, int id, double width, double height, double velocity, boolean hasCollision, CategoryFsm.CATEGORY type, List< CategoryFsm.CATEGORY > options )
+  public Document()
   {
-    super( fsm, id, width, height, velocity, hasCollision, type, options );
-    this.setPos( Map.getInstance().getRandomPos() );
+    super();
   }
 
   @Override

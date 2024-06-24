@@ -1,5 +1,6 @@
 package src.Model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import src.AI.CategoryFsm;
@@ -10,17 +11,9 @@ import src.Model.World.Map;
 
 public class Guard extends Entity
 {
-//  public Guard( Automaton automaton )
-//  {
-//    super( automaton );
-//    this.setPos( Map.getInstance().getRandomPos() );
-//    super.setVelocity( 0.1 );
-//  }
-
-  public Guard( FSM fsm, int id, double width, double height, double velocity, boolean hasCollision , CategoryFsm.CATEGORY type, List< CategoryFsm.CATEGORY > options)
+  public Guard()
   {
-    super( fsm, id, width, height, velocity, hasCollision, type, options );
-    this.setPos( Map.getInstance().getRandomPos() );
+    super();
   }
 
   @Override
@@ -29,20 +22,36 @@ public class Guard extends Entity
     return "Guard - " + super.toString();
   }
 
-//  void follow( Entity entity )
-//  {
-//    Vector OP = entity.getPos();
-//    Vector OE = this.getPos();
-//    Vector EP = Vector.sub( OP, OE );
-//    super.setOrientation( EP.getAngle() );
-//    doMove( m_orientation );
-//  }
-//
-//  @Override
-//  public void tick( long elapsed )
-//  {
-//    super.tick( elapsed );
-//    Circle c1 = Model.getInstance().getPlayer1().getVisionField();
-//    Circle c2 = super.getVisionField();
-//  }
+  private long countdown;
+
+  void shot( long dt )
+  {
+    countdown += dt;
+    if( countdown > 1000 )
+    {
+      System.out.println( "Shot!" );
+      Model.getInstance().addShot( new Shot( this.getPos(), this.getOrientation() ) );
+      countdown = 0;
+    }
+  }
+
+  @Override
+  public void doHit( double orientation, int damage )
+  {
+    ArrayList< Entity > entities = Model.getInstance().getEntities();
+    for ( Entity e : entities )
+    {
+      Vector  dist         = Vector.sub( e.getPos(), this.getPos() );
+
+      boolean closeEnough  = m_visionField.getRadius() >= dist.getMagnitude();
+      boolean correctAngle = orientation - ( Math.PI / 4 ) <= dist.getAngle();
+      correctAngle = correctAngle && dist.getAngle() <= orientation + ( Math.PI / 4 );
+
+      if( closeEnough && correctAngle )
+      {
+        Shot s = new Shot( this.getPos(), new Angle( dist.getAngle() ) );
+      }
+    }
+    m_brain.step();
+  }
 }

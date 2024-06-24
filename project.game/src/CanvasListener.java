@@ -5,8 +5,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
 import info3.game.graphics.GameCanvasListener;
-import src.Model.Entity;
-import src.Model.Model;
 
 public class CanvasListener implements GameCanvasListener
 {

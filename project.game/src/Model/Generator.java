@@ -9,11 +9,10 @@ import src.Model.World.Map;
 public class Generator extends Entity
 {
   private boolean m_isEnabled;
-  
-  public Generator( FSM fsm, int id, double width, double height, double velocity, boolean hasCollision, CategoryFsm.CATEGORY type, List< CategoryFsm.CATEGORY > options )
+
+  public Generator()
   {
-    super( fsm, id, width, height, velocity, hasCollision, type, options );
-    this.setPos( Map.getInstance().getRandomPos() );
+    super();
     m_isEnabled = false;
   }
 
@@ -22,12 +21,12 @@ public class Generator extends Entity
   {
     return "Generator - " + super.toString();
   }
-  
+
   public void enable()
   {
     m_isEnabled = true;
   }
-  
+
   public boolean isEnabled()
   {
     return m_isEnabled;

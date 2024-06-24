@@ -3,6 +3,7 @@
 	{
 		"seed": 130,
 		"visionFieldRadius": "100.0",
+		"visionFieldApertureAngle": "45°",
 		"player1" : 1234, 
 		"player2" : 5678,
 		"itemToWin" : 9012,
@@ -10,7 +11,8 @@
 		"enableWalls" : true,
 		"backgroundMusic" : "resources/sounds/alien-main-theme.ogg",
 		"gameOverBGM" : "resources/sounds/metal-gear-game-over.ogg",
-		"volume" : "0.9"
+		"volume" : "0.9",
+		"reducedVisionField" : "0%"
 	},
 	"world" : 
 	{
@@ -47,7 +49,8 @@
 		"zoom" : "1.0",
 		"screenWidth" : 500,
 		"screenHeight" : 500,
-		"title" : "Alien"
+		"title" : "Alien",
+		"enableReducedVisionField" : true
 	},
 	"entities" : 
 	[
@@ -60,7 +63,8 @@
 			"velocity" : "0.3",
 			"fsm" : "Player1",
 			"category" : "PlayerT",
-			"options" : ["Killable","Jumpable"]
+			"options" : ["Killable","Jumpable"],
+			"hp" : 200
 		},
 		{
 			"id" : 5678,
@@ -81,7 +85,18 @@
 			"velocity" : "0.0",
 			"fsm" : "DoNothing",
 			"category" : "Stuff"
-		}
+		},
+		{
+			"id" : 999,
+			"type" : "Rabbit",
+			"width" : "24.0",
+			"height" : "24.0",
+			"hasCollision" : true,
+			"velocity" : "3.0",
+			"fsm" : "DoNothing",
+			"hp" : 50,
+			"category" : "Team"
+		}	
 	],
 	"enenmies" :
 	[

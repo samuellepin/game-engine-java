@@ -5,11 +5,12 @@ import java.util.List;
 
 import src.AI.Brain;
 import src.AI.CategoryFsm;
+import src.AI.CategoryFsm.CATEGORY;
 import src.AI.Direction;
 import src.AI.FSM;
+import src.AI.FsmFactory;
 import src.Model.Collision.AABB;
 import src.Model.Collision.Arc;
-import src.Model.Collision.Circle;
 import src.Model.Collision.Collision;
 import src.Model.World.Tile;
 
@@ -22,9 +23,9 @@ public abstract class Entity implements Cloneable
   protected EntityTracker  m_tracker;
   protected long           m_elapsedTime;
   protected AABB           m_hitbox;
-  protected double         m_orientation;
+  protected Angle          m_orientation;
   protected double         m_velocity;
-  protected Circle         m_visionField;
+  protected Arc            m_visionField;
   protected boolean        m_isMoving;
   protected boolean        m_hasCollision;
   protected int            m_id;
@@ -32,39 +33,40 @@ public abstract class Entity implements Cloneable
   protected boolean        m_isWaiting;
   protected long           m_timeToWait;
   protected Brain          m_brain;
-  protected double         m_moveDirection;
+  protected Angle          m_moveDirection;
   protected boolean        m_isProtected;
-  protected double         m_protectDirection;
+  protected Angle          m_protectDirection;
   protected Entity         m_objectInHand;
   protected List< Entity > m_inventory;
   protected boolean        m_isResting;
+  protected int            m_hp;
+  protected int            m_maxHp;
 
-  public Entity( FSM fsm, CategoryFsm.CATEGORY type, List< CategoryFsm.CATEGORY > options )
+  public Entity()
   {
-    m_brain = new Brain( this, fsm );
+    m_tracker = null;
     m_elapsedTime = 0;
     m_hitbox = new AABB( 0, 0, 0, 0 );
-    m_visionField = new Circle( this.getHitbox().getMin(),
-        Config.getInstance().getParameters().getVisionFieldRadius() );
+    m_orientation = new Angle( 0 );
+    m_velocity = 0;
+    double radius        = Config.getInstance().getParameters().getVisionFieldRadius();
+    Angle  apertureAngle = Config.getInstance().getParameters().getVisionFieldApertureAngle();
+    m_visionField = new Arc( this.m_hitbox.getBarycenter(), radius, m_orientation, apertureAngle );
+    m_isMoving = false;
     m_hasCollision = true;
-    m_cat = new CategoryFsm( type, options );
     m_id = -1;
-  }
-
-  public Entity( FSM fsm, int id, double width, double height, double velocity, boolean hasCollision,
-      CategoryFsm.CATEGORY type, List< CategoryFsm.CATEGORY > options )
-  {
-    m_brain = new Brain( this, fsm );
-    m_elapsedTime = 0;
-    m_hitbox = new AABB( 0, 0, 0, 0 );
-    m_visionField = new Circle( this.getHitbox().getMin(),
-        Config.getInstance().getParameters().getVisionFieldRadius() );
-
-    this.setId( id );
-    this.setDim( width, height );
-    this.setVelocity( velocity );
-    this.setHasCollision( hasCollision );
-    m_cat = new CategoryFsm( type, options );
+    m_cat = new CategoryFsm();
+    m_isWaiting = false;
+    m_timeToWait = 0;
+    m_brain = new Brain( this );
+    m_moveDirection = new Angle( 0 );
+    m_isProtected = false;
+    m_protectDirection = new Angle( 0 );
+    m_objectInHand = null;
+    m_inventory = new ArrayList<>();
+    m_isResting = false;
+    m_hp = 0;
+    m_maxHp = 0;
   }
 
   @Override
@@ -74,7 +76,7 @@ public abstract class Entity implements Cloneable
     e.setTracker( null );
     e.m_hitbox = m_hitbox.clone();
     e.m_visionField = m_visionField.clone();
-    e.m_visionField.setTopLeftCorner( e.m_hitbox.getPos() );
+    e.m_visionField.setCenter( e.m_hitbox.getBarycenter() );
     return e;
   }
 
@@ -155,28 +157,28 @@ public abstract class Entity implements Cloneable
 
   public void doMove( Direction dir )
   {
-    m_moveDirection = dir.toAngle( m_orientation );
+    m_moveDirection.setValue( dir.toAngle( m_orientation ) );
     m_timeToWait = 20;
     m_isMoving = true;
   }
 
   public void doMove( double dir )
   {
-    m_moveDirection = dir;
+    m_moveDirection = new Angle( dir );
     m_timeToWait = 20;
     m_isMoving = true;
   }
 
   public void doMove( Direction dir, long time )
   {
-    m_moveDirection = dir.toAngle( m_orientation );
+    m_moveDirection.setValue( dir.toAngle( m_orientation ) );
     m_timeToWait = time;
     m_isMoving = true;
   }
 
   public void doMove( double dir, long time )
   {
-    m_moveDirection = dir;
+    m_moveDirection = new Angle( dir );
     m_timeToWait = time;
     m_isMoving = true;
   }
@@ -193,7 +195,8 @@ public abstract class Entity implements Cloneable
 
       double prevX = this.getHitbox().getX();
       double prevY = this.getHitbox().getY();
-      this.getHitbox().translate( d * Math.cos( m_moveDirection ), d * Math.sin( m_moveDirection ) );
+      this.getHitbox().translate( d * Math.cos( m_moveDirection.getValue() ),
+          d * Math.sin( m_moveDirection.getValue() ) );
       for ( Entity e : Model.getInstance().getEntities() )
       {
         if( e != this && e.hasCollision() && Collision.detect( this.getHitbox(), e.getHitbox() ) )
@@ -220,7 +223,7 @@ public abstract class Entity implements Cloneable
 
   public void doTurn( double orientation )
   {
-    m_orientation = orientation;
+    m_orientation.setValue( orientation );
     m_brain.step();
   }
 
@@ -248,7 +251,7 @@ public abstract class Entity implements Cloneable
     m_brain.step();
   }
 
-  public void doHit( double orientation )
+  public void doHit( double orientation, int damage )
   {
     ArrayList< Entity > entities = Model.getInstance().getEntities();
     for ( Entity e : entities )
@@ -261,7 +264,7 @@ public abstract class Entity implements Cloneable
 
       if( closeEnough && correctAngle )
       {
-        e.getHit();
+        e.getHit( damage );
       }
     }
     m_brain.step();
@@ -270,14 +273,14 @@ public abstract class Entity implements Cloneable
   public void doProtect( double orientation, long time )
   {
     m_isProtected = true;
-    m_protectDirection = orientation;
+    m_protectDirection.setValue( orientation );
     m_timeToWait = time;
   }
 
   public void doProtect( Direction direction, long time )
   {
     m_isProtected = true;
-    m_protectDirection = direction.toAngle( m_orientation );
+    m_protectDirection.setValue( direction.toAngle( m_orientation ) );
     m_timeToWait = time;
   }
 
@@ -294,9 +297,9 @@ public abstract class Entity implements Cloneable
     }
   }
 
-  public void getHit()
+  public void getHit( int damage )
   {
-    // À implémenter pour chaque entité
+    // À implémenter pour chaque entité si nécessaire
   }
 
   public void doPick( double orientation )
@@ -412,7 +415,7 @@ public abstract class Entity implements Cloneable
 
   public boolean getMyDir( Direction dir )
   {
-    return m_orientation == dir.toAngle( 0 );
+    return m_orientation.getValue() == dir.toAngle( Angle.ANGLE_ZERO );
   }
 
   public boolean getCell( Direction dir, CategoryFsm cat )
@@ -448,7 +451,8 @@ public abstract class Entity implements Cloneable
       break;
     }
     Vector pos = m_hitbox.getBarycenter();
-    Arc    a   = new Arc( pos.getX(), pos.getY(), radius, absDir.toAngle( 0 ), Direction.DIRECTION_ANGLE );
+    Arc    a   = new Arc( pos, radius, new Angle( absDir.toAngle( Angle.ANGLE_ZERO ) ),
+        new Angle( Direction.DIRECTION_ANGLE ) );
 
     for ( Entity e : Model.getInstance().getEntities() )
     {
@@ -460,7 +464,7 @@ public abstract class Entity implements Cloneable
   // Spécifique à notre physique
   public void repulse()
   {
-    m_orientation += Math.PI;
+    m_orientation.add( Math.PI );
 //    doMove( m_orientation );
   }
 
@@ -499,12 +503,12 @@ public abstract class Entity implements Cloneable
     return m_hitbox.getHeight();
   }
 
-  public double getOrientation()
+  public Angle getOrientation()
   {
     return m_orientation;
   }
 
-  public void setOrientation( double orientation )
+  public void setOrientation( Angle orientation )
   {
     m_orientation = orientation;
   }
@@ -529,7 +533,7 @@ public abstract class Entity implements Cloneable
     return m_hitbox;
   }
 
-  public Circle getVisionField()
+  public Arc getVisionField()
   {
     return m_visionField;
   }
@@ -541,7 +545,7 @@ public abstract class Entity implements Cloneable
 
   public void turn( double orientation )
   {
-    m_orientation = orientation;
+    m_orientation.setValue( orientation );
   }
 
   @Override
@@ -565,5 +569,51 @@ public abstract class Entity implements Cloneable
   public CategoryFsm.CATEGORY getType()
   {
     return m_cat.getType();
+  }
+
+  public void subHP( int damage )
+  {
+    m_hp -= damage;
+  }
+
+  public boolean isDead()
+  {
+    return m_hp == 0;
+  }
+
+  public int getHP()
+  {
+    return m_hp;
+  }
+
+  public int getMaxHP()
+  {
+    return m_maxHp;
+  }
+
+  public FSM getFSM()
+  {
+    return m_brain.getFSM();
+  }
+
+  public void setFSM( FSM fsm )
+  {
+    m_brain.setFSM( fsm );
+  }
+
+  public void setFSM( String name )
+  {
+    this.setFSM( FsmFactory.getInstance().getFSM( name ) );
+  }
+
+  public void setMaxHP( int maxHP )
+  {
+    m_hp = maxHP;
+    m_maxHp = maxHP;
+  }
+
+  public void setCategory( CATEGORY cat )
+  {
+    m_cat.setType( cat );
   }
 }

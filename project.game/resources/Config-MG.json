@@ -2,7 +2,8 @@
 	"parameters" :
 	{
 		"seed": 1451,
-		"visionFieldRadius": "100.0",
+		"visionFieldRadius" : "150.0",
+		"visionFieldApertureAngle": "45°",
 		"player1" : 1234, 
 		"player2" : 5678,
 		"itemToWin" : 9012,
@@ -33,12 +34,13 @@
 	},
 	"view" : 
 	{
-		"paintHitbox" : false,
-		"paintVisionField" : false,
+		"paintHitbox" : true,
+		"paintVisionField" : true,
 		"zoom" : "1.0",
 		"screenWidth" : 500,
 		"screenHeight" : 500,
-		"title" : "Metal Gear"
+		"title" : "Metal Gear",
+		"enableReducedVisionField" : false
 	},
 	"entities" : 
 	[
@@ -51,7 +53,8 @@
 			"velocity" : "0.3",
 			"fsm" : "Player1",
 			"category" : "PlayerT",
-			"options" : ["Killable","Jumpable"]
+			"options" : ["Killable","Jumpable"],
+			"hp" : 100
 		},
 		{
 			"id" : 5678,

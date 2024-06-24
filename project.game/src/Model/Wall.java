@@ -7,11 +7,11 @@ import src.AI.FSM;
 
 public class Wall extends Entity
 {
-  public Wall( FSM fsm, CategoryFsm.CATEGORY type, List< CategoryFsm.CATEGORY > options )
+  public Wall()
   {
-    super( fsm, type, options );
+    super();
   }
-
+  
   @Override
   public String toString()
   {

@@ -3,6 +3,8 @@ package src;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.io.RandomAccessFile;
 
 import javax.swing.JFrame;
@@ -50,19 +52,32 @@ public class Game
 
     m_view = View.getInstance();
 
-    Map map = Map.getInstance();
-
     m_listener = new CanvasListener( this );
 
     m_canvas = new GameCanvas( m_listener );
     m_canvas.setSize( new Dimension( SCREEN_WIDTH, SCREEN_HEIGHT ) );
 
-    m_frame = m_canvas.createFrame( new Dimension( SCREEN_WIDTH, SCREEN_HEIGHT ) );
+    m_frame = m_canvas.createFrame( new Dimension( SCREEN_WIDTH+30, SCREEN_HEIGHT+60 ) );
     m_frame.setTitle( Config.getInstance().getView().getTitle() );
     m_frame.setLayout( new FlowLayout() );
     m_frame.add( m_canvas );
     m_frame.setLocationRelativeTo( null );
     m_frame.setVisible( true );
+
+// RESIZE
+//    m_frame.addComponentListener( new ComponentAdapter()
+//    {
+//      @Override
+//      public void componentResized( ComponentEvent e )
+//      {
+//        Dimension newSize = m_frame.getSize();
+//        m_canvas.setSize( newSize );
+//        m_canvas.setPreferredSize( newSize );
+//        m_frame.validate();
+//        m_canvas.repaint();
+//      }
+//    } );
+
   }
 
   public void tick( long elapsed )
@@ -90,9 +105,14 @@ public class Game
       System.exit( -1 );
     }
   }
-  
+
   public void stopMusic( String filename )
   {
     m_canvas.stopMusic( filename );
+  }
+
+  public GameCanvas getCanvas()
+  {
+    return m_canvas;
   }
 }

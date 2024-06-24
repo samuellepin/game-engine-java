@@ -8,17 +8,24 @@ import src.AI.CategoryFsm;
 import src.AI.FSM;
 import src.AI.FsmFactory;
 import src.AI.CategoryFsm.CATEGORY;
+import src.Model.Angle;
 import src.Model.Entity;
 
 import src.Model.Model;
 import src.Model.Spy;
+import src.Model.World.Map;
 
 public class Config
 {
-  private static final String FILENAME = "resources/Config-Alien.json";
+  private static final String FILENAME = "resources/Config-MG.json";
   private static final Config INSTANCE = Serializer.deserialize( FILENAME, Config.class );
   private static final Random RANDOM   = new Random( Config.getInstance().getParameters().getSeed() );
 
+  public static Angle stringToAngle( String value )
+  {
+    return new Angle( Double.parseDouble( value.replace( "°", "" ) ), true );
+  }
+  
   public static Random getRandom()
   {
     return RANDOM;
@@ -30,31 +37,45 @@ public class Config
   }
 
   private src.Model.Entity StringToEntity( Entity e )
-  {
-    FSM                          fsm          = FsmFactory.getInstance().getFSM( e.getFSM() );
-    int                          id           = e.getId();
-    double                       width        = e.getWidth();
-    double                       height       = e.getHeight();
-    double                       velocity     = e.getVelocity();
-    boolean                      hasCollision = e.hasCollision();
-    CategoryFsm.CATEGORY         type         = e.getTypeCat();
-    List< CategoryFsm.CATEGORY > options      = e.getOptions();
+  { 
+    src.Model.Entity entity = null;
+    
     switch ( e.getType() )
     {
     case "Spy":
-      return new src.Model.Spy( fsm, id, width, height, velocity, hasCollision, type, options );
+      entity = new src.Model.Spy();
+      break;
     case "Guard":
-      return new src.Model.Guard( fsm, id, width, height, velocity, hasCollision, type, options );
+      entity = new src.Model.Guard();
+      break;
     case "Wall":
-      return new src.Model.Wall( fsm, type, options );
+      entity = new src.Model.Wall();
+      break;
     case "Document":
-      return new src.Model.Document( fsm, id, width, height, velocity, hasCollision, type, options );
+      entity = new src.Model.Document();
+      break;
     case "Alien":
-      return new src.Model.Alien( fsm, id, width, height, velocity, hasCollision, type, options );
+      entity = new src.Model.Alien();
+      break;
     case "Generator":
-      return new src.Model.Generator( fsm, id, width, height, velocity, hasCollision, type, options );
+      entity = new src.Model.Generator();
+      break;
+    case "Rabbit":
+      entity = new src.Model.Rabbit();
+      break;
     }
-    return null;
+    
+    entity.setFSM( e.getFSM() );
+    entity.setId( e.getId() );
+    entity.setDim( e.getWidth(), e.getHeight() );
+    entity.setVelocity( e.getVelocity() );
+    entity.setMaxHP( e.getMaxHP() );
+    entity.setHasCollision( e.hasCollision() );
+    entity.setCategory( e.getTypeCat() );
+    entity.setPos( Map.getInstance().getRandomPos() );
+//    entity.setOptions( e.getOptions() );
+
+    return entity;
   }
 
   public void initialize()
@@ -93,6 +114,7 @@ public class Config
   {
     public int     seed;
     public String  visionFieldRadius;
+    public String  visionFieldApertureAngle;
     public int     player1;
     public int     player2;
     public int     itemToWin;
@@ -138,6 +160,11 @@ public class Config
     public double getVisionFieldRadius()
     {
       return Double.parseDouble( visionFieldRadius );
+    }
+
+    public Angle getVisionFieldApertureAngle()
+    {
+      return Config.stringToAngle( visionFieldApertureAngle );
     }
 
     public src.Model.Entity getPlayer1()
@@ -267,9 +294,15 @@ public class Config
     public int     screenWidth;
     public int     screenHeight;
     public String  title;
+    public boolean enableReducedVisionField;
 
     public boolean paintHitbox;
     public boolean paintVisionField;
+
+    public boolean isReducedVisionFieldEnabled()
+    {
+      return enableReducedVisionField;
+    }
 
     public double getZoom()
     {
@@ -313,6 +346,12 @@ public class Config
     public String   fsm;
     public String   category;
     public String[] options;
+    public int      hp;
+
+    public int getMaxHP()
+    {
+      return hp;
+    }
 
     public int getId()
     {
@@ -344,9 +383,9 @@ public class Config
       return Double.parseDouble( velocity );
     }
 
-    public String getFSM()
+    public FSM getFSM()
     {
-      return fsm;
+      return FsmFactory.getInstance().getFSM( fsm );
     }
 
     public CategoryFsm.CATEGORY getTypeCat()

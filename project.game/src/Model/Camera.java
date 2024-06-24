@@ -7,21 +7,12 @@ import src.AI.FSM;
 
 public class Camera extends Entity
 {
-  private double ratio;
-  
-  public Camera( FSM fsm, int id, double width, double height, double velocity, boolean hasCollision,
-      CategoryFsm.CATEGORY type, List< CategoryFsm.CATEGORY > options )
-  {
-    super( fsm, id, width, height, velocity, hasCollision, type, options );
-    super.setDim( 25, 25 );
-    super.setHasCollision( false );
-    ratio=0.1;
-  }
-  
+  private static final double RATIO = 0.1;
+
   @Override
   public void doTurn( double orientation )
   {
-    m_orientation+=(orientation-m_orientation)*ratio;
+    m_orientation.add( ( orientation - m_orientation.getValue() ) * RATIO );
     m_brain.step();
   }
 }
