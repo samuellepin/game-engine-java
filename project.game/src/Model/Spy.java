@@ -18,4 +18,9 @@ public class Spy extends Entity
   {
     return "Spy - " + super.toString();
   }
+  
+  @Override
+  public void getHit(int damage) {
+    this.subHP( damage );
+  }
 }

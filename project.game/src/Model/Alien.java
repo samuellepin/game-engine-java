@@ -54,4 +54,9 @@ public class Alien extends Entity
   {
     return m_metamorph;
   }
+  
+  @Override 
+  public void getHit(int damage) {
+    this.subHP( damage );
+  }
 }

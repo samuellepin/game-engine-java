@@ -38,7 +38,7 @@ public class Shot
     m_hasTouched = false;
     m_distance = 0;
     m_entityTouched = null;
-    m_damage = 20;
+    m_damage = 1;
   }
 
   public void update( long dt )
@@ -58,7 +58,7 @@ public class Shot
       if( Collision.detect( e.getHitbox(), m_pos ) )
       {
         m_hasTouched = true;
-        e.subHP( m_damage );
+        e.getHit(m_damage);
         return;
       }
     }

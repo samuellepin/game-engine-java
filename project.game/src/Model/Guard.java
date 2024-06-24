@@ -1,5 +1,6 @@
 package src.Model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import src.AI.CategoryFsm;
@@ -37,11 +38,32 @@ public class Guard extends Entity
     countdown += dt;
     if( countdown > 1000 )
     {
-      System.out.println("Shot!");
+      System.out.println( "Shot!" );
       Model.getInstance().addShot( new Shot( this.getPos(), this.getOrientation() ) );
       countdown = 0;
     }
   }
+
+  @Override
+  public void doHit( double orientation , int damage)
+  {
+    ArrayList< Entity > entities = Model.getInstance().getEntities();
+    for ( Entity e : entities )
+    {
+      Vector  dist         = Vector.sub( e.getPos(), this.getPos() );
+
+      boolean closeEnough  = m_visionField.getRadius() >= dist.getMagnitude();
+      boolean correctAngle = orientation - ( Math.PI / 4 ) <= dist.getAngle();
+      correctAngle = correctAngle && dist.getAngle() <= orientation + ( Math.PI / 4 );
+
+      if( closeEnough && correctAngle )
+      {
+        Shot s = new Shot( this.getPos(), dist.getAngle() );
+      }
+    }
+    m_brain.step();
+  }
+  
 
   @Override
   public void tick( long elapsed )
