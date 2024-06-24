@@ -12,7 +12,7 @@ import src.Model.Model;
 import src.Model.Shot;
 import src.Model.Vector;
 import src.Model.Collision.AABB;
-import src.Model.Collision.Circle;
+import src.Model.Collision.Arc;
 import src.Model.World.*;
 
 public class Viewport
@@ -103,7 +103,7 @@ public class Viewport
     {
       g.setColor( Color.green );
     }
-    
+
     g.fillRect( x, y, (int) ( (double)width * rate ), height );
 
     padding = 3;
@@ -136,14 +136,12 @@ public class Viewport
 
         if( Config.getInstance().getView().shouldPaintVisionField() )
         {
-          Circle vision = e.getVisionField();
-          x = metersToPixels(
-              vision.getTopLeftCorner().getX() - vision.getRadius() + e.getWidth() / 2 - m_tracker.getX() );
-          y = metersToPixels(
-              vision.getTopLeftCorner().getY() - vision.getRadius() + e.getHeight() / 2 - m_tracker.getY() );
+          Arc vision = e.getVisionField();
+          x = metersToPixels( vision.getTopLeftCorner().getX() - m_tracker.getX() );
+          y = metersToPixels( vision.getTopLeftCorner().getY() - m_tracker.getY() );
           width = metersToPixels( vision.getWidth() );
           height = metersToPixels( vision.getHeight() );
-          avatar.paintVisionField( g, x, y, width, height );
+          avatar.paintVisionField( g, x, y, width, height, vision.getStartAngle(), vision.getArcAngle() );
         }
 
         x = metersToPixels( e.getX() - m_tracker.getX() );

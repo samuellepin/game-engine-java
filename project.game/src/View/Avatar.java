@@ -5,7 +5,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-import src.Config;
+import src.Model.Angle;
 import src.Model.Document;
 import src.Model.Entity;
 import src.Model.Wall;
@@ -40,11 +40,13 @@ public abstract class Avatar
     g.drawRect( x, y, width, height );
   }
 
-  public void paintVisionField( Graphics g, int x, int y, int width, int height )
+  public void paintVisionField( Graphics g, int x, int y, int width, int height, double startAngle, double arcAngle )
   {
     if( m_entity instanceof Wall || m_entity instanceof Document ) return;
     g.setColor( VISION_FIELD_COLOR );
-    g.fillOval( x, y, width, height );
+    Angle start = new Angle( startAngle );
+    Angle total = new Angle( arcAngle );
+    g.fillArc( x, y, width, height, -(int)start.toDegree(), -(int)total.toDegree() );
   }
 
   public Entity getEntity()

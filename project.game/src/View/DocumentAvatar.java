@@ -1,16 +1,33 @@
 package src.View;
 
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+
 import src.Model.Entity;
 
 public class DocumentAvatar extends Avatar
 {
+  private static BufferedImage[] m_idleImg;
   private Animation m_idle;
 
   public DocumentAvatar( Entity e )
   {
     super( e );
-    m_idle = new Animation( e, m_factory.getDocumentSprite(), 0 );
+    
+    if( m_idleImg == null )
+    {
+      try
+      {
+        m_idleImg = AvatarFactory.loadSprite( "resources/sprites/ConciseDocumentationOfLustre.png", 1, 1 );
+      }
+      catch ( IOException e1 )
+      {
+        e1.printStackTrace();
+      }
+    }
+    
+    m_idle = new Animation( e, m_idleImg, 0 );
   }
 
   @Override

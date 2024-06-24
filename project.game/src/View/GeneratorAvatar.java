@@ -2,21 +2,39 @@ package src.View;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 import src.Model.Entity;
 import src.Model.Generator;
-import src.Model.Vector;
 
 public class GeneratorAvatar extends Avatar
 {
-  private Animation m_idle;
-  private Animation m_enabled;
+  private static BufferedImage[] m_idleImg;
+  private static BufferedImage[] m_enabledImg;
+
+  private Animation              m_idle;
+  private Animation              m_enabled;
 
   public GeneratorAvatar( Entity e )
   {
     super( e );
-    m_idle = new Animation( e, m_factory.getGeneratorIdle(), ANIMATION_TIME / 2 );
-    m_enabled = new Animation( e, m_factory.getGeneratorEnabled(), ANIMATION_TIME / 2 );
+
+    if( m_idleImg == null )
+    {
+      try
+      {
+        m_idleImg = AvatarFactory.loadSprite( "resources/sprites/Generator/Generator_Idle.png", 1, 3 );
+        m_enabledImg = AvatarFactory.loadSprite( "resources/sprites/Generator/Generator_Enabled.png", 1, 3 );
+      }
+      catch ( IOException e1 )
+      {
+        e1.printStackTrace();
+      }
+
+    }
+
+    m_idle = new Animation( e, m_idleImg, ANIMATION_TIME / 2 );
+    m_enabled = new Animation( e, m_enabledImg, ANIMATION_TIME / 2 );
   }
 
   @Override

@@ -1,5 +1,6 @@
 package src.Model;
 
+import java.util.ArrayList;
 import java.util.List;
 import src.AI.Direction;
 
@@ -14,18 +15,10 @@ public class Guard extends Entity
   private Alarm   m_ownAlarm;
   private Alarm   m_otherAlarm;
   private boolean m_isAlarmed;
-//  public Guard( Automaton automaton )
-//  {
-//    super( automaton );
-//    this.setPos( Map.getInstance().getRandomPos() );
-//    super.setVelocity( 0.1 );
-//  }
 
-  public Guard( FSM fsm, int id, double width, double height, double velocity, boolean hasCollision,
-      CategoryFsm.CATEGORY type, List< CategoryFsm.CATEGORY > options, int hp )
+  public Guard()
   {
-    super( fsm, id, width, height, velocity, hasCollision, type, options, hp );
-    this.setPos( Map.getInstance().getRandomPos() );
+    super();
     m_ownAlarm = new Alarm( this );
   }
 
@@ -37,11 +30,11 @@ public class Guard extends Entity
 
   void follow( Entity entity )
   {
-    Vector OP = entity.getPos();
-    Vector OE = this.getPos();
+    Vector OP = entity.getBarycenter();
+    Vector OE = this.getBarycenter();
     Vector EP = Vector.sub( OP, OE );
-    super.setOrientation( EP.getAngle() );
-    doMove( m_orientation );
+    super.getOrientation().setValue( EP.getAngle() );
+    doMove( m_orientation.getValue() );
   }
 
   private long countdown;
@@ -52,9 +45,34 @@ public class Guard extends Entity
     if( countdown > 1000 )
     {
       System.out.println( "Shot!" );
-      Model.getInstance().addShot( new Shot( this.getPos(), this.getOrientation() ) );
+      Shot shot = new Shot( this.getBarycenter(), this.getOrientation() );
+      while( Collision.detect( m_hitbox, shot.getPos() ) )
+      {
+        shot.move( dt );
+      }
+      Model.getInstance().addShot( shot );
       countdown = 0;
     }
+  }
+
+  @Override
+  public void doHit( double orientation, int damage )
+  {
+    ArrayList< Entity > entities = Model.getInstance().getEntities();
+    for ( Entity e : entities )
+    {
+      Vector  dist         = Vector.sub( e.getPos(), this.getPos() );
+
+      boolean closeEnough  = m_visionField.getRadius() >= dist.getMagnitude();
+      boolean correctAngle = orientation - ( Math.PI / 4 ) <= dist.getAngle();
+      correctAngle = correctAngle && dist.getAngle() <= orientation + ( Math.PI / 4 );
+
+      if( closeEnough && correctAngle )
+      {
+        Shot s = new Shot( this.getPos(), new Angle( dist.getAngle(), false ) );
+      }
+    }
+    m_brain.step();
   }
 
   @Override
@@ -62,10 +80,8 @@ public class Guard extends Entity
   {
     super.tick( elapsed );
 //    AABB h1 = Model.getInstance().getPlayer1().getHitbox();
-    Circle c1 = Model.getInstance().getPlayer1().getVisionField();
-    Circle c2 = super.getVisionField();
 //    System.out.println( "Tick " + this.toString() );
-    if( Collision.detect( c1, c2 ) )
+    if( Collision.detect( Model.getInstance().getPlayer1().getHitbox(), this.getVisionField() ) )
     {
 //      System.out.println( "Collision : " + c1.toString() + " - " + c2.toString() );
       // follow( Model.getInstance().getPlayer1() );
@@ -86,11 +102,12 @@ public class Guard extends Entity
   {
     if( dir.getDirection() == Direction.DIRECTION.Underscore )
     {
-      Vector dist=Vector.sub( m_otherAlarm.getOpponentPos(), getPos() );
-      m_moveDirection=dist.getAngle();
+      Vector dist = Vector.sub( m_otherAlarm.getOpponentPos(), getPos() );
+      m_moveDirection.setValue( dist.getAngle() );
     }
-    else {
-      m_moveDirection = dir.toAngle( m_orientation );
+    else
+    {
+      m_moveDirection.setValue( dir.toAngle( m_orientation ) );
     }
     m_timeToWait = 20;
     m_isMoving = true;

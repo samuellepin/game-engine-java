@@ -7,38 +7,41 @@ public class Shot
   private static final double LIMIT_DISTANCE = 500;
 
   private Vector              m_pos;
-  private double              m_dir;
+  private Angle               m_dir;
   private double              m_velocity;
   private boolean             m_hasTouched;
   private double              m_distance;
   private Entity              m_entityTouched;
   private int                 m_damage;
+  
+  public Vector getPos()
+  {
+    return m_pos;
+  }
 
-  public Shot( Vector pos, double direction )
+  public Shot( Vector pos, Angle dir )
   {
     try
     {
       m_pos = pos.clone();
+      m_dir = dir.clone();
     }
     catch ( CloneNotSupportedException e )
     {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
-    m_dir = direction;
     m_velocity = 0.3f;
     m_hasTouched = false;
     m_distance = 0;
     m_entityTouched = null;
-    m_damage = 20;
+    m_damage = 1;
   }
 
   public void update( long dt )
   {
     if( this.hasTouched() ) return;
-    double d = m_velocity * (double)dt;
-    m_pos.translate( d * Math.cos( m_dir ), d * Math.sin( m_dir ) );
-    m_distance += d;
+    move( dt );
     if( m_distance >= LIMIT_DISTANCE )
     {
       m_hasTouched = true;
@@ -49,10 +52,18 @@ public class Shot
       if( Collision.detect( e.getHitbox(), m_pos ) )
       {
         m_hasTouched = true;
-        e.subHP( m_damage );
+        e.getHit(m_damage);
         return;
       }
     }
+  }
+  
+  public void move( long dt )
+  {
+    double d   = m_velocity * (double)dt;
+    double dir = m_dir.getValue();
+    m_pos.translate( d * Math.cos( dir ), d * Math.sin( dir ) );
+    m_distance += d;
   }
 
   public boolean hasTouched()

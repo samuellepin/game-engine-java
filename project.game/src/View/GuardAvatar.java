@@ -14,7 +14,6 @@ public class GuardAvatar extends Avatar
   {
     super( e );
     s_img = super.loadAnimation4( s_img, "resources/sprites/Guard/Guard_", 4 );
-    BufferedImage[][] img = s_img;
     m_anim4 = new Animation4( e, ANIMATION_TIME, s_img );
   }
 

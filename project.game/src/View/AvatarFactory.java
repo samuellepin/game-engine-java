@@ -28,66 +28,10 @@ public class AvatarFactory
     return INSTANCE;
   }
 
-  private BufferedImage[]      m_idleSpyImg;
-  private BufferedImage[]      m_runningSpyImg;
-  private BufferedImage[]      m_movingAlienImg;
   private BufferedImage        m_floorImg;
-  private BufferedImage[]      m_docImg;
   private BufferedImage[]      m_obstacles;
-  private BufferedImage[]      m_guardLeftImg;
-  private BufferedImage[]      m_guardRightImg;
-  private BufferedImage[]      m_guardUpImg;
-  private BufferedImage[]      m_guardDownImg;
-  private BufferedImage[]      m_generatorIdleImg;
-  private BufferedImage[]      m_generatorEnabledImg;
-  private BufferedImage[]      m_rabbitRightImg;
 
   public Map< Entity, Avatar > m_entities;
-  
-  public BufferedImage[] getRabbitRight()
-  {
-    return m_rabbitRightImg;
-  }
-  
-  public BufferedImage[] getGeneratorIdle()
-  {
-    return m_generatorIdleImg;
-  }
-  
-  public BufferedImage[] getGeneratorEnabled()
-  {
-    return m_generatorEnabledImg;
-  }
-
-  public BufferedImage[] getGuardLeft()
-  {
-    return m_guardLeftImg;
-  }
-
-  public BufferedImage[] getGuardRight()
-  {
-    return m_guardRightImg;
-  }
-
-  public BufferedImage[] getGuardUp()
-  {
-    return m_guardUpImg;
-  }
-
-  public BufferedImage[] getGuardDown()
-  {
-    return m_guardDownImg;
-  }
-
-  public BufferedImage[] getIdleSpySprite()
-  {
-    return m_idleSpyImg;
-  }
-
-  public BufferedImage[] getRunningSpySprite()
-  {
-    return m_runningSpyImg;
-  }
 
   public BufferedImage[] getObstaclesSprite()
   {
@@ -99,11 +43,6 @@ public class AvatarFactory
     return m_floorImg;
   }
 
-  public BufferedImage[] getDocumentSprite()
-  {
-    return m_docImg;
-  }
-
   private AvatarFactory()
   {
     m_entities = new HashMap<>();
@@ -111,25 +50,12 @@ public class AvatarFactory
     try
     {
       m_floorImg = AvatarFactory.loadImage( tile.getSprite() );
-      m_idleSpyImg = AvatarFactory.loadSprite( "resources/sprites/Spy/SMS_Adv_Idle_Gun_1_strip4.png", 1, 4 );
-      m_runningSpyImg = AvatarFactory.loadSprite( "resources/sprites/Spy/SMS_Adv_Idle_strip4.png", 1, 4 );
-      m_docImg = AvatarFactory.loadSprite( "resources/sprites/ConciseDocumentationOfLustre.png", 1, 1 );
       String[] obstacles = tile.getObstacles();
       if( obstacles.length > 0 ) m_obstacles = new BufferedImage[ obstacles.length ];
       for ( int i = 0; i < obstacles.length; i++ )
       {
         m_obstacles[ i ] = AvatarFactory.loadImage( obstacles[ i ] );
       }
-      m_movingAlienImg = AvatarFactory.loadSprite( "resources/sprites/Alien/Alien.png", 1, 11 );
-      m_guardLeftImg = AvatarFactory.loadSprite( "resources/sprites/Guard/Guard_Left.png", 1, 4 );
-      m_guardRightImg = AvatarFactory.loadSprite( "resources/sprites/Guard/Guard_Right.png", 1, 4 );
-      m_guardUpImg = AvatarFactory.loadSprite( "resources/sprites/Guard/Guard_Up.png", 1, 4 );
-      m_guardDownImg = AvatarFactory.loadSprite( "resources/sprites/Guard/Guard_Down.png", 1, 4 );
-      
-      this.m_generatorEnabledImg = AvatarFactory.loadSprite( "resources/sprites/Generator/Generator_Enabled.png", 1, 3 );
-      this.m_generatorIdleImg = AvatarFactory.loadSprite( "resources/sprites/Generator/Generator_Idle.png", 1, 3 );    
-
-      this.m_rabbitRightImg = AvatarFactory.loadSprite( "resources/sprites/Generator/Rabbit_Right.png", 1, 4 );
     }
     catch ( IOException e )
     {
@@ -161,7 +87,7 @@ public class AvatarFactory
     {
       avatar = new SpyAvatar( (Spy)e );
     }
-    else if ( e instanceof Rabbit )
+    else if( e instanceof Rabbit )
     {
       avatar = new RabbitAvatar( (Rabbit)e );
     }
@@ -213,10 +139,5 @@ public class AvatarFactory
       return images;
     }
     return null;
-  }
-
-  public BufferedImage[] getMovingAlienSprite()
-  {
-    return m_movingAlienImg;
   }
 }

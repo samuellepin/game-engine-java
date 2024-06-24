@@ -36,7 +36,7 @@ public class CategoryFsm
       m_type = cat;
     }
   }
-  
+
   public CategoryFsm( CATEGORY type, CATEGORY option )
   {
     switch ( type )
@@ -137,11 +137,11 @@ public class CategoryFsm
       return false;
     }
   }
-  
+
   @Override
   public boolean equals( Object o )
   {
-    if ( o instanceof CategoryFsm )
+    if( o instanceof CategoryFsm )
     {
       CategoryFsm cat = (CategoryFsm)o;
       if( !cat.getType().equals( getType() ) ) return false;
@@ -154,5 +154,10 @@ public class CategoryFsm
       return true;
     }
     return false;
+  }
+
+  public void setType( CATEGORY cat )
+  {
+    m_type = cat;
   }
 }

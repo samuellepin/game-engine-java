@@ -7,11 +7,9 @@ import src.AI.FSM;
 
 public class Robot extends Entity
 {
-
-  public Robot( FSM fsm, int id, double width, double height, double velocity, boolean hasCollision, CATEGORY type,
-      List< CATEGORY > options, int hp )
+  public Robot()
   {
-    super( fsm, id, width, height, velocity, hasCollision, type, options, hp );
+    super();
   }
   
   @Override

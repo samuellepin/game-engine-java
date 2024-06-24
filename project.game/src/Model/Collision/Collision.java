@@ -131,7 +131,7 @@ public class Collision
     Vector OP         = point;
     Vector OC         = arc.getCenter();
     Vector CP         = Vector.sub( OP, OC );
-    double angle      = -CP.getAngle();
+    double angle      = /*-*/ CP.getAngle();
     double thetaStart = Vector.normalizeAngle( arc.getStartAngle() );
     double thetaEnd   = Vector.normalizeAngle( arc.getEndAngle() );
     if( thetaStart <= thetaEnd )
@@ -143,10 +143,17 @@ public class Collision
 
   public static boolean detect( AABB aabb, Arc arc )
   {
+    if( arc.getApertureAngle().getValue() <= 0 ) return true;
+    
     double r = arc.getRadius();
     if( squaredDistanceBetweenAABBandPoint( aabb, arc.getCenter() ) >= r * r )
     {
       return false;
+    }
+
+    if( arc.getApertureAngle().getValue() >= Math.PI )
+    {
+      return true;
     }
 
     Vector pmin     = aabb.getMin();
@@ -164,13 +171,11 @@ public class Collision
 
     return false;
   }
-  
+
   public static boolean detect( AABB aabb, Vector point )
   {
-    return point.getX() >= aabb.getMin().getX() 
-        && point.getX() <= aabb.getMax().getX()
-        && point.getY() >= aabb.getMin().getY() 
-        && point.getY() <= aabb.getMax().getY();
+    return point.getX() >= aabb.getMin().getX() && point.getX() <= aabb.getMax().getX()
+        && point.getY() >= aabb.getMin().getY() && point.getY() <= aabb.getMax().getY();
   }
 
 }
