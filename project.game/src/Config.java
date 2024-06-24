@@ -25,7 +25,7 @@ public class Config
   {
     return new Angle( Double.parseDouble( value.replace( "°", "" ) ), true );
   }
-  
+
   public static Random getRandom()
   {
     return RANDOM;
@@ -37,46 +37,63 @@ public class Config
   }
 
   private src.Model.Entity StringToEntity( Entity e )
-  { 
+  {
     src.Model.Entity entity = null;
-    
+
     switch ( e.getType() )
     {
-    case "Spy":
-      entity = new src.Model.Spy();
+    case "Alien":
+      entity = new src.Model.Alien();
       break;
-    case "Guard":
-      entity = new src.Model.Guard();
+    case "Box":
+      entity = new src.Model.Box();
       break;
-    case "Wall":
-      entity = new src.Model.Wall();
+    case "Camera":
+      entity = new src.Model.Camera();
       break;
     case "Document":
       entity = new src.Model.Document();
       break;
-    case "Alien":
-      entity = new src.Model.Alien();
+    case "Dove":
+      entity = new src.Model.Dove();
       break;
     case "Generator":
       entity = new src.Model.Generator();
       break;
-    case "Rabbit":
-      entity = new src.Model.Rabbit();
-      break;
-    case "Dove":
-      entity = new src.Model.Dove();
-      break;
-    case "Raven":
-      entity = new src.Model.Raven();
+    case "Guard":
+      entity = new src.Model.Guard();
       break;
     case "Mouse":
       entity = new src.Model.Mouse();
       break;
+    case "Rabbit":
+      entity = new src.Model.Rabbit();
+      break;
+    case "Raven":
+      entity = new src.Model.Raven();
+      break;
+    case "Robot":
+      entity = new src.Model.Robot();
+      break;
+    case "Spy":
+      entity = new src.Model.Spy();
+      break;
     case "Squirrel":
       entity = new src.Model.Squirrel();
       break;
+    case "Stairs":
+      entity = new src.Model.Stairs();
+      break;
+    case "UFO":
+      entity = new src.Model.UFO();
+      break;
+    case "Wall":
+      entity = new src.Model.Wall();
+      break;
+    default:
+      throw new IllegalArgumentException( "Unknown entity type: " + e.getType() );
     }
-    
+
     entity.setFSM( e.getFSM() );
     entity.setId( e.getId() );
     entity.setDim( e.getWidth(), e.getHeight() );

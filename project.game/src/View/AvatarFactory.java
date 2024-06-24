@@ -24,6 +24,8 @@ import src.Model.Raven;
 import src.Model.Robot;
 import src.Model.Spy;
 import src.Model.Squirrel;
+import src.Model.Stairs;
+import src.Model.UFO;
 import src.Model.Wall;
 
 public class AvatarFactory
@@ -91,6 +93,8 @@ public class AvatarFactory
     else if( e instanceof Robot ) avatar = new RobotAvatar( e );
     else if( e instanceof Spy ) avatar = new SpyAvatar( e );
     else if( e instanceof Squirrel ) avatar = new MouseAvatar( e );
+    else if( e instanceof Stairs ) avatar = new StairsAvatar( e );
+    else if( e instanceof UFO ) avatar = new UFOAvatar( e );
     else if( e instanceof Wall )
     {
       int r = 1;
