@@ -21,7 +21,7 @@ public class Egg implements ActionFsm
   public Egg()
   {
     // TODO define default values
-    m_dir = new Direction(Direction.DIRECTION.BackWard);
+    m_dir = new Direction(Direction.DIRECTION.Backward);
   }
 
   @Override

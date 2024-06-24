@@ -4,7 +4,7 @@ import java.util.List;
 
 import src.AI.CategoryFsm;
 import src.AI.FSM;
-
+// security camera for MG
 public class Camera extends Entity
 {
   private Alarm               m_ownAlarm;

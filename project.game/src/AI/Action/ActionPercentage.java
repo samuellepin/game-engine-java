@@ -41,6 +41,7 @@ public class ActionPercentage implements ActionFsm
   public void execute( Entity entity )
   {
     double floor = 0;
+
     int    rand  = Config.getRandom().nextInt();
     rand = Math.abs( rand ) % 100;
 

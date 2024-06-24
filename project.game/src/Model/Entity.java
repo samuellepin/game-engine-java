@@ -11,8 +11,8 @@ import src.AI.FSM;
 import src.AI.FsmFactory;
 import src.Model.Collision.AABB;
 import src.Model.Collision.Arc;
-import src.Model.Collision.Circle;
 import src.Model.Collision.Collision;
+import src.Model.World.Tile;
 
 import java.text.DecimalFormat;
 
@@ -506,6 +506,59 @@ public abstract class Entity implements Cloneable
     m_brain.step();
   }
 
+  public boolean getTrue()
+  {
+    return true;
+  }
+
+  public boolean getMyDir( Direction dir )
+  {
+    return m_orientation.getValue() == dir.toAngle( Angle.ANGLE_ZERO );
+  }
+
+  public boolean getCell( Direction dir, CategoryFsm cat )
+  {
+    Direction absDir;
+    switch ( dir.getDirection() )
+    {
+    case Forward:
+    case Backward:
+    case Left:
+    case Right:
+      absDir = new Direction( Direction.toDirection( dir.toAngle( m_orientation ) ) );
+      break;
+    default:
+      absDir = new Direction( dir.getDirection() );
+      break;
+    }
+    double radius;
+    switch ( absDir.getDirection() )
+    {
+    case North:
+    case South:
+      radius = Tile.HEIGHT;
+      break;
+    case NE:
+    case NW:
+    case SE:
+    case SW:
+      radius = ( Tile.HEIGHT + Tile.WIDTH ) / 2;
+      break;
+    default:
+      radius = Tile.WIDTH;
+      break;
+    }
+    Vector pos = m_hitbox.getBarycenter();
+    Arc    a   = new Arc( pos, radius, new Angle( absDir.toAngle( Angle.ANGLE_ZERO ) ),
+        new Angle( Direction.DIRECTION_ANGLE ) );
+
+    for ( Entity e : Model.getInstance().getEntities() )
+    {
+      if( cat.getType() == e.getType() ) return Collision.detect( e.getHitbox(), a );
+    }
+    return false;
+  }
+
   // Spécifique à notre physique
   public void repulse()
   {
@@ -540,11 +593,19 @@ public abstract class Entity implements Cloneable
 
   public double getWidth()
   {
+    if( this.m_originEntity != null )
+    {
+      return this.m_originEntity.getWidth();
+    }
     return m_hitbox.getWidth();
   }
 
   public double getHeight()
   {
+    if( this.m_originEntity != null )
+    {
+      return this.m_originEntity.getHeight();
+    }
     return m_hitbox.getHeight();
   }
 
@@ -617,6 +678,11 @@ public abstract class Entity implements Cloneable
   public void setId( int id )
   {
     m_id = id;
+  }
+
+  public CategoryFsm.CATEGORY getType()
+  {
+    return m_cat.getType();
   }
 
   public void subHP( int damage )

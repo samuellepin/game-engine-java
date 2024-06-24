@@ -12,7 +12,6 @@ public class Cell implements ConditionFsm
 
   public Cell()
   {
-    // TODO define default values
     m_dir = new Direction( Direction.DIRECTION.Forward );
     m_cat = new CategoryFsm( CategoryFsm.CATEGORY.Adversary );
   }
@@ -26,8 +25,7 @@ public class Cell implements ConditionFsm
   @Override
   public boolean evaluate( Entity entity )
   {
-    // TODO Auto-generated method stub
-    return false;
+    return entity.getCell( m_dir, m_cat );
   }
 
   @Override

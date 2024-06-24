@@ -28,14 +28,14 @@ public class Guard extends Entity
     return "Guard - " + super.toString();
   }
 
-  void follow( Entity entity )
-  {
-    Vector OP = entity.getBarycenter();
-    Vector OE = this.getBarycenter();
-    Vector EP = Vector.sub( OP, OE );
-    super.getOrientation().setValue( EP.getAngle() );
-    doMove( m_orientation.getValue() );
-  }
+//  void follow( Entity entity )
+//  {
+//    Vector OP = entity.getBarycenter();
+//    Vector OE = this.getBarycenter();
+//    Vector EP = Vector.sub( OP, OE );
+//    super.getOrientation().setValue( EP.getAngle() );
+//    doMove( m_orientation.getValue() );
+//  }
 
   private long countdown;
 
@@ -133,4 +133,5 @@ public class Guard extends Entity
     m_otherAlarm = alarm;
     m_isAlarmed = true;
   }
+
 }

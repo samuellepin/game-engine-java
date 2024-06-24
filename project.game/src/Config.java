@@ -63,6 +63,18 @@ public class Config
     case "Rabbit":
       entity = new src.Model.Rabbit();
       break;
+    case "Dove":
+      entity = new src.Model.Dove();
+      break;
+    case "Raven":
+      entity = new src.Model.Raven();
+      break;
+    case "Mouse":
+      entity = new src.Model.Mouse();
+      break;
+    case "Squirrel":
+      entity = new src.Model.Squirrel();
+      break;
     }
     
     entity.setFSM( e.getFSM() );
@@ -344,7 +356,7 @@ public class Config
     public boolean  hasCollision;
     public String   velocity;
     public String   fsm;
-    public String   typeCat;
+    public String   category;
     public String[] options;
     public int      hp;
 
@@ -390,12 +402,12 @@ public class Config
 
     public CategoryFsm.CATEGORY getTypeCat()
     {
-      if( typeCat == null ) return CategoryFsm.CATEGORY.Void;
-      switch ( typeCat )
+      if( category == null ) return CategoryFsm.CATEGORY.Void;
+      switch ( category )
       {
       case "Adversary":
         return CategoryFsm.CATEGORY.Adversary;
-      case "Clur":
+      case "Clue":
         return CategoryFsm.CATEGORY.Clue;
       case "Danger":
         return CategoryFsm.CATEGORY.Danger;

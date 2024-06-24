@@ -72,7 +72,8 @@
 			"height" : "20.0",
 			"hasCollision" : false,
 			"velocity" : "0.0",
-			"fsm" : "DoNothing"
+			"fsm" : "DoNothing",
+			"category" : "Stuff"
 		}
 	],
 	"enenmies" :

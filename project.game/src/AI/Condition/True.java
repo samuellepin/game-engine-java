@@ -8,7 +8,7 @@ public class True implements ConditionFsm
   @Override
   public boolean evaluate( Entity entity )
   {
-    return true;
+    return entity.getTrue();
   }
 
   @Override

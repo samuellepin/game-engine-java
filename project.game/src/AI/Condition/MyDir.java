@@ -22,8 +22,7 @@ public class MyDir implements ConditionFsm
   @Override
   public boolean evaluate( Entity entity )
   {
-    // TODO Auto-generated method stub
-    return false;
+    return entity.getMyDir( m_dir );
   }
 
   @Override
