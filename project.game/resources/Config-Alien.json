@@ -1,0 +1,191 @@
+{
+	"parameters" :
+	{
+		"seed": 130,
+		"visionFieldRadius": "100.0",
+		"visionFieldApertureAngle": "45°",
+		"player1" : 1234, 
+		"player2" : 5678,
+		"exit" : 3000,
+		"itemToWin" : 9012,
+		"enableBSP" : false,
+		"enableWalls" : true,
+		"backgroundMusic" : "resources/sounds/alien-main-theme.ogg",
+		"gameOverBGM" : "resources/sounds/metal-gear-game-over.ogg",
+		"volume" : "0.9",
+		"reducedVisionField" : "0%"
+	},
+	"world" : 
+	{
+		"rowsNum" : 11,
+		"colsNum" : 11,
+		"tile" : 
+		{
+			"width" : "100.0",
+			"height" : "100.0",
+			"sprite" : "resources/sprites/Tile/Grass_01.png",
+			"obstacles" : [ 
+			"resources/sprites/Tree/Tree_1.png", 
+			"resources/sprites/Tree/Tree_2.png", 
+			"resources/sprites/Tree/Tree_3.png", 
+			"resources/sprites/Tree/Tree_4.png", 
+			"resources/sprites/Tree/Tree_5.png", 
+			"resources/sprites/Tree/Tree_6.png",
+			"resources/sprites/Tree/Tree_7.png",
+			"resources/sprites/Tree/Tree_8.png",
+			"resources/sprites/Tree/Tree_9.png" ]
+		},
+		"biome" : 
+		{
+			"width" : 3,
+			"height" : 3,
+			"space" : 3
+		},
+		"obstructionDensity" : "30%"
+	},
+	"view" : 
+	{
+		"paintHitbox" : true,
+		"paintVisionField" : true,
+		"zoom" : "1.7",
+		"screenWidth" : 500,
+		"screenHeight" : 500,
+		"title" : "Alien",
+		"enableReducedVisionField" : true
+	},
+	"entities" : 
+	[
+		{
+			"id" : 1234,
+			"type" : "Alien",
+			"width" : "25.0",
+			"height" : "25.0",
+			"hasCollision" : true,
+			"velocity" : "0.3",
+			"fsm" : "Player1",
+			"category" : "PlayerT",
+			"options" : ["Killable","Jumpable"],
+			"hp" : 200
+		},
+		{
+			"id" : 5678,
+			"type" : "Guard",
+			"width" : "20.0",
+			"height" : "40.0",
+			"hasCollision" : true,
+			"velocity" : "0.1",
+			"fsm" : "Guard",
+			"category" : "Adversary"
+		},
+		{
+			"id" : 9012,
+			"type" : "Generator",
+			"width" : "32.0",
+			"height" : "32.0",
+			"hasCollision" : false,
+			"velocity" : "0.0",
+			"fsm" : "DoNothing",
+			"category" : "Stuff"
+		},
+		{
+			"id" : 9013,
+			"type" : "Generator",
+			"width" : "32.0",
+			"height" : "32.0",
+			"hasCollision" : false,
+			"velocity" : "0.0",
+			"fsm" : "DoNothing",
+			"category" : "Stuff"
+		},
+		{
+			"id" : 2000,
+			"type" : "Rabbit",
+			"width" : "25.0",
+			"height" : "25.0",
+			"hasCollision" : false,
+			"velocity" : "1.0",
+			"fsm" : "Animal",
+			"category" : "Team"
+		},
+		{
+			"id" : 2100,
+			"type" : "Dove",
+			"width" : "25.0",
+			"height" : "25.0",
+			"hasCollision" : false,
+			"velocity" : "1.0",
+			"fsm" : "Animal",
+			"category" : "Team"
+		},
+		{
+			"id" : 2200,
+			"type" : "Mouse",
+			"width" : "25.0",
+			"height" : "25.0",
+			"hasCollision" : false,
+			"velocity" : "1.0",
+			"fsm" : "Animal",
+			"category" : "Team"
+		},
+		{
+			"id" : 2300,
+			"type" : "Squirrel",
+			"width" : "25.0",
+			"height" : "25.0",
+			"hasCollision" : false,
+			"velocity" : "1.0",
+			"fsm" : "Animal",
+			"category" : "Team"
+		},
+		{
+			"id" : 2400,
+			"type" : "Raven",
+			"width" : "25.0",
+			"height" : "25.0",
+			"hasCollision" : false,
+			"velocity" : "1.0",
+			"fsm" : "Animal",
+			"category" : "Team"
+		},
+		{
+			"id" : 3000,
+			"type" : "UFO",
+			"width" : "50.0",
+			"height" : "50.0",
+			"hasCollision" : false,
+			"velocity" : "0.0",
+			"fsm" : "DoNothing",
+			"category" : "Team"
+		}
+	],
+	"enenmies" :
+	[
+		{
+			"id" : 2000,
+			"min" : 3,
+			"max" : 6
+		},
+		{
+			"id" : 2100,
+			"min" : 3,
+			"max" : 6
+		},
+		{
+			"id" : 2200,
+			"min" : 3,
+			"max" : 6
+		},
+		{
+			"id" : 2300,
+			"min" : 3,
+			"max" : 6
+		},
+		{
+			"id" : 2400,
+			"min" : 3,
+			"max" : 6
+		}
+	],
+	"keyItems" : [ 9012, 9013 ]
+}
+

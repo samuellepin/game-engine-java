@@ -4,11 +4,15 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
+
 import javax.swing.JFrame;
 import info3.game.graphics.GameCanvas;
+import src.Controller;
+import src.Model.Angle;
 import src.Model.Vector;
 import src.Model.Collision.AABB;
-import src.Model.Collision.Circle;
+import src.Model.Collision.Arc;
 import src.Model.Collision.Collision;
 
 public class CollisionTest
@@ -33,7 +37,7 @@ public class CollisionTest
   private CanvasListener m_listener;
   private GameCanvas     m_canvas;
   private AABB           m_aabb;
-  private Circle         m_circle;
+  private Arc            m_arc;
   private boolean        m_collision;
 
   public static CollisionTest getInstance()
@@ -43,8 +47,8 @@ public class CollisionTest
 
   private CollisionTest() throws Exception
   {
-    m_aabb = new AABB( 100, 100, 170, 140 );
-    m_circle = new Circle( 50, 50, 35 );
+    m_aabb = new AABB( 270, 150, 300, 180 );
+    m_arc = new Arc( new Vector( 200, 200 ), 150, new Angle( Math.PI / 4 ), new Angle( Math.PI / 8 ) );
 
     m_listener = new CanvasListener( this );
 
@@ -61,7 +65,38 @@ public class CollisionTest
 
   void tick( long elapsed )
   {
-    m_collision = Collision.detect( m_aabb, m_circle );
+    m_collision = Collision.detect( m_aabb, m_arc );
+
+    Controller ctr = Controller.getInstance();
+    double     d   = 0.1 * elapsed;
+    if( ctr.isKeyDown( KeyEvent.VK_UP ) )
+    {
+      m_arc.translate( 0, -d );
+    }
+    if( ctr.isKeyDown( KeyEvent.VK_DOWN ) )
+    {
+      m_arc.translate( 0, d );
+    }
+    if( ctr.isKeyDown( KeyEvent.VK_RIGHT ) )
+    {
+      m_arc.translate( d, 0 );
+    }
+    if( ctr.isKeyDown( KeyEvent.VK_LEFT ) )
+    {
+      m_arc.translate( -d, 0 );
+    }
+    if( ctr.isKeyDown( KeyEvent.VK_SPACE ) )
+    {
+      m_arc.rotate( 0.01 );
+    }
+    if( ctr.isKeyDown( KeyEvent.VK_SHIFT ) && m_arc.getApertureAngle().getValue() < Math.PI )
+    {
+      m_arc.open( 0.01 );
+    }
+    if( ctr.isKeyDown( KeyEvent.VK_CONTROL ) && m_arc.getApertureAngle().getValue() > 0 )
+    {
+      m_arc.open( -0.01 );
+    }
   }
 
   void paint( Graphics g )
@@ -69,33 +104,23 @@ public class CollisionTest
     g.setColor( Color.DARK_GRAY );
     g.fillRect( 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT );
 
-    Vector pos = m_circle.getTopLeftCorner();
-    int    dim = (int) ( 2 * m_circle.getRadius() );
-    g.setColor( Color.red );
-    g.fillOval( (int)pos.getX(), (int)pos.getY(), dim, dim );
-    
-    g.setColor( Color.yellow );
+    g.setColor( Color.white );
     g.fillRect( (int)m_aabb.getX(), (int)m_aabb.getY(), (int)m_aabb.getWidth(), (int)m_aabb.getHeight() );
-  
+
+    g.setColor( new Color( 255, 0, 255, 140 ) );
+    g.fillArc( (int)m_arc.getX(), (int)m_arc.getY(), (int)m_arc.getWidth(), (int)m_arc.getHeight(),
+        -(int)Arc.radianToDegree( m_arc.getStartAngle() ), -(int)Arc.radianToDegree( m_arc.getArcAngle() ) );
+
     if( m_collision )
     {
       g.setColor( Color.red );
-      g.drawString( "Collision detected!", 20, 20 );
+      g.drawString( "COLLISION!", 20, 20 );
     }
     else
     {
       g.setColor( Color.white );
-      g.drawString( "No collision detected", 20, 20 );
+      g.drawString( "NO COLLISION", 20, 20 );
     }
   }
-  
-  void translateCircle( double x, double y )
-  {
-    m_circle.getTopLeftCorner().translate( x, y );
-  }
-  
-  void translateAABB( double x, double y )
-  {
-    m_aabb.getMin().translate( x, y );
-  }
+
 }

@@ -1,0 +1,101 @@
+DoNothing(Idle)
+{
+  * (Idle) :
+  | True ? : (Idle)
+}
+
+Player1(Normal)
+{
+  * (Normal) :
+  | Key(FU) ? Turn(N);Move(F) : (Normal)
+  | Key(FD) ? Turn(S);Move(F) : (Normal)
+  | Key(FR) ? Turn(E);Move(F) : (Normal)
+  | Key(FL) ? Turn(W);Move(F) : (Normal)
+  | Key(m)  ? Egg()   : (Robot)
+  | Key(l)  ?         : (Metamorph)
+  | True    ? Wait()  : (Normal)
+
+  * (Robot) :
+  | Key(FU) ? Move(N) : (Robot)
+  | Key(FD) ? Move(S) : (Robot)
+  | Key(FR) ? Move(E) : (Robot)
+  | Key(FL) ? Move(W) : (Robot)
+  | Key(m)  ?         : (Normal)
+  | True    ? Wait()  : (Robot)
+
+  * (Metamorph):
+  | Key(FU) ? Move(N) : (Metamorph)
+  | Key(FD) ? Move(S) : (Metamorph)
+  | Key(FR) ? Move(E) : (Metamorph)
+  | Key(FL) ? Move(W) : (Metamorph)
+  | Key(l)  ?         : (Normal)
+  | True    ? Wait()  : (Metamorph)
+}
+
+Player2(Normal)
+{
+  * (Normal) :
+  | Key(z) ? Turn(N);Move(F) : (Normal)
+  | Key(s) ? Turn(S);Move(F) : (Normal)
+  | Key(d) ? Turn(E);Move(F) : (Normal)
+  | Key(q) ? Turn(W);Move(F) : (Normal)
+  | Key(w)  ? Egg()   : (Robot)
+  | Key(x)  ?         : (Metamorph)
+  | True    ? Wait()  : (Normal)
+
+  * (Robot) :
+  | Key(z) ? Move(N) : (Robot)
+  | Key(s) ? Move(S) : (Robot)
+  | Key(d) ? Move(E) : (Robot)
+  | Key(q) ? Move(W) : (Robot)
+  | Key(w)  ?         : (Normal)
+  | True    ? Wait()  : (Robot)
+
+  * (Metamorph):
+  | Key(z) ? Move(N) : (Metamorph)
+  | Key(s) ? Move(S) : (Metamorph)
+  | Key(d) ? Move(E) : (Metamorph)
+  | Key(q) ? Move(W) : (Metamorph)
+  | Key(x) ?         : (Normal)
+  | True   ? Wait()  : (Metamorph)
+}
+
+Guard(Patrol)
+{  
+  * (Patrol):
+  | Got ?                                      : (Engage)
+  | Cell(F, @) ? Move(F);Wizz                  : (Engage)
+  | Cell(F,O)  ? 50% Turn(R)/ 50% Turn(L)      : (Patrol)
+  | True       ? 90% Move(F,100)/Turn(R)/ Turn(L)  : (Patrol)
+  
+  * (Engage):
+  | !Got ?                                : (Patrol)
+  | Cell(F, @) ? Move(F);Wizz             : (Engage)
+  | Cell(F,O)  ? 50% Turn(R)/ 50% Turn(L) : (Engage)
+  | True ? Move(_)                        : (Engage)
+}
+
+SecurityCamera(Right)
+{
+  * (Right) :
+  | Closest(#, F) ? Wizz    : (Right)
+  | Closest(O, F) ?         : (Left)
+  | True          ? Turn(R) : (Right)
+
+  * (Left) :
+  | Closest(#, F) ? Wizz    : (Left)
+  | Closest(O, F) ?         : (Right)
+  | True          ? Turn(R) : (Left)
+}
+
+Wall(DoNothing)
+{
+  * (DoNothing) :
+  | True ? : (DoNothing)
+}
+
+Animal(DoNothing)
+{
+  * (DoNothing) :
+  | True          ? : (DoNothing)
+}

@@ -1,0 +1,18 @@
+Poule(Pondre){
+  * (Pondre)
+  | MyDir(N) ? Add(A,10)  :(Couver)
+  | MyDir(N) ?  Egg(NE) ; Explode ; Get  :(Pondre) 
+  | Cell(S,#) & Cell(E,G) & Cell(W,I) ? Jump(N,10) / Move(S,12) / Pick(SE) :(Attendre)
+  | True ? 10% Protect(E,13) / 40% Rest(1,2) / 50% Store :(Pondre)
+
+  * (Couver)
+  | Cell(S,#) ? 10% Throw(E) / 20% Turn(F) / Wait(5) / Pop :(Pondre)
+  | Got(A,5) & Got(C) ? Hit(SE)  / Wizz :(Attendre)
+  | True ? Move(10) :(Couver)
+  
+  * (Attendre)
+  | Key(FU) ? Egg(NE) ; Egg(H); Egg(NW) ; Egg(SW) ; Egg(F) ; Egg(B) ; Egg(L) ; Egg(R); Egg(H):(Pondre)
+  | True ? :(Attendre)
+  
+}
+

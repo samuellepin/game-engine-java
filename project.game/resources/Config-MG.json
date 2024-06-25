@@ -1,0 +1,100 @@
+{
+	"parameters" :
+	{
+		"seed": 1451,
+		"visionFieldRadius" : "150.0",
+		"visionFieldApertureAngle": "45°",
+		"player1" : 1234, 
+		"player2" : 5678,
+		"exit" : 3000,
+		"itemToWin" : 9012,
+		"enableBSP" : false,
+		"enableWalls" : true,
+		"backgroundMusic" : "resources/sounds/metal-gear-main-theme.ogg",
+		"gameOverBGM" : "resources/sounds/metal-gear-game-over.ogg",
+		"volume" : "0.5"
+	},
+	"world" : 
+	{
+		"rowsNum" : 11,
+		"colsNum" : 11,
+		"tile" : 
+		{
+			"width" : "100.0",
+			"height" : "100.0",
+			"sprite" : "resources/sprites/Tile/Brick.png",
+			"obstacles" : []
+		},
+		"biome" : 
+		{
+			"width" : 3,
+			"height" : 3,
+			"space" : 3
+		},
+		"obstructionDensity" : "100%"
+	},
+	"view" : 
+	{
+		"paintHitbox" : false,
+		"paintVisionField" : false,
+		"zoom" : "1.0",
+		"screenWidth" : 500,
+		"screenHeight" : 500,
+		"title" : "Metal Gear",
+		"enableReducedVisionField" : false
+	},
+	"entities" : 
+	[
+		{
+			"id" : 1234,
+			"type" : "Spy",
+			"width" : "20.0",
+			"height" : "40.0",
+			"hasCollision" : true,
+			"velocity" : "0.3",
+			"fsm" : "Player1",
+			"typeCat" : "PlayerT",
+			"options" : ["Killable","Jumpable"],
+			"hp" : 100
+		},
+		{
+			"id" : 5678,
+			"type" : "Guard",
+			"width" : "25.0",
+			"height" : "45.0",
+			"hasCollision" : true,
+			"velocity" : "0.1",
+			"fsm" : "Guard"
+		},
+		{
+			"id" : 9012,
+			"type" : "Document",
+			"width" : "20.0",
+			"height" : "20.0",
+			"hasCollision" : false,
+			"velocity" : "0.0",
+			"fsm" : "DoNothing",
+			"category" : "Stuff"
+		},
+		{
+			"id" : 3000,
+			"type" : "Stairs",
+			"width" : "50.0",
+			"height" : "50.0",
+			"hasCollision" : false,
+			"velocity" : "0.0",
+			"fsm" : "DoNothing",
+			"category" : "Team"
+		}
+	],
+	"enenmies" :
+	[
+		{
+			"id" : 5678,
+			"min" : 8,
+			"max" : 10
+		}
+	],
+	"keyItems" : [ 9012 ]
+}
+

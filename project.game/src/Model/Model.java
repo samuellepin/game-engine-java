@@ -1,21 +1,26 @@
 package src.Model;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
+import src.Config;
+import src.Game;
 import src.Model.Collision.Collision;
+import src.Model.Entities.Generator;
 import src.Model.World.Map;
 
 public class Model
 {
   private static final Model         INSTANCE = new Model();
 
-  private Map                        m_map;                 /// < Background with no collisions : Floor
   private ArrayList< Entity >        m_entities;            /// < Players, Walls, Items, etc.
   private ArrayList< EntityTracker > m_trackers;
   private boolean                    m_isGameOver;
   private Entity                     m_player1;
   private Entity                     m_player2;
-  private Entity                     m_document;
+  private ArrayList< Entity >        m_keyItems;
+  private ArrayList< Shot >          m_shots;
+  private Entity                     m_exit;
 
   public static Model getInstance()
   {
@@ -26,30 +31,16 @@ public class Model
   {
     m_isGameOver = false;
 
+    m_keyItems = new ArrayList< Entity >();
     m_entities = new ArrayList< Entity >();
     m_trackers = new ArrayList< EntityTracker >();
+    m_shots = new ArrayList< Shot >();
 
-    m_map = Map.getInstance();
     for ( Entity e : Map.getInstance().getWalls() )
     {
       m_entities.add( e );
     }
-
-    Document doc = new Document( null );
-    doc.setPos( m_map.getPos( 3, 3 ) );
-    m_entities.add( doc );
-    m_document = doc;
-
-    Spy spy = new Spy( null );
-    spy.setPos( m_map.getPos( 5, 5 ) );
-    this.setPlayer1( spy );
-    m_entities.add( spy );
-    
-    Guard guard = new Guard( null );
-    guard.setPos( m_map.getPos( 6, 6 ) );
-    this.setPlayer2( guard );
-    m_entities.add( guard );
-    }
+  }
 
   public void tick( long elapsed )
   {
@@ -57,10 +48,51 @@ public class Model
     {
       e.tick( elapsed );
     }
-    if( Collision.detect( m_player1.getHitbox(), m_document.getHitbox() ) )
+
+    Iterator< Shot > iterator = m_shots.iterator();
+    while( iterator.hasNext() )
     {
-      m_isGameOver = true;
+      Shot shot = iterator.next();
+      shot.update( elapsed );
+      if( shot.hasTouched() )
+      {
+        iterator.remove();
+      }
     }
+
+    if( ( Collision.detect( m_player1.getHitbox(), m_exit.getHitbox() )
+        && m_player1.getInventory().size() == Model.getInstance().getKeyItems().size() ) || m_player1.isDead() )
+    {
+      setGameOver();
+    }
+
+    Iterator< Entity > it = m_keyItems.iterator();
+    while( it.hasNext() )
+    {
+      Entity entity = it.next();
+      if( Collision.detect( m_player1.getHitbox(), entity.getHitbox() ) )
+      {
+        m_player1.addItemToInventory( entity );
+        m_entities.remove( entity );
+      }
+    }
+
+  }
+
+//if( m_itemToWin instanceof Generator )
+//{
+//  ( (Generator)m_itemToWin ).enable();
+//}
+//else
+//{
+//}
+
+  public void setGameOver()
+  {
+    m_isGameOver = true;
+    Game game = Game.getInstance();
+    game.stopMusic( Config.getInstance().getParameters().getBackgroundMusic() );
+//    game.loadMusic( Config.getInstance().getParameters().getGameOverBGM() );
   }
 
   public boolean isGameOver()
@@ -71,6 +103,16 @@ public class Model
   public ArrayList< Entity > getEntities()
   {
     return m_entities;
+  }
+
+  public void addEntities( Entity entity )
+  {
+    m_entities.add( entity );
+  }
+
+  public void removeEntities( Entity entity )
+  {
+    m_entities.remove( entity );
   }
 
   public Entity getPlayer1()
@@ -96,5 +138,68 @@ public class Model
   public ArrayList< EntityTracker > getTrackers()
   {
     return m_trackers;
+  }
+
+  public void addEntity( Entity e )
+  {
+    m_entities.add( e );
+  }
+
+  public void addKeyItems( Entity e )
+  {
+    m_keyItems.add( e );
+  }
+
+  public ArrayList< Entity > getKeyItems()
+  {
+    return m_keyItems;
+  }
+
+  public void addEnenmies( Entity entity, int min, int max )
+  {
+    int num = min + Config.getRandom().nextInt( max - min );
+    for ( int i = 0; i < num; i++ )
+    {
+      Entity e = null;
+      try
+      {
+        e = entity.clone();
+      }
+      catch ( CloneNotSupportedException except )
+      {
+        except.printStackTrace();
+      }
+      try
+      {
+        e.correctBrain( e );
+      }
+      catch ( CloneNotSupportedException except )
+      {
+        except.printStackTrace();
+      }
+      e.setId( e.getId() + i + 1 );
+      e.setPos( Map.getInstance().getRandomPos() );
+      this.addEntity( e );
+    }
+  }
+
+  public void addShot( Shot shot )
+  {
+    m_shots.add( shot );
+  }
+
+  public ArrayList< Shot > getShots()
+  {
+    return m_shots;
+  }
+
+  public Entity getExit()
+  {
+    return m_exit;
+  }
+
+  public void setExit( Entity e )
+  {
+    m_exit = e;
   }
 }

@@ -5,122 +5,80 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
 import info3.game.graphics.GameCanvasListener;
-import src.Model.Entity;
-import src.Model.Model;
 
 public class CanvasListener implements GameCanvasListener
 {
-  Game  m_game;
-  Model m_model;
+  private Game       m_game;
+  private Controller m_controller;
 
   CanvasListener( Game game )
   {
     m_game = game;
-    m_model = Model.getInstance();
+    m_controller = Controller.getInstance();
   }
 
   @Override
   public void mouseClicked( MouseEvent e )
   {
-//    System.out.println( "Mouse clicked: (" + e.getX() + "," + e.getY() + ")" );
-//    System.out.println( "   modifiers=" + e.getModifiersEx() );
-//    System.out.println( "   buttons=" + e.getButton() );
   }
 
   @Override
   public void mousePressed( MouseEvent e )
   {
-//    System.out.println( "Mouse pressed: (" + e.getX() + "," + e.getY() + ")" );
-//    System.out.println( "   modifiers=" + e.getModifiersEx() );
-//    System.out.println( "   buttons=" + e.getButton() );
+    m_controller.updateMouseButtonPressed( e );
   }
 
   @Override
   public void mouseReleased( MouseEvent e )
   {
-//    System.out.println( "Mouse released: (" + e.getX() + "," + e.getY() + ")" );
-//    System.out.println( "   modifiers=" + e.getModifiersEx() );
-//    System.out.println( "   buttons=" + e.getButton() );
+    m_controller.updateMouseButtonReleased( e );
   }
 
   @Override
   public void mouseEntered( MouseEvent e )
   {
-//    System.out.println( "Mouse entered: (" + e.getX() + "," + e.getY() + ")" );
-//    System.out.println( "   modifiers=" + e.getModifiersEx() );
-//    System.out.println( "   buttons=" + e.getButton() );
+    m_controller.updateMousePos( e );
   }
 
   @Override
   public void mouseExited( MouseEvent e )
   {
-//    System.out.println( "Mouse exited: (" + e.getX() + "," + e.getY() + ")" );
-//    System.out.println( "   modifiers=" + e.getModifiersEx() );
-//    System.out.println( "   buttons=" + e.getButton() );
+    m_controller.updateMousePos( e );
   }
 
   @Override
   public void mouseDragged( MouseEvent e )
   {
-//    System.out.println( "Mouse dragged: (" + e.getX() + "," + e.getY() + ")" );
-//    System.out.println( "   modifiers=" + e.getModifiersEx() );
-//    System.out.println( "   buttons=" + e.getButton() );
+    m_controller.updateMousePos( e );
   }
 
   @Override
   public void mouseMoved( MouseEvent e )
   {
-//    System.out.println( "Mouse moved: (" + e.getX() + "," + e.getY() + ")" );
-//    System.out.println( "   modifiers=" + e.getModifiersEx() );
-//    System.out.println( "   buttons=" + e.getButton() );
+    m_controller.updateMousePos( e );
   }
 
   @Override
   public void keyTyped( KeyEvent e )
   {
-//    System.out.println( "Key typed: " + e.getKeyChar() + " code=" + e.getKeyCode() );
   }
 
   @Override
   public void keyPressed( KeyEvent e )
   {
-//    System.out.println( "Key pressed: " + e.getKeyChar() + " code=" + e.getKeyCode() );
-    double orientations[] = { -Math.PI, -Math.PI / 2, 0, Math.PI / 2 };
-    int    code           = e.getKeyCode();
-    Entity player1        = Model.getInstance().getPlayer1();
-    switch ( code )
-    {
-    case 37: // LEFT
-    case 38: // UP
-    case 39: // RIGHT
-    case 40: // DOWN
-      player1.turn( orientations[ code - 37 ] );
-      player1.doMove( player1.getOrientation() );
-      player1.setIsMoving( true );
-      break;
-    }
+    m_controller.updateKeyPressed( e );
   }
 
   @Override
   public void keyReleased( KeyEvent e )
   {
-//    System.out.println( "Key released: " + e.getKeyChar() + " code=" + e.getKeyCode() );
-    int    code           = e.getKeyCode();
-    Entity player1        = Model.getInstance().getPlayer1();
-    switch ( code )
-    {
-    case 37: // LEFT
-    case 38: // UP
-    case 39: // RIGHT
-    case 40: // DOWN
-      player1.setIsMoving( false );
-      break;
-    }
+    m_controller.updateKeyReleased( e );
   }
 
   @Override
   public void tick( long elapsed )
   {
+    m_controller.update();
     m_game.tick( elapsed );
   }
 
@@ -133,6 +91,7 @@ public class CanvasListener implements GameCanvasListener
   @Override
   public void windowOpened()
   {
+    m_game.loadMusic( Config.getInstance().getParameters().getBackgroundMusic() );
   }
 
   @Override
