@@ -1,5 +1,7 @@
 package src.Model.Entities;
 
+import java.util.List;
+
 import src.Model.Alarm;
 import src.Model.Entity;
 
@@ -7,7 +9,6 @@ import src.Model.Entity;
 public class Camera extends Entity
 {
   private Alarm               m_ownAlarm;
-  private static final double RATIO = 0.1;
 
   public Camera()
   {
@@ -21,6 +22,13 @@ public class Camera extends Entity
   public void doTurn( double orientation )
   {
     m_orientation.add( m_elapsedTime * m_velocity );
+    m_brain.step();
+  }
+  
+  @Override
+  public void doWizz( List< Object > parameters )// déclanché après cell de l'automate
+  {
+    m_ownAlarm.alert();
     m_brain.step();
   }
 }

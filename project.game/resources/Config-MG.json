@@ -53,7 +53,7 @@
 			"hasCollision" : true,
 			"velocity" : "0.3",
 			"fsm" : "Player1",
-			"typeCat" : "PlayerT",
+			"category" : "PlayerT",
 			"options" : ["Killable","Jumpable"],
 			"hp" : 100
 		},

@@ -17,7 +17,7 @@ public class Alarm
 
   public Alarm( Entity entity )
   {
-    m_radius = 200;
+    m_radius = 300;
     m_pos = entity.getPos();
     m_alarmArea = new Circle( m_pos, m_radius );
     m_isActive = false;

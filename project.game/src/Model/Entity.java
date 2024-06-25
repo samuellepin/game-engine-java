@@ -561,7 +561,7 @@ public abstract class Entity implements Cloneable
     Vector pos = m_hitbox.getBarycenter();
     Arc    a   = new Arc( pos, radius, new Angle( absDir.toAngle( m_orientation ) ),
         new Angle( Direction.DIRECTION_ANGLE ) );
-
+    Model.getInstance().getEntities();
     for ( Entity e : Model.getInstance().getEntities() )
     {
       if( cat.getType() == e.getCategoryType() ) return Collision.detect( e.getHitbox(), a );

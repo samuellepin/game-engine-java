@@ -137,7 +137,7 @@ public class Guard extends Entity
   }
 
   @Override
-  public void doWizz( List< Object > parameters )// déclanché après closest de l'automate
+  public void doWizz( List< Object > parameters )// déclanché après cell de l'automate
   {
     m_isAlarmed = true;
     m_ownAlarm.alert();
