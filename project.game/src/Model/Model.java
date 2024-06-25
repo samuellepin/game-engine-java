@@ -44,7 +44,11 @@ public class Model
 
   public void tick( long elapsed )
   {
-    for ( Entity e : m_entities )
+    // ATTENTION - PEUT ETRE SOURCE DE PROBLEME
+    // UTILE CAR ON MODIFIE LA LISTE 
+    // EN L'ITERANT
+    ArrayList<Entity> list = (ArrayList< Entity >)m_entities.clone();
+    for ( Entity e : list )
     {
       e.tick( elapsed );
     }
@@ -142,6 +146,7 @@ public class Model
 
   public void addEntity( Entity e )
   {
+    if( m_entities.contains( e ) ) return;
     m_entities.add( e );
   }
 

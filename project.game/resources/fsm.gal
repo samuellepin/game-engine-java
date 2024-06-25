@@ -11,7 +11,7 @@ Player1(Normal)
   | Key(FD) ? Turn(S);Move(F) : (Normal)
   | Key(FR) ? Turn(E);Move(F) : (Normal)
   | Key(FL) ? Turn(W);Move(F) : (Normal)
-  | Key(m)  ? Egg()   : (Robot)
+  | Key(m)  ? Egg()   : (Normal)
   | Key(l)  ? Wizz    : (Metamorph)
   | True    ? Wait()  : (Normal)
 
@@ -30,6 +30,16 @@ Player1(Normal)
   | Key(FL) ? Move(W) : (Metamorph)
   | Key(l)  ?         : (Normal)
   | True    ? Wait()  : (Metamorph)
+}
+
+Robot(Normal)
+{
+  * (Normal) :
+  | Key(FU) ? Turn(N);Move(F) : (Normal)
+  | Key(FD) ? Turn(S);Move(F) : (Normal)
+  | Key(FR) ? Turn(E);Move(F) : (Normal)
+  | Key(FL) ? Turn(W);Move(F) : (Normal)
+  | True    ? Wait()  : (Normal)
 }
 
 Player2(Normal)

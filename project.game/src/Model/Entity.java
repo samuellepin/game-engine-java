@@ -750,4 +750,9 @@ public abstract class Entity implements Cloneable
   {
     return m_inventory;
   }
+  
+  public void translate( double dx, double dy )
+  {
+    this.m_hitbox.translate( dx, dy );
+  }
 }

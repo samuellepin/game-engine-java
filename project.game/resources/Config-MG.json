@@ -99,10 +99,10 @@
 		{
 			"id" : 5000,
 			"type" : "Box",
-			"width" : "40.0",
-			"height" : "40.0",
+			"width" : "36.0",
+			"height" : "36.0",
 			"hasCollision" : false,
-			"velocity" : "0.001",
+			"velocity" : "0.0",
 			"fsm" : "DoNothing",
 			"category" : "Pickable"
 		}
