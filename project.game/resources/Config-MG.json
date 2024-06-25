@@ -4,14 +4,11 @@
 		"seed": 1451,
 		"visionFieldRadius" : "150.0",
 		"visionFieldApertureAngle": "45°",
-		"player1" : 1234, 
-		"player2" : 5678,
-		"exit" : 3000,
-		"itemToWin" : 9012,
-		"enableBSP" : false,
+		"player1" : 1000, 
+		"player2" : 2000,
+		"exit" : 5000,
 		"enableWalls" : true,
 		"backgroundMusic" : "resources/sounds/metal-gear-main-theme.ogg",
-		"gameOverBGM" : "resources/sounds/metal-gear-game-over.ogg",
 		"volume" : "0.5"
 	},
 	"world" : 
@@ -46,7 +43,7 @@
 	"entities" : 
 	[
 		{
-			"id" : 1234,
+			"id" : 1000,
 			"type" : "Spy",
 			"width" : "20.0",
 			"height" : "40.0",
@@ -58,7 +55,7 @@
 			"hp" : 100
 		},
 		{
-			"id" : 5678,
+			"id" : 2000,
 			"type" : "Spy",
 			"width" : "20.0",
 			"height" : "40.0",
@@ -70,7 +67,7 @@
 			"hp" : 100
 		},
 		{
-			"id" : 9012,
+			"id" : 3000,
 			"type" : "Guard",
 			"width" : "25.0",
 			"height" : "45.0",
@@ -79,7 +76,7 @@
 			"fsm" : "Guard"
 		},
 		{
-			"id" : 3456,
+			"id" : 4000,
 			"type" : "Document",
 			"width" : "20.0",
 			"height" : "20.0",
@@ -89,7 +86,7 @@
 			"category" : "Stuff"
 		},
 		{
-			"id" : 3000,
+			"id" : 5000,
 			"type" : "Stairs",
 			"width" : "50.0",
 			"height" : "50.0",
@@ -99,7 +96,7 @@
 			"category" : "Team"
 		},
 		{
-			"id" : 4000,
+			"id" : 6000,
 			"type" : "Camera",
 			"width" : "30.0",
 			"height" : "10.0",
@@ -109,7 +106,7 @@
 			"category" : "Team"
 		},
 		{
-			"id" : 5000,
+			"id" : 7000,
 			"type" : "Box",
 			"width" : "36.0",
 			"height" : "36.0",
@@ -122,16 +119,16 @@
 	"enenmies" :
 	[
 		{
-			"id" : 5678,
+			"id" : 3000,
 			"min" : 3,
 			"max" : 6
 		},
 		{
-			"id" : 4000,
+			"id" : 6000,
 			"min" : 2,
 			"max" : 5
 		}
 	],
-	"keyItems" : [ 9012 ]
+	"keyItems" : [ 4000 ]
 }
 

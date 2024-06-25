@@ -22,12 +22,12 @@ public class Model
   private ArrayList< Shot >          m_shots;
   private Entity                     m_exit;
   private boolean                    m_isVictory;
-  
+
   public void setVictory( boolean isVictory )
   {
     m_isVictory = isVictory;
   }
-  
+
   public boolean isVictory()
   {
     return m_isVictory;
@@ -76,15 +76,20 @@ public class Model
       }
     }
 
-    
-    if( m_exit != null && ( Collision.detect( m_player1.getHitbox(), m_exit.getHitbox() )
-        && m_player1.getInventory().size() == Model.getInstance().getKeyItems().size() ) || m_player1.isDead() )
+    if( m_exit != null )
     {
-      if( !m_player1.isDead() )
+      if( ( Collision.detect( m_player1.getHitbox(), m_exit.getHitbox() )
+          && m_player1.getInventory().size() == Model.getInstance().getKeyItems().size() )
+          || ( ( Collision.detect( m_player2.getHitbox(), m_exit.getHitbox() )
+              && m_player2.getInventory().size() == Model.getInstance().getKeyItems().size() ) )
+          || ( m_player1.isDead() && m_player2.isDead() ) )
       {
-        this.setVictory( true );
+        if( !m_player1.isDead() || !m_player2.isDead() )
+        {
+          this.setVictory( true );
+        }
+        setGameOver();
       }
-      setGameOver();
     }
 
     Iterator< Entity > it = m_keyItems.iterator();
@@ -94,6 +99,11 @@ public class Model
       if( Collision.detect( m_player1.getHitbox(), entity.getHitbox() ) )
       {
         m_player1.addItemToInventory( entity );
+        m_entities.remove( entity );
+      }
+      if( Collision.detect( m_player2.getHitbox(), entity.getHitbox() ) )
+      {
+        m_player2.addItemToInventory( entity );
         m_entities.remove( entity );
       }
     }
