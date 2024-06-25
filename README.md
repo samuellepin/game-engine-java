@@ -114,8 +114,9 @@ Voici les différents façon d'utiliser les Action et les Conditions dans les fi
 #### Actions
 Add():
 Explode():
+	- Par défaut : l'entité est détruite (donc supprimée du modèle).
 Get():
-	-Faire rien (à @Overide si on souhaite faire quelque chose)
+	- Faire rien (à @Override si on souhaite faire quelque chose)
 Egg():
 	- D : 
 		- Cas Général : Faire rien (à @Overide si on souhaite faire quelque chose)
@@ -141,19 +142,31 @@ Protect(): [Greg]
 Rest(): [Greg]
 	- N, pow (par défaut 100 et 5):
 		- L'entité appelle la méthode addPow(pow), puis ne fait rien pendant N millisecondes.
-Store():
-Throw():
-Turn():
-Wait():
+Store(): [Romain]
+	- L'entité range l'item de sa main dans son inventaire.
+Throw():[Romain]
+	- L'entité lache l'item de sa main devant lui.
+Turn():[Romain]
+	- D (par défaut Right)
+		- Cas général: L'entité tourne vers la direction donnée.
+Wait():[Romain]
+	- T (par défaut 100)
+		- L'entité attend pendant T millisecondes, et ne fait rien pendant ce temps.
 Pop():
+	- Dans le cas général : ne fait rien. C'est à chaque type d'entité d'Override doPop() afin de s'en servir comme action personnalisée.
 Wizz():
+	- Dans le cas général : ne fait rien. C'est à chaque type d'entité d'Override doWizz() afin de s'en servir comme action personnalisée.
+	- Dans Guard sert à donner l'alerte aux autres gardes.
 
 #### Conditions
 True():
 MyDir():
 Cell():
-Closest():
+Closest():[Romain]
+	-C,D (par défaut adversary, Forward)
+		-Vérifie si l'entité la plus proche de la catégorie est dans la bonne direction.
 Got():
+	-Dans Guard est utilisé pour vérifier si le garde est en état d'alerte.
 Key():
 
 ## Lien vidéo 
