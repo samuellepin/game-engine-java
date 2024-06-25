@@ -240,8 +240,8 @@ Key(A):
 [Lien vers la Vidéo](https://we.tl/t-48Q7g0dthT)
 
 ## Pourcentage participation 
-- David : 3%
-- Grégory : 500%
-- Rémi : 2%
-- Romain : 2.5%
-- Samuel : ?
+- David : 20%
+- Grégory : 20%
+- Rémi : 20%
+- Romain : 20%
+- Samuel : 20%
