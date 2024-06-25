@@ -60,6 +60,8 @@ Réflexion sur la View :
 - Romain s'occupe de faire les mouvenet aléatoire du snake 
 - Grégory et Samuel s'occupe de la rédaction et de la réflexion du contrat, des fonctionnalité du moteur, des 2 jeux avec ce moteur,...
 
+## Semaine 2
+
 ### Jour 5 (10 juin):
 
 - Rédaction du contrat 
@@ -80,7 +82,6 @@ Réflexion sur la View :
     - Système métrique 
 - Automate 
     - Double lien entre automate et entité 
-
 
 ### Jour 6 (11 juin):
 
@@ -130,19 +131,22 @@ TO DO pour demain :
 - Romain : continuer l'implémentation des biome de façon de façon aléatoire et mise en cohérence avec le code de David 
 
 ### Jour 9 (14 juin):
+
 TO DO :
 - Remi et greg doivent charger les avatars pour tester si leur Viewport fonctionne bien 
 - Sam implementer le visitor et README pour le fichier de config
 - David : fusionner les Hitbox pour les objects inanimé pour éviter d'avoir trop d'Hitbox
 - Romain : finir la cohérence entre le code de David puis intégration entre les deux maps de biome et couloir et Hitbox  
 
-## Jour 10 (17 juin):
+## Semaine 3
+
+### Jour 10 (17 juin):
 
 - Réunion de début de journée pour discuter de l'avancement du projet et des tâches à réaliser pour la journée.
 - David/Greg/Rémi : merge des différentes parties 
 - Romain / Sam : implémentation des automates et du Visitor
 
-## Jour 11 (18 juin):
+### Jour 11 (18 juin):
 
 - Redéfinition des objectifs de la semaine et de la journée.
 
@@ -151,7 +155,7 @@ TO DO :
 - Rémi : aide sur l'implémentation des automates et du Visitor
 - Greg : support et aide sur les différentes implémentations
 
-## Jour 12 (19 juin):
+### Jour 12 (19 juin):
 
 - David : parser le fichier de config pour les jeux et l'intégrer dans le projet
 - Sam / Rémi : finir les classes des automates et finir le Visitor
@@ -164,7 +168,7 @@ Pour demain :
     - Vérifier si le brain fonctionne
     - Finir le moteur pour de vrai
 
-## Jour 13 (20 juin):
+### Jour 13 (20 juin):
 
 - But de la matinée et de la journée : avoir une V0 fonctionnel pour que pendant le weekend on fasse les deux jeux et rajouter des features 
 
@@ -182,6 +186,43 @@ TO DO: ( dans l'ordre de priorité)
 - Faire l'alarme , comment chaque guard et camera se préviennent entre elles (voir Romain)
 - Faire méthode pour échanger les FSM 
 - Faire les classes du 2 ème joueur  
+
+### Jour 14 (21 juin):
+
+- Réalisation des tâches de la veille pour avancer un maximum sur le projet pour avoir une V0 fonctionnel pour la fin de la journée pour éviter de partir en weekend avec un projet non fonctionnel.
+
+- David : amélioration du champ de vison en un champ de vison de cercle en arc
+- Sam : test des differents automates avec les entité et support pour l'implémentation des actions et conditions
+- Rémi et Greg et Romain : avancement sur les implémentations des Actions et Conditions dans le model pour lié les automates et les entités.
+
+TO DO: ( dans l'ordre de priorité)
+- Intégrer tout le travail fait et tester si cela fonctionne
+- Finir les collision et les champs de vision
+- Robot  et echange des automates, laisser un peu de coté car par moins prioritaire que les autres tâches pour avoir une V1 qui est une amélioration de la V0.
+
+## Semaine 4
+
+### Jour 15 (24 juin):
+
+Pendant le weekend, nous avons travaillé sur les deux jeux et rajouté des features pour améliorer le projet. 
+
+- Continuation d'implémznter un maximun de fonctionnlité .
+- Debug et amélioration du code
+- Quelques problèmes et bugs détécté sur le mouvement aléatoire des entités et sur le champ de vision ont été corrigé.
+- Ajout de l'alarme pour le jeu Metal Gear (encore en cours de développement)
+- Début de la vidéo de présentation du projet
+
+### Jour 16 (25 juin):
+
+- Finalisation du projet :
+    - ajout de features pour compléter les deux jeux ainsi que validé un peu plus le contrat 
+- Vidéo de présentation :
+    - Réalisation des rush de différentes features du projet
+    - Montage de la vidéo
+    - ecriture du script de la vidéo
+- But avoir une première vidéo avant 21h pour pouvoir corriger et rajouter des choses pour la vidéo final et nous laisser une marge de temps pour de la correction et des améliorations.
+
+# Informations utiles
 
 **Commande parser**
 
