@@ -2,7 +2,7 @@
 	"parameters" :
 	{
 		"seed": 130,
-		"visionFieldRadius": "100.0",
+		"visionFieldRadius": "170.0",
 		"visionFieldApertureAngle": "45°",
 		"player1" : 1234, 
 		"player2" : 5678,
@@ -45,8 +45,8 @@
 	},
 	"view" : 
 	{
-		"paintHitbox" : true,
-		"paintVisionField" : true,
+		"paintHitbox" : false,
+		"paintVisionField" : false,
 		"zoom" : "1.7",
 		"screenWidth" : 500,
 		"screenHeight" : 500,
@@ -65,7 +65,7 @@
 			"fsm" : "Player1",
 			"category" : "PlayerT",
 			"options" : ["Killable","Jumpable"],
-			"hp" : 200
+			"hp" : 50
 		},
 		{
 			"id" : 5678,

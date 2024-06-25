@@ -76,15 +76,15 @@ public class Model
       }
     }
 
+    
     if( m_exit != null && ( Collision.detect( m_player1.getHitbox(), m_exit.getHitbox() )
         && m_player1.getInventory().size() == Model.getInstance().getKeyItems().size() ) || m_player1.isDead() )
     {
+      if( !m_player1.isDead() )
+      {
+        this.setVictory( true );
+      }
       setGameOver();
-    }
-    
-    if( !m_player1.isDead() )
-    {
-      this.setVictory( true );
     }
 
     Iterator< Entity > it = m_keyItems.iterator();
