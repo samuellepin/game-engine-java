@@ -7,11 +7,8 @@
 		"player1" : 1234, 
 		"player2" : 5678,
 		"exit" : 3000,
-		"itemToWin" : 9012,
-		"enableBSP" : false,
 		"enableWalls" : true,
 		"backgroundMusic" : "resources/sounds/alien-main-theme.ogg",
-		"gameOverBGM" : "resources/sounds/metal-gear-game-over.ogg",
 		"volume" : "0.9",
 		"reducedVisionField" : "0%"
 	},
