@@ -42,6 +42,12 @@ public class Config
     case "Alien":
       entity = new src.Model.Entities.Alien();
       break;
+    case "Robot":
+      entity = new src.Model.Entities.Robot();
+      break;
+    case "Guard":
+      entity = new src.Model.Entities.Guard();
+      break;
     case "Box":
       entity = new src.Model.Entities.Box();
       break;
@@ -57,9 +63,6 @@ public class Config
     case "Generator":
       entity = new src.Model.Entities.Generator();
       break;
-    case "Guard":
-      entity = new src.Model.Entities.Guard();
-      break;
     case "Mouse":
       entity = new src.Model.Entities.Mouse();
       break;
@@ -68,9 +71,6 @@ public class Config
       break;
     case "Raven":
       entity = new src.Model.Entities.Raven();
-      break;
-    case "Robot":
-      entity = new src.Model.Entities.Robot();
       break;
     case "Spy":
       entity = new src.Model.Entities.Spy();
@@ -112,7 +112,11 @@ public class Config
     {
       src.Model.Entity newEntity = StringToEntity( e );
       newEntity.setId( e.getId() );
-      model.addEntity( newEntity );
+      if( newEntity instanceof src.Model.Entities.Robot )
+      {
+        model.setRobotReference( (src.Model.Entities.Robot)newEntity );
+      }
+      else model.addEntity( newEntity );
     }
 
     // put the viewports on the right entities

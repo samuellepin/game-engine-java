@@ -7,7 +7,6 @@ import src.Model.Entity;
 public class Camera extends Entity
 {
   private Alarm               m_ownAlarm;
-  private static final double RATIO = 0.1;
 
   public Camera()
   {

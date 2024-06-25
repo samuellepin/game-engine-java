@@ -11,7 +11,7 @@ Player1(Normal)
   | Key(FD) ? Turn(S);Move(F) : (Normal)
   | Key(FR) ? Turn(E);Move(F) : (Normal)
   | Key(FL) ? Turn(W);Move(F) : (Normal)
-  | Key(m)  ? Egg()   : (Normal)
+  | Key(m)  ? Egg();Wait(1000)   : (Robot)
   | Key(l)  ? Wizz    : (Metamorph)
   | Key(p) & Cell(H,P) ? Pick(H,0) : (Normal) 
   | True    ? Wait()  : (Normal)
@@ -21,7 +21,7 @@ Player1(Normal)
   | Key(FD) ? Move(S) : (Robot)
   | Key(FR) ? Move(E) : (Robot)
   | Key(FL) ? Move(W) : (Robot)
-  | Key(m)  ?         : (Normal)
+  | Key(m)  ? Egg();Wait(1000)   : (Normal)
   | True    ? Wait()  : (Robot)
 
   * (Metamorph):
@@ -31,20 +31,6 @@ Player1(Normal)
   | Key(FL) ? Move(W) : (Metamorph)
   | Key(l)  ?         : (Normal)
   | True    ? Wait()  : (Metamorph)
-}
-
-Robot(Normal)
-{
-  * (Normal) :
-  | Key(FU) ? Turn(N);Move(F) : (Normal)
-  | Key(FD) ? Turn(S);Move(F) : (Normal)
-  | Key(FR) ? Turn(E);Move(F) : (Normal)
-  | Key(FL) ? Turn(W);Move(F) : (Normal)
-  | Key(n) ? Explode() : (Disabled)
-  | True    ? Wait()  : (Normal)
-  
-  * (Disabled) : 
-  | True ? : (Disabled)
 }
 
 GuardPlayer2(Normal)
@@ -70,10 +56,10 @@ Player2(Normal)
   | True    ? Wait()  : (Normal)
 
   * (Robot) :
-  | Key(z) ? Move(N) : (Robot)
-  | Key(s) ? Move(S) : (Robot)
-  | Key(d) ? Move(E) : (Robot)
-  | Key(q) ? Move(W) : (Robot)
+  | Key(z) ? Turn(N);Move(F) : (Robot)
+  | Key(s) ? Turn(S);Move(F) : (Robot)
+  | Key(d) ? Turn(E);Move(F) : (Robot)
+  | Key(q) ? Turn(W);Move(F) : (Robot)
   | Key(w)  ?         : (Normal)
   | True    ? Wait()  : (Robot)
 
@@ -92,8 +78,11 @@ Guard(Patrol)
   | Got ?                                      : (Engage)
   | Cell(F, @) ? Move(F);Wizz                  : (Engage)
   | Cell(F,O)  ? 50% Turn(R)/ 50% Turn(L)      : (Patrol)
-  | True       ? 90% Move(F,100)/Turn(R)/ Turn(L)  : (Patrol)
+  | True       ? 90% Move(F,100)/Turn(R)/ Turn(L)  : (Wait)
   
+  * (Wait):
+  | True ? Wait : (Patrol)
+
   * (Engage):
   | !Got ?                                : (Patrol)
   | Cell(F, @) ? Move(F);Wizz             : (Engage)
@@ -113,10 +102,19 @@ Wall(DoNothing)
   | True ? : (DoNothing)
 }
 
+Robot(DoNothing)
+{
+  * (DoNothing) :
+  | True ? Wait() : (DoNothing)
+}
+
 Animal(Moving)
 {
   * (Moving) :
-  | True ? 10% Turn(R)/ 10% Turn(L) / 80% Move(F,100) : (Moving) 
+  | True ? 10% Turn(R)/ 10% Turn(L) / 80% Move(F,100) : (Wait) 
+
+  * (Wait) :
+  | True ? Wait : (Moving)
 }
 
 Box(Idle)

@@ -6,7 +6,7 @@ import java.util.Iterator;
 import src.Config;
 import src.Game;
 import src.Model.Collision.Collision;
-import src.Model.Entities.Generator;
+import src.Model.Entities.Robot;
 import src.Model.World.Map;
 
 public class Model
@@ -20,6 +20,8 @@ public class Model
   private Entity                     m_player2;
   private ArrayList< Entity >        m_keyItems;
   private ArrayList< Shot >          m_shots;
+  private Robot                      m_robotReference;
+  private ArrayList< Entity >        m_queueEntitiesToAdd;
   private Entity                     m_exit;
   private boolean                    m_isVictory;
 
@@ -45,6 +47,7 @@ public class Model
 
     m_keyItems = new ArrayList< Entity >();
     m_entities = new ArrayList< Entity >();
+    m_queueEntitiesToAdd = new ArrayList< Entity >();
     m_trackers = new ArrayList< EntityTracker >();
     m_shots = new ArrayList< Shot >();
 
@@ -56,12 +59,10 @@ public class Model
 
   public void tick( long elapsed )
   {
-    // ATTENTION - PEUT ETRE SOURCE DE PROBLEME
-    // UTILE CAR ON MODIFIE LA LISTE
-    // EN L'ITERANT
-    ArrayList< Entity > list = (ArrayList< Entity >)m_entities.clone();
-    for ( Entity e : list )
+    Iterator< Entity > iter = m_entities.iterator();
+    while( iter.hasNext() )
     {
+      Entity e = iter.next();
       e.tick( elapsed );
     }
 
@@ -91,6 +92,7 @@ public class Model
         setGameOver();
       }
     }
+    clearQueue();
 
     Iterator< Entity > it = m_keyItems.iterator();
     while( it.hasNext() )
@@ -107,7 +109,6 @@ public class Model
         m_entities.remove( entity );
       }
     }
-
   }
 
 //if( m_itemToWin instanceof Generator )
@@ -136,9 +137,18 @@ public class Model
     return m_entities;
   }
 
-  public void addEntities( Entity entity )
+  public void addQueue( Entity entity )
   {
-    m_entities.add( entity );
+    m_queueEntitiesToAdd.add( entity );
+  }
+
+  public void clearQueue()
+  {
+    for ( Entity e : m_queueEntitiesToAdd )
+    {
+      addEntity(e);
+    }
+    m_queueEntitiesToAdd.clear();
   }
 
   public void removeEntities( Entity entity )
@@ -225,6 +235,16 @@ public class Model
     return m_shots;
   }
 
+  public Robot getRobotReference()
+  {
+    return m_robotReference;
+  }
+
+  public void setRobotReference( Robot robot )
+  {
+    m_robotReference = robot;
+  }
+  
   public Entity getExit()
   {
     return m_exit;

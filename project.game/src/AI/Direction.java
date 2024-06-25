@@ -76,6 +76,37 @@ public class Direction
     if( angleMod < -Math.PI * 0.375 && angleMod >= -Math.PI * 0.625 ) return DIRECTION.South;
     return DIRECTION.SE;
   }
+  
+  public void changeDirection()
+  {
+    switch( m_direction )
+    {
+    case North:
+      m_direction = DIRECTION.NE;
+    case NE:
+      m_direction = DIRECTION.East;
+    case East:
+      m_direction = DIRECTION.SE;
+    case SE:
+      m_direction = DIRECTION.South;
+    case South:
+      m_direction = DIRECTION.SW;
+    case SW:
+      m_direction = DIRECTION.West;
+    case West:
+      m_direction = DIRECTION.NW;
+    case NW:
+      m_direction = DIRECTION.North;
+    case Forward:
+      m_direction = DIRECTION.Right;
+    case Right:
+      m_direction = DIRECTION.Backward;
+    case Backward:
+      m_direction = DIRECTION.Left;
+    default:
+      m_direction = DIRECTION.Forward;
+    }
+  }
 
   @Override
   public boolean equals( Object o )

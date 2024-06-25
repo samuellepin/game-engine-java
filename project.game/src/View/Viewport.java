@@ -7,7 +7,6 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 
-import info3.game.graphics.GameCanvas;
 import src.Config;
 import src.Controller;
 import src.Game;
