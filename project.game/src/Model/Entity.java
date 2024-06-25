@@ -224,7 +224,7 @@ public abstract class Entity implements Cloneable
 
   public void doMove( double dir )
   {
-    m_moveDirection = new Angle( dir );
+    m_moveDirection.setValue( dir );
     m_timeToWait = 20;
     m_isMoving = true;
   }
@@ -238,7 +238,7 @@ public abstract class Entity implements Cloneable
 
   public void doMove( double dir, long time )
   {
-    m_moveDirection = new Angle( dir );
+    m_moveDirection.setValue( dir );
     m_timeToWait = time;
     m_isMoving = true;
   }
@@ -368,20 +368,23 @@ public abstract class Entity implements Cloneable
     ArrayList< Entity > entities = new ArrayList< Entity >( Model.getInstance().getEntities() );
     for ( Entity e : entities )
     {
-      Vector  dist         = Vector.sub( e.getPos(), this.getPos() );
-
-      boolean closeEnough  = m_visionField.getRadius() >= dist.getMagnitude();
-      boolean correctAngle = orientation - ( Math.PI / 4 ) <= dist.getAngle();
-      correctAngle = correctAngle && dist.getAngle() <= orientation + ( Math.PI / 4 );
-
-      if( closeEnough && correctAngle )
+      if( e.m_cat.getOptions().contains( CategoryFsm.CATEGORY.Pickable ) )
       {
-        if( m_objectInHand != null )
+        Vector  dist         = Vector.sub( e.getPos(), this.getPos() );
+
+        boolean closeEnough  = m_visionField.getRadius() >= dist.getMagnitude();
+        boolean correctAngle = orientation - ( Math.PI / 4 ) <= dist.getAngle();
+        correctAngle = correctAngle && dist.getAngle() <= orientation + ( Math.PI / 4 );
+
+        if( closeEnough && correctAngle )
         {
-          m_inventory.add( m_objectInHand );
+          if( m_objectInHand != null )
+          {
+            m_inventory.add( m_objectInHand );
+          }
+          entities.remove( e );
+          m_objectInHand = e;
         }
-        entities.remove( e );
-        m_objectInHand = e;
       }
     }
     m_brain.step();
@@ -389,10 +392,13 @@ public abstract class Entity implements Cloneable
 
   public void doThrow( double orientation )
   {
-    Entity e     = m_objectInHand;
-    Model  model = Model.getInstance();
-    m_objectInHand = null;
-    model.addEntities( e );
+    Entity e = m_objectInHand;
+    if( e != null )
+    {
+      Model model = Model.getInstance();
+      m_objectInHand = null;
+      model.addEntities( e );
+    }
     m_brain.step();
   }
 
@@ -547,7 +553,7 @@ public abstract class Entity implements Cloneable
       break;
     }
     Vector pos = m_hitbox.getBarycenter();
-    Arc    a   = new Arc( pos, radius, new Angle( absDir.toAngle( Angle.ANGLE_ZERO ) ),
+    Arc    a   = new Arc( pos, radius, new Angle( absDir.toAngle( m_orientation ) ),
         new Angle( Direction.DIRECTION_ANGLE ) );
 
     for ( Entity e : Model.getInstance().getEntities() )
