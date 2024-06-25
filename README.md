@@ -51,6 +51,59 @@ Pour éviter une trop grosse population d'object nous allons créer moins d'obje
 
 Path : project.game/resources/Config-MG.json ou Confif-Alien.json
 
+Voici les différents paramètres que l'on peut modifier dans les fichiers de config :
+- parameters : 
+	- seed : grain pour la génération aléatoire
+	- visionFieldRadius : rayon du champ de vision
+	- visionFieldApertureAngle : angle d'ouverture du champ de vision
+	- player1 : id du joueur 1
+	- player2 : id du joueur 2
+	- exit : id de la sortie
+	- itemToWin : id de l'objet à récupérer pour gagner
+	- enableWalls : activer ou non les murs/arbres
+	- backgroundMusic : adresse du fichier de musique de fond
+	- gameOverBGM : adresse du fichier de musique de fin de partie
+	- volume : volume de la musique de fond
+- world :
+	- rowsNum : nombre de lignes
+	- colsNum : nombre de colonnes
+	- tile : 
+		- width : largeur d'une case
+		- height : hauteur d'une case
+		- sprite : adresse de l'image de la case
+		- obstacles : liste des sprites des obstacles
+	- biome : 
+		- width : largeur d'un biome
+		- height : hauteur d'un biome
+		- space : espace entre les biomes
+	- obstructionDensity : densité d'obstruction
+- view :
+	- paintHitbox : afficher les hitbox
+	- paintVisionField : afficher le champ de vision
+	- zoom : zoom de la vue
+	- screenWidth : largeur de l'écran
+	- screenHeight : hauteur de l'écran
+	- title : titre de la fenêtre
+	- enableReducedVisionField : activer ou non le champ de vision réduit
+- entities :
+	- id : id de l'entité
+	- type : type de l'entité (class qui lui est associée)
+	- width : largeur de l'entité
+	- height : hauteur de l'entité
+	- hasCollision : l'entité a-t-elle une collision
+	- velocity : vitesse de l'entité
+	- fsm : à quel automate est associé l'entité (nom de l'automate et non le fichier gal)
+	- typeCat : catégorie de l'entité
+	- options : options de l'entité
+	- hp : points de vie de l'entité
+- enemies :
+	- id : id de l'ennemi
+	- min : nombre minimum d'ennemis
+	- max : nombre maximum d'ennemis
+- keyItems :
+	- id : liste des id des objets à récupérer/activer pour gagner
+
+
 ### Fichier gal 
 
 Path : project.game/resources/fsm.gal 
