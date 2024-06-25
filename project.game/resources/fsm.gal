@@ -75,17 +75,10 @@ Guard(Patrol)
   | True ? Move(_)                        : (Engage)
 }
 
-SecurityCamera2(Right)
+SecurityCamera(Right)
 {
   * (Right) :
-  | Closest(#, F) ? Wizz    : (Right)
-  | Closest(O, F) ?         : (Left)
   | True          ? Turn(R) : (Right)
-
-  * (Left) :
-  | Closest(#, F) ? Wizz    : (Left)
-  | Closest(O, F) ?         : (Right)
-  | True          ? Turn(R) : (Left)
 }
 
 Wall(DoNothing)
