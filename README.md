@@ -21,6 +21,8 @@ Grégory Toureille, Romain Prat, Rémi Gaulmin, David Darras, Samuel Lepin
 
 1. Model :
 
+[TO DO]
+
 2. View :
 
 Chaque joueur a son viewport. Chaque viewport est associé à un objet EntityTracker du modèle.
@@ -30,6 +32,7 @@ Chaque entité est associée à un Avatar, qui s'occupe de représenter l'entit�
 
 3. Controller :
 Path : src
+[TO DO]
 
 4. Bots :
 Path : src/AI/
@@ -43,6 +46,60 @@ Pour éviter une trop grosse population d'object nous allons créer moins d'obje
 
 
 ## Environnement 
+
+### Fichier de config 
+
+Path : project.game/resources/Config-MG.json ou Confif-Alien.json
+
+### Fichier gal 
+
+Path : project.game/resources/fsm.gal 
+
+Voici les différents façon d'utiliser les Action et les Conditions dans les fichiers GAL:
+
+(C = Category, A = Action, D = Direction, N = Number(Integer))
+#### Actions
+Add():
+Explode():
+Get():
+	-Faire rien (à @Overide si on souhaite faire quelque chose)
+Egg():
+	- D : 
+		- Cas Général : Faire rien (à @Overide si on souhaite faire quelque chose)
+		- Cas Spy : Crée le robot espion dans la direction D
+Hit():
+	- D:
+		- Cas Général : Attaque toutes les entités dans la direction D
+	- D, N:
+		- Cas Général : Attaque dans la direction D avec une force de N
+		- Cas Guard : Attaque dans la direction D avec une force de N à distance 
+Jump():
+	- D,N :
+		- Cas Général : Saute dans la direction D de N  = dash de distnace N
+Move():
+	- D:
+		- Cas Général : Se déplace dans la direction D pendant 20 ms
+	- D,N:
+		- Cas Général : Se déplace dans la direction D pendant N ms
+Pick():
+	- D :
+		- Cas Général : Ramasse l'objet dans la direction D
+Protect():
+Rest():
+Store():
+Throw():
+Turn():
+Wait():
+Pop():
+Wizz():
+
+#### Conditions
+True():
+MyDir():
+Cell():
+Closest():
+Got():
+Key():
 
 ## Lien vidéo 
 
