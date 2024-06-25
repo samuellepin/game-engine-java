@@ -224,7 +224,7 @@ public abstract class Entity implements Cloneable
 
   public void doMove( double dir )
   {
-    m_moveDirection = new Angle( dir );
+    m_moveDirection.setValue( dir );
     m_timeToWait = 20;
     m_isMoving = true;
   }
@@ -238,7 +238,7 @@ public abstract class Entity implements Cloneable
 
   public void doMove( double dir, long time )
   {
-    m_moveDirection = new Angle( dir );
+    m_moveDirection.setValue( dir );
     m_timeToWait = time;
     m_isMoving = true;
   }
