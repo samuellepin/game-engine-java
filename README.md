@@ -88,19 +88,29 @@ Protect(): [Greg]
 Rest(): [Greg]
 	- N, pow (par défaut 100 et 5):
 		- L'entité appelle la méthode addPow(pow), puis ne fait rien pendant N millisecondes.
-Store():
-Throw():
-Turn():
-Wait():
+Store(): [Romain]
+	- L'entité range l'item de sa main dans son inventaire.
+Throw():[Romain]
+	-L'entité lache l'item de sa main devant lui.
+Turn():[Romain]
+	-D (par défaut Right)
+		-Cas général: L'entité tourne vers la direction donnée.
+Wait():[Romain]
+	-T (par défaut 0.1s)
+		-L'entité attend le temps donné.
 Pop():
 Wizz():
+	-Dans Guard sert à donner l'alerte aux autres gardes.
 
 #### Conditions
 True():
 MyDir():
 Cell():
-Closest():
+Closest():[Romain]
+	-C,D (par défaut adversary, Forward)
+		-Vérifie si l'entité la plus proche de la catégorie est dans la bonne direction.
 Got():
+	-Dans Guard est utilisé pour vérifier si le garde est en état d'alerte.
 Key():
 
 ## Lien vidéo 
