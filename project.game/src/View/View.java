@@ -70,13 +70,13 @@ public class View
   {
     Font font = new Font( "Serif", Font.BOLD, 48 );
     g.setFont( font );
-    FontMetrics fm     = g.getFontMetrics();
-    boolean isVictory = Model.getInstance().isVictory()
-    String      text   = isVictory ? "VICTORY" : "GAME OVER";
-    int         width  = fm.stringWidth( text );
-    int         height = fm.getAscent() + fm.getDescent() + fm.getLeading();
-    int         posX   = ( Game.SCREEN_WIDTH - width ) / 2;
-    int         posY   = ( Game.SCREEN_HEIGHT - height ) / 2;
+    FontMetrics fm        = g.getFontMetrics();
+    boolean     isVictory = Model.getInstance().isVictory();
+    String      text      = isVictory ? "VICTORY" : "GAME OVER";
+    int         width     = fm.stringWidth( text );
+    int         height    = fm.getAscent() + fm.getDescent() + fm.getLeading();
+    int         posX      = ( Game.SCREEN_WIDTH - width ) / 2;
+    int         posY      = ( Game.SCREEN_HEIGHT - height ) / 2;
 
     g.setColor( Color.black );
     g.fillRect( 0, 0, Game.SCREEN_WIDTH, Game.SCREEN_HEIGHT );
