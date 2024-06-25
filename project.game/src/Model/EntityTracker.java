@@ -61,7 +61,7 @@ public class EntityTracker extends AABB
     super.setDim( Game.SCREEN_WIDTH/2, Game.SCREEN_HEIGHT );
   }
 
-  private void centerOnTarget()
+  public void centerOnTarget()
   {
     if( m_target == null )
     {
@@ -86,5 +86,10 @@ public class EntityTracker extends AABB
   public Entity getTarget()
   {
     return m_target;
+  }
+  
+  public void setTarget( Entity target )
+  {
+    m_target = target;
   }
 }

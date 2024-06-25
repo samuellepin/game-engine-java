@@ -71,6 +71,14 @@ public class Spy extends Entity
       setBrain( brobot );
       brobot.setEntity( this );
       bspy.setEntity( m_robot );
+      for ( EntityTracker tracker : Model.getInstance().getTrackers() )
+      {
+        if( tracker.getTarget().equals( this ) )
+        {
+          tracker.setTarget( m_robot );
+          tracker.centerOnTarget();
+        }
+      }
     }
     catch ( CloneNotSupportedException e )
     {
