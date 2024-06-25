@@ -73,19 +73,21 @@ Hit():
 	- D, N:
 		- Cas Général : Attaque dans la direction D avec une force de N
 		- Cas Guard : Attaque dans la direction D avec une force de N à distance 
-Jump():
-	- D,N :
-		- Cas Général : Saute dans la direction D de N  = dash de distnace N
-Move():
-	- D:
-		- Cas Général : Se déplace dans la direction D pendant 20 ms
-	- D,N:
+Jump(): [Greg]
+	- D,N (par défaut Forward et 1):
+		- Cas Général : Saute dans la direction D de N  = dash de distance N mètres. Le déplacement est instantané, et ignore les obstacles se trouvant sur leur chemin. Le jump ne s'effectue pas si l'entité atterrirait sur un obstacle.
+Move(): [Greg]
+	- D,N (par défaut Forward et 20):
 		- Cas Général : Se déplace dans la direction D pendant N ms
-Pick():
-	- D :
-		- Cas Général : Ramasse l'objet dans la direction D
-Protect():
-Rest():
+Pick(): [Greg]
+	- D (par défaut Forward):
+		- Cas Général : Si une entité Pickable se situe dans son champ de vision dans la direction D, l'entité met le pickable dans sa main. S'il avait une autre entité en main, cette dernière est transférée dans son inventaire.
+Protect(): [Greg]
+	- D, N (par défaut Forward et 100):
+		- Cas Général : L'entité ignorera les appels à getHit() provenant d'une entité dans la direction D, pendant N millisecondes.
+Rest(): [Greg]
+	- N, pow (par défaut 100 et 5):
+		- L'entité appelle la méthode addPow(pow), puis ne fait rien pendant N millisecondes.
 Store():
 Throw():
 Turn():
