@@ -1,7 +1,7 @@
 # Variables
 SRC_DIR := src
 BIN_DIR := bin
-LIBS := gson-2.11.0.jar:info3.game.jar:parser.jar
+LIBS := $(shell find . -maxdepth 1 -name '*.jar' -printf '%p:')
 CLASSPATH := $(LIBS)
 
 # Compilateur et options
