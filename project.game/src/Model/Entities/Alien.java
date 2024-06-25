@@ -1,8 +1,7 @@
 package src.Model.Entities;
 
-import java.awt.event.KeyEvent;
+import java.util.List;
 
-import src.Controller;
 import src.Model.Entity;
 import src.Model.Model;
 import src.Model.Collision.Collision;
@@ -48,22 +47,6 @@ public class Alien extends Entity
     this.setUpdateView( true );
   }
 
-  @Override
-  public void tick( long dt )
-  {
-    super.tick( dt );
-    if( Controller.getInstance().isKeyDown( KeyEvent.VK_SPACE ) )
-    {
-      for ( Entity e : Model.getInstance().getEntities() )
-      {
-        if( this != e && Collision.detect( this.getHitbox(), e.getHitbox() ) )
-        {
-          updateMetamorph( e );
-        }
-      }
-    }
-  }
-
   public boolean isNonOriginForm()
   {
     return m_metamorph != null;
@@ -78,5 +61,18 @@ public class Alien extends Entity
   public void getHit( int damage )
   {
     this.subHP( damage );
+  }
+
+  @Override
+  public void doWizz( List< Object > parameters ) // metamorphose
+  {
+    for ( Entity e : Model.getInstance().getEntities() )
+    {
+      if( this != e && Collision.detect( this.getHitbox(), e.getHitbox() ) )
+      {
+        updateMetamorph( e );
+      }
+    }
+    m_brain.step();
   }
 }

@@ -27,9 +27,27 @@ public class CameraAvatar extends Avatar
     points[ 2 ] = new Vector( x + width, y + height );
     points[ 3 ] = new Vector( x, y + height );
 
+    double centroidX = 0;
+    double centroidY = 0;
+    for ( Vector point : points )
+    {
+      centroidX += point.getX();
+      centroidY += point.getY();
+    }
+    centroidX /= points.length;
+    centroidY /= points.length;
+
+    for ( Vector point : points )
+    {
+      point.setX( point.getX() - centroidX );
+      point.setY( point.getY() - centroidY );
+    }
+
     for ( int i = 0; i < points.length; i++ )
     {
       points[ i ].rotate( theta );
+      points[ i ].setX( points[ i ].getX() + centroidX );
+      points[ i ].setY( points[ i ].getY() + centroidY );
       X[ i ] = (int)points[ i ].getX();
       Y[ i ] = (int)points[ i ].getY();
     }
