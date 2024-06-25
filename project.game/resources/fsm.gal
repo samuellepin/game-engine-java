@@ -39,7 +39,11 @@ Robot(Normal)
   | Key(FD) ? Turn(S);Move(F) : (Normal)
   | Key(FR) ? Turn(E);Move(F) : (Normal)
   | Key(FL) ? Turn(W);Move(F) : (Normal)
+  | Key(n) ? Explode() : (Disabled)
   | True    ? Wait()  : (Normal)
+  
+  * (Disabled) : 
+  | True ? : (Disabled)
 }
 
 Player2(Normal)

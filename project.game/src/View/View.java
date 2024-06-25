@@ -10,6 +10,7 @@ import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
 
 import info3.game.graphics.GameCanvas;
+import src.Model.Entity;
 import src.Model.Model;
 import src.Config;
 import src.Game;
@@ -58,8 +59,10 @@ public class View
   public void paintInfo( Graphics g )
   {
     g.setColor( Color.white );
-    g.drawString( Model.getInstance().getPlayer1().toString(), 5, 20 );
-    g.drawString( Model.getInstance().getPlayer2().toString(), 5, 40 );
+    Entity e1 = Model.getInstance().getPlayer1();
+    if( e1 != null ) g.drawString( e1.toString(), 5, 20 );
+    Entity e2 = Model.getInstance().getPlayer2();
+    if( e2 != null ) g.drawString( e2.toString(), 5, 40 );
     this.paintFPS( g );
   }
 

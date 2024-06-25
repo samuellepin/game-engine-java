@@ -267,10 +267,7 @@ public abstract class Entity implements Cloneable
       }
       m_orientation.setValue( m_moveDirection.getValue() );
 
-      if( m_tracker != null )
-      {
-        m_tracker.getListener().moved();
-      }
+      moveTracker();
 
       callListener();
 
@@ -302,11 +299,8 @@ public abstract class Entity implements Cloneable
       }
     }
 
-    if( m_tracker != null )
-    {
-      m_tracker.getListener().moved();
-    }
-
+    moveTracker();
+    
     callListener();
 
     m_brain.step();
@@ -754,5 +748,18 @@ public abstract class Entity implements Cloneable
   public void translate( double dx, double dy )
   {
     this.m_hitbox.translate( dx, dy );
+  }
+  
+  public void moveTracker()
+  {
+    if( m_tracker != null )
+    {
+      m_tracker.getListener().moved();
+    }
+  }
+  
+  public EntityTracker getTracker()
+  {
+    return m_tracker;
   }
 }

@@ -1,0 +1,66 @@
+{
+	"parameters" :
+	{
+		"seed": 1451,
+		"visionFieldRadius" : "150.0",
+		"visionFieldApertureAngle": "45°",
+		"player1" : 1234, 
+		"player2" : 0,
+		"exit" : 0,
+		"itemToWin" : 0,
+		"enableBSP" : false,
+		"enableWalls" : false,
+		"backgroundMusic" : "resources/sounds/metal-gear-main-theme.ogg",
+		"gameOverBGM" : "resources/sounds/metal-gear-game-over.ogg",
+		"volume" : "0.5"
+	},
+	"world" : 
+	{
+		"rowsNum" : 11,
+		"colsNum" : 11,
+		"tile" : 
+		{
+			"width" : "100.0",
+			"height" : "100.0",
+			"sprite" : "resources/sprites/Tile/Brick.png",
+			"obstacles" : []
+		},
+		"biome" : 
+		{
+			"width" : 3,
+			"height" : 3,
+			"space" : 3
+		},
+		"obstructionDensity" : "100%"
+	},
+	"view" : 
+	{
+		"paintHitbox" : true,
+		"paintVisionField" : true,
+		"zoom" : "1.0",
+		"screenWidth" : 500,
+		"screenHeight" : 500,
+		"title" : "Metal Gear",
+		"enableReducedVisionField" : false
+	},
+	"entities" : 
+	[
+		{
+			"id" : 1234,
+			"type" : "Spy",
+			"width" : "20.0",
+			"height" : "40.0",
+			"hasCollision" : true,
+			"velocity" : "0.3",
+			"fsm" : "Player1",
+			"typeCat" : "PlayerT",
+			"options" : ["Killable","Jumpable"],
+			"hp" : 100
+		}
+	],
+	"enenmies" :
+	[
+	],
+	"keyItems" : [ ]
+}
+

@@ -64,7 +64,7 @@ public class Model
       }
     }
 
-    if( ( Collision.detect( m_player1.getHitbox(), m_exit.getHitbox() )
+    if( m_exit != null && ( Collision.detect( m_player1.getHitbox(), m_exit.getHitbox() )
         && m_player1.getInventory().size() == Model.getInstance().getKeyItems().size() ) || m_player1.isDead() )
     {
       setGameOver();
@@ -206,5 +206,10 @@ public class Model
   public void setExit( Entity e )
   {
     m_exit = e;
+  }
+  
+  public void removeEntity( Entity e )
+  {
+    m_entities.remove( e );
   }
 }

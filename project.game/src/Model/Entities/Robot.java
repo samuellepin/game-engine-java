@@ -15,9 +15,10 @@ public class Robot extends Entity
     return "Robot - " + super.toString();
   }
   
-  @Override
-  public void tick( long dt )
+  @Override 
+  public void doExplode()
   {
-    
+    this.m_hp = 0;
+    super.doExplode();
   }
 }

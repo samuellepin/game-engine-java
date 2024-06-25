@@ -92,7 +92,11 @@ public class Viewport
     int    padding = 15;
     int    x       = padding;
     int    y       = Game.SCREEN_HEIGHT - padding - height;
-    double rate    = (double)e.getHP() / (double)e.getMaxHP();
+    
+    double rate    = 0;
+    
+    if( e != null )
+    rate = (double)e.getHP() / (double)e.getMaxHP();
 
     if( rate < 0.25 )
     {
@@ -113,12 +117,17 @@ public class Viewport
     g.setColor( Color.white );
     g.drawRect( x - padding, y - padding, width + 2 * padding - 1, height + 2 * padding - 1 );
 
-    g.drawString( e.getHP() + "/" + e.getMaxHP(), x + 5, y + 15 );
+    if( e != null )
+    {
+      g.drawString( e.getHP() + "/" + e.getMaxHP(), x + 5, y + 15 );
+    }
+    
   }
 
   public void paintInventory( Graphics g )
   {
     Entity e       = m_tracker.getTarget();
+    if( e == null ) return;
     int    itemNo  = e.getInventory().size();
     int    itemMax = Model.getInstance().getKeyItems().size();
 
