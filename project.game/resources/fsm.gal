@@ -47,7 +47,7 @@ Robot(Normal)
   | True ? : (Disabled)
 }
 
-Player2(Normal)
+GuardPlayer2(Normal)
 {
   * (Normal) :
   | Key(z) ? Turn(N);Move(F) : (Normal)
@@ -55,6 +55,16 @@ Player2(Normal)
   | Key(d) ? Turn(E);Move(F) : (Normal)
   | Key(q) ? Turn(W);Move(F) : (Normal)
   | Key(RBP) ? Hit(0,0) : (Normal)
+  | True    ? Wait()  : (Normal)
+}
+
+Player2(Normal)
+{
+  * (Normal) :
+  | Key(z) ? Turn(N);Move(F) : (Normal)
+  | Key(s) ? Turn(S);Move(F) : (Normal)
+  | Key(d) ? Turn(E);Move(F) : (Normal)
+  | Key(q) ? Turn(W);Move(F) : (Normal)
   | Key(w)  ? Egg()   : (Robot)
   | Key(x)  ?         : (Metamorph)
   | True    ? Wait()  : (Normal)

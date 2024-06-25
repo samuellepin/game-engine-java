@@ -71,7 +71,8 @@ public class View
     Font font = new Font( "Serif", Font.BOLD, 48 );
     g.setFont( font );
     FontMetrics fm     = g.getFontMetrics();
-    String      text   = "GAME OVER";
+    boolean isVictory = Model.getInstance().isVictory()
+    String      text   = isVictory ? "VICTORY" : "GAME OVER";
     int         width  = fm.stringWidth( text );
     int         height = fm.getAscent() + fm.getDescent() + fm.getLeading();
     int         posX   = ( Game.SCREEN_WIDTH - width ) / 2;
@@ -79,7 +80,7 @@ public class View
 
     g.setColor( Color.black );
     g.fillRect( 0, 0, Game.SCREEN_WIDTH, Game.SCREEN_HEIGHT );
-    g.setColor( Color.red );
+    g.setColor( isVictory ? Color.yellow : Color.red );
     g.drawString( text, posX, posY + height - fm.getDescent() );
     int offset = 10;
     g.drawRect( posX - offset, posY, width + 2 * offset, height );

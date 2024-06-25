@@ -21,6 +21,17 @@ public class Model
   private ArrayList< Entity >        m_keyItems;
   private ArrayList< Shot >          m_shots;
   private Entity                     m_exit;
+  private boolean                    m_isVictory;
+  
+  public void setVictory( boolean isVictory )
+  {
+    m_isVictory = isVictory;
+  }
+  
+  public boolean isVictory()
+  {
+    return m_isVictory;
+  }
 
   public static Model getInstance()
   {
@@ -30,6 +41,7 @@ public class Model
   private Model()
   {
     m_isGameOver = false;
+    m_isVictory = false;
 
     m_keyItems = new ArrayList< Entity >();
     m_entities = new ArrayList< Entity >();
@@ -45,9 +57,9 @@ public class Model
   public void tick( long elapsed )
   {
     // ATTENTION - PEUT ETRE SOURCE DE PROBLEME
-    // UTILE CAR ON MODIFIE LA LISTE 
+    // UTILE CAR ON MODIFIE LA LISTE
     // EN L'ITERANT
-    ArrayList<Entity> list = (ArrayList< Entity >)m_entities.clone();
+    ArrayList< Entity > list = (ArrayList< Entity >)m_entities.clone();
     for ( Entity e : list )
     {
       e.tick( elapsed );
@@ -68,6 +80,11 @@ public class Model
         && m_player1.getInventory().size() == Model.getInstance().getKeyItems().size() ) || m_player1.isDead() )
     {
       setGameOver();
+    }
+    
+    if( !m_player1.isDead() )
+    {
+      this.setVictory( true );
     }
 
     Iterator< Entity > it = m_keyItems.iterator();
@@ -207,7 +224,7 @@ public class Model
   {
     m_exit = e;
   }
-  
+
   public void removeEntity( Entity e )
   {
     m_entities.remove( e );
