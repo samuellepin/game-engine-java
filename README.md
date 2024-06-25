@@ -160,14 +160,18 @@ Wizz():
 
 #### Conditions
 True():
+	- Retourne toujours vrai.
 MyDir():
+	- D : Vérifie si l'entité est dans la direction.
 Cell():
+	- D,C : Vérifie si dans la direction D il y a une entité de la catégorie C.
 Closest():[Romain]
 	-C,D (par défaut adversary, Forward)
 		-Vérifie si l'entité la plus proche de la catégorie est dans la bonne direction.
 Got():
 	-Dans Guard est utilisé pour vérifier si le garde est en état d'alerte.
-Key():
+Key(A):
+	- Vérifie si la touche A est appuyée.
 
 ## Lien vidéo 
 
