@@ -55,6 +55,11 @@ public class Controller
     return m_keysCnt[ keyCode ] > 0;
   }
 
+  public boolean isKeyPressed( int keyCode )
+  {
+    return m_keysCnt[ keyCode ] == 1;
+  }
+
   public void updateKeyPressed( KeyEvent e )
   {
     int keyCode = e.getKeyCode();
