@@ -113,6 +113,7 @@ Voici les différents façon d'utiliser les Action et les Conditions dans les fi
 (C = Category, A = Action, D = Direction, N = Number(Integer))
 #### Actions
 Add():
+	- Par défaut : Ne fait rien (à @Override si on souhaite faire quelque chose)
 Explode():
 	- Par défaut : l'entité est détruite (donc supprimée du modèle).
 Get():
