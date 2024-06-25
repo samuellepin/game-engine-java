@@ -4,6 +4,12 @@ DoNothing(Idle)
   | True ? : (Idle)
 }
 
+Move(Idle)
+{
+  * (Idle) :
+  | True ? Move(F): (Idle)
+}
+
 Player1(Normal)
 {
   * (Normal) :
