@@ -77,6 +77,17 @@
 			"category" : "Stuff"
 		},
 		{
+			"id": 4321,
+			"type" : "Robot",
+			"width" : "20.0",
+			"height" : "20.0",
+			"hasCollision" : true,
+			"velocity" : "0.1",
+			"fsm" : "Robot",
+			"category" : "PlayerT",
+			"hp" : 100
+		},
+		{
 			"id" : 3000,
 			"type" : "Stairs",
 			"width" : "50.0",
