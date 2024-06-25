@@ -95,14 +95,24 @@
 			"velocity" : "0.001",
 			"fsm" : "SecurityCamera",
 			"category" : "Team"
+		},
+		{
+			"id" : 5000,
+			"type" : "Box",
+			"width" : "40.0",
+			"height" : "40.0",
+			"hasCollision" : false,
+			"velocity" : "0.001",
+			"fsm" : "DoNothing",
+			"category" : "Pickable"
 		}
 	],
 	"enenmies" :
 	[
 		{
 			"id" : 5678,
-			"min" : 8,
-			"max" : 10
+			"min" : 3,
+			"max" : 6
 		},
 		{
 			"id" : 4000,
