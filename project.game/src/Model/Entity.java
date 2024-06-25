@@ -42,6 +42,17 @@ public abstract class Entity implements Cloneable
   protected int                 m_hp;
   protected int                 m_maxHp;
   protected Entity              m_originEntity;
+  protected boolean             m_isVisible;
+  
+  public boolean isVisible()
+  {
+    return m_isVisible;
+  }
+  
+  public void setVisible( boolean isVisible )
+  {
+    m_isVisible = isVisible;
+  }
 
   public boolean isNonOriginForm()
   {
@@ -50,6 +61,7 @@ public abstract class Entity implements Cloneable
 
   public Entity()
   {
+    m_isVisible = true;
     m_tracker = null;
     m_elapsedTime = 0;
     m_hitbox = new AABB( 0, 0, 0, 0 );
@@ -267,10 +279,7 @@ public abstract class Entity implements Cloneable
       }
       m_orientation.setValue( m_moveDirection.getValue() );
 
-      if( m_tracker != null )
-      {
-        m_tracker.getListener().moved();
-      }
+      moveTracker();
 
       callListener();
 
@@ -302,10 +311,7 @@ public abstract class Entity implements Cloneable
       }
     }
 
-    if( m_tracker != null )
-    {
-      m_tracker.getListener().moved();
-    }
+    moveTracker();
 
     callListener();
 
@@ -558,7 +564,7 @@ public abstract class Entity implements Cloneable
 
     for ( Entity e : Model.getInstance().getEntities() )
     {
-      if( cat.getType() == e.getType() ) return Collision.detect( e.getHitbox(), a );
+      if( cat.getType() == e.getCategoryType() ) return Collision.detect( e.getHitbox(), a );
     }
     return false;
   }
@@ -684,7 +690,7 @@ public abstract class Entity implements Cloneable
     m_id = id;
   }
 
-  public CategoryFsm.CATEGORY getType()
+  public CategoryFsm.CATEGORY getCategoryType()
   {
     return m_cat.getType();
   }
@@ -749,5 +755,23 @@ public abstract class Entity implements Cloneable
   public ArrayList< Entity > getInventory()
   {
     return m_inventory;
+  }
+
+  public void translate( double dx, double dy )
+  {
+    this.m_hitbox.translate( dx, dy );
+  }
+
+  public void moveTracker()
+  {
+    if( m_tracker != null )
+    {
+      m_tracker.getListener().moved();
+    }
+  }
+
+  public EntityTracker getTracker()
+  {
+    return m_tracker;
   }
 }

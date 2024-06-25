@@ -36,7 +36,7 @@ public class RobotAvatar extends Avatar
       }
     }
 
-    m_idle = new Animation( e, m_idleImg, ANIMATION_TIME );
+    m_idle = new Animation( e, m_idleImg, ANIMATION_TIME/3 );
     m_walk = new Animation( e, m_walkImg, ANIMATION_TIME );
     m_dead = new Animation( e, m_deadImg, ANIMATION_TIME );
   }

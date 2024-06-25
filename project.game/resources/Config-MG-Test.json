@@ -5,11 +5,11 @@
 		"visionFieldRadius" : "150.0",
 		"visionFieldApertureAngle": "45°",
 		"player1" : 1234, 
-		"player2" : 5678,
-		"exit" : 3000,
-		"itemToWin" : 9012,
+		"player2" : 5000,
+		"exit" : 0,
+		"itemToWin" : 0,
 		"enableBSP" : false,
-		"enableWalls" : true,
+		"enableWalls" : false,
 		"backgroundMusic" : "resources/sounds/metal-gear-main-theme.ogg",
 		"gameOverBGM" : "resources/sounds/metal-gear-game-over.ogg",
 		"volume" : "0.5"
@@ -58,68 +58,19 @@
 			"hp" : 100
 		},
 		{
-			"id" : 5678,
-			"type" : "Guard",
-			"width" : "25.0",
-			"height" : "45.0",
-			"hasCollision" : true,
-			"velocity" : "0.1",
-			"fsm" : "Guard"
-		},
-		{
-			"id" : 9012,
-			"type" : "Document",
-			"width" : "20.0",
-			"height" : "20.0",
-			"hasCollision" : false,
-			"velocity" : "0.0",
-			"fsm" : "DoNothing",
-			"category" : "Stuff"
-		},
-		{
-			"id" : 3000,
-			"type" : "Stairs",
-			"width" : "50.0",
-			"height" : "50.0",
-			"hasCollision" : false,
-			"velocity" : "0.0",
-			"fsm" : "DoNothing",
-			"category" : "Team"
-		},
-		{
-			"id" : 4000,
-			"type" : "Camera",
-			"width" : "30.0",
-			"height" : "10.0",
-			"hasCollision" : false,
-			"velocity" : "0.001",
-			"fsm" : "SecurityCamera",
-			"category" : "Team"
-		},
-		{
 			"id" : 5000,
 			"type" : "Box",
 			"width" : "36.0",
 			"height" : "36.0",
 			"hasCollision" : false,
 			"velocity" : "0.0",
-			"fsm" : "DoNothing",
+			"fsm" : "Box",
 			"category" : "Pickable"
 		}
 	],
 	"enenmies" :
 	[
-		{
-			"id" : 5678,
-			"min" : 3,
-			"max" : 6
-		},
-		{
-			"id" : 4000,
-			"min" : 2,
-			"max" : 5
-		}
 	],
-	"keyItems" : [ 9012 ]
+	"keyItems" : [ ]
 }
 

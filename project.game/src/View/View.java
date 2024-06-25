@@ -10,6 +10,7 @@ import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
 
 import info3.game.graphics.GameCanvas;
+import src.Model.Entity;
 import src.Model.Model;
 import src.Config;
 import src.Game;
@@ -58,8 +59,10 @@ public class View
   public void paintInfo( Graphics g )
   {
     g.setColor( Color.white );
-    g.drawString( Model.getInstance().getPlayer1().toString(), 5, 20 );
-    g.drawString( Model.getInstance().getPlayer2().toString(), 5, 40 );
+    Entity e1 = Model.getInstance().getPlayer1();
+    if( e1 != null ) g.drawString( e1.toString(), 5, 20 );
+    Entity e2 = Model.getInstance().getPlayer2();
+    if( e2 != null ) g.drawString( e2.toString(), 5, 40 );
     this.paintFPS( g );
   }
 
@@ -67,16 +70,18 @@ public class View
   {
     Font font = new Font( "Serif", Font.BOLD, 48 );
     g.setFont( font );
-    FontMetrics fm     = g.getFontMetrics();
-    String      text   = "GAME OVER";
-    int         width  = fm.stringWidth( text );
-    int         height = fm.getAscent() + fm.getDescent() + fm.getLeading();
-    int         posX   = ( Game.SCREEN_WIDTH - width ) / 2;
-    int         posY   = ( Game.SCREEN_HEIGHT - height ) / 2;
+
+    FontMetrics fm        = g.getFontMetrics();
+    boolean     isVictory = Model.getInstance().isVictory();
+    String      text      = isVictory ? "VICTORY" : "GAME OVER";
+    int         width     = fm.stringWidth( text );
+    int         height    = fm.getAscent() + fm.getDescent() + fm.getLeading();
+    int         posX      = ( Game.SCREEN_WIDTH - width ) / 2;
+    int         posY      = ( Game.SCREEN_HEIGHT - height ) / 2;
 
     g.setColor( Color.black );
     g.fillRect( 0, 0, Game.SCREEN_WIDTH, Game.SCREEN_HEIGHT );
-    g.setColor( Color.red );
+    g.setColor( isVictory ? Color.yellow : Color.red );
     g.drawString( text, posX, posY + height - fm.getDescent() );
     int offset = 10;
     g.drawRect( posX - offset, posY, width + 2 * offset, height );

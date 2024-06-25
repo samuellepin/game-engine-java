@@ -27,19 +27,19 @@ public class EntityTracker extends AABB
       return "Entity tracker of " + m_target.toString();
     }
 
-    void entered( Entity e )
+    public void entered( Entity e )
     {
 //      System.out.println( this.toString() + " - " + e.toString() + " entered" );
       m_entities.add( e );
     }
 
-    void left( Entity e )
+    public void left( Entity e )
     {
 //      System.out.println( this.toString() + " - " + e.toString() + " left" );
       m_entities.remove( e );
     }
 
-    void moved()
+    public void moved()
     {
       centerOnTarget();
     }
@@ -86,5 +86,11 @@ public class EntityTracker extends AABB
   public Entity getTarget()
   {
     return m_target;
+  }
+  
+  public void changeTarget( Entity e )
+  {
+    m_target = e;
+    centerOnTarget();
   }
 }

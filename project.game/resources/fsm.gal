@@ -11,8 +11,9 @@ Player1(Normal)
   | Key(FD) ? Turn(S);Move(F) : (Normal)
   | Key(FR) ? Turn(E);Move(F) : (Normal)
   | Key(FL) ? Turn(W);Move(F) : (Normal)
-  | Key(m)  ? Egg()   : (Robot)
+  | Key(m)  ? Egg()   : (Normal)
   | Key(l)  ? Wizz    : (Metamorph)
+  | Key(p) & Cell(H,P) ? Pick(H,0) : (Normal) 
   | True    ? Wait()  : (Normal)
 
   * (Robot) :
@@ -30,6 +31,31 @@ Player1(Normal)
   | Key(FL) ? Move(W) : (Metamorph)
   | Key(l)  ?         : (Normal)
   | True    ? Wait()  : (Metamorph)
+}
+
+Robot(Normal)
+{
+  * (Normal) :
+  | Key(FU) ? Turn(N);Move(F) : (Normal)
+  | Key(FD) ? Turn(S);Move(F) : (Normal)
+  | Key(FR) ? Turn(E);Move(F) : (Normal)
+  | Key(FL) ? Turn(W);Move(F) : (Normal)
+  | Key(n) ? Explode() : (Disabled)
+  | True    ? Wait()  : (Normal)
+  
+  * (Disabled) : 
+  | True ? : (Disabled)
+}
+
+GuardPlayer2(Normal)
+{
+  * (Normal) :
+  | Key(z) ? Turn(N);Move(F) : (Normal)
+  | Key(s) ? Turn(S);Move(F) : (Normal)
+  | Key(d) ? Turn(E);Move(F) : (Normal)
+  | Key(q) ? Turn(W);Move(F) : (Normal)
+  | Key(RBP) ? Hit(0,0) : (Normal)
+  | True    ? Wait()  : (Normal)
 }
 
 Player2(Normal)
@@ -91,4 +117,14 @@ Animal(Moving)
 {
   * (Moving) :
   | True ? 10% Turn(R)/ 10% Turn(L) / 80% Move(F,100) : (Moving) 
+}
+
+Box(Idle)
+{
+  * (Idle) : 
+  | Key(o) ? Explode() : (Dead)
+  | True ? : (Idle)
+
+  * (Dead)
+  | True ? : (Dead)
 }

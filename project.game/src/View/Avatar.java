@@ -19,7 +19,7 @@ public abstract class Avatar
   protected AvatarFactory    m_factory;
 
   private static final Color HITBOX_COLOR       = Color.yellow;
-  private static final Color VISION_FIELD_COLOR = new Color( 200, 0, 255, 100 );
+  private static final Color VISION_FIELD_COLOR = new Color( 200, 0, 255, 80 );
 
   public Avatar( Entity e )
   {

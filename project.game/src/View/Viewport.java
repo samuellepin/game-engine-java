@@ -4,10 +4,12 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.image.BufferedImage;
 
 import info3.game.graphics.GameCanvas;
 import src.Config;
+import src.Controller;
 import src.Game;
 import src.Model.Entity;
 import src.Model.EntityTracker;
@@ -92,7 +94,11 @@ public class Viewport
     int    padding = 15;
     int    x       = padding;
     int    y       = Game.SCREEN_HEIGHT - padding - height;
-    double rate    = (double)e.getHP() / (double)e.getMaxHP();
+    
+    double rate    = 0;
+    
+    if( e != null )
+    rate = (double)e.getHP() / (double)e.getMaxHP();
 
     if( rate < 0.25 )
     {
@@ -113,12 +119,25 @@ public class Viewport
     g.setColor( Color.white );
     g.drawRect( x - padding, y - padding, width + 2 * padding - 1, height + 2 * padding - 1 );
 
-    g.drawString( e.getHP() + "/" + e.getMaxHP(), x + 5, y + 15 );
+    if( e != null )
+    {
+      g.drawString( e.getHP() + "/" + e.getMaxHP(), x + 5, y + 15 );
+    }
+    
+  }
+  
+  public void paintMouseInfo( Graphics g )
+  {
+    Controller ctr = Controller.getInstance();
+    Point pt = ctr.getMousePos();
+    g.setColor( Color.white );
+    g.drawString( "Pos = (" + pt.getX() + ", " + pt.getY() + ")", 5, 55 );
   }
 
   public void paintInventory( Graphics g )
   {
     Entity e       = m_tracker.getTarget();
+    if( e == null ) return;
     int    itemNo  = e.getInventory().size();
     int    itemMax = Model.getInstance().getKeyItems().size();
 
@@ -141,6 +160,7 @@ public class Viewport
 
     for ( Entity e : Model.getInstance().getEntities() ) /// < m_tracker.getEntities()
     {
+      if( !e.isVisible() ) continue;
       Avatar avatar = null;
       try
       {
@@ -188,6 +208,7 @@ public class Viewport
 
     this.paintHP( g );
     this.paintInventory( g );
+//    this.paintMouseInfo( g );
 
     // FRAME
     g.setColor( Color.black );
