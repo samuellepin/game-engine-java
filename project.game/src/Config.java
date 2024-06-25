@@ -14,7 +14,7 @@ import src.Model.World.Map;
 
 public class Config
 {
-  private static final String FILENAME = "resources/Config-MG.json";
+  private static final String FILENAME = "resources/Config-Alien.json";
   private static final Config INSTANCE = Serializer.deserialize( FILENAME, Config.class );
   private static final Random RANDOM   = new Random( Config.getInstance().getParameters().getSeed() );
 
@@ -428,40 +428,50 @@ public class Config
     {
       return FsmFactory.getInstance().getFSM( fsm );
     }
-
-    public CategoryFsm.CATEGORY getTypeCat()
-    {
-      if( category == null ) return CategoryFsm.CATEGORY.Void;
-      switch ( category )
-      {
-      case "Adversary":
-        return CategoryFsm.CATEGORY.Adversary;
-      case "Clue":
-        return CategoryFsm.CATEGORY.Clue;
-      case "Danger":
-        return CategoryFsm.CATEGORY.Danger;
-      case "Gate":
-        return CategoryFsm.CATEGORY.Gate;
-      case "Icon":
-        return CategoryFsm.CATEGORY.Icon;
-      case "Obstacle":
-        return CategoryFsm.CATEGORY.Obstacle;
-      case "Team":
-        return CategoryFsm.CATEGORY.Team;
-      case "Util":
-        return CategoryFsm.CATEGORY.Util;
-      case "Void":
-        return CategoryFsm.CATEGORY.Void;
-      case "PlayerT":
-        return CategoryFsm.CATEGORY.PlayerT;
-      case "PlayerA":
-        return CategoryFsm.CATEGORY.PlayerA;
-      case "Stuff":
-        return CategoryFsm.CATEGORY.Stuff;
-      default:
-        return CategoryFsm.CATEGORY.Void;
+    public CategoryFsm.CATEGORY getTypeCat() {
+      if (category == null) return CategoryFsm.CATEGORY.Void;
+      switch (category) {
+          case "Adversary":
+              return CategoryFsm.CATEGORY.Adversary;
+          case "Clue":
+              return CategoryFsm.CATEGORY.Clue;
+          case "Danger":
+              return CategoryFsm.CATEGORY.Danger;
+          case "Gate":
+              return CategoryFsm.CATEGORY.Gate;
+          case "Icon":
+              return CategoryFsm.CATEGORY.Icon;
+          case "Jumpable":
+              return CategoryFsm.CATEGORY.Jumpable;
+          case "Killable":
+              return CategoryFsm.CATEGORY.Killable;
+          case "Moveable":
+              return CategoryFsm.CATEGORY.Moveable;
+          case "Obstacle":
+              return CategoryFsm.CATEGORY.Obstacle;
+          case "Pickable":
+              return CategoryFsm.CATEGORY.Pickable;
+          case "Team":
+              return CategoryFsm.CATEGORY.Team;
+          case "Util":
+              return CategoryFsm.CATEGORY.Util;
+          case "Void":
+              return CategoryFsm.CATEGORY.Void;
+          case "PlayerT":
+              return CategoryFsm.CATEGORY.PlayerT;
+          case "PlayerA":
+              return CategoryFsm.CATEGORY.PlayerA;
+          case "Power":
+              return CategoryFsm.CATEGORY.Power;
+          case "Stuff":
+              return CategoryFsm.CATEGORY.Stuff;
+          case "Underscore":
+              return CategoryFsm.CATEGORY.Underscore;
+          default:
+              return CategoryFsm.CATEGORY.Void;
       }
-    }
+  }
+
 
     public List< CategoryFsm.CATEGORY > getOptions()
     {

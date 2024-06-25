@@ -1,10 +1,16 @@
 package src.Model.Entities;
 
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
+
+import src.Config;
+import src.Controller;
+import src.Game;
 import src.AI.Direction;
 
 import src.Model.Alarm;
+import src.Model.Angle;
 import src.Model.Entity;
 import src.Model.Model;
 import src.Model.Shot;
@@ -40,13 +46,13 @@ public class Guard extends Entity
 
   private long countdown;
 
-  void shot( long dt )
+  void shot( long dt, Angle orientation )
   {
     countdown += dt;
-    if( countdown > 1000 )
+    if( countdown > 50 )
     {
 //      System.out.println( "Shot!" );
-      Shot shot = new Shot( this.getBarycenter(), this.getOrientation() );
+      Shot shot = new Shot( this.getBarycenter(), orientation );
       while( Collision.detect( m_hitbox, shot.getPos() ) )
       {
         shot.move( dt );
@@ -55,24 +61,39 @@ public class Guard extends Entity
       countdown = 0;
     }
   }
+  
+  private Vector pointToVector( Point point ) // Point in pixel
+  {
+    Vector vec = new Vector( 0 , 0 );
+    double r = 1/Config.getInstance().getView().getZoom();
+    vec.setX( r * (point.getX()-Game.SCREEN_WIDTH/2) + m_tracker.getX() );
+    vec.setY( r * point.getY() + m_tracker.getY() );
+    return vec;
+  }
 
   @Override
   public void doHit( double orientation, int damage )
   {
-    ArrayList< Entity > entities = Model.getInstance().getEntities();
-    for ( Entity e : entities )
-    {
-      Vector  dist         = Vector.sub( e.getPos(), this.getPos() );
-
-      boolean closeEnough  = m_visionField.getRadius() >= dist.getMagnitude();
-      boolean correctAngle = orientation - ( Math.PI / 4 ) <= dist.getAngle();
-      correctAngle = correctAngle && dist.getAngle() <= orientation + ( Math.PI / 4 );
-
-      if( closeEnough && correctAngle )
-      {
-//        Shot s = new Shot( this.getPos(), new Angle( dist.getAngle(), false ) );
-      }
-    }
+    Point pos = Controller.getInstance().getMousePos();
+    Vector OC = this.getBarycenter();
+    Vector OP = pointToVector( pos );
+    Vector CP = Vector.sub( OP, OC );
+    double dir = CP.getAngle();
+    shot( m_elapsedTime, new Angle( dir ) );
+//    ArrayList< Entity > entities = Model.getInstance().getEntities();
+//    for ( Entity e : entities )
+//    {
+//      Vector  dist         = Vector.sub( e.getPos(), this.getPos() );
+//
+//      boolean closeEnough  = m_visionField.getRadius() >= dist.getMagnitude();
+//      boolean correctAngle = orientation - ( Math.PI / 4 ) <= dist.getAngle();
+//      correctAngle = correctAngle && dist.getAngle() <= orientation + ( Math.PI / 4 );
+//
+//      if( closeEnough && correctAngle )
+//      {
+////        Shot s = new Shot( this.getPos(), new Angle( dist.getAngle(), false ) );
+//      }
+//    }
     m_brain.step();
   }
 
@@ -87,7 +108,8 @@ public class Guard extends Entity
 //      System.out.println( "Collision : " + c1.toString() + " - " + c2.toString() );
       // follow( Model.getInstance().getPlayer1() );
 
-      shot( elapsed );
+// SHOT ICI
+//      shot( elapsed );
     }
     if( m_ownAlarm.isActive() )// actif si le garde à déclanché son alarme
     {

@@ -91,7 +91,6 @@ public class Controller
     int btn = e.getButton() - 1;
     if( btn < 0 || btn >= m_mouseBtn.length ) return;
     m_mouseBtn[ btn ] = false;
-    System.out.println( btn );
   }
 
   public void updateMousePos( MouseEvent e )

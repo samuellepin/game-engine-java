@@ -5,7 +5,7 @@
 		"visionFieldRadius" : "150.0",
 		"visionFieldApertureAngle": "45°",
 		"player1" : 1234, 
-		"player2" : 0,
+		"player2" : 5000,
 		"exit" : 0,
 		"itemToWin" : 0,
 		"enableBSP" : false,
@@ -56,6 +56,16 @@
 			"typeCat" : "PlayerT",
 			"options" : ["Killable","Jumpable"],
 			"hp" : 100
+		},
+		{
+			"id" : 5000,
+			"type" : "Box",
+			"width" : "36.0",
+			"height" : "36.0",
+			"hasCollision" : false,
+			"velocity" : "0.0",
+			"fsm" : "Box",
+			"category" : "Pickable"
 		}
 	],
 	"enenmies" :

@@ -36,6 +36,15 @@ public class Key implements ConditionFsm
   {
     if( m_key == KEY.UNDERSCORE ) return true;
 
+    if( m_key == KEY.RBP  )
+    {
+      return Controller.getInstance().isMouseButtonDown( 1 );
+    }
+    else if( m_key == KEY.LBP )
+    {
+      return Controller.getInstance().isMouseButtonDown( 3 ); 
+    }
+    
     for ( int i = 0; i < KEYS.length; i++ )
     {
       if( m_key == KEYS[ i ] )

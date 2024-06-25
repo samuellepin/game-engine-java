@@ -13,6 +13,7 @@ Player1(Normal)
   | Key(FL) ? Turn(W);Move(F) : (Normal)
   | Key(m)  ? Egg()   : (Normal)
   | Key(l)  ? Wizz    : (Metamorph)
+  | Key(p) & Cell(H,P) ? Pick(H,0) : (Normal) 
   | True    ? Wait()  : (Normal)
 
   * (Robot) :
@@ -53,6 +54,7 @@ Player2(Normal)
   | Key(s) ? Turn(S);Move(F) : (Normal)
   | Key(d) ? Turn(E);Move(F) : (Normal)
   | Key(q) ? Turn(W);Move(F) : (Normal)
+  | Key(RBP) ? Hit(0,0) : (Normal)
   | Key(w)  ? Egg()   : (Robot)
   | Key(x)  ?         : (Metamorph)
   | True    ? Wait()  : (Normal)
@@ -105,4 +107,14 @@ Animal(Moving)
 {
   * (Moving) :
   | True ? 10% Turn(R)/ 10% Turn(L) / 80% Move(F,100) : (Moving) 
+}
+
+Box(Idle)
+{
+  * (Idle) : 
+  | Key(o) ? Explode() : (Dead)
+  | True ? : (Idle)
+
+  * (Dead)
+  | True ? : (Dead)
 }

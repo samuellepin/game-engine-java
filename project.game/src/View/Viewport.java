@@ -4,10 +4,12 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.image.BufferedImage;
 
 import info3.game.graphics.GameCanvas;
 import src.Config;
+import src.Controller;
 import src.Game;
 import src.Model.Entity;
 import src.Model.EntityTracker;
@@ -123,6 +125,14 @@ public class Viewport
     }
     
   }
+  
+  public void paintMouseInfo( Graphics g )
+  {
+    Controller ctr = Controller.getInstance();
+    Point pt = ctr.getMousePos();
+    g.setColor( Color.white );
+    g.drawString( "Pos = (" + pt.getX() + ", " + pt.getY() + ")", 5, 55 );
+  }
 
   public void paintInventory( Graphics g )
   {
@@ -150,6 +160,7 @@ public class Viewport
 
     for ( Entity e : Model.getInstance().getEntities() ) /// < m_tracker.getEntities()
     {
+      if( !e.isVisible() ) continue;
       Avatar avatar = null;
       try
       {
@@ -197,6 +208,7 @@ public class Viewport
 
     this.paintHP( g );
     this.paintInventory( g );
+//    this.paintMouseInfo( g );
 
     // FRAME
     g.setColor( Color.black );
