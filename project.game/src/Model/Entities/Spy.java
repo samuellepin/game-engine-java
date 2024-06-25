@@ -1,22 +1,14 @@
 package src.Model.Entities;
 
-import java.awt.event.KeyEvent;
-import java.lang.reflect.Method;
-
-import src.Controller;
 import src.AI.CategoryFsm;
 import src.AI.Direction;
-import src.Model.Angle;
 import src.Model.Entity;
 import src.Model.EntityTracker;
 import src.Model.Model;
 import src.Model.Collision.Collision;
-import src.Model.World.Map;
-import src.View.View;
 
 public class Spy extends Entity
 {
-  private boolean m_isUsingRobot;
   private Robot   m_robot;
 
   private boolean m_isInBox;
@@ -27,7 +19,6 @@ public class Spy extends Entity
   public Spy()
   {
     super();
-    m_isUsingRobot = false;
     m_robot = new Robot();
     m_robot.setFSM( "Robot" );
     m_robot.setId( -this.getId() );
@@ -56,12 +47,9 @@ public class Spy extends Entity
   @Override
   public void doEgg( Direction dir )
   {
-    if( m_isUsingRobot ) return;
-    m_isUsingRobot = true;
     Model.getInstance().addEntity( m_robot );
     try
     {
-//      m_robot.setMaxHP( 100 );
       m_robot.setPos( this.getPos().clone() );
       m_robot.translate( this.getWidth() + 10, 0 );
       m_robot.setOrientation( this.getOrientation().clone() );
@@ -79,11 +67,7 @@ public class Spy extends Entity
   public void moveTracker()
   {
     EntityTracker tracker = this.getTracker();
-    if( m_isUsingRobot )
-    {
-      tracker = m_robot.getTracker();
-    }
-    else if( m_isInBox )
+    if( m_isInBox )
     {
       tracker = m_box.getTracker();
     }
@@ -104,20 +88,7 @@ public class Spy extends Entity
       super.setVisible( true );
       Model.getInstance().getTrackers().get( 0 ).changeTarget( this );
     }
-    if( m_isUsingRobot )
-    {
-      if( m_robot.isDead() )
-      {
-        m_isUsingRobot = false;
-        Model.getInstance().removeEntity( m_robot );
-        Model.getInstance().getTrackers().get( 0 ).changeTarget( this );
-      }
-      else
-      {
-        m_robot.tick( dt );
-      }
-    }
-    else if( m_isInBox )
+    if( m_isInBox )
     {
       m_box.tick( dt );
     }
@@ -125,16 +96,6 @@ public class Spy extends Entity
     {
       super.tick( dt );
     }
-  }
-
-  @Override
-  public Angle getOrientation()
-  {
-    if( m_isUsingRobot )
-    {
-      return m_robot.getOrientation();
-    }
-    return super.getOrientation();
   }
 
   @Override
@@ -147,8 +108,6 @@ public class Spy extends Entity
         if( e.getCategoryType() == cat.getType() )
         {
           m_itemSelected = e;
-
-//          Model.getInstance().removeEntity( e );
           return true;
         }
       }

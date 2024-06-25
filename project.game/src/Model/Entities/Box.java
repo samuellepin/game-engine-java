@@ -1,7 +1,6 @@
 package src.Model.Entities;
 
 import src.Model.Entity;
-import src.Model.Model;
 
 public class Box extends Entity
 {

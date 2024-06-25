@@ -69,9 +69,6 @@ public class Config
     case "Raven":
       entity = new src.Model.Entities.Raven();
       break;
-    case "Robot":
-      entity = new src.Model.Entities.Robot();
-      break;
     case "Spy":
       entity = new src.Model.Entities.Spy();
       break;
