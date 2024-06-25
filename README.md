@@ -114,8 +114,9 @@ Voici les différents façon d'utiliser les Action et les Conditions dans les fi
 #### Actions
 Add():
 Explode():
+	- Par défaut : l'entité est détruite (donc supprimée du modèle).
 Get():
-	-Faire rien (à @Overide si on souhaite faire quelque chose)
+	- Faire rien (à @Override si on souhaite faire quelque chose)
 Egg():
 	- D : 
 		- Cas Général : Faire rien (à @Overide si on souhaite faire quelque chose)
@@ -144,16 +145,18 @@ Rest(): [Greg]
 Store(): [Romain]
 	- L'entité range l'item de sa main dans son inventaire.
 Throw():[Romain]
-	-L'entité lache l'item de sa main devant lui.
+	- L'entité lache l'item de sa main devant lui.
 Turn():[Romain]
-	-D (par défaut Right)
-		-Cas général: L'entité tourne vers la direction donnée.
+	- D (par défaut Right)
+		- Cas général: L'entité tourne vers la direction donnée.
 Wait():[Romain]
-	-T (par défaut 0.1s)
-		-L'entité attend le temps donné.
+	- T (par défaut 100)
+		- L'entité attend pendant T millisecondes, et ne fait rien pendant ce temps.
 Pop():
+	- Dans le cas général : ne fait rien. C'est à chaque type d'entité d'Override doPop() afin de s'en servir comme action personnalisée.
 Wizz():
-	-Dans Guard sert à donner l'alerte aux autres gardes.
+	- Dans le cas général : ne fait rien. C'est à chaque type d'entité d'Override doWizz() afin de s'en servir comme action personnalisée.
+	- Dans Guard sert à donner l'alerte aux autres gardes.
 
 #### Conditions
 True():
