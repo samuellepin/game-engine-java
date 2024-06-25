@@ -71,7 +71,7 @@ public class View
     Font font = new Font( "Serif", Font.BOLD, 48 );
     g.setFont( font );
     FontMetrics fm     = g.getFontMetrics();
-    boolean isVictory = Model.getInstance().isVictory()
+    boolean isVictory = Model.getInstance().isVictory();
     String      text   = isVictory ? "VICTORY" : "GAME OVER";
     int         width  = fm.stringWidth( text );
     int         height = fm.getAscent() + fm.getDescent() + fm.getLeading();
