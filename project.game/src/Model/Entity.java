@@ -1,6 +1,7 @@
 package src.Model;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import src.AI.Brain;
@@ -384,7 +385,7 @@ public abstract class Entity implements Cloneable
     Entity e     = m_objectInHand;
     Model  model = Model.getInstance();
     m_objectInHand = null;
-    model.addEntities( e );
+    model.addQueue( e );
     m_brain.step();
   }
 
@@ -445,8 +446,38 @@ public abstract class Entity implements Cloneable
 
   public void doEgg( Direction dir )
   {
-//    Model model = Model.getInstance();
-    m_brain.step();
+    ArrayList< Entity > modelEntities = Model.getInstance().getEntities();
+    try
+    {
+      Entity    child      = this.clone();
+      AABB      hb         = child.getHitbox();
+      Direction exploreDir = new Direction( dir.getDirection() );
+      hb.translate( 2 * Math.cos( exploreDir.toAngle( m_orientation ) ),
+          2 * Math.sin( exploreDir.toAngle( m_orientation ) ) );
+      Iterator< Entity > iter = modelEntities.iterator();
+      while( iter.hasNext() )
+      {
+        Entity e = iter.next();
+        if( Collision.detect( hb, e.getHitbox() ) )
+        {
+          exploreDir.changeDirection();
+          hb.translate( 2 * Math.cos( exploreDir.toAngle( m_orientation ) ),
+              2 * Math.sin( exploreDir.toAngle( m_orientation ) ) );
+          if( exploreDir.equals( dir ) )
+          {
+            m_brain.step();
+            return;
+          }
+          iter = modelEntities.iterator();
+        }
+      }
+      Model.getInstance().addQueue( child );
+      m_brain.step();
+    }
+    catch ( CloneNotSupportedException e )
+    {
+      throw new RuntimeException( "Strange clone type fail with this.clone()" );
+    }
   }
 
   /* to override */
@@ -668,6 +699,16 @@ public abstract class Entity implements Cloneable
   public void setFSM( FSM fsm )
   {
     m_brain.setFSM( fsm );
+  }
+  
+  public Brain getBrain()
+  {
+    return m_brain;
+  }
+  
+  public void setBrain( Brain brain )
+  {
+    m_brain = brain;
   }
 
   public void setFSM( String name )

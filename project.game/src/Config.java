@@ -17,7 +17,7 @@ import src.Model.World.Map;
 
 public class Config
 {
-  private static final String FILENAME = "resources/Config-Alien.json";
+  private static final String FILENAME = "resources/Config-MG.json";
   private static final Config INSTANCE = Serializer.deserialize( FILENAME, Config.class );
   private static final Random RANDOM   = new Random( Config.getInstance().getParameters().getSeed() );
 
@@ -25,7 +25,7 @@ public class Config
   {
     return new Angle( Double.parseDouble( value.replace( "°", "" ) ), true );
   }
-  
+
   public static Random getRandom()
   {
     return RANDOM;
@@ -37,13 +37,16 @@ public class Config
   }
 
   private src.Model.Entity StringToEntity( Entity e )
-  { 
+  {
     src.Model.Entity entity = null;
-    
+
     switch ( e.getType() )
     {
     case "Spy":
       entity = new src.Model.Spy();
+      break;
+    case "Robot":
+      entity = new src.Model.Robot();
       break;
     case "Guard":
       entity = new src.Model.Guard();
@@ -76,7 +79,7 @@ public class Config
       entity = new src.Model.Squirrel();
       break;
     }
-    
+
     entity.setFSM( e.getFSM() );
     entity.setId( e.getId() );
     entity.setDim( e.getWidth(), e.getHeight() );
@@ -98,7 +101,11 @@ public class Config
     {
       src.Model.Entity newEntity = StringToEntity( e );
       newEntity.setId( e.getId() );
-      model.addEntity( newEntity );
+      if( newEntity instanceof src.Model.Robot )
+      {
+        model.setRobotReference( (src.Model.Robot)newEntity );
+      }
+      else model.addEntity( newEntity );
     }
 
     // put the viewports on the right entities

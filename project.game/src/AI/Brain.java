@@ -54,4 +54,14 @@ public class Brain
       action.execute( m_entity );
     }
   }
+  
+  public Entity getEntity()
+  {
+    return m_entity;
+  }
+  
+  public void setEntity( Entity entity )
+  {
+    m_entity = entity;
+  }
 }

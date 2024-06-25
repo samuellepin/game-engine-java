@@ -75,6 +75,17 @@
 			"velocity" : "0.0",
 			"fsm" : "DoNothing",
 			"category" : "Stuff"
+		},
+		{
+			"id": 4321,
+			"type" : "Robot",
+			"width" : "45.0",
+			"height" : "45.0",
+			"hasCollision" : true,
+			"velocity" : "0.1",
+			"fsm" : "Robot",
+			"category" : "PlayerT",
+			"hp" : 100
 		}
 	],
 	"enenmies" :

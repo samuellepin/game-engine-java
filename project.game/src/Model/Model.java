@@ -19,6 +19,8 @@ public class Model
   private Entity                     m_player2;
   private Entity                     m_itemToWin;
   private ArrayList< Shot >          m_shots;
+  private Robot                      m_robotReference;
+  private ArrayList< Entity >        m_queueEntitiesToAdd;
 
   public static Model getInstance()
   {
@@ -30,6 +32,7 @@ public class Model
     m_isGameOver = false;
 
     m_entities = new ArrayList< Entity >();
+    m_queueEntitiesToAdd = new ArrayList< Entity >();
     m_trackers = new ArrayList< EntityTracker >();
     m_shots = new ArrayList< Shot >();
 
@@ -41,8 +44,10 @@ public class Model
 
   public void tick( long elapsed )
   {
-    for ( Entity e : m_entities )
+    Iterator< Entity > iter = m_entities.iterator();
+    while( iter.hasNext() )
     {
+      Entity e = iter.next();
       e.tick( elapsed );
     }
 
@@ -72,6 +77,8 @@ public class Model
     {
       setGameOver();
     }
+    
+    clearQueue();
   }
 
   public void setGameOver()
@@ -92,9 +99,23 @@ public class Model
     return m_entities;
   }
 
-  public void addEntities( Entity entity )
+  public void addEntity( Entity entity )
   {
     m_entities.add( entity );
+  }
+
+  public void addQueue( Entity entity )
+  {
+    m_queueEntitiesToAdd.add( entity );
+  }
+
+  public void clearQueue()
+  {
+    for ( Entity e : m_queueEntitiesToAdd )
+    {
+      addEntity(e);
+    }
+    m_queueEntitiesToAdd.clear();
   }
 
   public void removeEntities( Entity entity )
@@ -125,11 +146,6 @@ public class Model
   public ArrayList< EntityTracker > getTrackers()
   {
     return m_trackers;
-  }
-
-  public void addEntity( Entity e )
-  {
-    m_entities.add( e );
   }
 
   public void setItemToWin( Entity e )
@@ -170,5 +186,15 @@ public class Model
   public ArrayList< Shot > getShots()
   {
     return m_shots;
+  }
+
+  public Robot getRobotReference()
+  {
+    return m_robotReference;
+  }
+
+  public void setRobotReference( Robot robot )
+  {
+    m_robotReference = robot;
   }
 }
