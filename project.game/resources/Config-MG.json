@@ -92,7 +92,7 @@
 			"width" : "30.0",
 			"height" : "10.0",
 			"hasCollision" : false,
-			"velocity" : "0.0",
+			"velocity" : "0.001",
 			"fsm" : "SecurityCamera",
 			"category" : "Team"
 		}
