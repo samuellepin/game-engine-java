@@ -8,10 +8,8 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
-import java.text.DecimalFormat;
 
 import info3.game.graphics.GameCanvas;
-import src.Model.Entity;
 import src.Model.Model;
 import src.Config;
 import src.Game;
@@ -53,7 +51,7 @@ public class View
     int         posX   = Game.SCREEN_WIDTH - width - 5;
     int         posY   = height;
 
-    g.setColor( Color.red );
+    g.setColor( Color.white );
     g.drawString( text, posX, posY );
   }
 

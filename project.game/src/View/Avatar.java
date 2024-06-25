@@ -6,14 +6,14 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import src.Model.Angle;
-import src.Model.Document;
 import src.Model.Entity;
-import src.Model.Wall;
+import src.Model.Entities.Document;
+import src.Model.Entities.Wall;
 
 public abstract class Avatar
 {
 
-  static final long          ANIMATION_TIME     = 50;
+  protected static final long          ANIMATION_TIME     = 50;
 
   protected Entity           m_entity;
   protected AvatarFactory    m_factory;

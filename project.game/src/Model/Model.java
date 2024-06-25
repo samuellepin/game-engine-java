@@ -6,6 +6,7 @@ import java.util.Iterator;
 import src.Config;
 import src.Game;
 import src.Model.Collision.Collision;
+import src.Model.Entities.Robot;
 import src.Model.World.Map;
 
 public class Model
@@ -17,10 +18,11 @@ public class Model
   private boolean                    m_isGameOver;
   private Entity                     m_player1;
   private Entity                     m_player2;
-  private Entity                     m_itemToWin;
+  private ArrayList< Entity >        m_keyItems;
   private ArrayList< Shot >          m_shots;
   private Robot                      m_robotReference;
   private ArrayList< Entity >        m_queueEntitiesToAdd;
+  private Entity                     m_exit;
 
   public static Model getInstance()
   {
@@ -31,6 +33,7 @@ public class Model
   {
     m_isGameOver = false;
 
+    m_keyItems = new ArrayList< Entity >();
     m_entities = new ArrayList< Entity >();
     m_queueEntitiesToAdd = new ArrayList< Entity >();
     m_trackers = new ArrayList< EntityTracker >();
@@ -62,24 +65,32 @@ public class Model
       }
     }
 
-    if( Collision.detect( m_player1.getHitbox(), m_itemToWin.getHitbox() ) )
-    {
-      if( m_itemToWin instanceof Generator )
-      {
-        ( (Generator)m_itemToWin ).enable();
-      }
-      else
-      {
-        setGameOver();
-      }
-    }
-    if( m_player1.isDead() )
+    if( ( Collision.detect( m_player1.getHitbox(), m_exit.getHitbox() )
+        && m_player1.getInventory().size() == Model.getInstance().getKeyItems().size() ) || m_player1.isDead() )
     {
       setGameOver();
     }
-    
     clearQueue();
+
+    Iterator< Entity > it = m_keyItems.iterator();
+    while( it.hasNext() )
+    {
+      Entity entity = it.next();
+      if( Collision.detect( m_player1.getHitbox(), entity.getHitbox() ) )
+      {
+        m_player1.addItemToInventory( entity );
+        m_entities.remove( entity );
+      }
+    }
   }
+
+//if( m_itemToWin instanceof Generator )
+//{
+//  ( (Generator)m_itemToWin ).enable();
+//}
+//else
+//{
+//}
 
   public void setGameOver()
   {
@@ -148,14 +159,14 @@ public class Model
     return m_trackers;
   }
 
-  public void setItemToWin( Entity e )
+  public void addKeyItems( Entity e )
   {
-    m_itemToWin = e;
+    m_keyItems.add( e );
   }
 
-  public Entity getItemToWin()
+  public ArrayList< Entity > getKeyItems()
   {
-    return m_itemToWin;
+    return m_keyItems;
   }
 
   public void addEnenmies( Entity entity, int min, int max )
@@ -167,6 +178,14 @@ public class Model
       try
       {
         e = entity.clone();
+      }
+      catch ( CloneNotSupportedException except )
+      {
+        except.printStackTrace();
+      }
+      try
+      {
+        e.correctBrain( e );
       }
       catch ( CloneNotSupportedException except )
       {
@@ -196,5 +215,15 @@ public class Model
   public void setRobotReference( Robot robot )
   {
     m_robotReference = robot;
+  }
+  
+  public Entity getExit()
+  {
+    return m_exit;
+  }
+
+  public void setExit( Entity e )
+  {
+    m_exit = e;
   }
 }

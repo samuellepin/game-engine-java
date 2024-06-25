@@ -7,12 +7,9 @@ import java.util.Random;
 import src.AI.CategoryFsm;
 import src.AI.FSM;
 import src.AI.FsmFactory;
-import src.AI.CategoryFsm.CATEGORY;
 import src.Model.Angle;
-import src.Model.Entity;
 
 import src.Model.Model;
-import src.Model.Spy;
 import src.Model.World.Map;
 
 public class Config
@@ -42,42 +39,56 @@ public class Config
 
     switch ( e.getType() )
     {
-    case "Spy":
-      entity = new src.Model.Spy();
+    case "Alien":
+      entity = new src.Model.Entities.Alien();
       break;
     case "Robot":
-      entity = new src.Model.Robot();
+      entity = new src.Model.Entities.Robot();
       break;
     case "Guard":
-      entity = new src.Model.Guard();
+      entity = new src.Model.Entities.Guard();
       break;
-    case "Wall":
-      entity = new src.Model.Wall();
+    case "Box":
+      entity = new src.Model.Entities.Box();
+      break;
+    case "Camera":
+      entity = new src.Model.Entities.Camera();
       break;
     case "Document":
-      entity = new src.Model.Document();
-      break;
-    case "Alien":
-      entity = new src.Model.Alien();
-      break;
-    case "Generator":
-      entity = new src.Model.Generator();
-      break;
-    case "Rabbit":
-      entity = new src.Model.Rabbit();
+      entity = new src.Model.Entities.Document();
       break;
     case "Dove":
-      entity = new src.Model.Dove();
+      entity = new src.Model.Entities.Dove();
       break;
-    case "Raven":
-      entity = new src.Model.Raven();
+    case "Generator":
+      entity = new src.Model.Entities.Generator();
       break;
     case "Mouse":
-      entity = new src.Model.Mouse();
+      entity = new src.Model.Entities.Mouse();
+      break;
+    case "Rabbit":
+      entity = new src.Model.Entities.Rabbit();
+      break;
+    case "Raven":
+      entity = new src.Model.Entities.Raven();
+      break;
+    case "Spy":
+      entity = new src.Model.Entities.Spy();
       break;
     case "Squirrel":
-      entity = new src.Model.Squirrel();
+      entity = new src.Model.Entities.Squirrel();
       break;
+    case "Stairs":
+      entity = new src.Model.Entities.Stairs();
+      break;
+    case "UFO":
+      entity = new src.Model.Entities.UFO();
+      break;
+    case "Wall":
+      entity = new src.Model.Entities.Wall();
+      break;
+    default:
+      throw new IllegalArgumentException( "Unknown entity type: " + e.getType() );
     }
 
     entity.setFSM( e.getFSM() );
@@ -88,7 +99,7 @@ public class Config
     entity.setHasCollision( e.hasCollision() );
     entity.setCategory( e.getTypeCat() );
     entity.setPos( Map.getInstance().getRandomPos() );
-//    entity.setOptions( e.getOptions() );
+    // entity.setOptions( e.getOptions() );
 
     return entity;
   }
@@ -101,9 +112,9 @@ public class Config
     {
       src.Model.Entity newEntity = StringToEntity( e );
       newEntity.setId( e.getId() );
-      if( newEntity instanceof src.Model.Robot )
+      if( newEntity instanceof src.Model.Entities.Robot )
       {
-        model.setRobotReference( (src.Model.Robot)newEntity );
+        model.setRobotReference( (src.Model.Entities.Robot)newEntity );
       }
       else model.addEntity( newEntity );
     }
@@ -111,7 +122,8 @@ public class Config
     // put the viewports on the right entities
     model.setPlayer1( this.getParameters().getPlayer1() );
     model.setPlayer2( this.getParameters().getPlayer2() );
-    model.setItemToWin( this.getParameters().getItemToWin() );
+    model.setExit( this.getParameters().getExit() );
+    this.updateKeyItems();
 
     // make copy of the enenmies
     for ( int i = 0; i < this.enenmies.length; i++ )
@@ -136,6 +148,7 @@ public class Config
     public String  visionFieldApertureAngle;
     public int     player1;
     public int     player2;
+    public int     exit;
     public int     itemToWin;
     public boolean enableBSP;
     public boolean enableWalls;
@@ -205,6 +218,19 @@ public class Config
       for ( src.Model.Entity e : model.getEntities() )
       {
         if( e.getId() == player2 )
+        {
+          return e;
+        }
+      }
+      return null;
+    }
+
+    public src.Model.Entity getExit()
+    {
+      Model model = Model.getInstance();
+      for ( src.Model.Entity e : model.getEntities() )
+      {
+        if( e.getId() == exit )
         {
           return e;
         }
@@ -507,12 +533,12 @@ public class Config
     }
   }
 
-  public Parameters       parameters;
-  public World            world;
-  public View             view;
-  public Entity[]         entities;
-  public Enemy[]          enenmies;
-  public ItemsToPickToWin itemsToPickToWin;
+  public Parameters parameters;
+  public World      world;
+  public View       view;
+  public Entity[]   entities;
+  public Enemy[]    enenmies;
+  public int[]      keyItems;
 
   public Parameters getParameters()
   {
@@ -539,8 +565,18 @@ public class Config
     return enenmies;
   }
 
-  public ItemsToPickToWin getItemsToPickToWin()
+  public void updateKeyItems()
   {
-    return itemsToPickToWin;
+    Model model = Model.getInstance();
+    for ( src.Model.Entity e : model.getEntities() )
+    {
+      for( int id : keyItems )
+      {
+        if( id == e.getId() )
+        {
+          model.addKeyItems( e );
+        }
+      }
+    }
   }
 }

@@ -1,9 +1,12 @@
 package src.View;
 
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
+import info3.game.graphics.GameCanvas;
 import src.Config;
 import src.Game;
 import src.Model.Entity;
@@ -113,6 +116,25 @@ public class Viewport
     g.drawString( e.getHP() + "/" + e.getMaxHP(), x + 5, y + 15 );
   }
 
+  public void paintInventory( Graphics g )
+  {
+    Entity e       = m_tracker.getTarget();
+    int    itemNo  = e.getInventory().size();
+    int    itemMax = Model.getInstance().getKeyItems().size();
+
+    Font   font    = new Font( "Arial", Font.BOLD, 12 );
+    g.setFont( font );
+    FontMetrics fm     = g.getFontMetrics();
+    String      text   = "No. Key Items : " + itemNo + "/" + itemMax;
+    int         width  = fm.stringWidth( text );
+    int         height = fm.getAscent() + fm.getDescent() + fm.getLeading();
+    int         posX   = Game.SCREEN_WIDTH/2 - width - 5;
+    int         posY   = Game.SCREEN_HEIGHT - height;
+
+    g.setColor( Color.white );
+    g.drawString( text, posX, posY );
+  }
+
   public void paint( Graphics g )
   {
     this.paintTiles( g );
@@ -165,6 +187,7 @@ public class Viewport
     this.paintShots( g );
 
     this.paintHP( g );
+    this.paintInventory( g );
 
     // FRAME
     g.setColor( Color.black );

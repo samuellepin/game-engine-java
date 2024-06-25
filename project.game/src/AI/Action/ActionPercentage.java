@@ -41,11 +41,12 @@ public class ActionPercentage implements ActionFsm
   public void execute( Entity entity )
   {
     double floor = 0;
-    double rand  = Config.getRandom().nextDouble();
-    rand = rand % 100;
+
+    int    rand  = Config.getRandom().nextInt();
+    rand = Math.abs( rand ) % 100;
 
     Iterator< CoupleAction > iter = m_actions.iterator();
-
+    
     while( iter.hasNext() && floor < 100 )
     {
       CoupleAction couple     = iter.next();

@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
-import java.text.DecimalFormat;
 
 import javax.swing.JFrame;
 import info3.game.graphics.GameCanvas;
@@ -14,7 +13,6 @@ import src.Model.Angle;
 import src.Model.Vector;
 import src.Model.Collision.AABB;
 import src.Model.Collision.Arc;
-import src.Model.Collision.Circle;
 import src.Model.Collision.Collision;
 
 public class CollisionTest
@@ -41,7 +39,6 @@ public class CollisionTest
   private AABB           m_aabb;
   private Arc            m_arc;
   private boolean        m_collision;
-  private Vector         m_closetPoint;
 
   public static CollisionTest getInstance()
   {
@@ -51,7 +48,7 @@ public class CollisionTest
   private CollisionTest() throws Exception
   {
     m_aabb = new AABB( 270, 150, 300, 180 );
-    m_arc = new Arc( new Vector(200, 200), 150, new Angle(Math.PI/4), new Angle(Math.PI/8) );
+    m_arc = new Arc( new Vector( 200, 200 ), 150, new Angle( Math.PI / 4 ), new Angle( Math.PI / 8 ) );
 
     m_listener = new CanvasListener( this );
 
@@ -92,16 +89,16 @@ public class CollisionTest
     {
       m_arc.rotate( 0.01 );
     }
-    if ( ctr.isKeyDown( KeyEvent.VK_SHIFT ) && m_arc.getApertureAngle().getValue() < Math.PI )
+    if( ctr.isKeyDown( KeyEvent.VK_SHIFT ) && m_arc.getApertureAngle().getValue() < Math.PI )
     {
       m_arc.open( 0.01 );
     }
-    if ( ctr.isKeyDown( KeyEvent.VK_CONTROL ) && m_arc.getApertureAngle().getValue() > 0 )
+    if( ctr.isKeyDown( KeyEvent.VK_CONTROL ) && m_arc.getApertureAngle().getValue() > 0 )
     {
       m_arc.open( -0.01 );
     }
   }
-  
+
   void paint( Graphics g )
   {
     g.setColor( Color.DARK_GRAY );

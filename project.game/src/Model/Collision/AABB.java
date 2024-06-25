@@ -7,7 +7,7 @@ public class AABB implements Hitbox, Cloneable
   private Vector m_min;
   private Vector m_max;
   private Vector m_barycenter;
-  
+
   public AABB clone() throws CloneNotSupportedException
   {
     AABB cloned = (AABB)super.clone();
@@ -21,7 +21,7 @@ public class AABB implements Hitbox, Cloneable
   {
     m_min = pmin;
     m_max = pmax;
-    m_barycenter = new Vector(0,0);
+    m_barycenter = new Vector( 0, 0 );
     this.updateBarycenter();
   }
 
@@ -29,7 +29,7 @@ public class AABB implements Hitbox, Cloneable
   {
     m_min = new Vector( minX, minY );
     m_max = new Vector( maxX, maxY );
-    m_barycenter = new Vector(0,0);
+    m_barycenter = new Vector( 0, 0 );
     this.updateBarycenter();
   }
 
@@ -103,7 +103,7 @@ public class AABB implements Hitbox, Cloneable
     m_min.setPos( x, y );
     m_max.setPos( x + width, y + height );
   }
-  
+
   public void updateBarycenter()
   {
     m_barycenter.setPos( ( m_min.getX() + m_max.getX() ) / 2, ( m_min.getY() + m_max.getY() ) / 2 );
@@ -133,11 +133,10 @@ public class AABB implements Hitbox, Cloneable
 
     return new AABB( minX, minY, maxX, maxY );
   }
-  
+
   @Override
   public String toString()
   {
-    return "(min=" + this.getMin().toString()
-        + ", " + "max=" + this.getMax().toString() + ")";
+    return "(min=" + this.getMin().toString() + ", " + "max=" + this.getMax().toString() + ")";
   }
 }

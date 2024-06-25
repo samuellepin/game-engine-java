@@ -21,28 +21,28 @@ import src.Config;
 
 public abstract class Entity implements Cloneable
 {
-  protected EntityTracker  m_tracker;
-  protected long           m_elapsedTime;
-  protected AABB           m_hitbox;
-  protected Angle          m_orientation;
-  protected double         m_velocity;
-  protected Arc            m_visionField;
-  protected boolean        m_isMoving;
-  protected boolean        m_hasCollision;
-  protected int            m_id;
-  protected CategoryFsm    m_cat;
-  protected boolean        m_isWaiting;
-  protected long           m_timeToWait;
-  protected Brain          m_brain;
-  protected Angle          m_moveDirection;
-  protected boolean        m_isProtected;
-  protected Angle          m_protectDirection;
-  protected Entity         m_objectInHand;
-  protected List< Entity > m_inventory;
-  protected boolean        m_isResting;
-  protected int            m_hp;
-  protected int            m_maxHp;
-  protected Entity         m_originEntity;
+  protected EntityTracker       m_tracker;
+  protected long                m_elapsedTime;
+  protected AABB                m_hitbox;
+  protected Angle               m_orientation;
+  protected double              m_velocity;
+  protected Arc                 m_visionField;
+  protected boolean             m_isMoving;
+  protected boolean             m_hasCollision;
+  protected int                 m_id;
+  protected CategoryFsm         m_cat;
+  protected boolean             m_isWaiting;
+  protected long                m_timeToWait;
+  protected Brain               m_brain;
+  protected Angle               m_moveDirection;
+  protected boolean             m_isProtected;
+  protected Angle               m_protectDirection;
+  protected Entity              m_objectInHand;
+  protected ArrayList< Entity > m_inventory;
+  protected boolean             m_isResting;
+  protected int                 m_hp;
+  protected int                 m_maxHp;
+  protected Entity              m_originEntity;
 
   public boolean isNonOriginForm()
   {
@@ -70,7 +70,7 @@ public abstract class Entity implements Cloneable
     m_isProtected = false;
     m_protectDirection = new Angle( 0 );
     m_objectInHand = null;
-    m_inventory = new ArrayList<>();
+    m_inventory = new ArrayList< Entity >();
     m_isResting = false;
     m_hp = 0;
     m_maxHp = 0;
@@ -91,9 +91,16 @@ public abstract class Entity implements Cloneable
     e.m_visionField = m_visionField.clone();
     e.m_visionField.setCenter( e.m_hitbox.getBarycenter() );
     e.m_orientation = m_orientation.clone();
+    e.m_visionField.setAzimuth( e.m_orientation );
     e.m_protectDirection = m_protectDirection.clone();
     e.m_moveDirection = m_moveDirection.clone();
     return e;
+  }
+
+  public Entity correctBrain( Entity entity ) throws CloneNotSupportedException
+  {
+    entity.m_brain = m_brain.clone( entity );
+    return entity;
   }
 
   public void setTracker( EntityTracker tracker )
@@ -218,7 +225,7 @@ public abstract class Entity implements Cloneable
 
   public void doMove( double dir )
   {
-    m_moveDirection = new Angle( dir );
+    m_moveDirection.setValue( dir );
     m_timeToWait = 20;
     m_isMoving = true;
   }
@@ -232,7 +239,7 @@ public abstract class Entity implements Cloneable
 
   public void doMove( double dir, long time )
   {
-    m_moveDirection = new Angle( dir );
+    m_moveDirection.setValue( dir );
     m_timeToWait = time;
     m_isMoving = true;
   }
@@ -259,6 +266,7 @@ public abstract class Entity implements Cloneable
 //        e.repulse();
         }
       }
+      m_orientation.setValue( m_moveDirection.getValue() );
 
       if( m_tracker != null )
       {
@@ -358,23 +366,26 @@ public abstract class Entity implements Cloneable
 
   public void doPick( double orientation )
   {
-    ArrayList< Entity > entities = Model.getInstance().getEntities();
+    ArrayList< Entity > entities = new ArrayList< Entity >( Model.getInstance().getEntities() );
     for ( Entity e : entities )
     {
-      Vector  dist         = Vector.sub( e.getPos(), this.getPos() );
-
-      boolean closeEnough  = m_visionField.getRadius() >= dist.getMagnitude();
-      boolean correctAngle = orientation - ( Math.PI / 4 ) <= dist.getAngle();
-      correctAngle = correctAngle && dist.getAngle() <= orientation + ( Math.PI / 4 );
-
-      if( closeEnough && correctAngle )
+      if( e.m_cat.getOptions().contains( CategoryFsm.CATEGORY.Pickable ) )
       {
-        if( m_objectInHand != null )
+        Vector  dist         = Vector.sub( e.getPos(), this.getPos() );
+
+        boolean closeEnough  = m_visionField.getRadius() >= dist.getMagnitude();
+        boolean correctAngle = orientation - ( Math.PI / 4 ) <= dist.getAngle();
+        correctAngle = correctAngle && dist.getAngle() <= orientation + ( Math.PI / 4 );
+
+        if( closeEnough && correctAngle )
         {
-          m_inventory.add( m_objectInHand );
+          if( m_objectInHand != null )
+          {
+            m_inventory.add( m_objectInHand );
+          }
+          entities.remove( e );
+          m_objectInHand = e;
         }
-        entities.remove( e );
-        m_objectInHand = e;
       }
     }
     m_brain.step();
@@ -382,10 +393,13 @@ public abstract class Entity implements Cloneable
 
   public void doThrow( double orientation )
   {
-    Entity e     = m_objectInHand;
-    Model  model = Model.getInstance();
-    m_objectInHand = null;
-    model.addQueue( e );
+    Entity e = m_objectInHand;
+    if( e != null )
+    {
+      Model model = Model.getInstance();
+      m_objectInHand = null;
+      model.addQueue( e );
+    }
     m_brain.step();
   }
 
@@ -480,6 +494,41 @@ public abstract class Entity implements Cloneable
     }
   }
 
+  public boolean getGot()
+  {
+    return false;
+  }
+
+  public boolean getClosest( CategoryFsm cat, double dir )
+  {
+    ArrayList< Entity > entities = new ArrayList< Entity >( Model.getInstance().getEntities() );
+    Vector              dist     = null;
+    double              distMin  = Double.MAX_VALUE;
+    for ( Entity e : entities )
+    {
+      if( e.m_cat.equals( cat ) )
+      {
+        double distNorm = Vector.sub( e.getPos(), this.getPos() ).norm();
+        if( distNorm < distMin && !e.equals( this ) )
+        {
+          dist = Vector.sub( e.getPos(), this.getPos() );
+          distMin = distNorm;
+        }
+      }
+    }
+
+    if( dist != null )
+    {
+      boolean correctAngle = dir - ( Math.PI / 4 ) <= dist.getAngle();
+      correctAngle = correctAngle && dist.getAngle() <= dir + ( Math.PI / 4 );
+      if( correctAngle )
+      {
+        return true;
+      }
+    }
+    return false;
+  }
+
   /* to override */
   public void doPop( List< Object > parameters )
   {
@@ -535,7 +584,7 @@ public abstract class Entity implements Cloneable
       break;
     }
     Vector pos = m_hitbox.getBarycenter();
-    Arc    a   = new Arc( pos, radius, new Angle( absDir.toAngle( Angle.ANGLE_ZERO ) ),
+    Arc    a   = new Arc( pos, radius, new Angle( absDir.toAngle( m_orientation ) ),
         new Angle( Direction.DIRECTION_ANGLE ) );
 
     for ( Entity e : Model.getInstance().getEntities() )
@@ -730,5 +779,16 @@ public abstract class Entity implements Cloneable
   public Vector getBarycenter()
   {
     return m_hitbox.getBarycenter();
+  }
+
+  public void addItemToInventory( Entity e )
+  {
+    if( m_inventory.contains( e ) ) return;
+    m_inventory.add( e );
+  }
+
+  public ArrayList< Entity > getInventory()
+  {
+    return m_inventory;
   }
 }

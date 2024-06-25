@@ -6,6 +6,7 @@
 		"visionFieldApertureAngle": "45°",
 		"player1" : 1234, 
 		"player2" : 5678,
+		"exit" : 3000,
 		"itemToWin" : 9012,
 		"enableBSP" : false,
 		"enableWalls" : true,
@@ -52,7 +53,7 @@
 			"hasCollision" : true,
 			"velocity" : "0.3",
 			"fsm" : "Player1",
-			"category" : "PlayerT",
+			"typeCat" : "PlayerT",
 			"options" : ["Killable","Jumpable"],
 			"hp" : 100
 		},
@@ -63,8 +64,7 @@
 			"height" : "45.0",
 			"hasCollision" : true,
 			"velocity" : "0.1",
-			"fsm" : "Guard",
-			"category" : "Adversary"
+			"fsm" : "Guard"
 		},
 		{
 			"id" : 9012,
@@ -79,28 +79,58 @@
 		{
 			"id": 4321,
 			"type" : "Robot",
-			"width" : "45.0",
-			"height" : "45.0",
+			"width" : "20.0",
+			"height" : "20.0",
 			"hasCollision" : true,
 			"velocity" : "0.1",
 			"fsm" : "Robot",
 			"category" : "PlayerT",
 			"hp" : 100
+		},
+		{
+			"id" : 3000,
+			"type" : "Stairs",
+			"width" : "50.0",
+			"height" : "50.0",
+			"hasCollision" : false,
+			"velocity" : "0.0",
+			"fsm" : "DoNothing",
+			"category" : "Team"
+		},
+		{
+			"id" : 4000,
+			"type" : "Camera",
+			"width" : "30.0",
+			"height" : "10.0",
+			"hasCollision" : false,
+			"velocity" : "0.001",
+			"fsm" : "SecurityCamera",
+			"category" : "Team"
+		},
+		{
+			"id" : 5000,
+			"type" : "Box",
+			"width" : "40.0",
+			"height" : "40.0",
+			"hasCollision" : false,
+			"velocity" : "0.001",
+			"fsm" : "DoNothing",
+			"category" : "Pickable"
 		}
 	],
 	"enenmies" :
 	[
 		{
 			"id" : 5678,
-			"min" : 6,
-			"max" : 9
+			"min" : 3,
+			"max" : 6
+		},
+		{
+			"id" : 4000,
+			"min" : 2,
+			"max" : 5
 		}
 	],
-	"itemsToPickToWin" : 
-	{
-		"id" : 9012,
-		"min" : 1,
-		"max" : 1
-	}
+	"keyItems" : [ 9012 ]
 }
 

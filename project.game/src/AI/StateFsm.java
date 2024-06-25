@@ -1,10 +1,9 @@
 package src.AI;
 
 import java.util.ArrayList;
-
 import src.Model.Entity;
 
-public class StateFsm
+public class StateFsm implements Cloneable
 {
   private String                     m_name;
   private ArrayList< TransitionFsm > m_transitions;
@@ -19,6 +18,14 @@ public class StateFsm
   {
     m_name = name;
     m_transitions = trans;
+  }
+
+  public StateFsm clone() throws CloneNotSupportedException
+  {
+    StateFsm cloned = (StateFsm)super.clone();
+    cloned.m_name = m_name;
+    cloned.m_transitions = (ArrayList< TransitionFsm >)m_transitions.clone();
+    return cloned;
   }
 
   public void addTransition( TransitionFsm trans )
