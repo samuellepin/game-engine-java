@@ -54,9 +54,7 @@ Path : src/AI/
 - Nous utilisons le parser mit à notre disposition pour parser et créer un arbre AST à partir des fichiers GAL. 
 Notre visitor va permettre de créer nos automates à partir de cet arbre au fil du parcours de l'arbre AST.
 On s'est inspirés des classes du parser pour faire nos automates.
-
-![Automate](image.jpg)
-
+[Insérer schema/graph object automates]
 On définit une interface pour les actions et une pour les conditions. Pour chaque action et condition que nous implémentons, elles implémenteront ses interfaces pour qu'on puisse les utiliser dans le model.
 Pour éviter une trop grosse population d'objets, nous allons en créer moins en utilisant l'aliasing pour les objets ayant le même comportement. Par exemple, si on a plusieurs Move(N) nous ne ferons qu'un object Move(N).
 
@@ -242,8 +240,8 @@ Key(A):
 [Lien vers la Vidéo](https://we.tl/t-48Q7g0dthT)
 
 ## Pourcentage participation 
-- David : 20%
-- Grégory : 20%
-- Rémi : 20%
-- Romain : 20%
-- Samuel : 20%
+- David : 3%
+- Grégory : 500%
+- Rémi : 2%
+- Romain : 2.5%
+- Samuel : ?
