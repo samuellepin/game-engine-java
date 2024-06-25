@@ -12,7 +12,7 @@ Player1(Normal)
   | Key(FR) ? Turn(E);Move(F) : (Normal)
   | Key(FL) ? Turn(W);Move(F) : (Normal)
   | Key(m)  ? Egg()   : (Robot)
-  | Key(l)  ?         : (Metamorph)
+  | Key(l)  ? Wizz    : (Metamorph)
   | True    ? Wait()  : (Normal)
 
   * (Robot) :
@@ -75,7 +75,7 @@ Guard(Patrol)
   | True ? Move(_)                        : (Engage)
 }
 
-SecurityCamera(Right)
+SecurityCamera2(Right)
 {
   * (Right) :
   | Closest(#, F) ? Wizz    : (Right)

@@ -35,8 +35,8 @@
 	},
 	"view" : 
 	{
-		"paintHitbox" : false,
-		"paintVisionField" : false,
+		"paintHitbox" : true,
+		"paintVisionField" : true,
 		"zoom" : "1.0",
 		"screenWidth" : 500,
 		"screenHeight" : 500,
@@ -85,6 +85,16 @@
 			"velocity" : "0.0",
 			"fsm" : "DoNothing",
 			"category" : "Team"
+		},
+		{
+			"id" : 4000,
+			"type" : "Camera",
+			"width" : "30.0",
+			"height" : "10.0",
+			"hasCollision" : false,
+			"velocity" : "0.0",
+			"fsm" : "SecurityCamera",
+			"category" : "Team"
 		}
 	],
 	"enenmies" :
@@ -93,6 +103,11 @@
 			"id" : 5678,
 			"min" : 8,
 			"max" : 10
+		},
+		{
+			"id" : 4000,
+			"min" : 2,
+			"max" : 5
 		}
 	],
 	"keyItems" : [ 9012 ]
