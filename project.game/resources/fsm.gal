@@ -94,8 +94,8 @@ Wall(DoNothing)
   | True ? : (DoNothing)
 }
 
-Animal(DoNothing)
+Animal(Moving)
 {
-  * (DoNothing) :
-  | True          ? : (DoNothing)
+  * (Moving) :
+  | True ? 10% Turn(R)/ 10% Turn(L) / 80% Move(F,100) : (Moving) 
 }

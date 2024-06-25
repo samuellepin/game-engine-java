@@ -6,6 +6,7 @@
 		"visionFieldApertureAngle": "45°",
 		"player1" : 1234, 
 		"player2" : 5678,
+		"exit" : 3000,
 		"itemToWin" : 9012,
 		"enableBSP" : false,
 		"enableWalls" : true,
@@ -34,8 +35,8 @@
 	},
 	"view" : 
 	{
-		"paintHitbox" : true,
-		"paintVisionField" : true,
+		"paintHitbox" : false,
+		"paintVisionField" : false,
 		"zoom" : "1.0",
 		"screenWidth" : 500,
 		"screenHeight" : 500,
@@ -74,6 +75,16 @@
 			"velocity" : "0.0",
 			"fsm" : "DoNothing",
 			"category" : "Stuff"
+		},
+		{
+			"id" : 3000,
+			"type" : "Stairs",
+			"width" : "50.0",
+			"height" : "50.0",
+			"hasCollision" : false,
+			"velocity" : "0.0",
+			"fsm" : "DoNothing",
+			"category" : "Team"
 		}
 	],
 	"enenmies" :
@@ -84,11 +95,6 @@
 			"max" : 10
 		}
 	],
-	"itemsToPickToWin" : 
-	{
-		"id" : 9012,
-		"min" : 1,
-		"max" : 1
-	}
+	"keyItems" : [ 9012 ]
 }
 

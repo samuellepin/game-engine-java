@@ -17,7 +17,7 @@ public class EntityTracker extends AABB
   private Entity              m_target;
   private ArrayList< Entity > m_entities;
   private TrackerListener     m_listener;
-  double                      m_ratioWidth, m_ratioHeight;
+  private double              m_ratioWidth, m_ratioHeight;
 
   public class TrackerListener
   {
@@ -55,10 +55,10 @@ public class EntityTracker extends AABB
     m_entities = new ArrayList< Entity >();
     m_listener = new TrackerListener();
   }
-  
+
   public void resize()
   {
-    super.setDim( Game.SCREEN_WIDTH/2, Game.SCREEN_HEIGHT );
+    super.setDim( Game.SCREEN_WIDTH / 2, Game.SCREEN_HEIGHT );
   }
 
   private void centerOnTarget()
@@ -82,7 +82,7 @@ public class EntityTracker extends AABB
   {
     return m_listener;
   }
-  
+
   public Entity getTarget()
   {
     return m_target;

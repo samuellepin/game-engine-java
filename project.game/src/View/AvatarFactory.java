@@ -10,21 +10,38 @@ import javax.imageio.ImageIO;
 
 import src.Config;
 import src.Config.Tile;
-import src.Model.Alien;
-import src.Model.Box;
-import src.Model.Camera;
-import src.Model.Document;
-import src.Model.Dove;
 import src.Model.Entity;
-import src.Model.Generator;
-import src.Model.Guard;
-import src.Model.Mouse;
-import src.Model.Rabbit;
-import src.Model.Raven;
-import src.Model.Robot;
-import src.Model.Spy;
-import src.Model.Squirrel;
-import src.Model.Wall;
+import src.Model.Entities.Alien;
+import src.Model.Entities.Box;
+import src.Model.Entities.Camera;
+import src.Model.Entities.Document;
+import src.Model.Entities.Dove;
+import src.Model.Entities.Generator;
+import src.Model.Entities.Guard;
+import src.Model.Entities.Mouse;
+import src.Model.Entities.Rabbit;
+import src.Model.Entities.Raven;
+import src.Model.Entities.Robot;
+import src.Model.Entities.Spy;
+import src.Model.Entities.Squirrel;
+import src.Model.Entities.Stairs;
+import src.Model.Entities.UFO;
+import src.Model.Entities.Wall;
+import src.View.Avatars.AlienAvatar;
+import src.View.Avatars.BoxAvatar;
+import src.View.Avatars.CameraAvatar;
+import src.View.Avatars.DocumentAvatar;
+import src.View.Avatars.DoveAvatar;
+import src.View.Avatars.GeneratorAvatar;
+import src.View.Avatars.GuardAvatar;
+import src.View.Avatars.MouseAvatar;
+import src.View.Avatars.RabbitAvatar;
+import src.View.Avatars.RavenAvatar;
+import src.View.Avatars.RobotAvatar;
+import src.View.Avatars.SpyAvatar;
+import src.View.Avatars.StairsAvatar;
+import src.View.Avatars.UFOAvatar;
+import src.View.Avatars.WallAvatar;
 
 public class AvatarFactory
 {
@@ -91,6 +108,8 @@ public class AvatarFactory
     else if( e instanceof Robot ) avatar = new RobotAvatar( e );
     else if( e instanceof Spy ) avatar = new SpyAvatar( e );
     else if( e instanceof Squirrel ) avatar = new MouseAvatar( e );
+    else if( e instanceof Stairs ) avatar = new StairsAvatar( e );
+    else if( e instanceof UFO ) avatar = new UFOAvatar( e );
     else if( e instanceof Wall )
     {
       int r = 1;

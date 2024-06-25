@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import src.Model.Collision.Circle;
 import src.Model.Collision.Collision;
+import src.Model.Entities.Guard;
 
 public class Alarm
 {

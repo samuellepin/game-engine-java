@@ -3,8 +3,6 @@ package src.AI;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import src.AI.Action.ActionFsm;
-import src.AI.Condition.ConditionFsm;
 import src.Model.Entity;
 
 public class FSM implements Cloneable
@@ -31,13 +29,13 @@ public class FSM implements Cloneable
     m_name = name;
     m_init_state = init;
   }
-  
+
   public FSM clone() throws CloneNotSupportedException
   {
     FSM cloned = (FSM)super.clone();
     cloned.m_init_state = m_init_state.clone();
-    cloned.m_name=m_name;
-    cloned.m_states=(ArrayList< StateFsm >)m_states.clone();
+    cloned.m_name = m_name;
+    cloned.m_states = (ArrayList< StateFsm >)m_states.clone();
     return cloned;
   }
 
@@ -70,7 +68,7 @@ public class FSM implements Cloneable
    */
   public void addState( StateFsm st )
   {
-    Iterator iter = m_states.iterator();
+    Iterator< StateFsm > iter = m_states.iterator();
     while( iter.hasNext() )
     {
       StateFsm s = (StateFsm)iter.next();
@@ -101,9 +99,9 @@ public class FSM implements Cloneable
     }
     return null;
   }
-  
- public String getName()
- {
-   return m_name;
- }
+
+  public String getName()
+  {
+    return m_name;
+  }
 }

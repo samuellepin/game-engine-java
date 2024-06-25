@@ -1,8 +1,6 @@
 package src.AI;
 
 import java.util.ArrayList;
-
-import src.AI.Action.ActionFsm;
 import src.Model.Entity;
 
 public class StateFsm implements Cloneable
@@ -26,10 +24,10 @@ public class StateFsm implements Cloneable
   {
     StateFsm cloned = (StateFsm)super.clone();
     cloned.m_name = m_name;
-    cloned.m_transitions=(ArrayList< TransitionFsm >)m_transitions.clone();
+    cloned.m_transitions = (ArrayList< TransitionFsm >)m_transitions.clone();
     return cloned;
   }
-  
+
   public void addTransition( TransitionFsm trans )
   {
     m_transitions.add( trans );

@@ -6,8 +6,8 @@ import src.Model.Vector;
 public class Direction
 {
   public static final double DIRECTION_ANGLE = Math.PI * 0.25;
-  
-  private DIRECTION m_direction;
+
+  private DIRECTION          m_direction;
 
   public enum DIRECTION
   {

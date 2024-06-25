@@ -6,21 +6,20 @@ import java.util.Random;
 
 import src.Config;
 import src.AI.CategoryFsm;
-import src.AI.FsmFactory;
 import src.Model.Vector;
-import src.Model.Wall;
+import src.Model.Entities.Wall;
 
 public class Map
 {
   private ArrayList< Position > m_tilesAlreadyUsed;
 
   private Tile[][]              m_tiles;
-  private Biome[]               m_biome_tab;                                                                 // pour le
-                                                                                                             // random
-                                                                                                             // entre
-                                                                                                             // les
-                                                                                                             // différents
-                                                                                                             // biomes
+//  private Biome[]               m_biome_tab;                                                                 // pour le
+  // random
+  // entre
+  // les
+  // différents
+  // biomes
   private ArrayList< Biome >    m_biomes;                                                                    // pour
                                                                                                              // afficher
                                                                                                              // les
@@ -77,9 +76,9 @@ public class Map
     m_walls = new ArrayList<>();
 
     if( !Config.getInstance().getParameters().isWallsEnabled() ) return;
-    
+
     double density = Config.getInstance().getWorld().getObstructionDensity();
-    Random rand = Config.getRandom();
+    Random rand    = Config.getRandom();
 
     for ( int y = 0; y < ROWS_NUM; y++ )
     {
@@ -92,10 +91,9 @@ public class Map
           wall.setCategory( CategoryFsm.CATEGORY.Obstacle );
           wall.setPos( x * Tile.WIDTH, y * Tile.HEIGHT );
           wall.setDim( Tile.WIDTH, Tile.HEIGHT );
-          if( x == 0 || x == COLS_NUM-1 || y == 0 || y == ROWS_NUM-1
-              || density >= rand.nextDouble() )
+          if( x == 0 || x == COLS_NUM - 1 || y == 0 || y == ROWS_NUM - 1 || density >= rand.nextDouble() )
           {
-            m_walls.add( wall ); 
+            m_walls.add( wall );
           }
         }
       }
@@ -242,6 +240,7 @@ public class Map
     m_tilesAlreadyUsed.add( p );
     return this.getPos( x, y );
   }
+
 
 // Inutile - les murs sont dans la liste des entités
 //  public boolean detectCollision( Entity entity )

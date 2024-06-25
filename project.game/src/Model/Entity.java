@@ -20,28 +20,28 @@ import src.Config;
 
 public abstract class Entity implements Cloneable
 {
-  protected EntityTracker  m_tracker;
-  protected long           m_elapsedTime;
-  protected AABB           m_hitbox;
-  protected Angle          m_orientation;
-  protected double         m_velocity;
-  protected Arc            m_visionField;
-  protected boolean        m_isMoving;
-  protected boolean        m_hasCollision;
-  protected int            m_id;
-  protected CategoryFsm    m_cat;
-  protected boolean        m_isWaiting;
-  protected long           m_timeToWait;
-  protected Brain          m_brain;
-  protected Angle          m_moveDirection;
-  protected boolean        m_isProtected;
-  protected Angle          m_protectDirection;
-  protected Entity         m_objectInHand;
-  protected List< Entity > m_inventory;
-  protected boolean        m_isResting;
-  protected int            m_hp;
-  protected int            m_maxHp;
-  protected Entity         m_originEntity;
+  protected EntityTracker       m_tracker;
+  protected long                m_elapsedTime;
+  protected AABB                m_hitbox;
+  protected Angle               m_orientation;
+  protected double              m_velocity;
+  protected Arc                 m_visionField;
+  protected boolean             m_isMoving;
+  protected boolean             m_hasCollision;
+  protected int                 m_id;
+  protected CategoryFsm         m_cat;
+  protected boolean             m_isWaiting;
+  protected long                m_timeToWait;
+  protected Brain               m_brain;
+  protected Angle               m_moveDirection;
+  protected boolean             m_isProtected;
+  protected Angle               m_protectDirection;
+  protected Entity              m_objectInHand;
+  protected ArrayList< Entity > m_inventory;
+  protected boolean             m_isResting;
+  protected int                 m_hp;
+  protected int                 m_maxHp;
+  protected Entity              m_originEntity;
 
   public boolean isNonOriginForm()
   {
@@ -69,7 +69,7 @@ public abstract class Entity implements Cloneable
     m_isProtected = false;
     m_protectDirection = new Angle( 0 );
     m_objectInHand = null;
-    m_inventory = new ArrayList<>();
+    m_inventory = new ArrayList< Entity >();
     m_isResting = false;
     m_hp = 0;
     m_maxHp = 0;
@@ -464,10 +464,9 @@ public abstract class Entity implements Cloneable
 
   public boolean getClosest( CategoryFsm cat, double dir )
   {
-    ArrayList< Entity > entities  = new ArrayList< Entity >( Model.getInstance().getEntities() );
-    Vector              dist      = null;
-    double              distMin   = Double.MAX_VALUE;
-    Entity              entityMin = null;
+    ArrayList< Entity > entities = new ArrayList< Entity >( Model.getInstance().getEntities() );
+    Vector              dist     = null;
+    double              distMin  = Double.MAX_VALUE;
     for ( Entity e : entities )
     {
       if( e.m_cat.equals( cat ) )
@@ -477,7 +476,6 @@ public abstract class Entity implements Cloneable
         {
           dist = Vector.sub( e.getPos(), this.getPos() );
           distMin = distNorm;
-          entityMin = e;
         }
       }
     }
@@ -734,5 +732,16 @@ public abstract class Entity implements Cloneable
   public Vector getBarycenter()
   {
     return m_hitbox.getBarycenter();
+  }
+
+  public void addItemToInventory( Entity e )
+  {
+    if( m_inventory.contains( e ) ) return;
+    m_inventory.add( e );
+  }
+
+  public ArrayList< Entity > getInventory()
+  {
+    return m_inventory;
   }
 }
