@@ -547,7 +547,7 @@ public abstract class Entity implements Cloneable
       break;
     }
     Vector pos = m_hitbox.getBarycenter();
-    Arc    a   = new Arc( pos, radius, new Angle( absDir.toAngle( Angle.ANGLE_ZERO ) ),
+    Arc    a   = new Arc( pos, radius, new Angle( absDir.toAngle( m_orientation ) ),
         new Angle( Direction.DIRECTION_ANGLE ) );
 
     for ( Entity e : Model.getInstance().getEntities() )
