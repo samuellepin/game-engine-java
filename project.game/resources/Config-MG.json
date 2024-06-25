@@ -59,6 +59,18 @@
 		},
 		{
 			"id" : 5678,
+			"type" : "Spy",
+			"width" : "20.0",
+			"height" : "40.0",
+			"hasCollision" : true,
+			"velocity" : "0.3",
+			"fsm" : "Player2",
+			"typeCat" : "PlayerT",
+			"options" : ["Killable","Jumpable"],
+			"hp" : 100
+		},
+		{
+			"id" : 9012,
 			"type" : "Guard",
 			"width" : "25.0",
 			"height" : "45.0",
@@ -67,7 +79,7 @@
 			"fsm" : "Guard"
 		},
 		{
-			"id" : 9012,
+			"id" : 3456,
 			"type" : "Document",
 			"width" : "20.0",
 			"height" : "20.0",
