@@ -239,7 +239,7 @@ Key(A):
 
 ## Lien vidéo 
 
-[Insérer lien vidéo]
+[Lien vers la Vidéo](https://we.tl/t-48Q7g0dthT)
 
 ## Pourcentage participation 
 - David : 20%
