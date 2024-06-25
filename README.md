@@ -5,6 +5,9 @@ Grégory Toureille, Romain Prat, Rémi Gaulmin, David Darras, Samuel Lepin
 
 - Open the terminal to an empty folder 
 - Clone the project in this folder ( https://gricad-gitlab.univ-grenoble-alpes.fr/michael_perin_private_project/2023_info3_ple/g6 )
+
+### Compilation avec Eclipse 
+
 - Open eclipse in this folder 
 - In Eclipse :
 	- File -> Opne Projects from File System or Archive-> select this path : ~/path-to-folder/g6/project.game
@@ -17,11 +20,21 @@ Grégory Toureille, Romain Prat, Rémi Gaulmin, David Darras, Samuel Lepin
 	- Launch the project.gam/src/Game.java file to start the game
 - If you have compilation problems, check if you have to install : sudo apt install openjdk-11-jdk 
 
+### Compilation avec le Makefile
+
+- Open the terminal in the project.game folder
+- Run the command `make` to compile the project
+- Run the command `make run` to run the project
+
 ## Structure du code 
 
 1. Model :
+Path : src/Model
 
-[TO DO]
+- Le package src.Model contient des informations sur l'état du jeu telles que les entités présentes sur la carte et des fonctions utiles pour manipuler les vecteurs et les angles dans notre monde métrique.
+- Le package src.Model.World génère de manière procédurale une carte aléatoire, et la classe Biome permet d'ajouter des salles vides parmi les couloirs.
+- Le package src.Model.Collision s'occupe de toutes les collisions possibles dans le jeu : entre deux AABB pour les collisions entre entités, et entre un arc de cercle et une AABB pour détecter le joueur dans le champ de vision des adversaires, etc.
+- Le package src.Model.Entities regroupe toutes les entités utilisées dans le jeu.
 
 2. View :
 
@@ -32,7 +45,8 @@ Chaque entité est associée à un Avatar, qui s'occupe de représenter l'entit�
 
 3. Controller :
 Path : src
-[TO DO]
+
+- La partie controller permet de récupérer les touches pressées et la position de la souris fournies par le GameCanvas. Ces informations sont stockées dans des tableaux, mis à jour à chaque tick, et sont appelées par src.AI pour la condition Key.
 
 4. Bots :
 Path : src/AI/
@@ -43,6 +57,12 @@ On s'est inspiré des classes du parser pour faire nos automates.
 [Insérer schema/graph object automates]
 On définit une intérface pour les actions et une pour les conditions. Pour chaque action et condition que nous implémenterons, elles devront implémenter ses interfaces pour qu'on puisse les utiliser dans le model.
 Pour éviter une trop grosse population d'object nous allons créer moins d'object et faire de l'aliasing pour les objects ayant le même comportement ( par exemple si on a plusieurs Move(N) nous ne ferons qu'un object Move(N))
+
+5. Divers :
+
+- Le pattern singleton a été utilisé pour les classes qui ne devaient être instanciées qu'une seule fois, comme pour Map, Model, Controller, etc.
+
+- Pour éviter des problèmes d'aliasing, des méthodes clone ont été ajoutées pour Vector, Angle, AABB, etc.
 
 
 ## Environnement 
