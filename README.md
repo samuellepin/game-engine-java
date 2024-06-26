@@ -16,8 +16,11 @@ Grégory Toureille, Romain Prat, Rémi Gaulmin, David Darras, Samuel Lepin
 		- info3.game.jar
 		- parser.jar
 	- Check that the compiler is in the correct version: Window -> Preferences -> Java -> Compiler -> Compiler compilance level: 11 
-	- Clean the project 
-	- Run project.gam/src/Game.java file to start the game
+	- Clean the project
+	- In `Config.java`, change the first line `FILENAME` to the config file you want :
+		- `Config-Alien.json`
+		- `Config-MG.json`
+	- Run project.game/src/Game.java file to start the game
 - If you have compilation issues, check if jdk11 is correctly installed: sudo apt install openjdk-11-jdk 
 
 ### Compiling using Makefile
