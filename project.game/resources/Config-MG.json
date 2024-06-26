@@ -32,7 +32,7 @@
 	},
 	"view" : 
 	{
-		"paintHitbox" : true,
+		"paintHitbox" : false,
 		"paintVisionField" : true,
 		"zoom" : "1.0",
 		"screenWidth" : 500,
