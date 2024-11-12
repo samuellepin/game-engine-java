@@ -87,7 +87,8 @@ public class Map
         if( this.getTile( x, y ).getType() == TILE_TYPE.WALL )
         {
           Wall wall = new Wall();
-          wall.setFSM( "Wall" );
+          wall.setVelocity(0.1);
+          wall.setFSM( "Animal" );
           wall.setCategory( CategoryFsm.CATEGORY.Obstacle );
           wall.setPos( x * Tile.WIDTH, y * Tile.HEIGHT );
           wall.setDim( Tile.WIDTH, Tile.HEIGHT );

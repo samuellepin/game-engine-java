@@ -48,8 +48,8 @@
 			"width" : "20.0",
 			"height" : "40.0",
 			"hasCollision" : true,
-			"velocity" : "0.3",
-			"fsm" : "Player1",
+			"velocity" : "0.1",
+			"fsm" : "Animal",
 			"typeCat" : "PlayerT",
 			"options" : ["Killable","Jumpable"],
 			"hp" : 100
@@ -73,7 +73,7 @@
 			"height" : "45.0",
 			"hasCollision" : true,
 			"velocity" : "0.1",
-			"fsm" : "Guard"
+			"fsm" : "Animal"
 		},
 		{
 			"id" : 4000,
@@ -81,8 +81,8 @@
 			"width" : "20.0",
 			"height" : "20.0",
 			"hasCollision" : false,
-			"velocity" : "0.0",
-			"fsm" : "DoNothing",
+			"velocity" : "0.1",
+			"fsm" : "Animal",
 			"category" : "Stuff"
 		},
 		{
@@ -102,8 +102,8 @@
 			"width" : "50.0",
 			"height" : "50.0",
 			"hasCollision" : false,
-			"velocity" : "0.0",
-			"fsm" : "DoNothing",
+			"velocity" : "0.1",
+			"fsm" : "Animal",
 			"category" : "Team"
 		},
 		{
@@ -112,8 +112,8 @@
 			"width" : "30.0",
 			"height" : "10.0",
 			"hasCollision" : false,
-			"velocity" : "0.001",
-			"fsm" : "SecurityCamera",
+			"velocity" : "0.1",
+			"fsm" : "Animal",
 			"category" : "Team"
 		},
 		{
@@ -122,8 +122,8 @@
 			"width" : "36.0",
 			"height" : "36.0",
 			"hasCollision" : false,
-			"velocity" : "0.0",
-			"fsm" : "DoNothing",
+			"velocity" : "0.1",
+			"fsm" : "Animal",
 			"category" : "Pickable"
 		}
 	],
